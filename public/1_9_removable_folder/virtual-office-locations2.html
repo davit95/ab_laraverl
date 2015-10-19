@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Virtual Office, Virtual Office Solutions from Alliance Virtual Offices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/autocomplete.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.alliancevirtualoffices.com/js/jquery.autocomplete1.js"></script>
+
+<script>
+        jQuery(document).ready(function($) {
+			
+			$( ".menuBtnLink" ).click(function() {
+			  $( ".menu" ).slideToggle( "slow", function() {
+				// Animation complete.
+			  });
+			});
+
+    $("#suggest1").autocomplete('js/lookup.php', {
+        minChars: 1,
+	delay: 40,
+	maxItemsToShow: 30,
+    });
+	
+    $("input#suggest1").keyup(function(e){ 
+
+        var code = e.which;
+        if(code==13)e.preventDefault();
+        if(code==13||code==186){
+	   $("#searchBtn").click();
+        } 
+
+    });
+	
+    $( ".avo1" ).change(function() {
+
+        var e = document.getElementById("Services");
+        var strType = e.options[e.selectedIndex].value;
+
+        if(strType=='VO') { 
+             $("#avoS").attr("action", "search2.php");
+        }
+        else{
+            $("#avoS").attr("action", "mr-search.php");
+        } 
+	
+    });
+            
+        });
+    </script>
+END;
+
+include("google_code.php");
+
+echo <<<END
+</head>
+<body>
+<div class="contentWrap">
+
+
+<div class="headMenu">
+        <div class="logo"><a href="http://www.alliancevirtualoffices.com"><img src="/1_9/images/AVOlogo.png" width="279" height="55" border="0" alt="Alliance Virtual Offices"></a></div><!--/logo-->
+        <a href="#" class="menuBtnLink"><div class="menuBtn"></div></a>
+        <div class="menu">
+        <div class="btnMenu"><a href="/virtual-office-locations.php" class="active">VIRTUAL OFFICES</a></div>
+        <div class="btnMenu"><a href="/meeting-room-locations.php">MEETING ROOMS</a></div>
+        <div class="btnMenu"><a href="/live-receptionist.php">LIVE RECEPTIONISTS</a></div>
+        <div class="btnMenu"><a href="/login.php"><span class="light">Login</span></a></div>
+        <div class="btnMenu"><a href="/contact.php"><span class="light">Contact</span></a></div>
+        <div class="btnMenu"><a href="/cart.php"><span class="orange">CART</span><img src="/1_9/images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
+        </div><!--/menu-->
+</div><!--/headMenu-->
+<div class="PowerUp">
+    <div class="contactTop">Call: +1 888.869.9494</div><!--/contactTop-->
+
+      <div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Power Up Your Small Business</h1>
+        <p><span class="mediumBold">Alliance Virtual Offices</span> is a business power tool for startups and SMBs. <br>Our technology interface and 
+        service delivery focus are designed to help bootstrapping businesses grow fast on a budget. <br>
+        We've always championed small businesses, and we get straight to the core of what you need 
+        to succeed with people, place, and technology - the complete virtual office. It's your springboard to the bigtime.</p>
+        </div><!--/productTxtWrap-->
+        
+        <div class="searchHome">
+        <form action="forChat/search2.php" autocomplete="off" id="avoS" method="get">
+	<input type="hidden" name="step" value="search" />
+          <div class="searchWrap">
+          <input type="text" class="SearchInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
+          </div>
+          <div class="selectService">
+              <select id="Services" name="avo1" class="avo1">
+                    <option value="VO">Virtual Offices</option>
+                    <option value="MR">Meeting Rooms</option>
+              </select>  
+          </div>
+          <input type="hidden" name="source" value="bb">
+          <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large aquaB" id="searchBtn">
+            <span class="mobileS">Search</span>
+          </button>
+        </form>
+        </div><!--/searchHome-->
+       </div><!--/productContWrap-->
+    
+</div><!--/PowerUp-->
+<div class="contactMobile2">Call: +1 888.869.9494</div>
+
+
+<div class="VirtualOffice">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Virtual Office</h1>
+        <p>A virtual office is an <span class="mediumBold">office mailing address</span> that you can use for business correspondence. 
+        Business mail is received and forwarded to the location of your choice, as often as you like. 
+        Or come and pick it up yourself. <br><br>Choose one or more virtual offices <span class="mediumBold">from hundreds of locations</span> across North America and internationally.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/VirtualOffice-->
+
+<div class="VirtualLocations">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Virtual Office Locations</h1>
+        <p><span class="mediumBold">Create an instant presence in a new city.</span><br> 
+        Choose from hundreds of virtual office locations across the world, from local business centers to iconic city skyscrapers. 
+        Use the address as a mail handling facility, as your official business address, or rent meeting rooms and office space by the hour.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/VirtualLocations-->
+
+<div class="MailForwarding">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Mail Forwarding</h1>
+        <p>Have <span class="mediumBold">business mail received and forwarded</span> to the location of your choice, as often as you like. 
+        Secure and affordable, your business is only charged the postal rate plus a small handling fee based on forwarding frequency. <br>
+        Or come and collect it yourself for free.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/MailForwarding-->
+
+<div class="productsDividedWrap">
+<div class="PrLeft">
+
+<table class="productsTxtTable" width="100%" height="100%"><tr><td>
+<div class="PrdTxtWrap">
+		<h1 class="medium">SETTING UP A VIRTUAL OFFICE LOCATION</h1>
+        <p class="light">To use a virtual office address in the United States, you'll need to complete a <a href="http://www.alliancevirtualoffices.com/CMRA_form.pdf" target="_blank" class="gray2 mediumBold">CMRA form</a> (Commercial Mail Receiving Agency). 
+        This is a consumer protection to safeguard against fraudulent businesses. <br>Our inclusive online notary service makes the process quick and easy. <span class="mediumBold">Job done.</span></p>
+</div><!--/PrdTxtWrap-->
+</td></tr></table>
+
+</div><!--/PrLeft-->
+<div class="PrRight">
+<table class="productsTxtTable" width="100%" height="100%"><tr><td>
+<div class="PrdTxtWrap">
+		<h1 class="medium">NOTARY SERVICE</h1>
+        <p class="light">Use your own notary service when completing your CMRA form, or use our <a href="https://www.notarycam.com/alliancevirtualoffices/" target="_blank" class="gray2 mediumBold">online notary service</a> at no extra cost.<br> 
+        To use our online service, simply upload your document, connect to a live Notary face-to-face on a webcam, and electronically sign your document. 
+        The notary will verify and confirm your identity and apply their eNotary seal. <span class="mediumBold">That's it.</span></p>
+</div><!--/PrdTxtWrap-->
+</td></tr></table>
+</div><!--/PrRight-->
+<div class="clear"></div>	
+</div><!--/productsDividedWrap-->
+
+<div class="TopCities">
+<div class="Wrapper">
+<h2 class="smallh2">TOP CITIES</h2>
+<ul>
+<a href="http://www.alliancevirtualoffices.com/US/los-angeles-virtual-office"><li>Los Angeles</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/new-york-virtual-office"><li>New York</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/chicago-virtual-office"><li>Chicago</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/dallas-virtual-office"><li>Dallas</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/atlanta-virtual-office"><li>Atlanta</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/houston-virtual-office"><li>Houston</li></a>
+<a href="http://www.alliancevirtualoffices.com/GB/london-virtual-office"><li>London</li></a>
+<a href="http://www.alliancevirtualoffices.com/CN/beijing-virtual-office"><li>Beijing</li></a>
+<a href="http://www.alliancevirtualoffices.com/JP/tokyo-virtual-office"><li>Tokyo</li></a>
+<a href="http://www.alliancevirtualoffices.com/AE/dubai-virtual-office"><li>Dubai</li></a>
+<a href="http://www.alliancevirtualoffices.com/DE/berlin-virtual-office"><li>Berlin</li></a>
+<a href="http://www.alliancevirtualoffices.com/NL/amsterdam-virtual-office"><li>Amsterdam</li></a>
+<a href="http://www.alliancevirtualoffices.com/FR/paris-virtual-office"><li>Paris</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/las-vegas-virtual-office"><li>Las Vegas</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/washington-virtual-office"><li>Washington</li></a>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/TopCities-->
+
+
+<div class="NAsection">
+<div class="Wrapper" >
+<h3>NORTH AMERICAN LOCATIONS</h3>
+<table width="100%" cellpadding="5" cellspacing="2" border="0">
+<tr>
+	<td valign="top" class="col_one">
+    <div class="state-header"><a href="/alabama-virtual-offices" title="Alabama virtual offices">Virtual Office in Alabama</a></div><div class="city-header"><a href="/US/birmingham-virtual-office" class="style5" title="Birmingham virtual offices">Birmingham</a></div><div class="city-header"><a href="/US/mobile-virtual-office" class="style5" title="Mobile virtual offices">Mobile</a></div>					
+    <div class="state-header"><a href="/arizona-virtual-offices" title="Arizona virtual offices">Virtual Office in Arizona</a></div><div class="city-header"><a href="/US/phoenix-virtual-office" class="style5" title="Phoenix virtual offices">Phoenix</a></div>					<div class="city-header"><a href="/US/scottsdale-virtual-office" class="style5" title="Scottsdale virtual offices">Scottsdale</a></div>					<div class="city-header"><a href="/US/tucson-virtual-office" class="style5" title="Tucson virtual offices">Tucson</a></div>					
+    <div class="state-header"><a href="/california-virtual-offices" title="California virtual offices">Virtual Office in California</a></div>					<div class="city-header"><a href="/US/beverly-hills-virtual-office" class="style5" title="Beverly Hills virtual offices">Beverly Hills</a></div>					<div class="city-header"><a href="/US/burbank-virtual-office" class="style5" title="Burbank virtual offices">Burbank</a></div>					<div class="city-header"><a href="/US/burlingame-virtual-office" class="style5" title="Burlingame virtual offices">Burlingame</a></div>					<div class="city-header"><a href="/US/calabasas-virtual-office" class="style5" title="Calabasas virtual offices">Calabasas</a></div>					<div class="city-header"><a href="/US/carlsbad-virtual-office" class="style5" title="Carlsbad virtual offices">Carlsbad</a></div>					<div class="city-header"><a href="/US/century-city-virtual-office" class="style5" title="Century City virtual offices">Century City</a></div>					<div class="city-header"><a href="/US/cerritos-virtual-office" class="style5" title="Cerritos virtual offices">Cerritos</a></div>					<div class="city-header"><a href="/US/culver-city-virtual-office" class="style5" title="Culver City virtual offices">Culver City</a></div>					<div class="city-header"><a href="/US/cupertino-virtual-office" class="style5" title="Cupertino virtual offices">Cupertino</a></div>					<div class="city-header"><a href="/US/el-segundo-virtual-office" class="style5" title="El Segundo virtual offices">El Segundo</a></div>					<div class="city-header"><a href="/US/encino-virtual-office" class="style5" title="Encino virtual offices">Encino</a></div>					<div class="city-header"><a href="/US/foothill-ranch-virtual-office" class="style5" title="Foothill Ranch virtual offices">Foothill Ranch</a></div>					<div class="city-header"><a href="/US/fremont-virtual-office" class="style5" title="Fremont virtual offices">Fremont</a></div>					<div class="city-header"><a href="/US/fresno-virtual-office" class="style5" title="Fresno virtual offices">Fresno</a></div>					<div class="city-header"><a href="/US/fullerton-virtual-office" class="style5" title="Fullerton virtual offices">Fullerton</a></div>					<div class="city-header"><a href="/US/glendale-virtual-office" class="style5" title="Glendale virtual offices">Glendale</a></div>					<div class="city-header"><a href="/US/huntington-beach-virtual-office" class="style5" title="Huntington Beach virtual offices">Huntington Beach</a></div>					<div class="city-header"><a href="/US/irvine-virtual-office" class="style5" title="Irvine virtual offices">Irvine</a></div>					<div class="city-header"><a href="/US/la-jolla-virtual-office" class="style5" title="La Jolla virtual offices">La Jolla</a></div>					<div class="city-header"><a href="/US/la-mirada-virtual-office" class="style5" title="La Mirada virtual offices">La Mirada</a></div>					<div class="city-header"><a href="/US/larkspur-virtual-office" class="style5" title="Larkspur virtual offices">Larkspur</a></div>					<div class="city-header"><a href="/US/long-beach-virtual-office" class="style5" title="Long Beach virtual offices">Long Beach</a></div>					<div class="city-header"><a href="/US/los-angeles-virtual-office" class="style5" title="Los Angeles virtual offices">Los Angeles</a></div>					<div class="city-header"><a href="/US/manhattan-beach-virtual-office" class="style5" title="Manhattan Beach virtual offices">Manhattan Beach</a></div>					<div class="city-header"><a href="/US/marina-del-rey-virtual-office" class="style5" title="Marina Del Rey virtual offices">Marina Del Rey</a></div>					<div class="city-header"><a href="/US/mission-viejo-virtual-office" class="style5" title="Mission Viejo virtual offices">Mission Viejo</a></div>					<div class="city-header"><a href="/US/newport-beach-virtual-office" class="style5" title="Newport Beach virtual offices">Newport Beach</a></div>					<div class="city-header"><a href="/US/oakland-virtual-office" class="style5" title="Oakland virtual offices">Oakland</a></div>					<div class="city-header"><a href="/US/ontario-virtual-office" class="style5" title="Ontario virtual offices">Ontario</a></div>					<div class="city-header"><a href="/US/orange-virtual-office" class="style5" title="Orange virtual offices">Orange</a></div>					<div class="city-header"><a href="/US/oxnard-virtual-office" class="style5" title="Oxnard virtual offices">Oxnard</a></div>					<div class="city-header"><a href="/US/palo-alto-virtual-office" class="style5" title="Palo Alto virtual offices">Palo Alto</a></div>					<div class="city-header"><a href="/US/panorama-city-virtual-office" class="style5" title="Panorama City virtual offices">Panorama City</a></div>					<div class="city-header"><a href="/US/pasadena-virtual-office" class="style5" title="Pasadena virtual offices">Pasadena</a></div>					<div class="city-header"><a href="/US/pleasant-hill-virtual-office" class="style5" title="Pleasant Hill virtual offices">Pleasant Hill</a></div>					<div class="city-header"><a href="/US/rancho-cucamonga-virtual-office" class="style5" title="Rancho Cucamonga virtual offices">Rancho Cucamonga</a></div>					<div class="city-header"><a href="/US/rancho-santa-margarita-virtual-office" class="style5" title="Rancho Santa Margarita virtual offices">Rancho Santa Margarita</a></div>					<div class="city-header"><a href="/US/sacramento-virtual-office" class="style5" title="Sacramento virtual offices">Sacramento</a></div>					<div class="city-header"><a href="/US/san-diego-virtual-office" class="style5" title="San Diego virtual offices">San Diego</a></div>					<div class="city-header"><a href="/US/san-francisco-virtual-office" class="style5" title="San Francisco virtual offices">San Francisco</a></div>					<div class="city-header"><a href="/US/san-jose-virtual-office" class="style5" title="San Jose virtual offices">San Jose</a></div>					<div class="city-header"><a href="/US/santa-ana-virtual-office" class="style5" title="Santa Ana virtual offices">Santa Ana</a></div>					<div class="city-header"><a href="/US/santa-monica-virtual-office" class="style5" title="Santa Monica virtual offices">Santa Monica</a></div>					<div class="city-header"><a href="/US/sherman-oaks-virtual-office" class="style5" title="Sherman Oaks virtual offices">Sherman Oaks</a></div>					<div class="city-header"><a href="/US/south-coast-metro-santa-ana-virtual-office" class="style5" title="South Coast Metro (Santa Ana) virtual offices">South Coast Metro (Santa Ana)</a></div>					<div class="city-header"><a href="/US/sunnyvale-virtual-office" class="style5" title="Sunnyvale virtual offices">Sunnyvale</a></div>					<div class="city-header"><a href="/US/temecula-virtual-office" class="style5" title="Temecula virtual offices">Temecula</a></div>					<div class="city-header"><a href="/US/torrance-virtual-office" class="style5" title="Torrance virtual offices">Torrance</a></div>					<div class="city-header"><a href="/US/valencia-virtual-office" class="style5" title="Valencia virtual offices">Valencia</a></div>					<div class="city-header"><a href="/US/walnut-creek-virtual-office" class="style5" title="Walnut Creek virtual offices">Walnut Creek</a></div>					<div class="city-header"><a href="/US/west-hollywood-virtual-office" class="style5" title="West Hollywood virtual offices">West Hollywood</a></div>					<div class="city-header"><a href="/US/westlake-village-virtual-office" class="style5" title="Westlake Village virtual offices">Westlake Village</a></div>					<div class="city-header"><a href="/US/woodland-hills-virtual-office" class="style5" title="Woodland Hills virtual offices">Woodland Hills</a></div>					
+    
+    <div class="state-header"><a href="/colorado-virtual-offices" title="Colorado virtual offices">Virtual Office in Colorado</a></div>					<div class="city-header"><a href="/US/aurora-virtual-office" class="style5" title="Aurora virtual offices">Aurora</a></div>					<div class="city-header"><a href="/US/denver-virtual-office" class="style5" title="Denver virtual offices">Denver</a></div>					<div class="city-header"><a href="/US/fort-collins-virtual-office" class="style5" title="Fort Collins virtual offices">Fort Collins</a></div>					<div class="city-header"><a href="/US/greenwood-village-virtual-office" class="style5" title="Greenwood Village virtual offices">Greenwood Village</a></div>
+    <div class="state-header"><a href="/connecticut-virtual-offices" title="Connecticut virtual offices">Virtual Office in Connecticut</a></div>					<div class="city-header"><a href="/US/darien-virtual-office" class="style5" title="Darien virtual offices">Darien</a></div>					<div class="city-header"><a href="/US/greenwich-virtual-office" class="style5" title="Greenwich virtual offices">Greenwich</a></div>					<div class="city-header"><a href="/US/stamford-virtual-office" class="style5" title="Stamford virtual offices">Stamford</a></div>					<div class="city-header"><a href="/US/westport-virtual-office" class="style5" title="Westport virtual offices">Westport</a></div>
+    <div class="state-header"><a href="/delaware-virtual-offices" title="Delaware virtual offices">Virtual Office in Delaware</a></div>					<div class="city-header"><a href="/US/wilmington-virtual-office" class="style5" title="Wilmington virtual offices">Wilmington</a></div>
+    <div class="state-header"><a href="/district-of-columbia-virtual-offices" title="District of Columbia virtual offices">Virtual Office in District of Columbia</a></div>					<div class="city-header"><a href="/US/washington-virtual-office" class="style5" title="Washington virtual offices">Washington</a></div>	
+    <div class="state-header"><a href="/florida-virtual-offices" title="Florida virtual offices">Virtual Office in Florida</a></div>					<div class="city-header"><a href="/US/aventura-virtual-office" class="style5" title="Aventura virtual offices">Aventura</a></div>					<div class="city-header"><a href="/US/boca-raton-virtual-office" class="style5" title="Boca Raton virtual offices">Boca Raton</a></div>					<div class="city-header"><a href="/US/celebration-virtual-office" class="style5" title="Celebration virtual offices">Celebration</a></div>					<div class="city-header"><a href="/US/coral-gables-virtual-office" class="style5" title="Coral Gables virtual offices">Coral Gables</a></div>					<div class="city-header"><a href="/US/estero-virtual-office" class="style5" title="Estero virtual offices">Estero</a></div>					<div class="city-header"><a href="/US/ft.-lauderdale-virtual-office" class="style5" title="Ft. Lauderdale virtual offices">Ft. Lauderdale</a></div>					<div class="city-header"><a href="/US/hollywood-virtual-office" class="style5" title="Hollywood virtual offices">Hollywood</a></div>					<div class="city-header"><a href="/US/jacksonville-virtual-office" class="style5" title="Jacksonville virtual offices">Jacksonville</a></div>					<div class="city-header"><a href="/US/lake-mary-virtual-office" class="style5" title="Lake Mary virtual offices">Lake Mary</a></div>					<div class="city-header"><a href="/US/miami-virtual-office" class="style5" title="Miami virtual offices">Miami</a></div>					<div class="city-header"><a href="/US/naples-virtual-office" class="style5" title="Naples virtual offices">Naples</a></div>					<div class="city-header"><a href="/US/orlando-virtual-office" class="style5" title="Orlando virtual offices">Orlando</a></div>					<div class="city-header"><a href="/US/palm-beach-gardens-virtual-office" class="style5" title="Palm Beach Gardens virtual offices">Palm Beach Gardens</a></div>					<div class="city-header"><a href="/US/tampa-virtual-office" class="style5" title="Tampa virtual offices">Tampa</a></div>					<div class="city-header"><a href="/US/west-palm-beach-virtual-office" class="style5" title="West Palm Beach virtual offices">West Palm Beach</a></div>					<div class="city-header"><a href="/US/weston-virtual-office" class="style5" title="Weston virtual offices">Weston</a></div>
+    <div class="state-header"><a href="/georgia-virtual-offices" title="Georgia virtual offices">Virtual Office in Georgia</a></div>					<div class="city-header"><a href="/US/alpharetta-virtual-office" class="style5" title="Alpharetta virtual offices">Alpharetta</a></div>					<div class="city-header"><a href="/US/atlanta-virtual-office" class="style5" title="Atlanta virtual offices">Atlanta</a></div>					<div class="city-header"><a href="/US/duluth-virtual-office" class="style5" title="Duluth virtual offices">Duluth</a></div>					<div class="city-header"><a href="/US/peachtree-corners-virtual-office" class="style5" title="Peachtree Corners virtual offices">Peachtree Corners</a></div></td>
+    
+    <td valign="top" class="col_two"><div class="state-header"><a href="/hawaii-virtual-offices" title="Hawaii virtual offices">Virtual Office in Hawaii</a></div>					<div class="city-header"><a href="/US/honolulu-virtual-office" class="style5" title="Honolulu virtual offices">Honolulu</a></div>
+    <div class="state-header"><a href="/illinois-virtual-offices" title="Illinois virtual offices">Virtual Office in Illinois</a></div>					<div class="city-header"><a href="/US/chicago-virtual-office" class="style5" title="Chicago virtual offices">Chicago</a></div>
+    <div class="state-header"><a href="/indiana-virtual-offices" title="Indiana virtual offices">Virtual Office in Indiana</a></div>					<div class="city-header"><a href="/US/indianapolis-virtual-office" class="style5" title="Indianapolis virtual offices">Indianapolis</a></div>
+    <div class="state-header"><a href="/kentucky-virtual-offices" title="Kentucky virtual offices">Virtual Office in Kentucky</a></div>					<div class="city-header"><a href="/US/florence-virtual-office" class="style5" title="Florence virtual offices">Florence</a></div>					<div class="city-header"><a href="/US/lexington-virtual-office" class="style5" title="Lexington virtual offices">Lexington</a></div>					<div class="city-header"><a href="/US/louisville-virtual-office" class="style5" title="Louisville virtual offices">Louisville</a></div>
+    <div class="state-header"><a href="/maryland-virtual-offices" title="Maryland virtual offices">Virtual Office in Maryland</a></div>					<div class="city-header"><a href="/US/bethesda-virtual-office" class="style5" title="Bethesda virtual offices">Bethesda</a></div>					<div class="city-header"><a href="/US/chevy-chase-virtual-office" class="style5" title="Chevy Chase virtual offices">Chevy Chase</a></div>					<div class="city-header"><a href="/US/laurel-virtual-office" class="style5" title="Laurel virtual offices">Laurel</a></div>
+    <div class="state-header"><a href="/massachusetts-virtual-offices" title="Massachusetts virtual offices">Virtual Office in Massachusetts</a></div>					<div class="city-header"><a href="/US/boston-virtual-office" class="style5" title="Boston virtual offices">Boston</a></div>					<div class="city-header"><a href="/US/burlington-virtual-office" class="style5" title="Burlington virtual offices">Burlington</a></div>					<div class="city-header"><a href="/US/framingham-virtual-office" class="style5" title="Framingham virtual offices">Framingham</a></div>					<div class="city-header"><a href="/US/newton-virtual-office" class="style5" title="Newton virtual offices">Newton</a></div>
+    <div class="state-header"><a href="/michigan-virtual-offices" title="Michigan virtual offices">Virtual Office in Michigan</a></div>					<div class="city-header"><a href="/US/grand-rapids-virtual-office" class="style5" title="Grand Rapids virtual offices">Grand Rapids</a></div>					<div class="city-header"><a href="/US/portage-virtual-office" class="style5" title="Portage virtual offices">Portage</a></div>					
+    <div class="state-header"><a href="/minnesota-virtual-offices" title="Minnesota virtual offices">Virtual Office in Minnesota</a></div>					<div class="city-header"><a href="/US/bloomington-virtual-office" class="style5" title="Bloomington virtual offices">Bloomington</a></div>					<div class="city-header"><a href="/US/eden-prairie-virtual-office" class="style5" title="Eden Prairie virtual offices">Eden Prairie</a></div>					<div class="city-header"><a href="/US/minneapolis-virtual-office" class="style5" title="Minneapolis virtual offices">Minneapolis</a></div>					<div class="city-header"><a href="/US/st.-louis-park-virtual-office" class="style5" title="St. Louis Park virtual offices">St. Louis Park</a></div>					
+    <div class="state-header"><a href="/mississippi-virtual-offices" title="Mississippi virtual offices">Virtual Office in Mississippi</a></div>					<div class="city-header"><a href="/US/jackson-virtual-office" class="style5" title="Jackson virtual offices">Jackson</a></div>					
+    <div class="state-header"><a href="/missouri-virtual-offices" title="Missouri virtual offices">Virtual Office in Missouri</a></div>					<div class="city-header"><a href="/US/st.-louis-virtual-office" class="style5" title="St. Louis virtual offices">St. Louis</a></div>					
+    <div class="state-header"><a href="/nevada-virtual-offices" title="Nevada virtual offices">Virtual Office in Nevada</a></div>					<div class="city-header"><a href="/US/henderson-virtual-office" class="style5" title="Henderson virtual offices">Henderson</a></div>					<div class="city-header"><a href="/US/las-vegas-virtual-office" class="style5" title="Las Vegas virtual offices">Las Vegas</a></div>					
+    <div class="state-header"><a href="/new-jersey-virtual-offices" title="New Jersey virtual offices">Virtual Office in New Jersey</a></div><div class="city-header"><a href="/US/bridgewater-virtual-office" class="style5" title="Bridgewater virtual offices">Bridgewater</a></div><div class="city-header"><a href="/US/east-brunswick-virtual-office" class="style5" title="East Brunswick virtual offices">East Brunswick</a></div><div class="city-header"><a href="/US/east-orange-virtual-office" class="style5" title="East Orange virtual offices">East Orange</a></div><div class="city-header"><a href="/US/marlton-virtual-office" class="style5" title="Marlton virtual offices">Marlton</a></div><div class="city-header"><a href="/US/mt.-laurel-virtual-office" class="style5" title="Mt. Laurel virtual offices">Mt. Laurel</a></div><div class="city-header"><a href="/US/new-brunswick-virtual-office" class="style5" title="New Brunswick virtual offices">New Brunswick</a></div><div class="city-header"><a href="/US/pine-brook-virtual-office" class="style5" title="Pine Brook virtual offices">Pine Brook</a></div><div class="city-header"><a href="/US/piscataway-virtual-office" class="style5" title="Piscataway virtual offices">Piscataway</a></div>					
+    <div class="state-header"><a href="/new-mexico-virtual-offices" title="New Mexico virtual offices">Virtual Office in New Mexico</a></div>					<div class="city-header"><a href="/US/albuquerque-virtual-office" class="style5" title="Albuquerque virtual offices">Albuquerque</a></div>					
+    <div class="state-header"><a href="/new-york-virtual-offices" title="New York virtual offices">Virtual Office in New York</a></div>					<div class="city-header"><a href="/US/albany-virtual-office" class="style5" title="Albany virtual offices">Albany</a></div>					<div class="city-header"><a href="/US/melville-virtual-office" class="style5" title="Melville virtual offices">Melville</a></div>					<div class="city-header"><a href="/US/new-york-virtual-office" class="style5" title="New York virtual offices">New York</a></div>					<div class="city-header"><a href="/US/southampton-virtual-office" class="style5" title="Southampton virtual offices">Southampton</a></div>					<div class="city-header"><a href="/US/white-plains-virtual-office" class="style5" title="White Plains virtual offices">White Plains</a></div></td>
+    
+    <td valign="top" class="col_three"><div class="state-header"><a href="/north-carolina-virtual-offices" title="North Carolina virtual offices">Virtual Office in North Carolina</a></div>					<div class="city-header"><a href="/US/charlotte-virtual-office" class="style5" title="Charlotte virtual offices">Charlotte</a></div>					<div class="city-header"><a href="/US/raleigh-virtual-office" class="style5" title="Raleigh virtual offices">Raleigh</a></div>					<div class="state-header"><a href="/ohio-virtual-offices" title="Ohio virtual offices">Virtual Office in Ohio</a></div>					<div class="city-header"><a href="/US/cincinnati-virtual-office" class="style5" title="Cincinnati virtual offices">Cincinnati</a></div>					<div class="city-header"><a href="/US/cleveland-virtual-office" class="style5" title="Cleveland virtual offices">Cleveland</a></div>					<div class="city-header"><a href="/US/columbus-virtual-office" class="style5" title="Columbus virtual offices">Columbus</a></div>					<div class="city-header"><a href="/US/west-chester-virtual-office" class="style5" title="West Chester virtual offices">West Chester</a></div>					<div class="state-header"><a href="/pennsylvania-virtual-offices" title="Pennsylvania virtual offices">Virtual Office in Pennsylvania</a></div>					<div class="city-header"><a href="/US/allentown-virtual-office" class="style5" title="Allentown virtual offices">Allentown</a></div>					<div class="city-header"><a href="/US/bala-cynwyd-virtual-office" class="style5" title="Bala Cynwyd virtual offices">Bala Cynwyd</a></div>					<div class="city-header"><a href="/US/bensalem-virtual-office" class="style5" title="Bensalem virtual offices">Bensalem</a></div>					<div class="city-header"><a href="/US/erie-virtual-office" class="style5" title="Erie virtual offices">Erie</a></div>					<div class="city-header"><a href="/US/king-of-prussia-virtual-office" class="style5" title="King of Prussia virtual offices">King of Prussia</a></div>					<div class="city-header"><a href="/US/malvern-virtual-office" class="style5" title="Malvern virtual offices">Malvern</a></div>					<div class="city-header"><a href="/US/philadelphia-virtual-office" class="style5" title="Philadelphia virtual offices">Philadelphia</a></div>					<div class="city-header"><a href="/US/plymouth-meeting-virtual-office" class="style5" title="Plymouth Meeting virtual offices">Plymouth Meeting</a></div>					<div class="city-header"><a href="/US/radnor-virtual-office" class="style5" title="Radnor virtual offices">Radnor</a></div>					<div class="state-header"><a href="/rhode-island-virtual-offices" title="Rhode Island virtual offices">Virtual Office in Rhode Island</a></div>					<div class="city-header"><a href="/US/warwick-virtual-office" class="style5" title="Warwick virtual offices">Warwick</a></div>					<div class="state-header"><a href="/tennessee-virtual-offices" title="Tennessee virtual offices">Virtual Office in Tennessee</a></div>					<div class="city-header"><a href="/US/brentwood-virtual-office" class="style5" title="Brentwood virtual offices">Brentwood</a></div>					<div class="city-header"><a href="/US/knoxville-virtual-office" class="style5" title="Knoxville virtual offices">Knoxville</a></div>					<div class="city-header"><a href="/US/memphis-virtual-office" class="style5" title="Memphis virtual offices">Memphis</a></div>					<div class="state-header"><a href="/texas-virtual-offices" title="Texas virtual offices">Virtual Office in Texas</a></div>					<div class="city-header"><a href="/US/austin-virtual-office" class="style5" title="Austin virtual offices">Austin</a></div>					<div class="city-header"><a href="/US/dallas-virtual-office" class="style5" title="Dallas virtual offices">Dallas</a></div>					<div class="city-header"><a href="/US/fort-worth-virtual-office" class="style5" title="Fort Worth virtual offices">Fort Worth</a></div>					<div class="city-header"><a href="/US/frisco-virtual-office" class="style5" title="Frisco virtual offices">Frisco</a></div>					<div class="city-header"><a href="/US/grapevine-virtual-office" class="style5" title="Grapevine virtual offices">Grapevine</a></div>					<div class="city-header"><a href="/US/houston-virtual-office" class="style5" title="Houston virtual offices">Houston</a></div>					<div class="city-header"><a href="/US/irving-virtual-office" class="style5" title="Irving virtual offices">Irving</a></div>					<div class="city-header"><a href="/US/mckinney-virtual-office" class="style5" title="McKinney virtual offices">McKinney</a></div>					<div class="city-header"><a href="/US/plano-virtual-office" class="style5" title="Plano virtual offices">Plano</a></div>					<div class="city-header"><a href="/US/san-antonio-virtual-office" class="style5" title="San Antonio virtual offices">San Antonio</a></div>					<div class="state-header"><a href="/utah-virtual-offices" title="Utah virtual offices">Virtual Office in Utah</a></div>					<div class="city-header"><a href="/US/salt-lake-city-virtual-office" class="style5" title="Salt Lake City virtual offices">Salt Lake City</a></div>					<div class="state-header"><a href="/virginia-virtual-offices" title="Virginia virtual offices">Virtual Office in Virginia</a></div>					<div class="city-header"><a href="/US/arlington-virtual-office" class="style5" title="Arlington virtual offices">Arlington</a></div>					<div class="city-header"><a href="/US/fairfax-virtual-office" class="style5" title="Fairfax virtual offices">Fairfax</a></div>					<div class="city-header"><a href="/US/herndon-virtual-office" class="style5" title="Herndon virtual offices">Herndon</a></div>					<div class="city-header"><a href="/US/mclean-virtual-office" class="style5" title="McLean virtual offices">McLean</a></div>					<div class="city-header"><a href="/US/reston-virtual-office" class="style5" title="Reston virtual offices">Reston</a></div>					<div class="city-header"><a href="/US/virginia-beach-virtual-office" class="style5" title="Virginia Beach virtual offices">Virginia Beach</a></div>					<div class="state-header"><a href="/washington-virtual-offices" title="Washington virtual offices">Virtual Office in Washington</a></div>					<div class="city-header"><a href="/US/bellevue-virtual-office" class="style5" title="Bellevue virtual offices">Bellevue</a></div>					<div class="city-header"><a href="/US/bothell-virtual-office" class="style5" title="Bothell virtual offices">Bothell</a></div>					<div class="city-header"><a href="/US/issaquah-virtual-office" class="style5" title="Issaquah virtual offices">Issaquah</a></div>					<div class="city-header"><a href="/US/seattle-virtual-office" class="style5" title="Seattle virtual offices">Seattle</a></div>					<div class="state-header"><a href="/wisconsin-virtual-offices" title="Wisconsin virtual offices">Virtual Office in Wisconsin</a></div>					<div class="city-header"><a href="/US/appleton-virtual-office" class="style5" title="Appleton virtual offices">Appleton</a></div>					<div class="city-header"><a href="/US/green-bay-virtual-office" class="style5" title="Green Bay virtual offices">Green Bay</a></div>					<div class="state-header"><a href="/wyoming-virtual-offices" title="Wyoming virtual offices">Virtual Office in Wyoming</a></div>					<div class="city-header"><a href="/US/casper-virtual-office" class="style5" title="Casper virtual offices">Casper</a></div>	</td>
+</tr>
+</table>
+</div><!--/Wrapper-->
+
+<div class="Wrapper">
+<h3 class="changeMtop2">INTERNATIONAL LOCATIONS</h3>
+<table width="100%" cellpadding="5" cellspacing="2" border="0">
+<tr>
+	<td valign="top">		<div class="city-header"><a href="/algeria-virtual-offices" class="style5" title="ALGERIA virtual offices">ALGERIA</a></div>		<div class="city-header"><a href="/australia-virtual-offices" class="style5" title="AUSTRALIA virtual offices">AUSTRALIA</a></div>		<div class="city-header"><a href="/bahrain-virtual-offices" class="style5" title="BAHRAIN virtual offices">BAHRAIN</a></div>		<div class="city-header"><a href="/belgium-virtual-offices" class="style5" title="BELGIUM virtual offices">BELGIUM</a></div>		<div class="city-header"><a href="/belize-virtual-offices" class="style5" title="BELIZE virtual offices">BELIZE</a></div>		<div class="city-header"><a href="/brazil-virtual-offices" class="style5" title="BRAZIL virtual offices">BRAZIL</a></div>		<div class="city-header"><a href="/bulgaria-virtual-offices" class="style5" title="BULGARIA virtual offices">BULGARIA</a></div>		<div class="city-header"><a href="/canada-virtual-offices" class="style5" title="CANADA virtual offices">CANADA</a></div>		<div class="city-header"><a href="/china-virtual-offices" class="style5" title="CHINA virtual offices">CHINA</a></div>		<div class="city-header"><a href="/czech-republic-virtual-offices" class="style5" title="CZECH REPUBLIC virtual offices">CZECH REPUBLIC</a></div>		<div class="city-header"><a href="/denmark-virtual-offices" class="style5" title="DENMARK virtual offices">DENMARK</a></div>		<div class="city-header"><a href="/estonia-virtual-offices" class="style5" title="ESTONIA virtual offices">ESTONIA</a></div>		<div class="city-header"><a href="/finland-virtual-offices" class="style5" title="FINLAND virtual offices">FINLAND</a></div>		<div class="city-header"><a href="/france-virtual-offices" class="style5" title="FRANCE virtual offices">FRANCE</a></div>		<div class="city-header"><a href="/germany-virtual-offices" class="style5" title="GERMANY virtual offices">GERMANY</a></div>		<div class="city-header"><a href="/greece-virtual-offices" class="style5" title="GREECE virtual offices">GREECE</a></div>		<div class="city-header"><a href="/guadeloupe-virtual-offices" class="style5" title="GUADELOUPE virtual offices">GUADELOUPE</a></div>		<div class="city-header"><a href="/guyana-virtual-offices" class="style5" title="GUYANA virtual offices">GUYANA</a></div>		<div class="city-header"><a href="/hong-kong-virtual-offices" class="style5" title="HONG KONG virtual offices">HONG KONG</a></div>		<div class="city-header"><a href="/hungary-virtual-offices" class="style5" title="HUNGARY virtual offices">HUNGARY</a></div>		<div class="city-header"><a href="/india-virtual-offices" class="style5" title="INDIA virtual offices">INDIA</a></div>		<div class="city-header"><a href="/indonesia-virtual-offices" class="style5" title="INDONESIA virtual offices">INDONESIA</a></div>		<div class="city-header"><a href="/ireland-virtual-offices" class="style5" title="IRELAND virtual offices">IRELAND</a></div>		<div class="city-header"><a href="/israel-virtual-offices" class="style5" title="ISRAEL virtual offices">ISRAEL</a></div>		<div class="city-header"><a href="/italy-virtual-offices" class="style5" title="ITALY virtual offices">ITALY</a></div>		<div class="city-header"><a href="/japan-virtual-offices" class="style5" title="JAPAN virtual offices">JAPAN</a></div>		<div class="city-header"><a href="/korea-republic-of-virtual-offices" class="style5" title="KOREA, REPUBLIC OF virtual offices">KOREA, REPUBLIC OF</a></div>		<div class="city-header"><a href="/luxembourg-virtual-offices" class="style5" title="LUXEMBOURG virtual offices">LUXEMBOURG</a></div>		<div class="city-header"><a href="/martinique-virtual-offices" class="style5" title="MARTINIQUE virtual offices">MARTINIQUE</a></div>		<div class="city-header"><a href="/mexico-virtual-offices" class="style5" title="MEXICO virtual offices">MEXICO</a></div>		<div class="city-header"><a href="/mongolia-virtual-offices" class="style5" title="MONGOLIA virtual offices">MONGOLIA</a></div>		<div class="city-header"><a href="/morocco-virtual-offices" class="style5" title="MOROCCO virtual offices">MOROCCO</a></div>		<div class="city-header"><a href="/netherlands-virtual-offices" class="style5" title="NETHERLANDS virtual offices">NETHERLANDS</a></div>		<div class="city-header"><a href="/nigeria-virtual-offices" class="style5" title="NIGERIA virtual offices">NIGERIA</a></div>		<div class="city-header"><a href="/panama-virtual-offices" class="style5" title="PANAMA virtual offices">PANAMA</a></div>		<div class="city-header"><a href="/peru-virtual-offices" class="style5" title="PERU virtual offices">PERU</a></div>		<div class="city-header"><a href="/philippines-virtual-offices" class="style5" title="PHILIPPINES virtual offices">PHILIPPINES</a></div>		<div class="city-header"><a href="/poland-virtual-offices" class="style5" title="POLAND virtual offices">POLAND</a></div>		<div class="city-header"><a href="/portugal-virtual-offices" class="style5" title="PORTUGAL virtual offices">PORTUGAL</a></div>		<div class="city-header"><a href="/qatar-virtual-offices" class="style5" title="QATAR virtual offices">QATAR</a></div>		<div class="city-header"><a href="/romania-virtual-offices" class="style5" title="ROMANIA virtual offices">ROMANIA</a></div>		<div class="city-header"><a href="/russian-federation-virtual-offices" class="style5" title="RUSSIAN FEDERATION virtual offices">RUSSIAN FEDERATION</a></div>		<div class="city-header"><a href="/singapore-virtual-offices" class="style5" title="SINGAPORE virtual offices">SINGAPORE</a></div>		<div class="city-header"><a href="/spain-virtual-offices" class="style5" title="SPAIN virtual offices">SPAIN</a></div>		<div class="city-header"><a href="/sweden-virtual-offices" class="style5" title="SWEDEN virtual offices">SWEDEN</a></div>		<div class="city-header"><a href="/switzerland-virtual-offices" class="style5" title="SWITZERLAND virtual offices">SWITZERLAND</a></div>		<div class="city-header"><a href="/taiwan-republic-of-china-virtual-offices" class="style5" title="TAIWAN, REPUBLIC OF CHINA virtual offices">TAIWAN, REPUBLIC OF CHINA</a></div>		<div class="city-header"><a href="/turkey-virtual-offices" class="style5" title="TURKEY virtual offices">TURKEY</a></div>		<div class="city-header"><a href="/united-arab-emirates-virtual-offices" class="style5" title="UNITED ARAB EMIRATES virtual offices">UNITED ARAB EMIRATES</a></div>		<div class="city-header"><a href="/united-kingdom-virtual-offices" class="style5" title="UNITED KINGDOM virtual offices">UNITED KINGDOM</a></div>	</td>
+</tr>
+</table>
+</div><!--/Wrapper-->
+
+</div>
+
+<div class="MoreResources">
+<div class="Wrapper">
+<h3>MORE RESOURCES</h3>
+<ul>
+<li><a href="http://www.abcn.com/">Serviced Office Space</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/about.php">About Alliance Virtual</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/faq.php">FAQ</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/blogs.php">Blogs</a></li>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/MoreResources-->
+<div class="footer">
+<div class="Wrapper">
+<div class="FooterBtns"><div class="footerMob"><ul><a href="http://www.alliancevirtualoffices.com/terms-of-use.php"><li>Terms of Use</li></a><a href="http://www.alliancevirtualoffices.com/privacy_policy.php"><li>Privacy Policy</li></a></ul></div></div><!--/FooterBtns-->
+<div class="rights">©2014 Alliance Virtual Offices. All rights reserved.</div>
+
+<div class="social">
+    <a href="https://twitter.com/alliancevirtual"><div class="tweeter"></div></a>
+    <a href="https://www.facebook.com/alliancevirtual"><div class="facebook"></div></a>
+    <a href="https://www.linkedin.com/company/1493610"><div class="linkedin"></div></a>
+</div><!--/social-->
+
+</div><!--/Wrapper-->
+</div><!--/footer-->
+</div><!--/contentWrap-->
+
+
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName('script')[0];
+a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0011/2521.js";
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+
+END;
+
+include("zoho.php");
+
+echo <<<END
+
+
+</body>
+</html>

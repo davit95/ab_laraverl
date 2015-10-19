@@ -1,0 +1,445 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Virtual Office, Virtual Office Solutions from Alliance Virtual Offices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="js/jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="css/jquery.bxslider.css" rel="stylesheet" />
+<!-- Lightbox Javascript file -->
+<script src="js/jquery.magnific-popup.min.js"></script>
+<!-- Lightbox CSS file -->
+<link href="css/magnific-popup.css" rel="stylesheet" />
+<script>
+        jQuery(document).ready(function($) {
+			
+			$( ".menuBtnLink" ).click(function() {
+			  $( ".menu" ).slideToggle( "slow", function() {
+				// Animation complete.
+			  });
+			});
+			
+			$('.bxslider').bxSlider();
+			
+			$(".moreInfoBtn").hover(function() {
+				$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
+				// Animation complete.
+			  });
+			  
+			});
+			
+			//LightBox
+			$('.popup-with-form').magnificPopup({
+				type: 'inline',
+				preloader: false,
+				focus: '#name',
+		
+				// When elemened is focused, some mobile browsers in some cases zoom in
+				// It looks not nice, so we disable it:
+				callbacks: {
+					beforeOpen: function() {
+						if($(window).width() < 700) {
+							this.st.focus = false;
+						} else {
+							this.st.focus = '#name';
+						}
+					}
+				}
+			});
+			//end LightBox
+        });
+		
+		
+    </script>
+</head>
+<body>
+<div class="contentWrap">
+
+<div class="headMenu">
+        <div class="logo"><a href="#"><img src="images/AVOlogo.png" width="279" height="55" border="0" alt="Alliance Virtual Offices"></a></div><!--/logo-->
+        <a href="#" class="menuBtnLink"><div class="menuBtn"></div></a>
+        <div class="menu">
+        <div class="btnMenu"><a href="#">VIRTUAL OFFICES</a></div>
+        <div class="btnMenu"><a href="#">MEETING ROOMS</a></div>
+        <div class="btnMenu"><a href="#">LIVE RECEPTIONISTS</a></div>
+        <div class="btnMenu"><a href="#"><span class="light">Login</span></a></div>
+        <div class="btnMenu"><a href="#"><span class="light">Contact</span></a></div>
+        <div class="btnMenu"><a href="#"><span class="orange">CART</span><img src="images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
+        </div><!--/menu-->
+</div><!--/headMenu-->
+
+        
+      
+
+<div class="intWrap">
+		<div class="searchInt">
+        <form action="" id="search">
+          <div class="searchWrap">
+          <input type="text" class="SearchInputInt" id="" name="" placeholder="Find Your Location Here" />
+          </div>
+          <div class="selectService">
+              <select id="Services" name="guests">
+                    <option value="Virtual-Offices">Virtual Offices</option>
+                    <option value="Meeting-Rooms">Meeting Rooms</option>
+              </select>  
+          </div>
+          <input type="hidden" name="source" value="bb">
+          <button type="submit" class="searchBtnInt" id="submit_location">
+            <span class="mobileS">Search</span>
+          </button>
+        </form>
+        </div><!--/searchInt-->
+        <div class="breadcrumbs">
+        <a href="#">Home</a> / <a href="#">Virtual Offices</a> / <a href="#">United States</a> / <a href="#">California</a> / <a href="#" class="BActive">Los Angeles</a>
+        </div><!--/breadcrumbs-->
+        <div class="resutsTop">
+        <div class="ResutlsTitle">
+        <h1>Virtual Offices in Los Angeles CA - Los Angeles Virtual Office Services</h1>
+        <p class="gray2">Prestigious Addresses and On-demand Office Space</p>
+        </div><!--/ResutlsTitle-->
+        <div class="toggleMap">
+        <div class="toggleBtns">
+        	<a href="#" class="toggleActive"><div class="listViewBtn">LIST VIEW</div></a>
+            <a href="#"><div class="mapViewBtn">MAP VIEW</div></a>
+        </div><!--/toggleBtns-->
+        </div><!--/toggleMap-->
+        </div><!--/resutsTop-->
+        <div class="resutsWrap">
+        <div class="contactForm">
+            <div class="contactPhones">
+            <div class="centerForm">
+            NORTH AMERICA:    +1 888.869.9494<br>
+			INTERNATIONAL:     +1 949.777.6340
+            </div><!--/centerForm-->
+            </div><!--/contactPhones-->
+            <div class="cForm">
+            <div class="centerForm">
+            <h3>INQUIRE ABOUT<br/>
+            <span class="bold">VIRTUAL OFFICES</span></h3>
+            <form name="signup" action="/sendcontact.php" method="post" onSubmit="return validate_contact_form ( );">
+			
+					<label for="name"><div class="label">Name:</div></label>
+					<input name="name" id="name" type="text"><br/>
+				
+					<label for="email"><div class="label">Email:</div></label>
+					<input name="email" id="email" type="text"><br/>
+				
+					<label for="company"><div class="label">Company:</div></label>
+			  		<input name="company" id="company" type="text"><br/>
+		
+			  		<label for="label"><div class="label">Phone:</div></label>
+			  		<input name="phone" id="label" type="text"><br/>
+                    
+					<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+					<label for="submit"></label>
+					<button type="submit" id="submit">SEND</button> 		
+				<script language="JavaScript" type="text/javascript" xml:space="preserve">//<![CDATA[
+                //You should create the validator only after the definition of the HTML form
+                  var frmvalidator  = new Validator("signup");
+                  frmvalidator.addValidation("name","req","Please enter your Full Name");
+                  frmvalidator.addValidation("email","maxlen=50");
+                  frmvalidator.addValidation("email","req", "Please enter your Email Address");
+                  frmvalidator.addValidation("email","email");
+                
+                //]]></script>
+                
+                </form></fieldset>
+                </div><!--/centerForm-->
+            </div><!--/cForm-->
+        </div><!--/contactForm-->
+        <div class="TheResult">
+       	<div class="ImageInfo">
+        <div class="moreInfoBtn"><img src="images/moreInfo.png" border="0" /></div><!--/moreInfoBtn-->
+        <div class="ImageInfo2">
+        <p>This is a nice Los Angeles virtual office solution. This office location offers a selection of virtual services including receptionist services and on-demand conference rooms. For more information about this Los Angeles virtual office, call us now.</p>
+        </div><!--/ImageInfo2-->
+        </div><!--/ImageInfo-->
+        <div class="imageSlider">
+        <ul class="bxslider">
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-office-space.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_furnished-office-for-lease.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-conference-room.jpg" /></div></li>
+        </ul>
+        </div><!--/imageSlider-->
+        <div class="ResultBtns"><a class="popup-with-form" href="#plansGrid"><div class="btnPlans">SEE PLANS</div></a><a href="#"><div class="btnMoreInfo">MORE INFORMATION</div></a></div><!--/ResultBtns-->
+        <div class="CenterPrice gray1"><span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">59</span> <span class="usd">USD</span></div><!--/CenterPrice-->
+        <div class="CenterImpInf">
+        <h2>Wilshire Blvd. in Los Angeles, CA</h2>
+        <p><span class="rcName gray2">The Tower Business Center</span><br>
+        <span class="rcAddress gray3">10940 Wilshire Blvd. Suite 1600, Los Angeles, CA 90024</span></p>
+        </div><!--/CenterImpInf-->
+        </div><!--/TheResult-->
+        
+        <div class="TheResult">
+        <div class="ImageInfo">
+        <div class="moreInfoBtn"><img src="images/moreInfo.png" border="0" /></div><!--/moreInfoBtn-->
+        <div class="ImageInfo2">
+        <p>This virtual office location is a good business address in Los Angeles. This professionally trained team is ready to support you with a full menu of services and amenities, such as day offices, meeting rooms and virtual receptionists. Call Alliance Virtual Offices for more information about this Los Angeles virtual office.</p>
+        </div><!--/ImageInfo2-->
+        </div><!--/ImageInfo-->
+        <div class="imageSlider">
+        <ul class="bxslider">
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3630_office-entrance-lobby.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3630_los-angeles--meeting-room.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3630_furnished-office-for-lease.jpg" /></div></li>
+        </ul>
+        </div><!--/imageSlider-->
+        <div class="ResultBtns"><a href="#"><div class="btnPlans">SEE PLANS</div></a><a href="#"><div class="btnMoreInfo">MORE INFORMATION</div></a></div><!--/ResultBtns-->
+        <div class="CenterPrice gray1"><span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">59</span> <span class="usd">USD</span></div><!--/CenterPrice-->
+        <div class="CenterImpInf">
+        <h2>Wilshire Blvd. in Los Angeles, CA</h2>
+        <p><span class="rcName gray2">The Tower Business Center</span><br>
+        <span class="rcAddress gray3">10940 Wilshire Blvd. Suite 1600, Los Angeles, CA 90024</span></p>
+        </div><!--/CenterImpInf-->
+        </div><!--/TheResult-->
+        
+        <div class="TheResult">
+        <div class="ImageInfo">
+        <div class="moreInfoBtn"><img src="images/moreInfo.png" border="0" /></div><!--/moreInfoBtn-->
+        <div class="ImageInfo2">
+        <p>This is a nice Los Angeles virtual office solution. This office location offers a selection of virtual services including receptionist services and on-demand conference rooms. For more information about this Los Angeles virtual office, call us now.</p>
+        </div><!--/ImageInfo2-->
+        </div><!--/ImageInfo-->
+        <div class="imageSlider">
+        <ul class="bxslider">
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/2139_office-space-in-los-angeles-2139.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/2139_los-angelesoffice-entrance-lobby-2139.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/2139_turnkey-office-space-for-rent-2139.jpg" /></div></li>
+        </ul>
+        </div><!--/imageSlider-->
+        <div class="ResultBtns"><a href="#"><div class="btnPlans">SEE PLANS</div></a><a href="#"><div class="btnMoreInfo">MORE INFORMATION</div></a></div><!--/ResultBtns-->
+        <div class="CenterPrice gray1"><span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">59</span> <span class="usd">USD</span></div><!--/CenterPrice-->
+        <div class="CenterImpInf">
+        <h2>Wilshire Blvd. in Los Angeles, CA</h2>
+        <p><span class="rcName gray2">The Tower Business Center</span><br>
+        <span class="rcAddress gray3">10940 Wilshire Blvd. Suite 1600, Los Angeles, CA 90024</span></p>
+        </div><!--/CenterImpInf-->
+        </div><!--/TheResult-->
+        
+        <div class="TheResult">
+        <div class="ImageInfo">
+        <div class="moreInfoBtn"><img src="images/moreInfo.png" border="0" /></div><!--/moreInfoBtn-->
+        <div class="ImageInfo2">
+        <p>This virtual office location is a good business address in Los Angeles. This professionally trained team is ready to support you with a full menu of services and amenities, such as day offices, meeting rooms and virtual receptionists. Call Alliance Virtual Offices for more information about this Los Angeles virtual office.</p>
+        </div><!--/ImageInfo2-->
+        </div><!--/ImageInfo-->
+        <div class="imageSlider">
+        <ul class="bxslider">
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-office-space.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_furnished-office-for-lease.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-conference-room.jpg" /></div></li>
+        </ul>
+        </div><!--/imageSlider-->
+        <div class="ResultBtns"><a href="#"><div class="btnPlans">SEE PLANS</div></a><a href="#"><div class="btnMoreInfo">MORE INFORMATION</div></a></div><!--/ResultBtns-->
+        <div class="CenterPrice gray1"><span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">59</span> <span class="usd">USD</span></div><!--/CenterPrice-->
+        <div class="CenterImpInf">
+        <h2>Wilshire Blvd. in Los Angeles, CA</h2>
+        <p><span class="rcName gray2">The Tower Business Center</span><br>
+        <span class="rcAddress gray3">10940 Wilshire Blvd. Suite 1600, Los Angeles, CA 90024</span></p>
+        </div><!--/CenterImpInf-->
+        </div><!--/TheResult-->
+        
+        <div class="TheResult">
+        <div class="ImageInfo">
+        <div class="moreInfoBtn"><img src="images/moreInfo.png" border="0" /></div><!--/moreInfoBtn-->
+        <div class="ImageInfo2">
+        <p>This is a nice Los Angeles virtual office solution. This office location offers a selection of virtual services including receptionist services and on-demand conference rooms. For more information about this Los Angeles virtual office, call us now.</p>
+        </div><!--/ImageInfo2-->
+        </div><!--/ImageInfo-->
+        <div class="imageSlider">
+        <ul class="bxslider">
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-office-space.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_furnished-office-for-lease.jpg" /></div></li>
+          <li><div class="img-wrapper"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-conference-room.jpg" /></div></li>
+        </ul>
+        </div><!--/imageSlider-->
+        <div class="ResultBtns"><a href="#"><div class="btnPlans">SEE PLANS</div></a><a href="#"><div class="btnMoreInfo">MORE INFORMATION</div></a></div><!--/ResultBtns-->
+        <div class="CenterPrice gray1"><span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">59</span> <span class="usd">USD</span></div><!--/CenterPrice-->
+        <div class="CenterImpInf">
+        <h2>Wilshire Blvd. in Los Angeles, CA</h2>
+        <p><span class="rcName gray2">The Tower Business Center</span><br>
+        <span class="rcAddress gray3">10940 Wilshire Blvd. Suite 1600, Los Angeles, CA 90024</span></p>
+        </div><!--/CenterImpInf-->
+        </div><!--/TheResult-->
+        
+        <div style="clear:both;"></div>
+        </div><!--/resutsWrap-->
+        
+        
+        
+        <div id="plansGrid" class="mfp-hide white-popup-block">
+        <div class="Plans">
+        <h2>Wilshire Blvd. in Los Angeles, CA</h2>
+        <p><span class="rcName gray2">The Tower Business Center</span><br>
+        <span class="rcAddress gray3">10940 Wilshire Blvd. Suite 1600, Los Angeles, CA 90024</span></p>
+        <a href="#"><div class="btnMoreInfoP">MORE INFORMATION</div></a>
+        <div class="WrapTScroll">
+        <div class="most"><div class="mostBox"></div><div class="mostBox greenb mediumBold">MOST POPULAR</div><div class="mostBox"></div><div class="mostBox"></div></div>
+        <div class="WrapTable">
+            <div class="aPlan">
+                <div class="aPlanTop radiusl">
+                <div class="firstline gray2"><h3 class="cf1">PLATINUM</h3></div>
+                <div class="secondline gray3"><span class="price">$75</span><span class="pMonth"> /MONTH</span></div>
+                </div><!--/aPlanTop-->
+                <div class="aPlanBottom">
+                <a href="#"><div class="btnSelectP">SELECT PLAN</div></a>
+                <ul class="check gray3">
+                <li>Business Address</li>
+                <li>Mail Receipt</li>
+                <li>Mail Forwarding *</li>
+                <li>Personal Mail Box</li>
+                </ul>
+                </div><!--/aPlanBottom-->
+            </div><!--/aPlan-->
+            <div class="aPlan resalta">
+                <div class="aPlanTop">
+                <div class="firstline gray2"><h3 class="cf1">PLATINUM<br><span class="smallLine">WITH LIVE RECEPTIONIST</span></h3></div>
+                <div class="secondline gray3"><span class="nonPrice orange cf1 bold">&nbsp;$170 </span>&nbsp;&nbsp; <span class="price">$165</span><span class="pMonth"> /MONTH</span><br><span class="save">You save $10</span></div>
+                </div><!--/aPlanTop-->
+                <div class="aPlanBottom">
+                <a href="#"><div class="btnSelectP greenb">SELECT PLAN</div></a>
+                <ul class="check gray2 bold">
+                <li><span class="cf1">ALL IN PLATINUM</span></li>
+                </ul>
+                <ul class="plus">
+                <li>PLUS</li>
+                </ul>
+                <ul class="check gray3">
+                <li>1 Included Phone Number</li>
+                <li>50 Live Answering Minutes</li>
+                <li>Unlimited Local and Long Distance Minutes</li>
+                <li>Personalized, Live Answering 9am-8pm Eastern US</li>
+                <li>Call Screening / Attended Transfer</li>
+                <li>Message Taking, Email Delivery of Messages</li>
+                <li>Voicemail, Email Delivery of Voicemail</li>
+                <li>Custom Recordings, Messages</li>
+                <li>Call Forwarding</li>
+                <li>Full Online Control Panel</li>
+                </ul>
+                </div><!--/aPlanBottom-->
+            </div><!--/aPlan-->
+            
+            <div class="aPlan">
+                <div class="aPlanTop">
+                <div class="firstline gray2"><h3 class="cf1">PLATINUM PLUS</h3></div>
+                <div class="secondline gray3"><span class="price">$165</span><span class="pMonth"> /MONTH</span></div>
+                </div><!--/aPlanTop-->
+                <div class="aPlanBottom">
+                <a href="#"><div class="btnSelectP">SELECT PLAN</div></a>
+                <ul class="check gray2 bold">
+                <li><span class="cf1">ALL IN PLATINUM</span></li>
+                </ul>
+                <ul class="plus">
+                <li>PLUS</li>
+                </ul>
+                <ul class="check gray3">
+                <li>16 Hours of Meeting Room or Private Office Time</li>
+                </ul>
+                </div><!--/aPlanBottom-->
+            </div><!--/aPlan-->
+            
+            <div class="aPlan">
+                <div class="aPlanTop radiusr">
+                <div class="firstline gray2"><h3 class="cf1">PLATINUM PLUS<br><span class="smallLine">WITH LIVE RECEPTIONIST</span></h3></div>
+                <div class="secondline gray3"><span class="price">$260</span><span class="pMonth"> /MONTH</span></div>
+                </div><!--/aPlanTop-->
+                <div class="aPlanBottom">
+                <a href="#"><div class="btnSelectP">SELECT PLAN</div></a>
+                <ul class="check gray2 bold">
+                <li><span class="fitS">ALL IN PLATINUM WITH LIVE RECEPTIONIST</span></li>
+                </ul>
+                <ul class="plus">
+                <li>PLUS</li>
+                </ul>
+                <ul class="check gray3">
+                <li>16 Hours of Meeting Room or Private Office Time</li>
+                </ul>
+                </div><!--/aPlanBottom-->
+            </div><!--/aPlan-->
+            
+            
+        
+        </div><!--/WrapTable-->
+        <div class="extras gray3"><p><span class="bold">ALL PLANS COUNT WITH:</span> Main Building Directory Listing *   -  Professional Admin Services *   -  Professional Business Support Center *</p></div>
+        <div class="expl gray3">* Extra fees may apply</div>
+        </div><!--/WrapTScroll-->
+        </div><!--/Plans-->
+        </div><!--/plansGrid-->
+        
+        <div class="spotlight">
+        <h3>Virtual Office Location Spotlight: <span class="orange">Los Angeles</span></h3>
+        <div class="spotlightsWrap">
+        <div class="spotLeft">
+        <h4>BUSINESS INFORMATION</h4>
+        <p class="gray2">Nicknamed the City of Angels, Los Angeles is a global center of international trade, culture, entertainment, media, technology, fashion, sports, education, and business. The city is home to renowned institutions that span a wide range of cultural and professional industries and it represents one of the most significant economic engines within the U.S. Ranked the world's third wealthiest and fifth most powerful /influential city, as well as the third largest economic center in the world, Los Angeles provides an ideal location for virtual office space, business centers, executive office space and commercial real estate opportunities for the mobile entrepreneur and Alliance Virtual Offices offers a variety of prime Los Angeles virtual office space from which to choose. From the Howard Hughes and AT&T Centers to locations on Wilshire Boulevard and in the U.S. Bank Tower, Alliance Virtual Offices has got Los Angeles virtual office spaces covered.</p>
+        </div><!--/spotLeft-->
+        <div class="spotRight">
+        <h4>GENERAL LOCATION INFORMATION</h4>
+        <p class="gray2">With a population of nearly four million, Los Angeles is the most heavily populated city in California and the second most populated in the country (following New York City). LA has an area of 468.67 square miles and is situated in Southern California. Los Angeles is the hub of the greater Los Angeles-Long Beach-Santa Ana metropolitan statistical area, and is one of the most populated metro areas in the world (second largest in the U.S.). As the seat of Los Angeles County, LA is the most populated and one of the most ethnically diverse cities in the country. The whole of the Los Angeles area has been identified as the most diverse of the United States' largest cities. As Hollywood's home base, Los Angeles is also referred to as the "Entertainment Capital of the World," leading the globe in motion pictures, television and stage production, video games, as well as music production. The great influence of the entertainment industry to the City of Los Angeles has resulted in many celebrities choosing to call the L.A. area home.</p>
+        </div><!--/spotRight-->
+        </div><!--/spotlightsWrap-->
+        <div class="by">By: Monica Ochoa</div>
+        </div><!--/spotlight-->
+</div><!--/intWrap-->
+
+<div class="TopCities">
+<div class="Wrapper">
+<h2 class="smallh2">TOP CITIES</h2>
+<ul>
+<a href="#"><li>Los Angeles</li></a>
+<a href="#"><li>New York</li></a>
+<a href="#"><li>Chicago</li></a>
+<a href="#"><li>Dallas</li></a>
+<a href="#"><li>Atlanta</li></a>
+<a href="#"><li>Houston</li></a>
+<a href="#"><li>London</li></a>
+<a href="#"><li>Beijing</li></a>
+<a href="#"><li>Tokyo</li></a>
+<a href="#"><li>Dubai</li></a>
+<a href="#"><li>Berlin</li></a>
+<a href="#"><li>Amsterdam</li></a>
+<a href="#"><li>Paris</li></a>
+<a href="#"><li>Las Vegas</li></a>
+<a href="#"><li>Washington</li></a>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/TopCities-->
+
+<div class="MoreResources">
+<div class="Wrapper">
+<h3>MORE RESOURCES</h3>
+<ul>
+<li><a>Serviced Office Space</a></li>
+<li><a>About Alliance Virtual</a></li>
+<li><a>FAQ</a></li>
+<li><a>Blog</a></li>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/MoreResources-->
+<div class="footer">
+<div class="Wrapper">
+<div class="FooterBtns"><div class="footerMob"><ul><a href="#"><li>Terms of Use</li></a><a href="#"><li>Privacy Policy</li></a></ul></div></div><!--/FooterBtns-->
+<div class="rights">©2014 Alliance Virtual Offices. All rights reserved.</div>
+
+<div class="social">
+    <a href="https://twitter.com/alliancevirtual"><div class="tweeter"></div></a>
+    <a href="https://www.facebook.com/alliancevirtual"><div class="facebook"></div></a>
+    <a href="https://www.linkedin.com/company/1493610"><div class="linkedin"></div></a>
+</div><!--/social-->
+
+</div><!--/Wrapper-->
+</div><!--/footer-->
+</div><!--/contentWrap-->
+
+
+
+
+<script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+</body>
+</html>

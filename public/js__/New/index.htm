@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jFlow</title>
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+    <script src="jquery-1.2.6.pack.js" type="text/javascript"></script>
+    <script src="jquery.flow.1.2.auto.pause.js" type="text/javascript"></script>
+    
+     <!--[if lt IE 7]>
+            <script type="text/javascript" src="unitpngfix.js"></script>
+    <![endif]-->   
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+	    	$("#controller").jFlow({
+        	slides: "#slides",  // the div where all your sliding divs are nested in
+        	controller: ".jFlowControl", // must be class, use . sign
+        	slideWrapper : "#jFlowSlide", // must be id, use # sign
+        	selectedWrapper: "jFlowSelected",  // just pure text, no sign
+        	width: "980px",  // this is the width for the content-slider
+        	height: "313px",  // this is the height for the content-slider
+        	duration: 300,  // time in miliseconds to transition one slide
+        	prev: ".jFlowPrev", // must be class, use . sign
+        	next: ".jFlowNext", // must be class, use . sign
+		auto: true
+			
+    });
+});
+</script>
+
+</head>
+<body><br /><br /><br />
+<div id="wrap">
+
+    <div id="controller" class="hidden">
+        <span class="jFlowControl">No 1</span>
+        <span class="jFlowControl">No 2</span>
+        <span class="jFlowControl">No 3</span>
+        <span class="jFlowControl">No 4</span>
+        <span class="jFlowControl">No 5</span>
+        <span class="jFlowControl">No 6</span>
+    </div>
+    
+    <div id="prev">
+        <img src="images/prev.png" alt="Previous Tab" class="jFlowPrev" />    </div>
+
+    <div id="next">
+        <img src="images/next.png" alt="Next Tab" class="jFlowNext" />    </div>
+    
+    <div id="slides">
+        <div class="slide_content">
+			<h1>What People Are Saying About Virtual Offices</h1>
+			<p>Finding and buying a virtual office was so easy. There are many virtual offices to choose from and quite a few options for virtual offices in New York. Having a virtual office has cut my expenses drastically but does not make me compromise on our company's image. And the automated phone system and virtual receptionist service is an unexpected bonus.</p>
+		</div>
+
+        <div class="slide_content">
+			<h1>What People Are Saying About Virtual Offices</h1>
+			<p>Having a virtual receptionist along with a phone system helps me run my business more efficiently. I don't have to answer every call that comes in, but in my line of business I can’t afford for the calls to go straight to voicemail, so the virtual office is the perfect solution. I also occasionally visit with clients in or just stop over in my new Chicago office space.</p>
+	</div>
+
+        <div class="slide_content">
+			<h1>What People Are Saying About Virtual Offices</h1>
+			<p>As a lawyer with a virtual office, I need a place to hold depositions and to meet with local clients when I have them. This virtual office solution is perfect as it offers a fantastic location and a recognizable address. I couldn't be happier with my new Dallas virtual office.</p>
+	</div>
+
+        <div class="slide_content">
+			<h1>What People Are Saying About Virtual Offices</h1>
+			<p>I needed someone to answer my calls, but was interested in something more than the standard call answering package, so I found this live receptionist solution would match my needs perfectly. And for just a little bit more per month I could have a fully featured PBX phone system with every bell and whistle I can imagine. This is the perfect virtual office for my business in Washington, DC.</p>
+	</div>
+
+        <div class="slide_content">
+			<h1>What People Are Saying About Virtual Offices</h1>
+			<p>A friend told me about virtual offices and how many good options there are in Houston. Between the virtual receptionists and the great locations in Downtown Houston, I have everything thing I need. While I enjoy having a virtual receptionist screen and forward my calls, I find the phone system to be a tremendous benefit with its myriad options.</p>
+	</div>
+
+        <div class="slide_content">
+			<h1>What People Are Saying About Virtual Offices</h1>
+			<p>I spent a lot of time searching for just the right virtual office in Miami, and finally found just the right mix of options. I started out with just a business address and mail forwarding. After a few months, it was very easy to add a number of other services such as live answering, voicemail and call forwarding. I even added a vanity toll-free number and a couple extensions without a problem!</p>
+	</div>
+
+    </div>
+</div>
+<!-- end wrap -->
+</body>
+</html>

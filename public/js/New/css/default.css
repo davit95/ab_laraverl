@@ -1,0 +1,53 @@
+﻿body
+{
+background: #1a1613;
+color: white;
+font-family: helvetica;
+}
+
+.hidden
+{
+display: none;
+}
+
+#prev
+{
+	position: absolute;
+	z-index: 2;
+	left: 15px;
+	top: 58px;
+}
+
+#next {
+	position: absolute;
+	z-index: 3;
+	left: 918px;
+	top: 58px;
+}
+
+#wrap {
+	position: relative;
+	width: 901px;
+}
+
+#slides {
+	background-image: url(../images/slider-bg.jpg) !important;
+	background-repeat: repeat-x;
+	position: relative;
+	height: 181px;
+}
+
+.slide_content {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.slide_content h1 {
+	font-size: 20px;
+	margin: 20px 0 5px 0;
+	padding: 0;
+}
+
+.slide_content p {
+
+}

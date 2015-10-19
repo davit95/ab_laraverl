@@ -1,0 +1,763 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Virtual Office, Virtual Office Solutions from Alliance Virtual Offices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script src="https://maps.googleapis.com/maps/api/js"></script>
+<link href="css/flat/grey.css" rel="stylesheet">
+<script src="js/icheck.js"></script>
+<script type="text/javascript" src="js/jquery.sticky-kit.min.js"></script>
+<link rel="stylesheet" href="css/themes/classic.css">
+<link rel="stylesheet" href="css/themes/classic.date.css">
+<link rel="stylesheet" href="css/themes/classic.time.css">
+<!--[if lt IE 9]>
+    <script>document.createElement('section')</script>
+    <style type="text/css">
+        .holder {
+            position: relative;
+            z-index: 10000;
+        }
+        .datepicker {
+            display: block;
+        }
+    </style>
+<![endif]-->
+<script>
+        jQuery(document).ready(function($) {
+			
+			$( ".menuBtnLink" ).click(function() {
+			  $( ".menu" ).slideToggle( "slow", function() {
+				// Animation complete.
+			  });
+			});
+			
+			
+			
+			
+			if ($(window).width() > 850) {
+			   $(".dformright2").stick_in_parent()
+			}
+			else {
+			   
+			};
+			
+			$( window ).resize(function() {
+			  if ($(window).width() < 850) {
+			   $(".dformright2").trigger("sticky_kit:detach");
+			}
+			else {
+			   $(".dformright2").stick_in_parent()
+			};;
+			});
+			
+			$('input').iCheck({
+				checkboxClass: 'icheckbox_flat-grey',
+				radioClass: 'iradio_flat-grey'
+			  });
+        });
+    </script>
+    <script type="text/javascript">
+  function initialize() {
+    var myLatlng = new google.maps.LatLng(44.5403, -78.5463);
+    var myOptions = {
+      zoom: 15,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var iconBase = 'images/';
+    var marker = new google.maps.Marker({
+        position: myLatlng, 
+        map: map,
+		icon: iconBase + 'marker.png',
+        title:"$center_address_1"
+    });   
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+<body>
+<div class="contentWrap">
+
+<div class="headMenu">
+        <div class="logo"><a href="#"><img src="images/AVOlogo.png" width="279" height="55" border="0" alt="Alliance Virtual Offices"></a></div><!--/logo-->
+        <a href="#" class="menuBtnLink"><div class="menuBtn"></div></a>
+        <div class="menu">
+        <div class="btnMenu"><a href="#">VIRTUAL OFFICES</a></div>
+        <div class="btnMenu"><a href="#">MEETING ROOMS</a></div>
+        <div class="btnMenu"><a href="#">LIVE RECEPTIONISTS</a></div>
+        <div class="btnMenu"><a href="#"><span class="light">Login</span></a></div>
+        <div class="btnMenu"><a href="#"><span class="light">Contact</span></a></div>
+        <div class="btnMenu"><a href="#"><span class="orange">CART</span><img src="images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
+        </div><!--/menu-->
+</div><!--/headMenu-->
+
+        
+      
+
+<div class="intWrap">
+		
+        <div class="breadcrumbs dtails">
+        <a href="#">Home</a> / <a href="#">Virtual Offices</a> / <a href="#">United States</a> / <a href="#">California</a> / <a href="#" class="BActive">Los Angeles</a>
+        </div><!--/breadcrumbs-->
+        
+        <div class="resutsTop">
+        <div class="ResutlsTitle">
+        <h1>Los Angeles Meeting Room <span class="blue">/</span> <span class="medium">S. Grand Ave.</span></h1>
+        <p class="gray2">Conference Rooms and On-Site Staff</p>
+        </div><!--/ResutlsTitle-->
+        <div style="clear:both"></div>
+        
+        <div class="detailsTopWrap">
+        <div class="detailTopLeft">
+        <div class="dimg"><div class="img-wrapper2"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-office-space.jpg" /></div></div>
+        <div class="dcInfo">
+        <h2 class="gray1 cf2 bold">S. Grand Ave. <br>in Los Angeles, CA</h2>
+        <h3 class="gray3">Live Answering & Virtual Office Solutions</h3>
+        <p class="gray2"><span class="bold">KPMG Building</span> <br>355 S. Grand Ave. <br>Los Angeles, CA 90071</p>
+        </div><!--/dcInfo-->
+        </div><!--/detailTopLeft-->
+        <div class="detailTopRight">
+        <div class="dmap"><div id="map_canvas" style="width:100%; height:100%"></div></div>
+        </div><!--/detailTopRight-->
+        <div class="clear"></div>
+        </div><!--/detailsTopWrap-->
+        
+        <div class="detailsTopWrap3">
+        <div class="mTopLeft2"><p class="mediumBold"><span class="blue">CONFIGURE YOUR MEETING ROOM OPTIONS</span> </p></div>
+        <div class="mformright2"><p class=" mediumBold"><span class="gray2">FOR MORE INFORMATION PLEASE CONTACT US:</span> </p></div>
+        </div>
+        <div class="detailsTopWrap2 changeMtop">
+        <div class="dformright2 radiusTop">
+        <div class="contactPhones2">
+            <div class="centerForm">
+            NORTH AMERICA:    +1 888.869.9494<br>
+			INTERNATIONAL:     +1 949.777.6340
+            </div><!--/centerForm-->
+            </div><!--/contactPhones2-->
+            <div class="cForm2">
+            <div class="centerForm2">
+            <h3>INQUIRE ABOUT 
+            <span class="bold">MEETING ROOMS</span></h3>
+            <form name="signup" action="/sendcontact.php" method="post" onSubmit="return validate_contact_form ( );">
+			
+					<label for="name"><div class="label">Name:</div></label>
+					<input name="name" id="name" type="text"><br/>
+				
+					<label for="email"><div class="label">Email:</div></label>
+					<input name="email" id="email" type="text"><br/>
+				
+					<label for="company"><div class="label">Company:</div></label>
+			  		<input name="company" id="company" type="text"><br/>
+		
+			  		<label for="label"><div class="label">Phone:</div></label>
+			  		<input name="phone" id="label" type="text"><br/>
+                    
+					<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+					<label for="submit"></label>
+					<button type="submit" id="submit2">SEND</button> 		
+				<script language="JavaScript" type="text/javascript" xml:space="preserve">//<![CDATA[
+                //You should create the validator only after the definition of the HTML form
+                  var frmvalidator  = new Validator("signup");
+                  frmvalidator.addValidation("name","req","Please enter your Full Name");
+                  frmvalidator.addValidation("email","maxlen=50");
+                  frmvalidator.addValidation("email","req", "Please enter your Email Address");
+                  frmvalidator.addValidation("email","email");
+                
+                //]]></script>
+                
+                </form></fieldset>
+                </div><!--/centerForm-->
+            </div><!--/cForm2-->
+            
+        </div><!--/dformright2-->
+        
+        <div class="wrapMRdetails">
+        
+        <div class="descTopLeft2">
+        <div class="wrapDescrip">
+        <div class="number nOne"></div><h3 class="gray2">SET YOUR DATE AND TIME</h3>
+        <div id="root-picker-outlet" style="margin-left:45px;"></div>
+        <div id="root-picker-outlet2" style="margin-left:45px;"></div>
+		
+        <form>
+        
+            <fieldset class="dateAndTime">
+            	<div class="yourDateT showHide hide">
+                	Your meeting room date is: <span class="mediumBold">23 April, 2015</span><br>
+                    From: <span class="mediumBold">8:00 AM</span> to: <span class="mediumBold">9:00 AM</span><br>
+                    <a href="#" style="text-decoration:none;"><div class="otherTime lightBtn">CHANGE DATE</div></a>
+                    
+                </div><!--/showHide-->
+            	<div class="hideShow">
+                <label for="date"><div class="label">Set Date:</div></label><input id="input_01" class="datepicker" name="date" type="text" placeholder="Please select a date" data-valuee="2014-08-08" required><br>
+
+                <label for="fromTime"><div class="label">Set Your Start Time:</div></label><input type="text" class="timepicker" placeholder="Please select a start time" id="input_from" name="from_time" required><br>
+                <label for="toTime"><div class="label">Set End Start Time:</div></label><input type="text" class="timepicker" placeholder="Please select an end time" id="input_to" name="to_time" required><br>		
+                <!-- <button type="button">Disable all dates</button>
+                <input class="button" type="submit" value="open"> -->
+                <div class="label"></div><input class="aquaBtn sbmitDate" type="submit" width="170" value="SET DATE AND TIME">
+            	</div>
+            </fieldset>
+         
+        </form>
+
+        </div><!--/wrapDescrip-->
+        </div><!--/descTopLeft-->
+        
+        <div class="descTopLeft2 showHide hide" >
+        <div class="wrapDescrip">
+        <div class="number nTwo"></div><h3 class="gray2">PLEASE SELECT A MEETING ROOM AND OPTIONS</h3>
+        <form action="" id="mrForm" name="mr-main-form" method="post">
+<!--/$form_extras-->
+	
+
+					<table id="hor-minimalist-b" summary="Meeting Room Summary" class="MRoptionT gray2">
+						<tr>
+							<th scope="col" style="">&nbsp;</th>
+							<th scope="col" style=" text-align: left;">MEETING ROOM</th>
+							<th scope="col" style="text-align: center;">CAPACITY</th>
+							<th scope="col" style=" text-align: center;">RATE</th>
+							<th scope="col" style="text-align: center;">TOTAL</th>
+						</tr>
+<!--/END;
+
+$meeting_room_names = array();
+			$meeting_room_count = '0';
+			foreach( $center_mr_list as $meeting_room_id )
+			{
+				$mr_query = mysql_query("SELECT * from Meeting_Rooms where Meeting_Room_ID = '$meeting_room_id'");
+				$mr_data = mysql_fetch_array($mr_query);
+
+				$num_meeting_rooms++;
+				$mr_options_query = mysql_query("SELECT * from Meeting_Room_Options where Meeting_Room_ID = '$mr_data[Meeting_Room_ID]'");
+				$mr_options_data = mysql_fetch_array($mr_options_query);
+
+				$first_amount = $math_hours * $mr_data['Hourly_Rate'];
+				$first_amount = round($first_amount);
+
+				// set javascript array
+				$meeting_room_names[$meeting_room_count] = $mr_data['Name'];
+				$meeting_room_count++;
+	
+echo <<<END-->
+						<tr class="MRline totalCost Mroom" Mroom="$mr_data[Meeting_Room_ID]" cost="$first_amount" bgcolor="#F3F4F4">
+							<td style="text-align: center; min-width:30px;"><input name="meeting_room_choice" type="radio" value="$mr_data[Meeting_Room_ID]" class="Mroom SelectMR" $js_alert/></td>
+							<td class="theMR">Large Conference room</td>
+							<td style="text-align: center;">up to 12</td>
+							<td class="thePrice" style="text-align: center;"><span class="convert">$65</span>/hr</td>
+							<td class="total bold" style="text-align: center;">$53</td>
+						</tr>
+                       
+<!--/END;
+
+					$included = array();
+					$paid = array();
+					$video_conf_extras = '';
+					$parking_extras = '';
+					// check to see what's included. If it doesn't have a price it's considered included
+
+					// make the extras for some
+					if( $mr_options_data['Parking_Description'] != '' )
+					{
+						$parking_extras = ' (' . $mr_options_data['Parking_Description'] . ')';
+					}
+					if( $mr_options_data['Video_Equipment'] != '' )
+					{
+						$video_conf_extras = ' (' . $mr_options_data['Video_Equipment'] . ')';
+					}
+
+
+					// Now populate the paid/included arrays
+					$phone_rate_pieces = explode('||', $mr_options_data['Phone_Rate']);
+					if( $phone_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $phone_rate_pieces[0] < '1' || $phone_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Phone Access');
+					}
+					else
+					{	
+						array_push($paid, 'Phone Access|Phone_Rate');
+					}
+
+					$network_rate_pieces = explode('||', $mr_options_data['Network_Rate']);
+					if( $network_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $network_rate_pieces[0] < '1' || $network_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Network Connection');
+					}
+					else
+					{	
+						array_push($paid, 'Network Connection|Network_Rate');
+					}
+
+					$whiteboard_rate_pieces = explode('||', $mr_options_data['Whiteboard_Rate']);
+					if( $whiteboard_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $whiteboard_rate_pieces[0] < '1' || $whiteboard_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Whiteboard');
+					}
+					else
+					{	
+						array_push($paid, 'Whiteboard|Whiteboard_Rate');
+					}
+
+					$wireless_rate_pieces = explode('||', $mr_options_data['Wireless_Rate']);
+					if( $wireless_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $wireless_rate_pieces[0] < '1' || $wireless_rate_pieces[0] == '' )
+					{
+						array_push($included, 'WiFi');
+					}
+					else
+					{	
+						array_push($paid, 'WiFi|Wireless_Rate');
+					}
+
+					$tvdvdplayer_rate_pieces = explode('||', $mr_options_data['Tvdvdplayer_Rate']);
+					if( $tvdvdplayer_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $tvdvdplayer_rate_pieces[0] < '1' || $tvdvdplayer_rate_pieces[0] == '' )
+					{
+						array_push($included, 'TV / DVD Player');
+					}
+					else
+					{	
+						array_push($paid, 'TV / DVD Player|Tvdvdplayer_Rate');
+					}
+
+					$projector_rate_pieces = explode('||', $mr_options_data['Projector_Rate']);
+					if( $projector_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $projector_rate_pieces[0] < '1' || $projector_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Projector');
+					}
+					else
+					{	
+						array_push($paid, 'Projector|Projector_Rate');
+					}
+
+					$videoconferencing_rate_pieces = explode('||', $mr_options_data['Videoconferencing_Rate']);
+					if( $videoconferencing_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $videoconferencing_rate_pieces[0] < '1' || $videoconferencing_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Video Conferencing' . $video_conf_extras);
+					}
+					else
+					{	
+						array_push($paid, 'Video Conferencing' . $video_conf_extras . '|Videoconferencing_Rate');
+					}
+
+					$admin_services_rate_pieces = explode('||', $mr_options_data['Admin_Services_Rate']);
+					if( $admin_services_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $admin_services_rate_pieces[0] < '1' || $admin_services_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Admin Services');
+					}
+					else
+					{	
+						array_push($paid, 'Admin Services|Admin_Services_Rate');
+					}
+
+					$parking_rate_pieces = explode('||', $mr_options_data['Parking_Rate']);
+					if( $parking_rate_pieces[0] == 'NA' )
+					{
+						1;
+					}
+					elseif( $parking_rate_pieces[0] < '1' || $parking_rate_pieces[0] == '' )
+					{
+						array_push($included, 'Parking' . $parking_extras);
+					}
+					else
+					{	
+						array_push($paid, 'Parking' . $parking_extras . '|Parking_Rate');
+					}
+
+					if( $mr_options_data['Bridge_Connection_Available'] == 'yes' )
+					{
+						array_push($included, 'Bridge Connection Available');
+					}
+
+					if( $mr_options_data[Catering] == 'yes' )
+					{
+						array_push($included, 'Catering Available');
+					}
+
+					// make room description if needed
+					$room_description = '';
+					if( $mr_options_data['Room_Description'] != '' )
+					{
+$room_description =<<<END-->
+						<h2 class="h2Desc">ROOM DESCRIPTION</h2>
+						<div class="mr-description">
+                        Great for brainstorming and small team meetings, IgnitedSpaces fondly refers to this room as "The Think Tank." The walls of this room might appear normal at first glance, but they are actually a 360-degrees, wall-to-wall whiteboard. A set of ergonomically-designed swivel-seats will keep your group engaged with any breakout session in The Think Tank.
+                        </div>				
+<!--/END;
+					}
+
+echo <<<END-->
+						<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" style="" cost="0">
+							<td colspan="5" class="no-border">
+<!--$room_description-->
+						<br><h2>INCLUDED AMENITIES</h2>
+						<div class="mr-incl-amenities-box">
+						<ul>
+<!--/END;
+
+					foreach ( $included as $amenity)
+					{
+echo <<<END-->
+							<li>Network Connection</li>
+                            <li>Whiteboard</li>
+                            <li>WiFi</li>
+                            <li>Parking ($20.00 flat rate on weekdays $6.00 flat rate for weekends The cafe Tiago downstairs will validate for 90 minutes with a minimum $5 purchase.)</li>
+                            <li>Catering Available</li>
+
+<!--/END;
+					}
+
+echo <<<END-->
+						</ul>
+						</div>
+						<div class="clear"></div>
+							</td>
+						</tr>
+<!--/END;
+
+					// now show the paid offerings
+echo <<<END-->
+						<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" style="" cost="0">
+							<td colspan="5" class="no-border">
+						<h2>ADDITIONAL AMENITIES AVAILABLE</h2>
+							</td>
+						</tr>
+
+<!--/END;
+
+					foreach ( $paid as $paidOne )
+					{
+						// split the name and the var name
+						$pieces = explode('|', $paidOne);
+						$rate_pieces = explode('||', $mr_options_data[$pieces[1]]);
+						$rate = $rate_pieces[0];
+						$rate_type = $rate_pieces[1];
+						
+						if( $rate_type == 'H' )
+						{
+echo <<<END-->
+							<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" style="" rate="$rate" cost="$rate">
+								<td class="no-border"><input type="checkbox" name="services_$mr_data[Meeting_Room_ID][]" class="service checkExtra" value="$pieces[1]" /></td>
+								<td class="no-border">Admin Services</td>
+								
+								<td class="no-border"><span class="convert">$40/hr</td>
+								<td class="no-border">
+									<select name="duration_$mr_data[Meeting_Room_ID]_$pieces[1]" class="hours duration checkExtra">
+									  $selected_hours
+									  <option value="1">1 hour</option>
+									  <option value="2">2 hours</option>
+									  <option value="3">3 hours</option>
+									  <option value="4">4 hours</option>
+									  <option value="5">5 hours</option>
+									  <option value="6">6 hours</option>
+									  <option value="7">7 hours</option>
+									  <option value="8">8 hours</option>
+									</select>
+								</td>
+							</tr>
+<!--/END;
+						}
+						elseif( $rate_type == 'T' )
+						{
+echo <<<END-->
+							<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" style="" rate="$rate" cost="$rate">
+								<td class="no-border"><input type="checkbox" name="services_$mr_data[Meeting_Room_ID][]" class="service checkExtra" value="$pieces[1]" /></td>
+								<td class="no-border">Other Service</td>
+								
+								<td class="no-border"><span class="convert">$80</span></td>
+								<td class="no-border">
+									<select name="duration_$mr_data[Meeting_Room_ID]_$pieces[1]" class="totl duration hidden">
+									  <option value="1" disabled>Total</option>
+									</select>
+								</td>
+							</tr>
+<!--/END;
+						}
+						else
+						{
+echo <<<END-->
+							<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" style="" rate="$rate" cost="$rate">
+								<td class="no-border"><input type="checkbox" name="services_$mr_data[Meeting_Room_ID][]" class="service checkExtra" value="$pieces[1]" /></td>
+								<td class="no-border">Phone Access</td>
+								
+								<td class="no-border"><span class="convert">$70</span>/hr</td>
+								<td class="no-border">
+									<select name="duration_$mr_data[Meeting_Room_ID]_$pieces[1]" class="hours duration checkExtra">
+									  $selected_hours
+									  <option value="1">1 hour</option>
+									  <option value="2">2 hours</option>
+									  <option value="3">3 hours</option>
+									  <option value="4">4 hours</option>
+									  <option value="5">5 hours</option>
+									  <option value="6">6 hours</option>
+									  <option value="7">7 hours</option>
+									  <option value="8">8 hours</option>
+									</select>
+								</td>
+							</tr>
+<!--/END;
+						}
+					}
+
+					// if there are no additional amenities we'll say so
+					if (empty($paid)) 
+					{
+echo <<<END-->
+						<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" style="" >
+							<td colspan="5" class="no-border">
+								<strong>No Additional Amenities Available</>
+							</td>
+						</tr>
+<!--/END;
+					}
+
+echo <<<END-->
+						<tr class="service" Mroom="$mr_data[Meeting_Room_ID]" cost="0" style="display:none">
+							<td colspan="5" class="big-border" >&nbsp;</td>
+						</tr>
+						
+<!--/END;
+
+			}
+
+echo <<<END-->
+					<tr>
+                    <div class="getInfo hide">
+                    <input type="text" class="Mrname" value="" />
+                    <input type="text" class="Mrprice" value="" />
+                    </div>
+						<td colspan="5" class="no-border" style="text-align: right;" >
+<!--$error_48
+$submit_button-->
+						</td>
+					</tr>
+					</table>
+					</form>
+        </div><!--/wrapDescrip-->
+        </div><!--/descTopLeft-->
+        
+        <div class="descTopLeft2 noMbottom showHide" style="display:none">
+        <div class="wrapDescrip">
+        <div class="number nThree"></div><h3 class="gray2">SUBMIT</h3>
+        <div class="wrapSN3">
+        <a href="#"><div class="submitBook aquaBtn">SUBMIT BOOKING</div></a> <div class="or">OR</div> 
+        
+        <div class="bookOwrap">
+        <a href="#"><div class="otherBook lightBtn">BOOK ANOTHER MEETING ROOM</div></a>
+        <div class="OtherRadios gray3">
+        <form class="radio">
+        <input type="radio" name="MrLocation" value="same" checked><label for="same"> Same location</label> &nbsp; &nbsp; 
+        <input type="radio" name="MrLocation" value="different"> <label for="diff"> Different location</label>
+        </form>
+        </div><!--/OtherRadios-->
+        </div><!--/bookOwrap-->
+        
+        </div><!--/wrapSN3-->
+        </div><!--/wrapDescrip-->
+        </div><!--/descTopLeft-->
+        
+        </div><!--/wrapMRdetails-->
+        
+        <div class="clear"></div>
+        </div><!--/detailsTopWrap2-->
+        
+        
+        </div><!--/resutsTop-->
+        
+       
+        <div class="nearWrap">
+        <h3 class="gray2">NEARBY CENTERS</h3>
+        <a href="#"><div class="cNear">
+        <div class="nearImg"><div class="img-wrapper4"><img src="http://www.abcn.com/images/photos/3056_Los-Angeles-office-space.jpg" alt="" /></div></div>
+        <div class="nearInfo gray2 medium">Wilshire Boulevard Coworking Center<br><span class="gray3 light">(5.52 miles away)</span></div><!--/cNear-->
+        </div><!--/cNear--></a>
+        <a href="#"><div class="cNear">
+        <div class="nearImg"><div class="img-wrapper4"><img src="http://www.abcn.com/images/photos/3628__DSC8319_web.jpg" alt=""/></div></div>
+        <div class="nearInfo gray2 medium">Corporate Point Office Center<br><span class="gray3 light">(8.04 miles away)</span></div><!--/cNear-->
+        </div><!--/cNear--></a>
+        <a href="#"><div class="cNear">
+        <div class="nearImg"><div class="img-wrapper4"><img src="http://www.abcn.com/images/photos/3730_Los_Angeles_Office_Space.jpg" alt=""/></div></div>
+        <div class="nearInfo gray2 medium">Watt Plaza Business Center<br><span class="gray3 light">(6.32 miles away)</span></div><!--/cNear-->
+        </div><!--/cNear--></a>
+        <a href="#"><div class="cNear">
+        <div class="nearImg"><div class="img-wrapper4"><img src="http://www.abcn.com/images/photos/3630_office-entrance-lobby.jpg" alt=""/></div></div>
+        <div class="nearInfo gray2 medium">Beverly Hills Triangle Business Center <br><span class="gray3 light">(9.50 miles away)</span></div><!--/cNear-->
+        </div><!--/cNear--></a>
+        <a href="#"><div class="cNear">
+        <div class="nearImg"><div class="img-wrapper4"><img src="http://www.abcn.com/images/photos/116_glendale-office-space.jpg" alt=""/></div></div>
+        <div class="nearInfo gray2 medium">Los Angeles Airport Building<br><span class="gray3 light">(7.70 miles away)</span></div><!--/cNear-->
+        </div><!--/cNear--></a>
+        <a href="#"><div class="cNear">
+        <div class="nearImg"><div class="img-wrapper4"><img src="http://www.abcn.com/images/photos/3357_westhollywood-office-space.jpg" alt=""/></div></div>
+        <div class="nearInfo gray2 medium">The Tower Business Center<br><span class="gray3 light">(1.34 miles away)</span></div><!--/cNear-->
+        </div><!--/cNear--></a>
+        </div><!--/nearWrap-->
+</div><!--/intWrap-->
+
+
+<div class="MoreResources">
+<div class="Wrapper">
+<h3>MORE RESOURCES</h3>
+<ul>
+<li><a>Serviced Office Space</a></li>
+<li><a>About Alliance Virtual</a></li>
+<li><a>FAQ</a></li>
+<li><a>Blog</a></li>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/MoreResources-->
+<div class="footer">
+<div class="Wrapper">
+<div class="FooterBtns"><div class="footerMob"><ul><a href="#"><li>Terms of Use</li></a><a href="#"><li>Privacy Policy</li></a></ul></div></div><!--/FooterBtns-->
+<div class="rights">©2014 Alliance Virtual Offices. All rights reserved.</div>
+
+<div class="social">
+    <a href="https://twitter.com/alliancevirtual"><div class="tweeter"></div></a>
+    <a href="https://www.facebook.com/alliancevirtual"><div class="facebook"></div></a>
+    <a href="https://www.linkedin.com/company/1493610"><div class="linkedin"></div></a>
+</div><!--/social-->
+
+</div><!--/Wrapper-->
+</div><!--/footer-->
+</div><!--/contentWrap-->
+
+ <script src="js/picker.js"></script>
+    <script src="js/picker.date.js"></script>
+    <script src="js/picker.time.js"></script>
+    <script src="js/legacy.js"></script>
+
+    <script type="text/javascript">
+
+        $( '.datepicker' ).pickadate({
+            formatSubmit: 'mm/dd/yy',
+            min: true,
+            container: '#root-picker-outlet',
+            // editable: true,
+            closeOnSelect: true,
+			
+            closeOnClear: false,
+			disable: [
+				1, 7
+			],
+			// Work-around for some mobile browsers clipping off the picker.
+    onOpen: function() { $('pre').css('overflow', 'hidden') },
+    onClose: function() { $('pre').css('overflow', '') }
+        })
+
+        
+		$('.timepicker').pickatime({
+			min: [8,0],
+			  max: [17,0],
+			  container: '#root-picker-outlet2',
+			  formatSubmit: 'HH:i',
+			  onClose: function() {
+    $('.timepicker').blur();
+}
+			})
+		 
+       var from_$input = $('#input_from').pickatime(),
+    from_picker = from_$input.pickatime('picker')
+
+var to_$input = $('#input_to').pickatime({
+        formatLabel: function( timeObject ) {
+            var minObject = this.get( 'min' ),
+                hours = timeObject.hour - minObject.hour,
+                mins = ( timeObject.mins - minObject.mins ) / 60,
+                pluralize = function( number, word ) {
+                    return number + ' ' + ( number === 1 ? word : word + 's' )
+                }
+            return '<b>H</b>:i <!i>a</!i> <sm!all>(' + pluralize( hours + mins, '!hour' ) + ')</sm!all>'
+        }
+    }),
+    to_picker = to_$input.pickatime('picker')
+
+
+// Check if there's a "from" or "to" time to start with.
+if ( from_picker.get('value') ) {
+  to_picker.set('min', from_picker.get('select'))
+}
+if ( to_picker.get('value') ) {
+  from_picker.set('max', to_picker.get('select') )
+}
+
+// When something is selected, update the "from" and "to" limits.
+from_picker.on('set', function(event) {
+  if ( event.select ) {
+    to_picker.set('min', from_picker.get('select'))
+  }
+})
+to_picker.on('set', function(event) {
+  if ( event.select ) {
+    from_picker.set('max', to_picker.get('select'))
+  }
+})
+
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}       
+
+var date = getUrlParameter('date');
+var firstTime = getUrlParameter('_submit');
+var secondTime = getUrlParameter('_submit');
+
+if( date.length == 0){
+    }else{
+		$('.showHide').show();
+		$('.hideShow').hide();
+	}
+	
+	$( ".otherTime" ).click(function() {
+			  $('.showHide').hide();
+		$('.hideShow').show();
+			});
+		
+    </script>
+    
+    
+</body>
+</html>

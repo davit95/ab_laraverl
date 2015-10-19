@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Virtual Office, Virtual Office Solutions from Alliance Virtual Offices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/autocomplete.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.alliancevirtualoffices.com/js/jquery.autocomplete1.js"></script>
+<script>
+        jQuery(document).ready(function($) {
+			
+			$( ".menuBtnLink" ).click(function() {
+			  $( ".menu" ).slideToggle( "slow", function() {
+				// Animation complete.
+			  });
+			});
+
+    $("#suggest1").autocomplete('../js/lookup.php', {
+        minChars: 1,
+	delay: 40,
+	maxItemsToShow: 30,
+    });
+	
+    $("input#suggest1").keyup(function(e){ 
+
+        var code = e.which;
+        if(code==13)e.preventDefault();
+        if(code==13||code==186){
+	   $("#searchBtn").click();
+        } 
+
+    });
+	
+    $( ".avo1" ).change(function() {
+
+        var e = document.getElementById("Services");
+        var strType = e.options[e.selectedIndex].value;
+
+        if(strType=='VO') { 
+             $("#avoS").attr("action", "../search2.php");
+        }
+        else{
+            $("#avoS").attr("action", "../mr-search.php");
+        } 
+	
+    });
+            
+        });
+    </script>
+</head>
+<body>
+<div class="contentWrap">
+
+
+<div class="headMenu">
+        <div class="logo"><a href="http://www.alliancevirtualoffices.com"><img src="images/AVOlogo.png" width="279" height="55" border="0" alt="Alliance Virtual Offices"></a></div><!--/logo-->
+        <a href="#" class="menuBtnLink"><div class="menuBtn"></div></a>
+        <div class="menu">
+        <div class="btnMenu"><a href="/virtual-office-locations.php">VIRTUAL OFFICES</a></div>
+        <div class="btnMenu"><a href="/meeting-room-locations.php">MEETING ROOMS</a></div>
+        <div class="btnMenu"><a href="/live-receptionist.php">LIVE RECEPTIONISTS</a></div>
+        <div class="btnMenu"><a href="/login.php"><span class="light">Login</span></a></div>
+        <div class="btnMenu"><a href="/contact.php"><span class="light">Contact</span></a></div>
+        <div class="btnMenu"><a href="/cart.php"><span class="orange">CART</span><img src="images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
+        </div><!--/menu-->
+</div><!--/headMenu-->
+<div class="PowerUp">
+    <div class="contactTop">Call: +1 888.869.9494</div><!--/contactTop-->
+
+      <div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Power Up Your Small Business</h1>
+        <p><span class="mediumBold">Alliance Virtual Offices</span> is a business power tool for startups and SMBs. <br>Our technology interface and 
+        service delivery focus are designed to help bootstrapping businesses grow fast on a budget. <br>
+        We've always championed small businesses, and we get straight to the core of what you need 
+        to succeed with people, place, and technology - the complete virtual office. It's your springboard to the bigtime.</p>
+        </div><!--/productTxtWrap-->
+        
+        <div class="searchHome">
+        <form action="../search2.php" autocomplete="off" id="avoS" method="get">
+	<input type="hidden" name="step" value="search" />
+          <div class="searchWrap">
+          <input type="text" class="SearchInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
+          </div>
+          <div class="selectService">
+              <select id="Services" name="avo1" class="avo1">
+                    <option value="VO">Virtual Offices</option>
+                    <option value="MR">Meeting Rooms</option>
+              </select>  
+          </div>
+          <input type="hidden" name="source" value="bb">
+          <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large aquaB" id="searchBtn">
+            <span class="mobileS">Search</span>
+          </button>
+        </form>
+        </div><!--/searchHome-->
+       </div><!--/productContWrap-->
+    
+</div><!--/PowerUp-->
+<div class="contactMobile2">Call: +1 888.869.9494</div>
+
+
+<div class="VirtualOffice">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Virtual Office</h1>
+        <p>A virtual office is an <span class="mediumBold">office mailing address</span> that you can use for business correspondence. 
+        Business mail is received and forwarded to the location of your choice, as often as you like. 
+        Or come and pick it up yourself. <br><br>Choose one or more virtual offices <span class="mediumBold">from hundreds of locations</span> across North America and internationally.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/VirtualOffice-->
+
+<div class="VirtualLocations">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Virtual Office Locations</h1>
+        <p><span class="mediumBold">Create an instant presence in a new city.</span><br> 
+        Choose from hundreds of virtual office locations across the world, from local business centers to iconic city skyscrapers. 
+        Use the address as a mail handling facility, as your official business address, or rent meeting rooms and office space by the hour.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/VirtualLocations-->
+
+<div class="MailForwarding">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Mail Forwarding</h1>
+        <p>Have <span class="mediumBold">business mail received and forwarded</span> to the location of your choice, as often as you like. 
+        Secure and affordable, your business is only charged the postal rate plus a small handling fee based on forwarding frequency. <br>
+        Or come and collect it yourself for free.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/MailForwarding-->
+
+<div class="productsDividedWrap">
+<div class="PrLeft">
+
+<table class="productsTxtTable" width="100%" height="100%"><tr><td>
+<div class="PrdTxtWrap">
+		<h1 class="medium">SETTING UP A VIRTUAL OFFICE LOCATION</h1>
+        <p class="light">To use a virtual office address in the United States, you'll need to complete a <a href="#" class="gray2 mediumBold">CMRA form</a> (Commercial Mail Receiving Agency). 
+        This is a consumer protection to safeguard against fraudulent businesses. <br>Our inclusive online notary service makes the process quick and easy. <span class="mediumBold">Job done.</span></p>
+</div><!--/PrdTxtWrap-->
+</td></tr></table>
+
+</div><!--/PrLeft-->
+<div class="PrRight">
+<table class="productsTxtTable" width="100%" height="100%"><tr><td>
+<div class="PrdTxtWrap">
+		<h1 class="medium">NOTARY SERVICE</h1>
+        <p class="light">Use your own notary service when completing your CMRA form, or use our <a href="#" class="gray2 mediumBold">online notary service</a> at no extra cost.<br> 
+        To use our online service, simply upload your document, connect to a live Notary face-to-face on a webcam, and electronically sign your document. 
+        The notary will verify and confirm your identity and apply their eNotary seal. <span class="mediumBold">That's it.</span></p>
+</div><!--/PrdTxtWrap-->
+</td></tr></table>
+</div><!--/PrRight-->
+<div class="clear"></div>	
+</div><!--/productsDividedWrap-->
+
+<div class="TopCities">
+<div class="Wrapper">
+<h2 class="smallh2">TOP CITIES</h2>
+<ul>
+<a href="http://www.alliancevirtualoffices.com/US/los-angeles-virtual-office"><li>Los Angeles</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/new-york-virtual-office"><li>New York</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/chicago-virtual-office"><li>Chicago</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/dallas-virtual-office"><li>Dallas</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/atlanta-virtual-office"><li>Atlanta</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/houston-virtual-office"><li>Houston</li></a>
+<a href="http://www.alliancevirtualoffices.com/GB/london-virtual-office"><li>London</li></a>
+<a href="http://www.alliancevirtualoffices.com/CN/beijing-virtual-office"><li>Beijing</li></a>
+<a href="http://www.alliancevirtualoffices.com/JP/tokyo-virtual-office"><li>Tokyo</li></a>
+<a href="http://www.alliancevirtualoffices.com/AE/dubai-virtual-office"><li>Dubai</li></a>
+<a href="http://www.alliancevirtualoffices.com/DE/berlin-virtual-office"><li>Berlin</li></a>
+<a href="http://www.alliancevirtualoffices.com/NL/amsterdam-virtual-office"><li>Amsterdam</li></a>
+<a href="http://www.alliancevirtualoffices.com/FR/paris-virtual-office"><li>Paris</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/las-vegas-virtual-office"><li>Las Vegas</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/washington-virtual-office"><li>Washington</li></a>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/TopCities-->
+
+<div class="MoreResources">
+<div class="Wrapper">
+<h3>MORE RESOURCES</h3>
+<ul>
+<li><a href="http://www.abcn.com/">Serviced Office Space</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/about.php">About Alliance Virtual</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/faq.php">FAQ</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/blogs.php">Blogs</a></li>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/MoreResources-->
+<div class="footer">
+<div class="Wrapper">
+<div class="FooterBtns"><div class="footerMob"><ul><a href="http://www.alliancevirtualoffices.com/terms-of-use.php"><li>Terms of Use</li></a><a href="http://www.alliancevirtualoffices.com/privacy_policy.php"><li>Privacy Policy</li></a></ul></div></div><!--/FooterBtns-->
+<div class="rights">©2014 Alliance Virtual Offices. All rights reserved.</div>
+
+<div class="social">
+    <a href="https://twitter.com/alliancevirtual"><div class="tweeter"></div></a>
+    <a href="https://www.facebook.com/alliancevirtual"><div class="facebook"></div></a>
+    <a href="https://www.linkedin.com/company/1493610"><div class="linkedin"></div></a>
+</div><!--/social-->
+
+</div><!--/Wrapper-->
+</div><!--/footer-->
+</div><!--/contentWrap-->
+
+
+
+
+</body>
+</html>

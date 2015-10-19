@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Virtual Office, Virtual Office Solutions from Alliance Virtual Offices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/autocomplete.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.alliancevirtualoffices.com/js/jquery.autocomplete1.js"></script>
+<script>
+        jQuery(document).ready(function($) {
+			
+			$( ".menuBtnLink" ).click(function() {
+			  $( ".menu" ).slideToggle( "slow", function() {
+				// Animation complete.
+			  });
+			});
+
+    $("#suggest1").autocomplete('../js/lookup.php', {
+        minChars: 1,
+	delay: 40,
+	maxItemsToShow: 30,
+    });
+	
+    $("input#suggest1").keyup(function(e){ 
+
+        var code = e.which;
+        if(code==13)e.preventDefault();
+        if(code==13||code==186){
+	   $("#searchBtn").click();
+        } 
+
+    });
+	
+    $( ".avo1" ).change(function() {
+
+        var e = document.getElementById("Services");
+        var strType = e.options[e.selectedIndex].value;
+
+        if(strType=='VO') { 
+             $("#avoS").attr("action", "../search2.php");
+        }
+        else{
+            $("#avoS").attr("action", "../mr-search.php");
+        } 
+	
+    });            
+        });
+    </script>
+</head>
+<body>
+<div class="contentWrap">
+
+
+<div class="headMenu">
+        <div class="logo"><a href="http://www.alliancevirtualoffices.com"><img src="images/AVOlogo.png" width="279" height="55" border="0" alt="Alliance Virtual Offices"></a></div><!--/logo-->
+        <a href="#" class="menuBtnLink"><div class="menuBtn"></div></a>
+        <div class="menu">
+        <div class="btnMenu"><a href="/virtual-office-locations.php">VIRTUAL OFFICES</a></div>
+        <div class="btnMenu"><a href="/meeting-room-locations.php">MEETING ROOMS</a></div>
+        <div class="btnMenu"><a href="/live-receptionist.php">LIVE RECEPTIONISTS</a></div>
+        <div class="btnMenu"><a href="/login.php"><span class="light">Login</span></a></div>
+        <div class="btnMenu"><a href="/contact.php"><span class="light">Contact</span></a></div>
+        <div class="btnMenu"><a href="/cart.php"><span class="orange">CART</span><img src="images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
+        </div><!--/menu-->
+</div><!--/headMenu-->
+<div class="MeetingRooms">
+    <div class="contactTop">Call: +1 888.869.9494</div><!--/contactTop-->
+
+      <div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1 class="mediumBold">Time to Talk Business:<br>Meeting Rooms for Every Agenda</h1>
+        <p class="light">Book a meeting room online in your virtual office location, or in another listed business center of your choice. 
+        Select your location from <span class="mediumBold">hundreds of meeting rooms worldwide</span>, choose your room size, add any special requests, 
+        and leave the rest to us. Alliance Virtual Offices acts as your personal concierge, booking the room on your behalf.</p>
+        </div><!--/productTxtWrap-->
+        
+        <div class="searchHome">
+        <form action="../search2.php" autocomplete="off" id="avoS" method="get">
+	<input type="hidden" name="step" value="search" />
+          <div class="searchWrap">
+          <input type="text" class="SearchInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
+          </div>
+          <div class="selectService">
+              <select id="Services" name="avo1" class="avo1">
+                    <option value="VO">Virtual Offices</option>
+                    <option value="MR" selected>Meeting Rooms</option>
+              </select> 
+          </div>
+          <input type="hidden" name="source" value="bb">
+          <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large aquaB" id="searchBtn">
+            <span class="mobileS">Search</span>
+          </button>
+        </form>
+        </div><!--/searchHome-->
+       </div><!--/productContWrap-->
+    
+</div><!--/MeetingRooms-->
+<div class="contactMobile2">Call: +1 888.869.9494</div>
+
+<div class="Bookings">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Online Bookings</h1>
+        <p>Book your meeting room online and receive an email confirmation within the hour*. 
+        Select your location, venue and room size, enter your payment details into our secure portal, 
+        and you're done. We'll confirm availability direct with the venue, confirm your 
+        booking and send a confirmation email immediately.<br><span class="smallLine">*During business hours</span></p>
+        <br><h1>Or Book By Phone</h1>
+        <p>Phone your meeting room requirements through to us and we'll act as your private concierge. We'll source a suitable venue, 
+        check availability and confirm your booking within the hour*. We'll also handle any changes or cancellations.<br><span class="smallLine">*During business hours</span></p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/Bookings-->
+
+<div class="PBenefits">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Benefits</h1>
+        <p><span class="mediumBold">Meeting rooms in minutes:</span><br>
+        Choose from thousands of meeting rooms in <span class="medium">hundreds of locations across the globe</span>. 
+        By the hour, half or full day - the choice is yours. <br>Book online in minutes with our fast, secure system.<br><br>
+        <span class="mediumBold">No more noisy coffee shops:</span><br>
+        Isn't it time to upgrade your meeting venue?<br> Give your business the VIP experience it deserves, 
+        without the luxury price tag. <br><span class="medium">From interview rooms to conference suites</span>, 
+        budget-friendly to WOW-factor, book meeting rooms in every size, shape and city imaginable.<br><br>
+        <span class="mediumBold">Clear pricing structure:</span><br>
+        Renting a meeting room doesn't have to take up the lion's share of your budget. All of our meeting rooms are clearly and competitively priced, with a list of inclusive amenities too. A friendly greeting comes as standard, along with help and support from the Alliance Virtual Offices team.</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/PBenefits-->
+
+<div class="MR_Services">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>Available Services</h1>
+        <p><span class="mediumBold">Full transparency:</span><br>
+        Just like a hotel, facilities vary from room-to-room. <br>Rest assured full details of what's included will be clearly displayed on your chosen meeting room venue, prior to booking.<br><br>
+        <span class="mediumBold">Friendly greeting:</span><br>
+        Every venue is staffed by a professional management team who are ready and waiting to receive you and your guests. 
+        Many venues also offer additional receptionist support such as admin or secretarial services.<br><br>
+        <span class="mediumBold">We're here for you:</span><br>
+        When you rent a meeting room through <span class="medium">Alliance Virtual Offices</span>, <br>we become <span class="medium">your personal concierge</span>. 
+        We book the room on your behalf and handle any follow-up procedures. Whatever you need, simply pick up the phone or email us for help and support.
+		</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/MR_Services-->
+<div class="HowToBook">
+	<div class="productContWrap">
+        <div class="productTxtWrap">
+        <h1>How to Book</h1>
+        <p>Booking a meeting room through Alliance Virtual Offices couldn't be simpler. Get your calendar ready, 
+        follow these few simple steps, et voila - you've booked your perfect meeting room! Here's how it works:<br><br>
+        <span class="mediumBold">Step 1.</span> Find your preferred meeting venue. [link to meeting rooms page]<br><br>
+
+        <span class="mediumBold">Step 2.</span> Enter your date and time frame, choose your style of meeting room and capacity, choose additional services then click 'Submit'.<br><br>
+         
+        <span class="mediumBold">Step 3.</span>  Checkout (need card details ready, mention Bitcoin?)<br><br>
+         
+        <span class="mediumBold">Step 4.</span> Your booking will be verified and payment processed*. You'll receive a room reservation and payment confirmation.<br><br>
+         
+        <span class="mediumBold">Step 5.</span> You're all set. All that's left to do is attend the meeting!
+		</p>
+        </div><!--/productTxtWrap-->
+       </div><!--/productContWrap-->
+</div><!--/HowToBook-->
+
+
+<div class="TopCities">
+<div class="Wrapper">
+<h2 class="smallh2">TOP CITIES</h2>
+<ul>
+<a href="http://www.alliancevirtualoffices.com/US/los-angeles-virtual-office"><li>Los Angeles</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/new-york-virtual-office"><li>New York</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/chicago-virtual-office"><li>Chicago</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/dallas-virtual-office"><li>Dallas</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/atlanta-virtual-office"><li>Atlanta</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/houston-virtual-office"><li>Houston</li></a>
+<a href="http://www.alliancevirtualoffices.com/GB/london-virtual-office"><li>London</li></a>
+<a href="http://www.alliancevirtualoffices.com/CN/beijing-virtual-office"><li>Beijing</li></a>
+<a href="http://www.alliancevirtualoffices.com/JP/tokyo-virtual-office"><li>Tokyo</li></a>
+<a href="http://www.alliancevirtualoffices.com/AE/dubai-virtual-office"><li>Dubai</li></a>
+<a href="http://www.alliancevirtualoffices.com/DE/berlin-virtual-office"><li>Berlin</li></a>
+<a href="http://www.alliancevirtualoffices.com/NL/amsterdam-virtual-office"><li>Amsterdam</li></a>
+<a href="http://www.alliancevirtualoffices.com/FR/paris-virtual-office"><li>Paris</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/las-vegas-virtual-office"><li>Las Vegas</li></a>
+<a href="http://www.alliancevirtualoffices.com/US/washington-virtual-office"><li>Washington</li></a>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/TopCities-->
+
+<div class="MoreResources">
+<div class="Wrapper">
+<h3>MORE RESOURCES</h3>
+<ul>
+<li><a href="http://www.abcn.com/">Serviced Office Space</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/about.php">About Alliance Virtual</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/faq.php">FAQ</a></li>
+<li><a href="http://www.alliancevirtualoffices.com/blogs.php">Blogs</a></li>
+</ul>
+</div><!--/Wrapper-->
+</div><!--/MoreResources-->
+<div class="footer">
+<div class="Wrapper">
+<div class="FooterBtns"><div class="footerMob"><ul><a href="http://www.alliancevirtualoffices.com/terms-of-use.php"><li>Terms of Use</li></a><a href="http://www.alliancevirtualoffices.com/privacy_policy.php"><li>Privacy Policy</li></a></ul></div></div><!--/FooterBtns-->
+<div class="rights">©2014 Alliance Virtual Offices. All rights reserved.</div>
+
+<div class="social">
+    <a href="https://twitter.com/alliancevirtual"><div class="tweeter"></div></a>
+    <a href="https://www.facebook.com/alliancevirtual"><div class="facebook"></div></a>
+    <a href="https://www.linkedin.com/company/1493610"><div class="linkedin"></div></a>
+</div><!--/social-->
+
+</div><!--/Wrapper-->
+</div><!--/footer-->
+</div><!--/contentWrap-->
+
+
+
+
+</body>
+</html>
