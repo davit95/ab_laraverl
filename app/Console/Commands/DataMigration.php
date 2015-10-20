@@ -651,7 +651,7 @@ class DataMigration extends Command
         $this->make_new_connection();
         $collection = DB::table('Customers')->get();
         $bar = $this->output->createProgressBar(count($collection));
-        $max = DB::table('customers')->count();
+        $max = DB::table('Customers')->count();
 
         $passwords = DB::table('customer_hashes')->lists('Password', 'Customer_ID');
         DB::setDefaultConnection('mysql');
