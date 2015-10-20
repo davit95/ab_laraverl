@@ -238,7 +238,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating virtual_offices_seos table");
         $this->make_new_connection();
-        $collection = DB::table('Center_Seo')->get();
+        $collection = DB::table('Center_SEO')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
@@ -273,7 +273,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating meeting_rooms_seos table");
         $this->make_new_connection();
-        $collection = DB::table('Center_Seo_Mr')->get();
+        $collection = DB::table('Center_SEO_MR')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
