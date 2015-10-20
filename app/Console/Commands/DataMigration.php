@@ -66,6 +66,7 @@ class DataMigration extends Command
         $this->meeting_rooms_options();
         $this->tel_countries();
         $this->tel_prefixes();
+        $this->telephony_package_includes();
     }
 
     private function centers()
@@ -849,6 +850,31 @@ class DataMigration extends Command
         DB::setDefaultConnection('mysql');
         DB::table('tel_prefixes')->truncate();
         DB::table('tel_prefixes')->insert($new_collection);
+        $bar->finish();
+        $this->info(' ✔');
+    }
+    private function telephony_package_includes()
+    {
+        $this->info("\n migrating telephony_package_includes table");
+        $this->make_new_connection();
+        $telephony_package_includes = DB::table('telephony_package_includes')->get();
+        $bar = $this->output->createProgressBar(count($telephony_package_includes));
+        foreach ($telephony_package_includes as $include)
+        {
+            $new_collection[] =
+            [
+                'center_id'  => $include->Center_ID,
+                'package_id' => $include->Package,
+                'include'    => $include->Include,
+                'place'      => $include->Place,
+            ];
+            $bar->advance();
+        }
+
+
+        DB::setDefaultConnection('mysql');
+        DB::table('telephony_package_includes')->truncate();
+        DB::table('telephony_package_includes')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
     }

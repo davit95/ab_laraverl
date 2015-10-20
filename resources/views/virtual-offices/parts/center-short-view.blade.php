@@ -24,7 +24,7 @@
                 </div><!--/PlanFtsHeight-->
                     <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids.php?id=$center_ID"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt1-->
-        
+
             <!-- Platinum with LR plan -->
                 <div class="PlanFt2">
                 <div class="PlanFtsHeight">
@@ -40,12 +40,14 @@
                     <div class="planFts">
                         <div class="planFtsLine"><div class="planListR bold"><div class="includedIcon"></div>EVERYTHING IN PLATINUM</div></div><!--/planFtsLine-->
                         <div class="planFtsLine"><div class="planListR"><div class="plusIcon"></div>PLUS</div></div><!--/planFtsLine-->
-                $platinum_with_included
+                        @foreach($center->telephony_includes_arr as $include)
+                          <div class="planFtsLine"><div class="planListR"><div class="includedIcon"></div>{!! $include->include !!}</div></div>
+                        @endforeach
                     </div><!--/planFts-->
                 </div><!--/PlanFtsHeight-->
                     <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids.php?id=$center_ID"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt2-->
-        
+
             <!-- Platinum Plus plan -->
                 <div class="PlanFt3">
                 <div class="PlanFtsHeight">
@@ -66,12 +68,19 @@
                 </div><!--/PlanFtsHeight-->
                     <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids.php?id=$center_ID"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt3-->
-        
+
             <!-- Platinum Plus with LR plan -->
                 <div class="PlanFt4">
                 <div class="PlanFtsHeight">
                     <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp; &nbsp;</div><!--/RPBtop-->
-                    <div class="PlanFtName"><div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>$center_platinum_plus_with_price_disp</div>
+                    <div class="PlanFtName">
+                      <div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>
+                      @if(isset($center->packages_arr['Platinum Plus']))
+                          <div class="RPBright2"><span class="lineTrough smallText">$ {{$center->packages_arr['Platinum Plus']->with_live_receptionist_full_price}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {{$center->packages_arr['Platinum Plus']->with_live_receptionist_pack_price}}</span><span class="smallText">/MONTH</span></span></div>
+                      @else
+                          <span>Not Available</span>
+                      @endif
+                    </div>
                     <div class="planFts">
                         <div class="planFtsLine"><div class="planListR bold"><div class="includedIcon"></div>EVERYTHING IN PLATINUM WITH LIVE RECEPTIONIST</div></div><!--/planFtsLine-->
                         <div class="planFtsLine"><div class="planListR"><div class="plusIcon"></div>PLUS</div></div><!--/planFtsLine-->
@@ -93,7 +102,7 @@
         @endif
         </div><!--/RPBinfoPlan-->
         </div><!--/RPBplan1-->
-    
+
     <!-- Platinum with LR plan -->
         <div class="RPBplan2"><div class="RPBplan2T"><div class="planNum">2</div><div class="tleft">BEST DEAL</div><div class="tright">You save $10 a month</div></div>
         <div class="RPBinfoPlan2"><div class="RPBleft2 bold">Platinum<br>with Live Receptionist</div>
@@ -104,7 +113,7 @@
         @endif
         </div><!--/RPBinfoPlan2-->
         </div><!--/RPBplan2-->
-    
+
     <!-- Platinum Plus plan -->
         <div class="RPBplan3"><div class="RPBplan1T topShadow"><div class="planNum">3</div></div>
         <div class="RPBinfoPlan"><div class="RPBleft lh1">Platinum Plus</div>
@@ -115,7 +124,7 @@
         @endif
         </div><!--/RPBinfoPlan-->
         </div><!--/RPBplan3-->
-    
+
     <!-- Platinum plus with LR plan -->
         <div class="RPBplan4"><div class="RPBplan1T"><div class="planNum">4</div><div class="tleft">GREAT DEAL</div><div class="tright">You save $10 a month</div></div>
         <div class="RPBinfoPlan2"><div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>
@@ -126,7 +135,7 @@
             @endif
         </div><!--/RPBinfoPlan-->
         </div><!--/RPBplan4-->
-        
+
         <div class="setUpFee">One time only - $100 Set up fee for any plan.</div><!--/setUpFee-->
         <div class="featuresCompare"><a class="popup-with-form compareBtnLink" href="/pricing-grids.php?id=$center_ID"><div class="compareBtn">SEE FEATURES AND COMPARE ALL</div></a></div><!--/featuresCompare-->
         </div><!--/RplansBox-->
