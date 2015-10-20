@@ -16,7 +16,7 @@ class DataMigration extends Command
      *
      * @var string
      */
-    protected $signature = 'data:migrate {--host=localhost} {--database=abcn} {--username=homestead} {--password=secret}';
+    protected $signature = "data:migrate {--host=localhost} {--database=abcn} {--username=homestead} {--password=secret}";
 
     /**
      * The console command description.
@@ -72,7 +72,7 @@ class DataMigration extends Command
     {
         $this->info("\n  migrating centers table");
         $this->make_new_connection();
-        $collection = DB::table('center')->get();
+        $collection = DB::table('Center')->get();
         DB::setDefaultConnection('mysql');
         $unknown_cities_count = 0;
         $unknown_countries_count = 0;
@@ -152,7 +152,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating centers_coordnates table");
         $this->make_new_connection();
-        $collection = DB::table('center_coords')->get();
+        $collection = DB::table('Center_Coords')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
@@ -176,7 +176,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating centers_emails table");
         $this->make_new_connection();
-        $collection = DB::table('center_emails')->get();
+        $collection = DB::table('Center_Emails')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
@@ -198,7 +198,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating centers_photos table");
         $this->make_new_connection();
-        $collection = DB::table('center')->get();
+        $collection = DB::table('Center')->get();
         $bar = $this->output->createProgressBar(count($collection));
         $counter = 0;
         foreach($collection as $key => $value)
@@ -238,7 +238,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating virtual_offices_seos table");
         $this->make_new_connection();
-        $collection = DB::table('center_seo')->get();
+        $collection = DB::table('Center_Seo')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
@@ -273,7 +273,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating meeting_rooms_seos table");
         $this->make_new_connection();
-        $collection = DB::table('center_seo_mr')->get();
+        $collection = DB::table('Center_Seo_Mr')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
@@ -314,7 +314,7 @@ class DataMigration extends Command
         foreach($centers as $center)
         {
             
-            if(null != $filter = DB::table('center_filter')->where('Center_ID', $center->id)->first())
+            if(null != $filter = DB::table('Center_Filter')->where('Center_ID', $center->id)->first())
             {
                 $new_collection[] = 
                 [
@@ -337,7 +337,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating centers_filters table");
         $this->make_new_connection();
-        $prices = DB::table('center_package_pricing')->get();
+        $prices = DB::table('Center_Package_Pricing')->get();
         $bar = $this->output->createProgressBar(count($prices));
         foreach ($prices as $price) 
         {
@@ -363,7 +363,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating products table");
         $this->make_new_connection();
-        $products = DB::table('products')->get();
+        $products = DB::table('Products')->get();
         $bar = $this->output->createProgressBar(count($products));
         foreach ($products as $product) 
         {
@@ -460,10 +460,6 @@ class DataMigration extends Command
         }
         $bar_other_ciites->finish();
         $this->info(" ✔");
-        
-        
-        
-
     }
 
     private function countries()
@@ -494,7 +490,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating customers_files table");
         $this->make_new_connection();
-        $collection = DB::table('customers_files')->get();
+        $collection = DB::table('Customers_Files')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value)
         {
@@ -522,7 +518,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating owners table");
         $this->make_new_connection();
-        $collection = DB::table('center_owner')->get();
+        $collection = DB::table('Center_Owner')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value)
         {
@@ -558,7 +554,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating regions table");
         $this->make_new_connection();
-        $collection = DB::table('region')->get();
+        $collection = DB::table('Region')->get();
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value)
         {
@@ -653,7 +649,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating customers table");
         $this->make_new_connection();
-        $collection = DB::table('customers')->get();
+        $collection = DB::table('Customers')->get();
         $bar = $this->output->createProgressBar(count($collection));
         $max = DB::table('customers')->count();
 
@@ -741,7 +737,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating meeting_rooms table");
         $this->make_new_connection();
-        $meeting_rooms = DB::table('meeting_rooms')->get();
+        $meeting_rooms = DB::table('Meeting_Rooms')->get();
         $bar = $this->output->createProgressBar(count($meeting_rooms));
         foreach ($meeting_rooms as $room)
         {
@@ -772,7 +768,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating meeting_rooms_options table");
         $this->make_new_connection();
-        $meeting_rooms_options = DB::table('meeting_room_options')->get();
+        $meeting_rooms_options = DB::table('Meeting_Room_Options')->get();
         $bar = $this->output->createProgressBar(count($meeting_rooms_options));
         foreach ($meeting_rooms_options as $option)
         {
@@ -810,7 +806,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating tel_countries table");
         $this->make_new_connection();
-        $tel_countries = DB::table('tel_countries')->get();
+        $tel_countries = DB::table('Tel_Countries')->get();
         $bar = $this->output->createProgressBar(count($tel_countries));
         foreach ($tel_countries as $country)
         {
@@ -836,7 +832,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating tel_prefixes table");
         $this->make_new_connection();
-        $tel_prefixes = DB::table('tel_prefixes')->get();
+        $tel_prefixes = DB::table('Tel_Prefixes')->get();
         $bar = $this->output->createProgressBar(count($tel_prefixes));
         foreach ($tel_prefixes as $prefix)
         {
