@@ -857,7 +857,7 @@ class DataMigration extends Command
     {
         $this->info("\n migrating telephony_package_includes table");
         $this->make_new_connection();
-        $telephony_package_includes = DB::table('telephony_package_includes')->get();
+        $telephony_package_includes = DB::table('Telephony_Package_Includes')->get();
         $bar = $this->output->createProgressBar(count($telephony_package_includes));
         foreach ($telephony_package_includes as $include)
         {
