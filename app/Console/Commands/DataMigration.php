@@ -45,26 +45,26 @@ class DataMigration extends Command
      */
     public function fire()
     {
-        $this->regions();
-        $this->us_states();
-        $this->countries();
-        $this->cities();
-        $this->centers();
-        $this->virtual_offices_seos();
-        $this->meeting_rooms_seos();
-        $this->detect_active_cities();
-        $this->centers_coordinates();
-        $this->centers_emails();
-        $this->centers_photos();
-        $this->centers_filters();
-        $this->centers_prices();
-        $this->products();
-        $this->customers_files();
-        $this->owners();
-        $this->customers();
-        $this->meeting_rooms();
-        $this->meeting_rooms_options();
-        $this->tel_countries();
+        //$this->regions();
+        //$this->us_states();
+        //$this->countries();
+        //$this->cities();
+        //$this->centers();
+        //$this->virtual_offices_seos();
+        //$this->meeting_rooms_seos();
+        //$this->detect_active_cities();
+        //$this->centers_coordinates();
+        //$this->centers_emails();
+        //$this->centers_photos();
+        //$this->centers_filters();
+        //$this->centers_prices();
+        //$this->products();
+        //$this->customers_files();
+        //$this->owners();
+        //$this->customers();
+        //$this->meeting_rooms();
+        //$this->meeting_rooms_options();
+        //$this->tel_countries();
         $this->tel_prefixes();
     }
 
