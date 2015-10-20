@@ -203,12 +203,12 @@ class DataMigration extends Command
         $counter = 0;
         foreach($collection as $key => $value)
         {
-            $curr_photos[] = DB::table('image_descriptions')->where('Image_Name', $value->Photo1)->first();
-            $curr_photos[] = DB::table('image_descriptions')->where('Image_Name', $value->Photo2)->first();
-            $curr_photos[] = DB::table('image_descriptions')->where('Image_Name', $value->Photo3)->first();
-            $curr_photos[] = DB::table('image_descriptions')->where('Image_Name', $value->Photo4)->first();
-            $curr_photos[] = DB::table('image_descriptions')->where('Image_Name', $value->Photo5)->first();
-            $curr_photos[] = DB::table('image_descriptions')->where('Image_Name', $value->Photo6)->first();
+            $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo1)->first();
+            $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo2)->first();
+            $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo3)->first();
+            $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo4)->first();
+            $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo5)->first();
+            $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo6)->first();
             foreach ($curr_photos as $k => $v) 
             {
                 if(null != $v)
