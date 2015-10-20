@@ -45,26 +45,26 @@ class DataMigration extends Command
      */
     public function fire()
     {
-        //$this->regions();
-        //$this->us_states();
-        //$this->countries();
-        //$this->cities();
-        //$this->centers();
-        //$this->virtual_offices_seos();
-        //$this->meeting_rooms_seos();
-        //$this->detect_active_cities();
-        //$this->centers_coordinates();
-        //$this->centers_emails();
-        //$this->centers_photos();
-        //$this->centers_filters();
-        //$this->centers_prices();
-        //$this->products();
-        //$this->customers_files();
-        //$this->owners();
-        //$this->customers();
-        //$this->meeting_rooms();
-        //$this->meeting_rooms_options();
-        //$this->tel_countries();
+        $this->regions();
+        $this->us_states();
+        $this->countries();
+        $this->cities();
+        $this->centers();
+        $this->virtual_offices_seos();
+        $this->meeting_rooms_seos();
+        $this->detect_active_cities();
+        $this->centers_coordinates();
+        $this->centers_emails();
+        $this->centers_photos();
+        $this->centers_filters();
+        $this->centers_prices();
+        $this->products();
+        $this->customers_files();
+        $this->owners();
+        $this->customers();
+        $this->meeting_rooms();
+        $this->meeting_rooms_options();
+        $this->tel_countries();
         $this->tel_prefixes();
     }
 
@@ -110,7 +110,7 @@ class DataMigration extends Command
                 $unknown_states_count++;
                 $state_id = null;
             }
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'id'                => $value->CenterID,
                 'slug'              => str_slug(preg_replace('/^[^a-zA-Z]*/', '', $value->Address1)),
@@ -145,7 +145,7 @@ class DataMigration extends Command
         DB::table('centers')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
-        
+
     }
 
     private function centers_coordinates()
@@ -156,7 +156,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'id'        => $value->Object_ID,
                 'center_id' => $value->Center_ID,
@@ -180,7 +180,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'center_id' => $value->Center_ID,
                 'email'     => $value->Email
@@ -209,11 +209,11 @@ class DataMigration extends Command
             $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo4)->first();
             $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo5)->first();
             $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo6)->first();
-            foreach ($curr_photos as $k => $v) 
+            foreach ($curr_photos as $k => $v)
             {
                 if(null != $v)
                 {
-                    $new_collection[] = 
+                    $new_collection[] =
                     [
                         'center_id'   => $value->CenterID,
                         'path'        => $v->Image_Name,
@@ -223,7 +223,7 @@ class DataMigration extends Command
                     ];
                 }
                 $bar->advance();
-                
+
             }
             $curr_photos = [];
         }
@@ -242,7 +242,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'center_id'        => $value->Center_ID,
                 'sentence1'        => $value->Sentence_1,
@@ -277,7 +277,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'center_id'        => $value->Center_ID,
                 'sentence1'        => $value->Sentence_1,
@@ -313,10 +313,10 @@ class DataMigration extends Command
         $this->make_new_connection();
         foreach($centers as $center)
         {
-            
+
             if(null != $filter = DB::table('Center_Filter')->where('Center_ID', $center->id)->first())
             {
-                $new_collection[] = 
+                $new_collection[] =
                 [
                     'center_id'      => $filter->Center_ID,
                     'virtual_office' => $filter->Approval_1 == 'Approved' ? true : false,
@@ -339,16 +339,16 @@ class DataMigration extends Command
         $this->make_new_connection();
         $prices = DB::table('Center_Package_Pricing')->get();
         $bar = $this->output->createProgressBar(count($prices));
-        foreach ($prices as $price) 
+        foreach ($prices as $price)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'center_id'  => $price->Center_ID,
                 'package_id' => $price->Package_ID,
                 'price'      => $price->Price,
                 'with_live_receptionist_pack_price' => $price->Price+85,
                 'with_live_receptionist_full_price' => $price->Price+95,
-                'updated_at' => date('Y-m-d H:i:s', $price->Modify_Date) 
+                'updated_at' => date('Y-m-d H:i:s', $price->Modify_Date)
             ];
             $bar->advance();
         }
@@ -365,9 +365,9 @@ class DataMigration extends Command
         $this->make_new_connection();
         $products = DB::table('Products')->get();
         $bar = $this->output->createProgressBar(count($products));
-        foreach ($products as $product) 
+        foreach ($products as $product)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'id'          => $product->Object_ID,
                 'part_number' => $product->Part_Number,
@@ -378,7 +378,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        
+
         DB::setDefaultConnection('mysql');
         DB::table('products')->truncate();
         DB::table('products')->insert($new_collection);
@@ -392,7 +392,7 @@ class DataMigration extends Command
         $count = 0;
         $states = $this->usStates->getStates();
         $other_cities = $this->countryCities->getCities();
-        
+
         $bar_other_ciites = $this->output->createProgressBar(count($other_cities));
         DB::setDefaultConnection('mysql');
         DB::table('cities')->truncate();
@@ -401,7 +401,7 @@ class DataMigration extends Command
         $us_state_ids = DB::table('us_states')->lists('id','name');
         $us_state_codes = DB::table('us_states')->lists('code','name');
         $key = 0;
-        
+
         foreach( $states as $st_name => $state)
         {
             foreach ($state as $city)
@@ -409,7 +409,7 @@ class DataMigration extends Command
                 if ($count%250 == 0) {
                     $key++;
                 }
-                $cities[$key][] = 
+                $cities[$key][] =
                 [
                     'name'          => $city,
                     'us_state'      => $st_name,
@@ -421,7 +421,7 @@ class DataMigration extends Command
                 ];
                 $count++;
             }
-            
+
         }
         $bar_states = $this->output->createProgressBar(count($cities));
         foreach ($cities as $key => $city) {
@@ -439,7 +439,7 @@ class DataMigration extends Command
             {
                 foreach($cities as $city)
                 {
-                    $arr = 
+                    $arr =
                     [
                         'name'          => $city,
                         'us_state'      => null,
@@ -454,7 +454,7 @@ class DataMigration extends Command
             }
             else
             {
-                
+
             }
             $bar_other_ciites->advance();
         }
@@ -470,7 +470,7 @@ class DataMigration extends Command
         DB::setDefaultConnection('mysql');
         foreach ($all_countries as $country)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'name'           => $country['name'],
                 'code'           => $country['code'],
@@ -478,7 +478,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        
+
         DB::table('countries')->truncate();
         DB::table('countries')->insert($new_collection);
         $bar->finish();
@@ -494,7 +494,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'id'             => $value->File_ID,
                 'customer_id'    => $value->Customer_ID,
@@ -522,7 +522,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'id'           => $value->OwnerID,
                 'name'         => $value->OwnerName,
@@ -558,7 +558,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'name'         => $value->Region,
                 'email'        => $value->Email,
@@ -662,9 +662,9 @@ class DataMigration extends Command
         $int_perc = 0;
         foreach ($collection as $key => $value)
         {
-            
-            
-            $new_collection = 
+
+
+            $new_collection =
             [
                 'id'              => $value->Customer_ID,
                 'first_name'      => $value->First_Name,
@@ -700,7 +700,7 @@ class DataMigration extends Command
                 $int_perc = (int)$perc;
                 $this->info($int_perc."%");
             }*/
-            
+
             DB::table('customers')->insert($new_collection);
             $bar->advance();
         }
@@ -731,7 +731,7 @@ class DataMigration extends Command
         $bar->finish();
         $this->info('✔');
     }
-    
+
 
     private function meeting_rooms()
     {
@@ -741,7 +741,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($meeting_rooms));
         foreach ($meeting_rooms as $room)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'id'            => $room->Meeting_Room_ID,
                 'center_id'     => $room->Center_ID,
@@ -755,7 +755,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        
+
 
         DB::setDefaultConnection('mysql');
         DB::table('meeting_rooms')->truncate();
@@ -772,7 +772,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($meeting_rooms_options));
         foreach ($meeting_rooms_options as $option)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'meeting_room_id'             =>  $option->Meeting_Room_ID,
                 'room_description'            =>  $option->Room_Description,
@@ -793,7 +793,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        
+
 
         DB::setDefaultConnection('mysql');
         DB::table('meeting_rooms_options')->truncate();
@@ -806,11 +806,11 @@ class DataMigration extends Command
     {
         $this->info("\n migrating tel_countries table");
         $this->make_new_connection();
-        $tel_countries = DB::table('Tel_Countries')->get();
+        $tel_countries = DB::table('tel_Countries')->get();
         $bar = $this->output->createProgressBar(count($tel_countries));
         foreach ($tel_countries as $country)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'country_code' => $country->Country_Code,
                 'full_name'    => $country->Full_Name,
@@ -819,7 +819,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        
+
 
         DB::setDefaultConnection('mysql');
         DB::table('tel_countries')->truncate();
@@ -832,11 +832,11 @@ class DataMigration extends Command
     {
         $this->info("\n migrating tel_prefixes table");
         $this->make_new_connection();
-        $tel_prefixes = DB::table('Tel_Prefixes')->get();
+        $tel_prefixes = DB::table('tel_Prefixes')->get();
         $bar = $this->output->createProgressBar(count($tel_prefixes));
         foreach ($tel_prefixes as $prefix)
         {
-            $new_collection[] = 
+            $new_collection[] =
             [
                 'country_code' => $prefix->Country_Code,
                 'prefix'       => $prefix->Prefix,
@@ -844,7 +844,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        
+
 
         DB::setDefaultConnection('mysql');
         DB::table('tel_prefixes')->truncate();
@@ -854,8 +854,8 @@ class DataMigration extends Command
     }
 
     private function make_new_connection()
-    {      
-        App::make('config')->set('database.connections.tmp', 
+    {
+        App::make('config')->set('database.connections.tmp',
         [
             'driver'    => 'mysql',
             'host'      => $this->option('host'),
