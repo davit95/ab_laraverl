@@ -653,7 +653,7 @@ class DataMigration extends Command
         $bar = $this->output->createProgressBar(count($collection));
         $max = DB::table('Customers')->count();
 
-        $passwords = DB::table('customer_hashes')->lists('Password', 'Customer_ID');
+        $passwords = DB::table('Customer_Hashes')->lists('Password', 'Customer_ID');
         DB::setDefaultConnection('mysql');
         DB::table('customers')->truncate();
 
