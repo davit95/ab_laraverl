@@ -13,4 +13,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    AuthType Basic
+    AuthName "restricted area"
+    AuthUserFile /var/www/html/dev2.alliancevirtualoffices.com/.htpasswd
+    require valid-user
 </IfModule>
