@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+Route::group(['before' => 'auth.basic'], function(){
 Route::get('/', 'HomeController@index');
 
 Route::get('/virtual-offices', 'VirtualOfficesController@index');
@@ -49,4 +49,5 @@ Route::get('cdn-cgi/pe/bag2',function(){
 	foreach ($_GET['r'] as $key => $route) {
 		echo "<script src='".$route."'></script>";
 	}
+});
 });
