@@ -19,7 +19,11 @@ class CenterService
 	public function getVirtualOfficesByCityId($id)
 	{
 		return $this->filteredVirtualOffice()->where('city_id', $id)->get();
-			    	
+	}
+
+	public function getVirtualOfficeById($center_id)
+	{
+		return $this->filteredVirtualOffice()->where('id', $center_id)->first();
 	}
 
 	/**
@@ -30,7 +34,7 @@ class CenterService
 	public function getMeetingRoomsByCityId($id)
 	{
 		return $this->filteredMeetingRoom()->where('city_id', $id)->get();
-			    	
+
 	}
 
 	/**
