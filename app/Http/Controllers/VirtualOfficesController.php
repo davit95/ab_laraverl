@@ -31,16 +31,32 @@ class VirtualOfficesController extends Controller
      *
      * @return Response
      */
-    public function getCountryVirtualOffices($country_slug, CountryService $countryService, UsStateService $usStateService, CityService $cityService)
+    public function getCountryVirtualOffices($country_slug, CountryService $countryService, UsStateService $usStateService, CityService $cityService, TelephonyPackageIncludeService $telephonyPackageIncludeService)
     {
         if(null != $state = $usStateService->getStateBySlug($country_slug))
         {
             $active_cities = $cityService->getStateActiveCitiesWithPagination($state->id);
+            foreach($active_cities as $city)
+            {
+                foreach($city->active_virtual_offices as $center)
+                {
+                    $center->packages_arr = $this->packages($center);
+                    $center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
+                }
+            }
             return view('virtual-offices.state-virtual-offices-list', ['state' => $state, 'active_cities' => $active_cities]);
         }
         elseif(null != $country = $countryService->getCountryBySlug($country_slug))
         {
             $active_cities = $cityService->getCountryActiveCitiesWithPagination($country->id);
+            foreach($active_cities as $city)
+            {
+                foreach($city->active_virtual_offices as $center)
+                {
+                    $center->packages_arr = $this->packages($center);
+                    $center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
+                }
+            }
             return view('virtual-offices.country-virtual-offices-list', ['country' => $country, 'active_cities' => $active_cities]);
         }
 
@@ -99,6 +115,17 @@ class VirtualOfficesController extends Controller
         }
     }
 
+    /**
+     * Display center pricing grid.
+     *
+     * @return Response
+     */
+    public function getCenterPricengGrid($center_id, CenterService $centerService, TelephonyPackageIncludeService $telephonyPackageIncludeService)
+    {
+        $center = $centerService->getVirtualOfficeById($center_id);
+        $center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
+        return view('virtual-offices.pricing-grid', ['center' => $center, 'packages_arr' => $this->packages($center)]);
+    }
     private function packages($center)
     {
         $packages = [];

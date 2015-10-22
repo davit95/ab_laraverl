@@ -4,12 +4,12 @@
 	<div class="intWrap">
 		<div class="searchInt">
 			<form action="/search2.php" autocomplete="off" id="avoS" method="get">
-				<input type="hidden" name="step" value="search">      
+				<input type="hidden" name="step" value="search">
 			    <input type="text" class="SearchInputInt" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
 	            <select id="Services" name="avo1" class="avo1" >
 	            	<option value="VO">Virtual Offices</option>
 	                <option value="MR">Meeting Rooms</option>
-	            </select> 
+	            </select>
 	            <input type="hidden" name="source" value="bb">
 			    <button type="submit" class="searchBtnInt" id="searchBtn" >
 			    	<span class="mobileS">Search</span>
@@ -78,7 +78,7 @@
 								<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
 							@endif
 						</div>
-                
+
 						<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
 						<label for="submit"></label>
 						<button type="submit" id="submit2">FIND OUT MORE</button>
@@ -103,7 +103,7 @@
         	@endforeach
         </ul>
         <div class="clearLeft"></div>
-       
+
         	@foreach($active_cities as $city)
         	 <div class="resutsTop2a">
         		<div class="ResutlsTitle">
@@ -122,32 +122,32 @@
 
 @section('scripts')
 	<script src="/js/jquery.bxslider.min.js"></script>
-
+  <script src="/js/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src="/js/see-plans.js"></script>
 	<script>
 	        jQuery(document).ready(function($) {
-				
+
 				$( ".menuBtnLink" ).click(function() {
 				  $( ".menu" ).slideToggle( "slow", function() {
 					// Animation complete.
 				  });
 				});
-				
+
 				$('.bxslider').bxSlider();
-				
+
 				$(".moreInfoBtn").hover(function() {
 					$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
 					// Animation complete.
 				  });
-				  
+
 				});
-				
+
 				//LightBox
 				$('.popup-with-form').magnificPopup({
 					type: 'inline',
 					preloader: false,
 					focus: '#name',
-			
+
 					// When elemened is focused, some mobile browsers in some cases zoom in
 					// It looks not nice, so we disable it:
 					callbacks: {
@@ -183,31 +183,34 @@
 		delay: 40,
 		maxItemsToShow: 30,
 	    });
-		
-	    $("input#suggest1").keyup(function(e){ 
+
+	    $("input#suggest1").keyup(function(e){
 
 	        var code = e.which;
 	        if(code==13)e.preventDefault();
 	        if(code==13||code==186){
 		   $("#searchBtn").click();
-	        } 
+	        }
 
 	    });
-		
+
 	    $( ".avo1" ).change(function() {
 
 	        var e = document.getElementById("Services");
 	        var strType = e.options[e.selectedIndex].value;
 
-	        if(strType=='VO') { 
+	        if(strType=='VO') {
 	             $("#avoS").attr("action", "/search2.php");
 	        }
 	        else{
 	            $("#avoS").attr("action", "/mr-search.php");
-	        } 
-		
+	        }
+
 	    });
 	        });
-			
+
 	</script>
+@stop
+@section('styles')
+	<link href="/css/magnific-popup.css" rel="stylesheet" />
 @stop
