@@ -59,5 +59,6 @@ class Center extends Model
     public function telephony_includes()
     {
       return $this->hasMany('App\\TelephonyPackageInclude', 'center_id', 'id');
+      
     }
 }
