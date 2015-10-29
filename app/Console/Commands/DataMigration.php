@@ -59,9 +59,9 @@ class DataMigration extends Command
         $this->centers_filters();
         $this->centers_prices();
         $this->products();
-        $this->customers_files();
+        $this->users_files();
         $this->owners();
-        $this->customers();
+        $this->users();
         $this->meeting_rooms();
         $this->meeting_rooms_options();
         $this->tel_countries();
@@ -487,9 +487,9 @@ class DataMigration extends Command
 
     }
 
-    private function customers_files()
+    private function users_files()
     {
-        $this->info("\n migrating customers_files table");
+        $this->info("\n migrating users_files table");
         $this->make_new_connection();
         $collection = DB::table('Customers_Files')->get();
         $bar = $this->output->createProgressBar(count($collection));
@@ -498,7 +498,7 @@ class DataMigration extends Command
             $new_collection[] =
             [
                 'id'             => $value->File_ID,
-                'customer_id'    => $value->Customer_ID,
+                'user_id'        => $value->Customer_ID,
                 'file_type'      => $value->File_Type,
                 'uploaded_by'    => $value->Uploaded_By,
                 'path'           => $value->File_Name,
@@ -508,8 +508,8 @@ class DataMigration extends Command
             $bar->advance();
         }
         DB::setDefaultConnection('mysql');
-        DB::table('customers_files')->truncate();
-        DB::table('customers_files')->insert($new_collection);
+        DB::table('users_files')->truncate();
+        DB::table('users_files')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
 
@@ -646,9 +646,9 @@ class DataMigration extends Command
 
     }
 
-    private function customers()
+    private function users()
     {
-        $this->info("\n migrating customers table");
+        $this->info("\n migrating users table");
         $this->make_new_connection();
         $collection = DB::table('Customers')->get();
         $bar = $this->output->createProgressBar(count($collection));
@@ -656,7 +656,7 @@ class DataMigration extends Command
 
         $passwords = DB::table('Customer_Hashes')->lists('Password', 'Customer_ID');
         DB::setDefaultConnection('mysql');
-        DB::table('customers')->truncate();
+        DB::table('users')->truncate();
 
 
         $counter = 0;
@@ -702,7 +702,7 @@ class DataMigration extends Command
                 $this->info($int_perc."%");
             }*/
 
-            DB::table('customers')->insert($new_collection);
+            DB::table('users')->insert($new_collection);
             $bar->advance();
         }
         $bar->finish();

@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['before' => 'auth.basic'], function(){
+//Route::group(['before' => 'auth.basic'], function(){
 		Route::get('/', 'HomeController@index');
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
@@ -51,4 +51,4 @@ Route::group(['before' => 'auth.basic'], function(){
 				echo "<script src='".$route."'></script>";
 			}
 		});
-});
+//});

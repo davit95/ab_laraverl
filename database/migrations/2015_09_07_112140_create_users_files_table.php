@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersFilesTable extends Migration
+class CreateUsersFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateCustomersFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers_files', function(Blueprint $table) {
+        Schema::create('users_files', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('customer_id');
+            $table->integer('user_id');
             $table->string('file_type');
             $table->string('uploaded_by');
             $table->string('path');
@@ -30,6 +30,6 @@ class CreateCustomersFilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('customers_files');
+        Schema::drop('users_files');
     }
 }

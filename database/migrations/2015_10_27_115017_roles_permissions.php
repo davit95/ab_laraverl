@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTelCountriesTable extends Migration
+class RolesPermissions extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class CreateTelCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tel_countries', function(Blueprint $table)
+        Schema::create('roles_permissions', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('country_code');
-            $table->string('full_name');
-            $table->string('abbrv');
-            $table->integer('logtime');
+            $table->string('role_id');
+            $table->string('permission_id');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateTelCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tel_countries');
+        Schema::drop('roles_permissions');
     }
 }
