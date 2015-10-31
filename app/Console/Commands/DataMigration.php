@@ -216,7 +216,7 @@ class DataMigration extends Command
                 {
                     $new_collection[] =
                     [
-                        'center_id'   => $value->CenterID,
+                        //'center_id'   => $value->CenterID,
                         'path'        => $v->Image_Name,
                         'description' => $v->Description,
                         'alt'         => $v->Alt,
@@ -228,9 +228,22 @@ class DataMigration extends Command
             }
             $curr_photos = [];
         }
+        $final_collection = [];
+
+        foreach($new_collection as $item)
+        {
+            foreach ($final_collection as  $value)
+            {
+                if($item['path'] == $value['path'])
+                {
+                    break;
+                }
+                $final_collection[] = $item;
+            }
+        }
         DB::setDefaultConnection('mysql');
-        DB::table('centers_photos')->truncate();
-        DB::table('centers_photos')->insert($new_collection);
+        DB::table('photos')->truncate();
+        DB::table('photos')->insert($final_collection);
         $bar->finish();
         $this->info(' ✔');
     }
