@@ -44,7 +44,8 @@ class MeetingRoomsImagesMigration extends Command
     {
         $counter = 0;
         $errors_count = 0;
-        $path = realpath('/home/raphael/storage/Pictures');
+        $path = public_path().'/mr-photos/all';
+        $this->info($path);
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
         $files = [];
         $ids = [];
