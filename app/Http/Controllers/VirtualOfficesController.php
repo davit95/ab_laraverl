@@ -112,6 +112,8 @@ class VirtualOfficesController extends Controller
            }
            $nearby_centers = $nearby_centers->sortBy('distance');
            return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center)]);
+
+           dd($center);
         }
     }
 

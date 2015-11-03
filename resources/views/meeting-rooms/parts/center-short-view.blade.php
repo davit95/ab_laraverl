@@ -9,8 +9,8 @@
     </div>
     <div class='imageSlider'>
     	<ul class='bxslider'>
-            @forelse($center->photos as $photo)
-                <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
+            @forelse($center->mr_photos as $photo)
+                <li><div class='img-wrapper'><img src='/mr-photos/all/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
             @empty
                 <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/no_pic.gif' alt=''></div></li>
             @endforelse

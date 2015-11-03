@@ -6,9 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Center extends Model
 {
-    public function photos()
+    // public function photos()
+    // {
+    // 	return $this->hasMany('App\\CenterPhoto');
+    // }
+
+    public function vo_photos()
     {
-    	return $this->hasMany('App\\CenterPhoto');
+        return $this->belongsToMany('App\\Photo', 'vo_photos', 'center_id', 'photo_id');
+    }
+
+    public function mr_photos()
+    {
+        return $this->belongsToMany('App\\Photo', 'mr_photos', 'center_id', 'photo_id');
     }
 
     public function virtual_office_seo()
@@ -59,6 +69,6 @@ class Center extends Model
     public function telephony_includes()
     {
       return $this->hasMany('App\\TelephonyPackageInclude', 'center_id', 'id');
-      
+
     }
 }

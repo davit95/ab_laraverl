@@ -56,6 +56,7 @@ class DataMigration extends Command
         $this->centers_coordinates();
         $this->centers_emails();
         $this->centers_photos();
+        $this->vo_photos();
         $this->centers_filters();
         $this->centers_prices();
         $this->products();
@@ -197,11 +198,12 @@ class DataMigration extends Command
 
     private function centers_photos()
     {
-        $this->info("\n migrating centers_photos table");
+        $this->info("\n migrating photos table");
         $this->make_new_connection();
         $collection = DB::table('Center')->get();
         $bar = $this->output->createProgressBar(count($collection));
         $counter = 0;
+        $new_collection = [];
         foreach($collection as $key => $value)
         {
             $curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo1)->first();
@@ -214,6 +216,8 @@ class DataMigration extends Command
             {
                 if(null != $v)
                 {
+                    //$this->info($v->Image_Name);
+
                     $new_collection[] =
                     [
                         //'center_id'   => $value->CenterID,
@@ -228,6 +232,7 @@ class DataMigration extends Command
             }
             $curr_photos = [];
         }
+        $break  = false;
         $final_collection = [];
 
         foreach($new_collection as $item)
@@ -236,14 +241,45 @@ class DataMigration extends Command
             {
                 if($item['path'] == $value['path'])
                 {
+                    $break = true;
                     break;
                 }
-                $final_collection[] = $item;
+
             }
+            if($break) {
+                $break = false;
+                break;
+            }
+            $final_collection[] = $item;
         }
         DB::setDefaultConnection('mysql');
         DB::table('photos')->truncate();
         DB::table('photos')->insert($final_collection);
+        $bar->finish();
+        $this->info(' ✔');
+    }
+
+    private function vo_photos()
+    {
+        $this->info("\n migrating vo_photos table");
+        $this->make_new_connection();
+        $collection = DB::table('Center')->get();
+        $bar = $this->output->createProgressBar(count($collection));
+        $vo_photos = [];
+        DB::setDefaultConnection('mysql');
+        foreach($collection as $center)
+        {
+            $center_photos = [$center->Photo1, $center->Photo2, $center->Photo3, $center->Photo4, $center->Photo5, $center->Photo6];
+            foreach($center_photos as $center_photo)
+            {
+                if((null != $unique_iamge = DB::table('photos')->where('path', $center_photo)->first()) && ($center_photo != null || $center_photo != ''))
+                {
+                    $vo_photos[] = ['center_id' => $center->CenterID, 'photo_id' => $unique_iamge->id];
+                }
+            }
+        }
+        DB::table('vo_photos')->truncate();
+        DB::table('vo_photos')->insert($vo_photos);
         $bar->finish();
         $this->info(' ✔');
     }

@@ -5,18 +5,18 @@
 @section('content')
 	<div class='intWrap'>
 		<div class="breadcrumbs dtails">
-			<a href="/">Home</a> / 
-			<a href="/virtual-offices">Virtual Offices</a> / 
+			<a href="/">Home</a> /
+			<a href="/virtual-offices">Virtual Offices</a> /
 			<a href="{!! URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $center->city->country->slug])!!}">{!! $center->city->country->name!!}</a> /
 			@if($center->city->us_state_id)
-				<a href="{!! URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $center->city->usState->slug])!!}">{!! $center->city->us_state !!}</a> / 
-			@endif 
-			<a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> / 
-			@if($center->building_name) 
-				{!! $center->buidling_name!!} 
+				<a href="{!! URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $center->city->usState->slug])!!}">{!! $center->city->us_state !!}</a> /
+			@endif
+			<a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> /
+			@if($center->building_name)
+				{!! $center->buidling_name!!}
 			@else
-				Virtual Office in {!! $center->city->name !!} 
-			@endif	
+				Virtual Office in {!! $center->city->name !!}
+			@endif
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
@@ -27,15 +27,15 @@
 					<h1>Virtual Offices in {!! $center->city->name !!} <span class="blue">/</span> <span class="medium">{!! preg_replace('/^[^a-zA-Z]*/', '', $center->address1) !!}</span></h1>
 					<p class="gray2">Live Answering & Advanced Telephony</p>
 				@endif
-				
+
 			</div>
 			<div style="clear:both"></div>
 			<div class="detailsTopWrap">
 				<div class="detailTopLeft">
 					<div class="dimg">
 						<div class="img-wrapper2">
-							@if(count($center->photos))
-								<img src="http://www.abcn.com/images/photos/{!! $center->photos[0]->path !!}" alt="{!! $center->photos[0]->alt !!}">
+							@if(count($center->vo_photos()))
+								<img src="http://www.abcn.com/images/photos/{!! $center->vo_photos[0]->path !!}" alt="{!! $center->vo_photos[0]->alt !!}">
 							@else
 								<img src="http://www.abcn.com/images/photos/no_pic.gif">
 							@endif
@@ -64,7 +64,7 @@
 					<div class="cForm2a">
 						<div class="centerForm2">
 							<h3>
-								INQUIRE ABOUT 
+								INQUIRE ABOUT
 								<span class="bold">VIRTUAL OFFICES</span>
 							</h3>
 							@if(session('success'))
@@ -101,7 +101,7 @@
 										<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
 									@endif
 								</div>
-	                    
+
 								<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
 								<label for="submit"></label>
 								<button type="submit" id="submit2">FIND OUT MORE</button>
@@ -117,7 +117,7 @@
 			<div class="dPlansWrap">
 				<div class="dPlansAllWrap" style="overflow: auto;">
 					<div class="dPlansAll">
-						
+
 						<div class="aPlan2">
 						    <div class="aPlanTop2 bordeRight">
 						    <div class="wrapPP">
@@ -160,7 +160,7 @@
 									    </div>
 								    <div class="clear"></div>
 							    </div><!--/wrapPP-->
-						    	
+
 								<a href="" class="link">
 									<div class="btnSelectP2 orb">SELECT PLAN</div>
 								</a>
@@ -288,7 +288,7 @@
 							<br><h3>PHOTOS</h3>
 							<div class="littleImgs">
 								<div id="links">
-									@foreach($center->photos as $photo)
+									@foreach($center->vo_photos as $photo)
 										<a href="http://www.abcn.com/images/photos/{!! $photo->path !!}" title="{!! $photo->caption !!}">
 											<div class="centerimg">
 												<div class="img-wrapper3">
@@ -318,8 +318,8 @@
 						<div class="cNear">
 							<div class="nearImg">
 								<div class="img-wrapper4">
-									@if(count($_center->photos))
-										<img src="http://www.abcn.com/images/photos/{!! $_center->photos[0]->path !!}" alt="$_center->photos[0]->alt">
+									@if(count($_center->vo_photos))
+										<img src="http://www.abcn.com/images/photos/{!! $_center->vo_photos[0]->path !!}" alt="$_center->vo_photos[0]->alt">
 									@else
 										<img src="http://www.abcn.com/images/photos/no_pic.gif">
 									@endif
@@ -362,11 +362,11 @@
 	    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	    var iconBase = '/images/';
 	    var marker = new google.maps.Marker({
-	        position: myLatlng, 
+	        position: myLatlng,
 	        map: map,
 			icon: iconBase + 'marker.png',
 	        title: "{!! $center->address1 !!}"
-	    });   
+	    });
 	  }
 	  google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
@@ -378,16 +378,16 @@
 			$(".dformright").trigger("sticky_kit:detach");
 			$(".dformright").stick_in_parent();
 			$(".triggerShow").hide();
-		
+
 		}
         jQuery(document).ready(function($) {
-			
+
 			$( ".menuBtnLink" ).click(function() {
 			  $( ".menu" ).slideToggle( "slow", function() {
 				// Animation complete.
 			  });
 			});
-			
+
 			$( ".triggerShow" ).click(function() {
 				$( ".aPlanBottom2" ).show();
 			  	$( ".extras2" ).show();
@@ -398,36 +398,36 @@
 				$(".aPlanTop2").css('min-height', '180px');
 				return false;
 			});
-			
+
 			$('.tooltip').tooltipster({
-				animation: 'fade',   
+				animation: 'fade',
 				theme: 'tooltipster-light',
 				trigger: 'hover',
 				contentAsHTML: true,
 				interactive: true,
             });
 			$('.tooltip2').tooltipster({
-				animation: 'fade',   
+				animation: 'fade',
 				theme: 'tooltipster-light',
 				trigger: 'hover',
 				contentAsHTML: true,
 				interactive: true,
             });
 			$('.tooltip3').tooltipster({
-				animation: 'fade',   
+				animation: 'fade',
 				theme: 'tooltipster-light',
 				trigger: 'hover',
 				contentAsHTML: true,
 				interactive: true,
             });
 			$('.tooltip4').tooltipster({
-				animation: 'fade',   
+				animation: 'fade',
 				theme: 'tooltipster-light',
 				trigger: 'hover',
 				contentAsHTML: true,
 				interactive: true,
             });
-			
+
 			$("#links a").tosrus({
 			   caption    : {
 				  add        : true
@@ -438,9 +438,9 @@
 			   $(".dformright").stick_in_parent()
 			}
 			else {
-			   
+
 			};
-			
+
 			$( window ).resize(function() {
 			  if ($(window).width() < 750) {
 			   $(".dformright").trigger("sticky_kit:detach");
@@ -454,7 +454,7 @@
 			$('.tooltip3').tooltipster('update', '<span> <span class="bold">One of our most popular services.</span> Best for startups and growing businesses who expect to meet with clients and colleagues on a regular basis in a stylish business setting.<br><a class="update" href="javascript:done()"><div class="showAllFplans">Show and compare plan features</div></a> </span></span>');
 			$('.tooltip4').tooltipster('update', '<span> <span class="bold">Our most popular service.</span> Best for startups and growing businesses who want a full complement of virtual services and who expect to meet with clients and colleagues on a regular basis in a stylish business setting. <br><a class="update" href="javascript:done()"><div class="showAllFplans">Show and compare plan features</div></a> </span></span>');
         });
-		
-		
+
+
     </script>
 @stop

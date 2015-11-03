@@ -60,6 +60,13 @@ class MeetingRoomsImagesMigration extends Command
         foreach($files as $file_name)
         {
             $file = $file_name['base_name'];
+            if(null == $unique_photo = DB::table('photos')->where('path', $file_name['base_name'])->first())
+            {
+                $unique_photo_id = DB::table('photos')->insertGetId(['path' => $file_name['base_name']]);
+                //$this->info($unique_photo);
+            }else {
+                $unique_photo_id = $unique_photo->id;
+            }
             $first_underscore = strpos($file, "_");
             $center_id = substr($file, 0, $first_underscore);
             $cuted_file = substr($file, $first_underscore + 1);
@@ -67,17 +74,15 @@ class MeetingRoomsImagesMigration extends Command
             $mr_id = substr($cuted_file, 0, $second_underscore);
             if($mr_id && $center_id)
             {
-                $data[] = ['center_id' => $center_id, 'meeting_room_id' => $mr_id];
+                $data[] = ['center_id' => $center_id, 'mr_id' => $mr_id, 'photo_id' => $unique_photo_id];
             }
             else
             {
                 $errors_count++;
-                //$this->error($file_name['full_path']);
             }
         }
         $this->info($errors_count . " invalid file names.");
-        var_dump($data);
-        //DB::table
+        DB::table('mr_photos')->insert($data);
 
     }
 }
