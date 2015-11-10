@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class Authenticate
+class PermissionMiddleware
 {
     /**
      * The Guard implementation.
@@ -32,8 +32,9 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $permission)
+    public function handle($request, Closure $next, ...$params)
     {
+        dd($permission);
         if(!in_array($permission, session('user_permissions')))
         {
             dd('no permission');

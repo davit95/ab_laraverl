@@ -11,6 +11,6 @@
         <div class="btnMenu"><a class="@if(Request::is('live-receptionist*')) active @endif" href="{!! URL::action('AvoPagesController@liveReceptionist') !!}">LIVE RECEPTIONISTS</a></div>
         <div class="btnMenu"><a href="/login.php"><span class="light">Login</span></a></div>
         <div class="btnMenu"><a class="@if(Request::is('contact*')) active @endif" href="{!! URL::action('AvoPagesController@contact') !!}"><span class="light">Contact</span></a></div>
-        <div class="btnMenu"><a href="/cart.php"><span class="orange">CART</span><img src="/images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
+        <div class="btnMenu"><a class="@if(Request::is('cart*')) active @endif" href="{!! URL::action('CartController@index') !!}"><span class="orange">CART</span><img src="/images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>
     </div>
 </div>

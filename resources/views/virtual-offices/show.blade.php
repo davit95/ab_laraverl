@@ -34,7 +34,7 @@
 				<div class="detailTopLeft">
 					<div class="dimg">
 						<div class="img-wrapper2">
-							@if(count($center->vo_photos()))
+							@if(count($center->vo_photos))
 								<img src="http://www.abcn.com/images/photos/{!! $center->vo_photos[0]->path !!}" alt="{!! $center->vo_photos[0]->alt !!}">
 							@else
 								<img src="http://www.abcn.com/images/photos/no_pic.gif">
@@ -340,6 +340,7 @@
 	<link href="/css/magnific-popup.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/jquery.tosrus.all.css"/>
 @stop
 
 @section('scripts')

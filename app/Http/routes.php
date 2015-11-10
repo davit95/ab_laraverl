@@ -10,19 +10,21 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-//Route::group(['before' => 'auth.basic'], function(){
+
+Route::group(['before' => 'auth.basic'], function(){
 		Route::get('/', 'HomeController@index');
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
 		Route::get('/virtual-offices/{country_slug}', 'VirtualOfficesController@getCountryVirtualOffices');
 		Route::get('/virtual-offices/{country_code}/{city_slug}', 'VirtualOfficesController@getCityVirtualOffices');
-		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}', 'VirtualOfficesController@getVirtualOfficeShowPage');
+		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}/{center_id}', 'VirtualOfficesController@getVirtualOfficeShowPage');
 		Route::get('/pricing-grids/{center_id}', 'VirtualOfficesController@getCenterPricengGrid');
 
 		Route::get('/meeting-rooms', 'MeetingRoomsController@index');
 		Route::get('/meeting-rooms/{country_slug}', 'MeetingRoomsController@getCountryMeetingRooms');
 		Route::get('/meeting-rooms/{country_code}/{city_slug}', 'MeetingRoomsController@getCityMeetingRooms');
-		Route::get('/meeting-rooms/{country_code}/{city_slug}/{center_slug}', 'MeetingRoomsController@getMeetingRoomShowPage');
+		Route::get('/meeting-rooms/{country_code}/{city_slug}/{center_slug}/{center_id}', 'MeetingRoomsController@getMeetingRoomShowPage');
+		Route::post('/meeting-rooms/book-meeting-room', 'MeetingRoomsController@bookMeetingRoom');
 		//Route::post('/meeting-rooms/{country_code}/{city_slug}/{center_slug}', 'MeetingRoomsController@getMeetingRoomShowPage');
 
 		// Avo pages
@@ -51,4 +53,6 @@
 				echo "<script src='".$route."'></script>";
 			}
 		});
-//});
+
+        Route::resource('/cart', 'CartController');
+});

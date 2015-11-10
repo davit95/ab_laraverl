@@ -76,14 +76,14 @@ class CenterService
      * @param (string) $country_code, (string) $city_slug, (string) $center_slug
      * @return Response
      */
-	public function getVirtualOfficeByCenterSlug($country_code, $city_slug, $center_slug)
+	public function getVirtualOfficeByCenterSlug($country_code, $city_slug, $center_slug, $center_id)
 	{
 		return $this->filteredVirtualOffice()
 					->where('country', $country_code)
 					->whereHas('city', function($q) use($city_slug){
 						$q->where('slug', $city_slug);
 					})
-					->where('slug', $center_slug)->first();
+					->where('slug', $center_slug)->where('id', $center_id)->first();
 	}
 
 	/**
@@ -92,14 +92,14 @@ class CenterService
      * @param (string) $country_code, (string) $city_slug, (string) $center_slug
      * @return Response
      */
-	public function getMeetingRoomByCenterSlug($country_code, $city_slug, $center_slug)
+	public function getMeetingRoomByCenterSlug($country_code, $city_slug, $center_slug, $center_id)
 	{
 		return $this->filteredMeetingRoom()
 					->where('country', $country_code)
 					->whereHas('city', function($q) use($city_slug){
 						$q->where('slug', $city_slug);
 					})
-					->where('slug', $center_slug)->first();
+					->where('slug', $center_slug)->where('id', $center_id)->first();
 	}
 
 	/**

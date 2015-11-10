@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\MRBookRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Guard;
+use Cookie;
+use Illuminate\Cookie\CookieJar;
 
 use App\Services\UsStateService;
 use App\Services\CenterService;
 use App\Services\CityService;
 use App\Services\CenterCoordinateService;
 use App\Services\CountryService;
+use App\Services\TempCartItemService;
 
 class MeetingRoomsController extends Controller
 {
@@ -61,7 +66,7 @@ class MeetingRoomsController extends Controller
             $google_maps_center_city = $city->name;
             foreach ($centers as $key => $center)
             {
-                $center_addresses_for_google_maps[] = 
+                $center_addresses_for_google_maps[] =
                 [
                     'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
                     'id' => $center->id
@@ -80,9 +85,9 @@ class MeetingRoomsController extends Controller
      *
      * @return Response
      */
-    public function getMeetingRoomShowPage($country_code, $city_slug, $center_slug, CenterService $centerService, CenterCoordinateService $centerCoordinateService)
+    public function getMeetingRoomShowPage($country_code, $city_slug, $center_slug, $center_id, CenterService $centerService, CenterCoordinateService $centerCoordinateService)
     {
-        if(null != $center = $centerService->getMeetingRoomByCenterSlug($country_code, $city_slug, $center_slug))
+        if(null != $center = $centerService->getMeetingRoomByCenterSlug($country_code, $city_slug, $center_slug, $center_id))
         {
            $nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);
            $nearby_centers = $centerService->getMeetingRoomsByIds($nearby_centers_ids['ids']);
@@ -95,12 +100,12 @@ class MeetingRoomsController extends Controller
            {
                $included = [];
                $paid = [];
-               
+
                $phone_rates = explode('||', $mr->options->phone_rate);
                if($phone_rates[0] < '1' || $phone_rates[0] == '')
                {
                     $included[] = 'Phone Access';
-               } 
+               }
                elseif($phone_rates[0] != 'NA')
                {
                     $paid[] = 'Phone Access|Phone_Rate';
@@ -110,7 +115,7 @@ class MeetingRoomsController extends Controller
                if($network_rates[0] < '1' || $network_rates[0] == '')
                {
                     $included[] = 'Network Connection';
-               } 
+               }
                elseif($network_rates[0] != 'NA')
                {
                     $paid[] = 'Network Connection|Network_Rate';
@@ -120,7 +125,7 @@ class MeetingRoomsController extends Controller
                if($whiteboard_rates[0] < '1' || $whiteboard_rates[0] == '')
                {
                     $included[] = 'Whiteboard';
-               } 
+               }
                elseif($whiteboard_rates[0] != 'NA')
                {
                     $paid[] = 'Whiteboard|Whiteboard_Rate';
@@ -130,7 +135,7 @@ class MeetingRoomsController extends Controller
                if($wireless_rates[0] < '1' || $wireless_rates[0] == '')
                {
                     $included[] = 'WiFi';
-               } 
+               }
                elseif($wireless_rates[0] != 'NA')
                {
                     $paid[] = 'WiFi|Wireless_Rate';
@@ -140,7 +145,7 @@ class MeetingRoomsController extends Controller
                if($tvdvdplayer_rates[0] < '1' || $tvdvdplayer_rates[0] == '')
                {
                     $included[] = 'TV / DVD Player';
-               } 
+               }
                elseif($tvdvdplayer_rates[0] != 'NA')
                {
                     $paid[] = 'TV / DVD Player|Tvdvdplayer_Rate';
@@ -150,7 +155,7 @@ class MeetingRoomsController extends Controller
                if($projector_rates[0] < '1' || $projector_rates[0] == '')
                {
                     $included[] = 'Projector';
-               } 
+               }
                elseif($projector_rates[0] != 'NA')
                {
                     $paid[] = 'Projector|Projector_Rate';
@@ -160,7 +165,7 @@ class MeetingRoomsController extends Controller
                if($videoconferencing_rates[0] < '1' || $videoconferencing_rates[0] == '')
                {
                     $included[] = 'Video Conferencing';
-               } 
+               }
                elseif($videoconferencing_rates[0] != 'NA')
                {
                     $paid[] = 'Video Conferencing|Videoconferencing_Rate';
@@ -170,7 +175,7 @@ class MeetingRoomsController extends Controller
                if($admin_services_rates[0] < '1' || $admin_services_rates[0] == '')
                {
                     $included[] = 'Admin Services';
-               } 
+               }
                elseif($admin_services_rates[0] != 'NA')
                {
                     $paid[] = 'Admin Services|Admin_Services_Rate';
@@ -180,7 +185,7 @@ class MeetingRoomsController extends Controller
                if($parking_rates[0] < '1' || $parking_rates[0] == '')
                {
                     $included[] = 'Parking';
-               } 
+               }
                elseif($parking_rates[0] != 'NA')
                {
                     $paid[] = 'Parking|Parking_Rate';
@@ -207,6 +212,29 @@ class MeetingRoomsController extends Controller
         else
         {
             return 'aa';
+        }
+    }
+
+    /**
+     * Set meeting rooms's booking.
+     *
+     * @return Response
+     */
+    public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService)
+    {
+        if($auth->guest()){
+            if(null != $cookie = Cookie::get('temp_user_id')) {
+                $temp_user_id = $cookie;
+            } else {
+                $temp_user_id = str_random(40);
+                $cookieJar->queue('temp_user_id', $temp_user_id, 999999);
+            }
+            $params = $request->all();
+            $params['temp_user_id'] = $temp_user_id;
+            if(null != $tempCartItemService->create($params))
+            {
+                return redirect('/cart');
+            }
         }
     }
 }

@@ -161,7 +161,7 @@
         	<a class='seePlansBtnR' href='#'>
         		<div class='btnPlans'>SEE PLANS</div>
         	</a>
-        	<a href="{!! URL::action('VirtualOfficesController@getVirtualOfficeShowPage', ['country_code' => $center->country, 'city_slug' => $center->city? $center->city->slug : '', 'center_slug' => $center->slug])!!}" class='moreInfoBtnR'>
+        	<a href="{!! URL::action('VirtualOfficesController@getVirtualOfficeShowPage', ['country_code' => $center->country, 'city_slug' => $center->city? $center->city->slug : '', 'center_slug' => $center->slug, 'center_id' => $center->id])!!}" class='moreInfoBtnR'>
         		<div class='btnMoreInfo'>MORE INFORMATION</div>
         	</a>
         </div>

@@ -2,18 +2,18 @@
 @section('content')
 	<div class="intWrap">
 		<div class="breadcrumbs dtails">
-			<a href="/">Home</a> / 
-			<a href="/virtual-offices">Virtual Offices</a> / 
+			<a href="/">Home</a> /
+			<a href="/virtual-offices">Virtual Offices</a> /
 			<a href="{!! URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $center->city->country->slug])!!}">{!! $center->city->country->name!!}</a> /
 			@if($center->city->us_state_id)
-				<a href="{!! URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $center->city->usState->slug])!!}">{!! $center->city->us_state !!}</a> / 
-			@endif 
-			<a href="{!! URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> / 
-			@if($center->building_name) 
-				{!! $center->buidling_name!!} 
+				<a href="{!! URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $center->city->usState->slug])!!}">{!! $center->city->us_state !!}</a> /
+			@endif
+			<a href="{!! URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> /
+			@if($center->building_name)
+				{!! $center->buidling_name!!}
 			@else
-				Meeting Room in {!! $center->city->name !!} 
-			@endif	
+				Meeting Room in {!! $center->city->name !!}
+			@endif
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
@@ -115,11 +115,10 @@
 										<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
 									@endif
 								</div>
-	                    
+
 								<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
 								<label for="submit"></label>
 								<button type="submit" id="submit2">SEND</button>
-
                 			{!! Form::close() !!}
 						</div>
 					</div>
@@ -131,33 +130,67 @@
 							<h3 class="gray2">SET YOUR DATE AND TIME</h3>
 							<div id="root-picker-outlet" style="margin-left:45px;"></div>
 							<div id="root-picker-outlet2" style="margin-left:45px;"></div>
-		        			<form method="post">
-								<input type="hidden" name="cid" value="$_REQUEST[cid]" />
-								<input type="hidden" name="step" value="set_date_time" />
-		        				$error_48
+							{!! Form::open(['action' => 'MeetingRoomsController@bookMeetingRoom', 'method' => 'POST']) !!}
+
+								{{-- <input type="hidden" name="cid" value="$_REQUEST[cid]" /> --}}
+								{{-- <input type="hidden" name="step" value="set_date_time" /> --}}
+								{!! Form::hidden('center_id', $center->id) !!}
+								@if($errors->has('date'))
+									<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+										{!! $errors->get('date')[0]!!}
+									</div>
+								@endif
+								@if($errors->has('from_time'))
+									<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+										{!! $errors->get('from_time')[0]!!}
+									</div>
+								@endif
+								@if($errors->has('to_time'))
+									<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+										{!! $errors->get('to_time')[0]!!}
+									</div>
+								@endif
+
 		            			<fieldset class="dateAndTime">
-		            				<div class="yourDateT" $hideShow>
+		            				{{-- <div class="yourDateT" $hideShow>
 		                    			Your meeting room date is: <span class="mediumBold">$_REQUEST[date]</span><br>
 		                    			From: <span class="mediumBold">$_REQUEST[from_time]</span> to: <span class="mediumBold">$_REQUEST[to_time]</span><br>
 		                    			<a href="#" style="text-decoration:none;"><div class="otherTime lightBtn">CHANGE DATE</div></a>
-		                			</div><!--/showHide-->
-
-		            				<div $showHide>
-		                    			<label for="date"><div class="label">Set Date:</div></label><input id="input_01" class="datepicker" name="date" type="text" placeholder="Please select a date" required><br>
-		                    			<label for="fromTime"><div class="label">Set Your Start Time:</div></label><input type="text" name="from_time" class="timepicker" placeholder="Please select a start time" id="input_from" required><br>
-		                    			<label for="toTime"><div class="label">Set End Start Time:</div></label><input type="text" name="to_time" class="timepicker" placeholder="Please select an end time" id="input_to" required><br>		
-		                    			<div class="label"></div><input class="aquaBtn sbmitDate" type="submit" width="170" value="SET DATE AND TIME">
+		                			</div><!--/showHide--> --}}
+		            				<div>
+		                    			<label for="date">
+											<div class="label">Set Date:</div>
+										</label>
+										{!! Form::text('mr_date', null, ['id' => 'input_01', 'placeholder' => 'Please select a date', 'class' =>  'datepicker', 'required']) !!}
+										<br>
+		                    			<label for="fromTime">
+											<div class="label">Set Your Start Time:</div>
+										</label>
+										{!! Form::text('mr_start_time', null, ['id' => 'input_from', 'placeholder' => 'Please select a start time', 'class' =>  'timepicker', 'required']) !!}
+										<br>
+		                    			<label for="toTime">
+											<div class="label">Set End Start Time:</div>
+										</label>
+										{!! Form::text('mr_end_time', null, ['id' => 'input_to', 'placeholder' => 'Please select an end time', 'class' => 'timepicker', 'required']) !!}
+										<br>
+		                    			<div class="label"></div>
+										{{-- {!! Form::submit('SET DATE AND TIME', ['class' => 'aquaBtn sbmitDate', 'width' => '170']) !!} --}}
 		            				</div>
 		            			</fieldset>
-		         
-		        			</form>
+		        			{{-- {!! Form::close() !!} --}}
 						</div>
 					</div>
 					<div class="descTopLeft2">
 						<div class="wrapDescrip">
 							<div class="number nTwo"></div>
 							<h3 class="gray2">PLEASE SELECT A MEETING ROOM AND OPTIONS</h3>
-							<form action="" id="mrForm" name="mr-main-form" method="post">
+							{{-- <form action="" id="mrForm" name="mr-main-form" method="post"> --}}
+							@if($errors->has('mr_id'))
+								<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+									{!! $errors->get('mr_id')[0]!!}
+								</div>
+							@endif
+							<div id="mrForm">
 								$form_extras
 								<table id="hor-minimalist-b" summary="Meeting Room Summary" class="MRoptionT gray2">
 									<tr>
@@ -172,7 +205,7 @@
 										@if($mr->name != '')
 											<tr class="MRline totalCost Mroom" Mroom="{!! $mr->id !!}" cost="$first_amount" bgcolor="#F3F4F4" >
 												<td style="text-align: center; min-width:30px;">
-												<input name="meeting_room_choice" type="radio" value="{!! $mr->id !!}" class="Mroom SelectMR" $js_alert />
+												<input name="mr_id" type="radio" value="{!! $mr->id !!}" class="Mroom SelectMR" $js_alert />
 												</td>
 												<td class="theMR">{!! $mr->name !!}</td>
 												<td style="text-align: center;">up to {!! $mr->capacity !!}</td>
@@ -221,7 +254,8 @@
 
 							</div>
 						</div>
-							</form>
+					</div>
+							{!! Form::close()!!}
 						</div>
 					</div>
 				</div>
@@ -250,12 +284,12 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 @stop
 
 @section('scripts')
-	
+
 	<script src="/js/picker.js" type="text/javascript"></script>
 	<script src="/js/picker.date.js" type="text/javascript"></script>
 	<script src="/js/picker.time.js" type="text/javascript"></script>
@@ -270,7 +304,7 @@
             min: true,
             container: '#root-picker-outlet',
             //editable: true,
-            closeOnSelect: true,	
+            closeOnSelect: true,
             closeOnClear: false,
 			disable: [
 				1, 7
@@ -279,7 +313,7 @@
     	    onOpen: function() { $('pre').css('overflow', 'hidden') },
     	    onClose: function() { $('pre').css('overflow', '') }
         });
-        
+
 		$('.timepicker').pickatime({
 		    min: [8,0],
 		    max: [17,0],
@@ -289,7 +323,7 @@
 	    	        $('.timepicker').blur();
 		    }
 		});
-		 
+
        var from_ = $('#input_from').pickatime(),
        from_picker = from_.pickatime('picker')
 
@@ -332,15 +366,15 @@
 		{
 		    var sPageURL = window.location.search.substring(1);
 		    var sURLVariables = sPageURL.split('&');
-		    for (var i = 0; i < sURLVariables.length; i++) 
+		    for (var i = 0; i < sURLVariables.length; i++)
 		    {
 		        var sParameterName = sURLVariables[i].split('=');
-		        if (sParameterName[0] == sParam) 
+		        if (sParameterName[0] == sParam)
 		        {
 		            return sParameterName[1];
 		        }
 		    }
-		}       
+		}
 
 		var date = getUrlParameter('date');
 		var firstTime = getUrlParameter('_submit');
@@ -351,30 +385,30 @@
 			$('.showHide').show();
 			$('.hideShow').hide();
 		}
-	
+
 		$( ".otherTime" ).click(function() {
 			$('.showHide').hide();
 			$('.hideShow').show();
 		});
     });
-		
+
     </script>
  	<script type="text/rocketscript">
         jQuery(document).ready(function($) {
-			
+
 			$( ".menuBtnLink" ).click(function() {
 			  $( ".menu" ).slideToggle( "slow", function() {
 				// Animation complete.
 			  });
 			});
-			
+
 			if ($(window).width() > 850) {
 			   $(".dformright2").stick_in_parent()
 			}
 			else {
-			   
+
 			};
-			
+
 			$( window ).resize(function() {
 			  if ($(window).width() < 850) {
 			   $(".dformright2").trigger("sticky_kit:detach");
@@ -383,7 +417,7 @@
 			   $(".dformright2").stick_in_parent()
 			};;
 			});
-			
+
 			$('input').iCheck({
 				checkboxClass: 'icheckbox_flat-grey',
 				radioClass: 'iradio_flat-grey'
@@ -402,11 +436,11 @@
 	    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	    var iconBase = '/images/';
 	    var marker = new google.maps.Marker({
-	        position: myLatlng, 
+	        position: myLatlng,
 	        map: map,
 			icon: iconBase + 'marker.png',
 	        title: "{!! $center->address1 !!}"
-	    });   
+	    });
 	  }
 	  google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
