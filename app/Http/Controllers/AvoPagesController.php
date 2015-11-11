@@ -42,6 +42,28 @@ class AvoPagesController extends Controller
     }
 
     /**
+     * Display the all-features page.
+     *
+     * @return Response
+     */
+    public function customerInformation(TelCountryService $telCountryService)
+    {
+        $country_codes = $telCountryService->getAllCountriesWithList();
+        return view('avo-pages.customer-information');
+    }
+
+    /**
+     * Display the all-features page.
+     *
+     * @return Response
+     */
+    public function customizeMail(TelCountryService $telCountryService)
+    {
+        //$country_codes = $telCountryService->getAllCountriesWithList();
+        return view('avo-pages.customize-mail');
+    }
+
+    /**
      * Display the contact page.
      *
      * @return Response

@@ -131,7 +131,7 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="" class="link">
+						    <a href="{!! url().'/customize-mail' !!}" class="link">
 						    	<div class="btnSelectP2">SELECT PLAN</div>
 						    </a>
 						    <div class="gray2 showFplans2 triggerShow">Show and compare plan features</div>
@@ -161,7 +161,7 @@
 								    <div class="clear"></div>
 							    </div><!--/wrapPP-->
 
-								<a href="" class="link">
+								<a href="{!! url().'/customize-mail' !!}" class="link">
 									<div class="btnSelectP2 orb">SELECT PLAN</div>
 								</a>
 
@@ -205,7 +205,7 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="" class="link">
+						    <a href="{!! url().'/customize-mail' !!}" class="link">
 						    	<div class="btnSelectP2">SELECT PLAN</div>
 						    </a>
 
@@ -248,7 +248,7 @@
 							    </div>
 						    	<div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="" class="link">
+						    <a href="{!! url().'/customize-mail' !!}" class="link">
 						    	<div class="btnSelectP2 orb">SELECT PLAN</div>
 						    </a>
 						    <a href="#" class="gray2 triggerShow"><div class="gray2 showFplans2 triggerShow">Show and compare plan features</div></a>

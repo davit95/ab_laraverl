@@ -31,6 +31,8 @@ Route::group(['before' => 'auth.basic'], function(){
 		Route::get('/live-receptionist', 'AvoPagesController@liveReceptionist');
 		Route::get('/all-features', 'AvoPagesController@allFeatures');
 		Route::get('/customize-phone', 'AvoPagesController@customizePhone');
+		Route::get('/customize-mail', 'AvoPagesController@customizeMail');
+		Route::get('/customer-information', 'AvoPagesController@customerInformation');
 		Route::get('/get-area-codes', 'PhonesController@getAreaCodes');
 		Route::get('/get-area-numbers', 'PhonesController@getAreaNumbers');
 		Route::get('/get-toll-free-numbers', 'PhonesController@getTollFreeNumbers');
