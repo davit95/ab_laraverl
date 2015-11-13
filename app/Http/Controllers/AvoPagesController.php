@@ -122,13 +122,17 @@ class AvoPagesController extends Controller
     public function sendcontact( Center $center, Guard $auth, SendContactrequest $request ,CookieJar $cookieJar, TempCartItemService $tempCartItemService)
     {        
         $inputs = $request->all();
-        $package = $request->get('package_option');
-        $center_id = $request->get('center_id');
+        if (isset($inputs['upgrade']) && $inputs['upgrade']=='yes') {
+            if ($inputs['package_option'] == 103) {
+                $inputs['package_option'] = 105;
+            }
+        }
+        $package = $inputs['package_option'];
+        $center_id = $inputs['center_id'];
         $price = $center->find($center_id)->prices()->where('package_id', $package )->first()->price;
         $package_option = $tempCartItemService->getPackageName($package);
         $inputs['price'] = $price;
         $inputs['vo_plan'] = $package_option;
-
         if( $auth->guest() ){
             if(null != $cookie = Cookie::get('temp_user_id')) {
                 $temp_user_id = $cookie;

@@ -92,11 +92,13 @@
                                     <td><div id="price">$0.00</div><div id="price_text">&nbsp;</div></td>
                                 </tr>
                             </table>
-                            <div class="upgrade">
-                                <p>Would you like to add <span class="bold">16 hours of conference room time</span> monhtly for only <span class="bold aqua">$$remainder</span> more per month?</p><br><br>
-                            </div>
+                            @if($package_option == 103)
+                                <div class="upgrade">
+                                    <p>Would you like to add <span class="bold">16 hours of conference room time</span> monhtly for only <span class="bold aqua">$$remainder</span> more per month?</p><br><br>
+                                </div>
 
-                            <p><input type="checkbox" name="upgrade" value="yes" style="width: 15px; height: auto;" /> <span class="bold">Yes!</span> I'd like to upgrade to the Platinum Plus package</p><br>
+                                <p><input type="checkbox" name="upgrade" value="yes" style="width: 15px; height: auto;" /> <span class="bold">Yes!</span> I'd like to upgrade to the Platinum Plus package</p><br>
+                            @endif
                             <input value=" CONTINUE " class="aquaBtn changeMtop continueBTN" type="submit" ><br>
 
                         {!! Form::close() !!}
