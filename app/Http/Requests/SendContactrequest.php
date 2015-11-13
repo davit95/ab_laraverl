@@ -24,10 +24,7 @@ class SendContactrequest extends Request
     public function rules()
     {
         return [
-            'name'      => 'required',
-            'email'     => 'required|email',
-            'company'   => 'required',
-            'phone'     => 'required'
+            
         ];
     }
 }

@@ -40,9 +40,16 @@
                         <h1 class="gray2">CUSTOMIZE AND CHOOSE OPTIONS</h1>
                         <p>Please customize your mail options first</p>
                         <h3>Virtual Office Term Length:</h3>
-                        <form action="" method="post" name="form1" id="form1" >
+                        {!! Form::open([ 'url' => url('sendcontact') , 'method' => 'post', 'name' => 'form1', 'id' => 'form1' ]) !!}
+
+                            {!! Form::hidden('center_id', $center_id) !!}
+                            @if( isset( $live_receptionist ) && $live_receptionist == 1 )
+                                <input type="hidden" name="live_receptionist" value="1" />
+                            @endif
+                            <input type="hidden" name="type" value="vo">
+                            <input type="hidden" name="package_option" value="{{ $package_option }}">
+                            <input type="hidden" name="vo_mail_forwarding_price" id="forwarding_price">
                             <input type="hidden" name="step" value="2" />
-                            <input type="hidden" name="Center_ID" value="$LNavCenterData[Center_ID]" />
 
                             <select name="term" class="term-drop">
                                 <option value="">Select Your Term Length</option>
@@ -58,7 +65,7 @@
                                 </tr>
                                 <tr>
                                     <td width="150">
-                                        <select name="product" id="forward" class="selcDrop" onChange="xajax_changePrice(this.value, document.getElementById('req').selectedIndex);">
+                                        <select name="vo_mail_forwarding_package" id="forward" class="selcDrop" onChange="changePrice(this.value, document.getElementById('freq').selectedIndex);">
                                             <option value="">Please Select </option>
                                             <option value="20">Local Pickup</option>
                                             <option value="21">Regular Mail </option>
@@ -72,7 +79,7 @@
                                 </tr>
                                 <tr>
                                     <td class="FreqHide">
-                                        <select name="freq" id="freq" class="selcDrop" onChange="xajax_changePrice(document.form1.product.value, this.value);">
+                                        <select name="vo_mail_forwarding_frequency" id="freq" class="selcDrop" onChange="changePrice(document.form1.product.value, this.value);">
                                             <option value="">Please Select </option>
                                             <option value="1">Monthly </option>
                                             <option value="2">Bi-Weekly </option>
@@ -92,7 +99,7 @@
                             <p><input type="checkbox" name="upgrade" value="yes" style="width: 15px; height: auto;" /> <span class="bold">Yes!</span> I'd like to upgrade to the Platinum Plus package</p><br>
                             <input value=" CONTINUE " class="aquaBtn changeMtop continueBTN" type="submit" ><br>
 
-                        </form>
+                        {!! Form::close() !!}
                     </div><!--/wrapDescrip-->
                 </div><!--/StepsContentLeft-->
             </div>
@@ -208,6 +215,45 @@
                 }
             });
         });
+
+        function changePrice (option, freq) {
+            //console.log(option);
+            //console.log(freq);
+            var price = '';
+            var newContent = 0;
+            var priceText = '';
+
+            if( option == '20' ) {
+                price = '0.00';
+            }
+
+            if( option == '21' ) {
+                price = '5.00';
+            } else if( option == '22' ) {
+                price = '5.00';
+            } else if( option == '23' ) {
+                price = '7.00';
+            } else if( option == '24' ) {
+                price = '7.00';
+            }
+
+            newContent = price * freq;
+            price = newContent;
+            newContent = '$' + newContent.toFixed(2);
+
+            $('#price').html(newContent);
+
+            if( (option == '23') || (option == '24') || (option != '20') ) {
+                newContent = newContent + ' + postage per forwarding';
+                $('#price').html(newContent);
+                priceText = '<div style="font-size: 10px; color: #666;">*Please note that prices may vary according to frequency and amount of mail received and forwarded. Oversized shipments and items requiring special packaging will be charged duly. For international shipments requiring customs forms, an additional $5 fee will be added per forwarded shipment.</div>';
+
+            }
+
+            $('#price_text').html(priceText);
+            $('#forwarding_price').val(price);
+
+        }
     </script>
 @stop
 

@@ -23,6 +23,13 @@ class CartController extends Controller
         if($auth->guest()) {
             if(null != $temp_user_id = Cookie::get('temp_user_id')) {
                 $items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
+
+                foreach($items as $item) {
+                    if(isset($item->vo_plan)) {
+                        $item->sum = $item->price + $item->vo_mail_forwarding_price + 100;
+                    }
+                }
+
             } else {
                 $items = [];
             }

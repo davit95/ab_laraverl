@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Center;
+use App\Product;
 use App\Http\Requests\SendContactrequest;
+use App\Http\Requests\CustomizeMailRequest;
 use App\Http\Controllers\Controller;
 use App\Services\TelCountryService;
+use Illuminate\Cookie\CookieJar;
+use App\Services\TempCartItemService;
+use Illuminate\Auth\Guard;
+use Cookie;
+
 
 class AvoPagesController extends Controller
 {
@@ -41,6 +48,17 @@ class AvoPagesController extends Controller
         return view('avo-pages.customize-phone', ['country_codes' => $country_codes]);
     }
 
+    public function storePhoneSettings( Request $request , TempCartItemService $tempCartItemService )
+    {       
+        // dd($request->all());
+        $temp_user_id = Cookie::get('temp_user_id');
+        if( null!= $tempCartItemService->update( $temp_user_id , $request->all()) ){
+            return redirect('/customer-information');
+        }else{
+            return redirect()->back()->withErrors('Error');
+        }
+    }
+
     /**
      * Display the all-features page.
      *
@@ -57,10 +75,33 @@ class AvoPagesController extends Controller
      *
      * @return Response
      */
-    public function customizeMail(TelCountryService $telCountryService)
+    public function customizeMail(CustomizeMailRequest $request, TelCountryService $telCountryService)
+    {
+        if($request->has('cid')) {
+            $center_id = $request->get('cid');
+        } else {
+            $center_id = 0;
+        }
+        if($request->has('b')) {
+            $live_receptionist = 1;
+        }else{
+            $live_receptionist = 0;
+        }
+        $package_option = $request->get('p');
+
+        //$country_codes = $telCountryService->getAllCountriesWithList();
+        return view('avo-pages.customize-mail', ['center_id' => $center_id , 'live_receptionist' => $live_receptionist, 'package_option' => $package_option ]);
+    }
+
+    /**
+     * Display the all-features page.
+     *
+     * @return Response
+     */
+    public function orderReview(TelCountryService $telCountryService)
     {
         //$country_codes = $telCountryService->getAllCountriesWithList();
-        return view('avo-pages.customize-mail');
+        return view('avo-pages.order-review');
     }
 
     /**
@@ -78,8 +119,35 @@ class AvoPagesController extends Controller
      *
      * @return Response
      */
-    public function sendcontact(SendContactrequest $request)
-    {
+    public function sendcontact( Center $center, Guard $auth, SendContactrequest $request ,CookieJar $cookieJar, TempCartItemService $tempCartItemService)
+    {        
+        $inputs = $request->all();
+        $package = $request->get('package_option');
+        $center_id = $request->get('center_id');
+        $price = $center->find($center_id)->prices()->where('package_id', $package )->first()->price;
+        $package_option = $tempCartItemService->getPackageName($package);
+        $inputs['price'] = $price;
+        $inputs['vo_plan'] = $package_option;
+
+        if( $auth->guest() ){
+            if(null != $cookie = Cookie::get('temp_user_id')) {
+                $temp_user_id = $cookie;
+            } else {
+                $temp_user_id = str_random(40);
+                $cookieJar->queue('temp_user_id', $temp_user_id, 999999);
+            }
+            
+            $inputs['temp_user_id'] = $temp_user_id;
+            if(null != $tempCartItemService->create($inputs))
+            {
+                if( $request->has('live_receptionist') ) {
+                    return redirect('/customize-phone');
+                } else {
+                    return redirect('/cart');
+                }
+            }
+        }
+
         return redirect()->back()->withSuccess('Successfully send!');
     }
 
