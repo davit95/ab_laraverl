@@ -9,6 +9,7 @@
             <div style="clear:both"></div>
             <div class="detailsTopWrap2 changeMtop2">
                 <div class="LeftCart">
+                    
                     @forelse($items as $item)
                         @include('cart.parts.item')
                     @empty

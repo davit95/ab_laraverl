@@ -131,17 +131,18 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url().'/customize-mail' !!}" class="link">
+
+						    <a href="{!! url().'/customize-mail?p=103&cid='.$center->id !!}" class="link">
 						    	<div class="btnSelectP2">SELECT PLAN</div>
 						    </a>
 						    <div class="gray2 showFplans2 triggerShow">Show and compare plan features</div>
 						    </div><!--/aPlanTop2-->
 						    <div class="aPlanBottom2 changeH bordeBottom bordeRight hide">
 						    <ul class="check gray3">
-						    <li>Business Address</li>
-						    <li>Mail Receipt</li>
-						    <li>Mail Forwarding *</li>
-						    <li>Personal Mail Box</li>
+							    <li>Business Address</li>
+							    <li>Mail Receipt</li>
+							    <li>Mail Forwarding *</li>
+							    <li>Personal Mail Box</li>
 						    </ul>
 						    </div>
 						</div>
@@ -161,7 +162,7 @@
 								    <div class="clear"></div>
 							    </div><!--/wrapPP-->
 
-								<a href="{!! url().'/customize-mail' !!}" class="link">
+								<a href="{!! url().'/customize-mail?p=103&b=402&cid='.$center->id !!}" class="link">
 									<div class="btnSelectP2 orb">SELECT PLAN</div>
 								</a>
 
@@ -205,7 +206,7 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url().'/customize-mail' !!}" class="link">
+						    <a href="{!! url().'/customize-mail?p=105&cid='.$center->id !!}" class="link">
 						    	<div class="btnSelectP2">SELECT PLAN</div>
 						    </a>
 
@@ -248,7 +249,7 @@
 							    </div>
 						    	<div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url().'/customize-mail' !!}" class="link">
+						    <a href="{!! url().'/customize-mail?p=105&b=402&cid='.$center->id !!}" class="link">
 						    	<div class="btnSelectP2 orb">SELECT PLAN</div>
 						    </a>
 						    <a href="#" class="gray2 triggerShow"><div class="gray2 showFplans2 triggerShow">Show and compare plan features</div></a>

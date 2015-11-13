@@ -23,18 +23,18 @@
             </div>
             <div class="StepsContentLeft">
                 <div class="wrapDescrip">
-                    <form action="" method="post" name="form1" id="form1" >
+                    <form action="/save-phone-settings" method="post" name="form1" id="form1" >
                         <h1 class="gray2">CUSTOMIZE AND CHOOSE OPTIONS</h1>
                         <div class="customPhoneTop">
                             <p>
                                 <span class="mediumBold">Select whether you would like a local or toll free number.</span>
                             </p>
                             <br>
-			                <input type="hidden" name="step" value="2" />
-			                <input type="hidden" name="Center_ID" value="$VOData[Center_ID]" />
-                            <input type="radio" id="localNumber" name="phoneValue" value="phoneValue" onclick="toggleTel('CountrySelect', 'TollFree');"/>
+			                
+			                
+                            <input type="radio" id="localNumber" name="package_option" value="local" onclick="toggleTel('CountrySelect', 'TollFree');"/>
                             <label> local number</label> &nbsp; &nbsp; 
-                            <input type="radio" id="" name="phoneValue" value="" onclick="toggleTel('TollFree','CountrySelect');"/>
+                            <input type="radio" id="" name="package_option" value="toll_free" onclick="toggleTel('TollFree','CountrySelect');"/>
                             <label> toll free number</label>
                             <br><br>
                         </div>
@@ -48,7 +48,7 @@
                             <p>
                                 <span class="mediumBold">Select a toll-free prefix below to see available numbers.</span>
                             </p>
-                            {!! Form::select('bbb', [
+                            {!! Form::select('phone_number_selected', [
                                 ''    => 'Please Select',
                                 '800' => '800',
                                 '888' => '888',
@@ -71,7 +71,7 @@
                                 <p>
                                     <span class="mediumBold">Please select a number:</span>
                                 </p>
-                                <select name="full_number" class="TollFPhone changeMtop"></select>
+                                <select name="phone_number_selected" class="TollFPhone changeMtop"></select>
                             </div>
                         </div>
                         <br>
