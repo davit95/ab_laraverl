@@ -22,3 +22,7 @@ Route::get('/logout', 'Auth\AuthController@logout');
 Route::get('/reports', 'ReportsController@index');
 
 Route::get('/reports', 'ReportsController@index');
+
+Route::resource('/owners', 'OwnersController');
+
+Route::resource('/centers', 'CentersController', [ 'only' => ['create', 'store'] ]);

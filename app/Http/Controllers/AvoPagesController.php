@@ -52,7 +52,7 @@ class AvoPagesController extends Controller
     {       
         // dd($request->all());
         $temp_user_id = Cookie::get('temp_user_id');
-        if( null!= $tempCartItemService->update( $temp_user_id , $request->all()) ){
+        if( null != $tempCartItemService->update( $temp_user_id , $request->all()) ){
             return redirect('/customer-information');
         }else{
             return redirect()->back()->withErrors('Error');

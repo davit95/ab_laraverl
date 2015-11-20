@@ -89,130 +89,137 @@ class MeetingRoomsController extends Controller
     {
         if(null != $center = $centerService->getMeetingRoomByCenterSlug($country_code, $city_slug, $center_slug, $center_id))
         {
-           $nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);
-           $nearby_centers = $centerService->getMeetingRoomsByIds($nearby_centers_ids['ids']);
-           foreach($nearby_centers as $k => $v)
-           {
+            $nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);
+            $nearby_centers = $centerService->getMeetingRoomsByIds($nearby_centers_ids['ids']);
+            foreach($nearby_centers as $k => $v)
+            {
                 $nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
-           }
-           $nearby_centers = $nearby_centers->sortBy('distance');
-           foreach ($center->meeting_rooms as $key => $mr)
-           {
-               $included = [];
-               $paid = [];
-
-               $phone_rates = explode('||', $mr->options->phone_rate);
-               if($phone_rates[0] < '1' || $phone_rates[0] == '')
-               {
-                    $included[] = 'Phone Access';
-               }
-               elseif($phone_rates[0] != 'NA')
-               {
-                    $paid[] = 'Phone Access|Phone_Rate';
-               }
-
-               $network_rates = explode('||', $mr->options->network_rate);
-               if($network_rates[0] < '1' || $network_rates[0] == '')
-               {
-                    $included[] = 'Network Connection';
-               }
-               elseif($network_rates[0] != 'NA')
-               {
-                    $paid[] = 'Network Connection|Network_Rate';
-               }
-
-               $whiteboard_rates = explode('||', $mr->options->whiteboard_rate);
-               if($whiteboard_rates[0] < '1' || $whiteboard_rates[0] == '')
-               {
-                    $included[] = 'Whiteboard';
-               }
-               elseif($whiteboard_rates[0] != 'NA')
-               {
-                    $paid[] = 'Whiteboard|Whiteboard_Rate';
-               }
-
-               $wireless_rates = explode('||', $mr->options->wireless_rate);
-               if($wireless_rates[0] < '1' || $wireless_rates[0] == '')
-               {
-                    $included[] = 'WiFi';
-               }
-               elseif($wireless_rates[0] != 'NA')
-               {
-                    $paid[] = 'WiFi|Wireless_Rate';
-               }
-
-               $tvdvdplayer_rates = explode('||', $mr->options->tvdvdplayer_rate);
-               if($tvdvdplayer_rates[0] < '1' || $tvdvdplayer_rates[0] == '')
-               {
-                    $included[] = 'TV / DVD Player';
-               }
-               elseif($tvdvdplayer_rates[0] != 'NA')
-               {
-                    $paid[] = 'TV / DVD Player|Tvdvdplayer_Rate';
-               }
-
-               $projector_rates = explode('||', $mr->options->projector_rate);
-               if($projector_rates[0] < '1' || $projector_rates[0] == '')
-               {
-                    $included[] = 'Projector';
-               }
-               elseif($projector_rates[0] != 'NA')
-               {
-                    $paid[] = 'Projector|Projector_Rate';
-               }
-
-               $videoconferencing_rates = explode('||', $mr->options->videoconferencing_rate);
-               if($videoconferencing_rates[0] < '1' || $videoconferencing_rates[0] == '')
-               {
-                    $included[] = 'Video Conferencing';
-               }
-               elseif($videoconferencing_rates[0] != 'NA')
-               {
-                    $paid[] = 'Video Conferencing|Videoconferencing_Rate';
-               }
-
-               $admin_services_rates = explode('||', $mr->options->admin_services_rate);
-               if($admin_services_rates[0] < '1' || $admin_services_rates[0] == '')
-               {
-                    $included[] = 'Admin Services';
-               }
-               elseif($admin_services_rates[0] != 'NA')
-               {
-                    $paid[] = 'Admin Services|Admin_Services_Rate';
-               }
-
-               $parking_rates = explode('||', $mr->options->parking_rate);
-               if($parking_rates[0] < '1' || $parking_rates[0] == '')
-               {
-                    $included[] = 'Parking';
-               }
-               elseif($parking_rates[0] != 'NA')
-               {
-                    $paid[] = 'Parking|Parking_Rate';
-               }
-
-               if($mr->bridge_connection_available == 'yes')
-               {
-                    $included[] = 'Bridge Connection Available';
-               }
-
-               if($mr->catering == 'yes')
-               {
-                    $included[] = 'Catering Available';
-               }
-
-
-
-               $center->meeting_rooms[$key]->included = $included;
-               $center->meeting_rooms[$key]->paid = $paid;
-           }
-           //dd( $center , $nearby_centers);
-           return view('meeting-rooms.show', ['center' => $center, 'nearby_centers' => $nearby_centers]);
-        }
-        else
-        {
+            }
+            $nearby_centers = $nearby_centers->sortBy('distance');
+            foreach ($center->meeting_rooms as $key => $mr)
+            {
+                $included = [];
+                $paid = [];
+    
+                $phone_rates = explode('||', $mr->options->phone_rate);
+                if($phone_rates[0] < '1' || $phone_rates[0] == '')
+                {
+                     $included[] = 'Phone Access';
+                }
+                elseif($phone_rates[0] != 'NA')
+                {
+                     $paid[] = 'Phone Access|Phone_Rate';
+                }
+    
+                $network_rates = explode('||', $mr->options->network_rate);
+                if($network_rates[0] < '1' || $network_rates[0] == '')
+                {
+                     $included[] = 'Network Connection';
+                }
+                elseif($network_rates[0] != 'NA')
+                {
+                     $paid[] = 'Network Connection|Network_Rate';
+                }
+    
+                $whiteboard_rates = explode('||', $mr->options->whiteboard_rate);
+                if($whiteboard_rates[0] < '1' || $whiteboard_rates[0] == '')
+                {
+                     $included[] = 'Whiteboard';
+                }
+                elseif($whiteboard_rates[0] != 'NA')
+                {
+                     $paid[] = 'Whiteboard|Whiteboard_Rate';
+                }
+    
+                $wireless_rates = explode('||', $mr->options->wireless_rate);
+                if($wireless_rates[0] < '1' || $wireless_rates[0] == '')
+                {
+                     $included[] = 'WiFi';
+                }
+                elseif($wireless_rates[0] != 'NA')
+                {
+                     $paid[] = 'WiFi|Wireless_Rate';
+                }
+    
+                $tvdvdplayer_rates = explode('||', $mr->options->tvdvdplayer_rate);
+                if($tvdvdplayer_rates[0] < '1' || $tvdvdplayer_rates[0] == '')
+                {
+                     $included[] = 'TV / DVD Player';
+                }
+                elseif($tvdvdplayer_rates[0] != 'NA')
+                {
+                     $paid[] = 'TV / DVD Player|Tvdvdplayer_Rate';
+                }
+    
+                $projector_rates = explode('||', $mr->options->projector_rate);
+                if($projector_rates[0] < '1' || $projector_rates[0] == '')
+                {
+                     $included[] = 'Projector';
+                }
+                elseif($projector_rates[0] != 'NA')
+                {
+                     $paid[] = 'Projector|Projector_Rate';
+                }
+    
+                $videoconferencing_rates = explode('||', $mr->options->videoconferencing_rate);
+                if($videoconferencing_rates[0] < '1' || $videoconferencing_rates[0] == '')
+                {
+                     $included[] = 'Video Conferencing';
+                }
+                elseif($videoconferencing_rates[0] != 'NA')
+                {
+                     $paid[] = 'Video Conferencing|Videoconferencing_Rate';
+                }
+    
+                $admin_services_rates = explode('||', $mr->options->admin_services_rate);
+                if($admin_services_rates[0] < '1' || $admin_services_rates[0] == '')
+                {
+                     $included[] = 'Admin Services';
+                }
+                elseif($admin_services_rates[0] != 'NA')
+                {
+                     $paid[] = 'Admin Services|Admin_Services_Rate';
+                }
+    
+                $parking_rates = explode('||', $mr->options->parking_rate);
+                if($parking_rates[0] < '1' || $parking_rates[0] == '')
+                {
+                     $included[] = 'Parking';
+                }
+                elseif($parking_rates[0] != 'NA')
+                {
+                     $paid[] = 'Parking|Parking_Rate';
+                }
+    
+                if($mr->bridge_connection_available == 'yes')
+                {
+                     $included[] = 'Bridge Connection Available';
+                }
+    
+                if($mr->catering == 'yes')
+                {
+                     $included[] = 'Catering Available';
+                }
+                $center->meeting_rooms[$key]->included = $included;
+                $center->meeting_rooms[$key]->paid = $paid;
+            }
+            //dd( $center , $nearby_centers);
+            return view('meeting-rooms.show', ['center' => $center, 'nearby_centers' => $nearby_centers]);
+        } else {
             return 'aa';
         }
+    }
+
+
+    /**
+     * Removing date values from session.
+     *
+     * @return Response
+     */
+    public function resetDate()
+    {
+        session()->forget(['mr_request', 'hours']);
+        return redirect()->back();
     }
 
     /**
@@ -223,17 +230,48 @@ class MeetingRoomsController extends Controller
     public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService)
     {
         if($auth->guest()){
+            if (!session('mr_request')) {
+                if ($request->has('mr_date') && $request->has('mr_start_time') && $request->has('mr_end_time')) {
+                    $mr_start_time = strtotime($request->mr_start_time);
+                    $mr_end_time = strtotime($request->mr_end_time);
+                    $hours = ($mr_end_time - $mr_start_time)/3600;
+                    session(['mr_request' => $request->all(), 'hours' => $hours]);
+                    return redirect()->back()->withInput();
+                } else {
+                    if (!$request->has('mr_date')) {
+                        $errors['mr_date'] = 'Date field is required.';
+                    }
+                    if (!$request->has('mr_start_time')) {
+                        $errors['mr_start_time'] = 'Start time field is required.';
+                    }
+                    if (!$request->has('mr_end_time')) {
+                        $errors['mr_end_time'] = 'End time field is required.';
+                    }
+                    return redirect()->back()->withErrors($errors)->withInput();
+                }
+            }
+
+            if (!$request->has('mr_id')) {
+                return redirect()->back()->withErrors(['mr_id' => 'No selected meeting room.']);
+            }
             if(null != $cookie = Cookie::get('temp_user_id')) {
                 $temp_user_id = $cookie;
             } else {
                 $temp_user_id = str_random(40);
                 $cookieJar->queue('temp_user_id', $temp_user_id, 999999);
             }
-            $params = $request->all();
+            $price = $request->price[$request->mr_id];
+            $params = session('mr_request');
+            $params['mr_id'] = $request->mr_id;
             $params['temp_user_id'] = $temp_user_id;
-            if(null != $tempCartItemService->create($params))
-            {
-                return redirect('/cart');
+            $params['price'] = $price;
+            $params['mr_date'] = (new \DateTime($params['mr_date']))->format('Y-m-d');
+            $params['mr_start_time'] = (new \DateTime($params['mr_start_time']))->format('H:i:s');
+            $params['mr_end_time'] = (new \DateTime($params['mr_end_time']))->format('H:i:s');
+            //dd( $params );
+            if(!is_null( $tempCartItemService->create($params))) {
+                session()->forget(['mr_request', 'hours']);
+                return redirect('/customer-information');
             }
         }
     }

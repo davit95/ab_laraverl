@@ -16,7 +16,7 @@ class DataMigration extends Command
      *
      * @var string
      */
-    protected $signature = "data:migrate {--host=localhost} {--database=abcn} {--username=homestead} {--password=secret}";
+    protected $signature = "data:migrate {--host=localhost} {--database=abcn-old} {--username=homestead} {--password=secret}";
 
     /**
      * The console command description.

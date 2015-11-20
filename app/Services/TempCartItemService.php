@@ -30,7 +30,7 @@ class TempCartItemService
      */
     public function getItemsByTempUserId($temp_user_id)
     {
-        return $this->tempCartItem->where('temp_user_id', $temp_user_id)->orderBy('updated_at', 'DESC')->get();
+        return $this->tempCartItem->where('temp_user_id', $temp_user_id)->orderBy('updated_at', 'DESC')->orderBy('type', 'DESC')->get();
     }
 
     /**

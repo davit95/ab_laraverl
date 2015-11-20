@@ -124,168 +124,187 @@
 					</div>
 				</div>
 				<div class="wrapMRdetails">
-					<div class="descTopLeft2">
-						<div class="wrapDescrip">
-							<div class="number nOne"></div>
-							<h3 class="gray2">SET YOUR DATE AND TIME</h3>
-							<div id="root-picker-outlet" style="margin-left:45px;"></div>
-							<div id="root-picker-outlet2" style="margin-left:45px;"></div>
-							{!! Form::open(['action' => 'MeetingRoomsController@bookMeetingRoom', 'method' => 'POST']) !!}
-
-								{{-- <input type="hidden" name="cid" value="$_REQUEST[cid]" /> --}}
-								{{-- <input type="hidden" name="step" value="set_date_time" /> --}}
-								{!! Form::hidden('center_id', $center->id) !!}
-								@if($errors->has('date'))
-									<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
-										{!! $errors->get('date')[0]!!}
-									</div>
-								@endif
-								@if($errors->has('from_time'))
-									<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
-										{!! $errors->get('from_time')[0]!!}
-									</div>
-								@endif
-								@if($errors->has('to_time'))
-									<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
-										{!! $errors->get('to_time')[0]!!}
-									</div>
-								@endif
-
-		            			<fieldset class="dateAndTime">
-		            				{{-- <div class="yourDateT" $hideShow>
-		                    			Your meeting room date is: <span class="mediumBold">$_REQUEST[date]</span><br>
-		                    			From: <span class="mediumBold">$_REQUEST[from_time]</span> to: <span class="mediumBold">$_REQUEST[to_time]</span><br>
-		                    			<a href="#" style="text-decoration:none;"><div class="otherTime lightBtn">CHANGE DATE</div></a>
-		                			</div><!--/showHide--> --}}
-		            				<div>
-		                    			<label for="date">
-											<div class="label">Set Date:</div>
-										</label>
-										{!! Form::text('mr_date', null, ['id' => 'input_01', 'placeholder' => 'Please select a date', 'class' =>  'datepicker', 'required']) !!}
-										<br>
-		                    			<label for="fromTime">
-											<div class="label">Set Your Start Time:</div>
-										</label>
-										{!! Form::text('mr_start_time', null, ['id' => 'input_from', 'placeholder' => 'Please select a start time', 'class' =>  'timepicker', 'required']) !!}
-										<br>
-		                    			<label for="toTime">
-											<div class="label">Set End Start Time:</div>
-										</label>
-										{!! Form::text('mr_end_time', null, ['id' => 'input_to', 'placeholder' => 'Please select an end time', 'class' => 'timepicker', 'required']) !!}
-										<br>
-		                    			<div class="label"></div>
-										{{-- {!! Form::submit('SET DATE AND TIME', ['class' => 'aquaBtn sbmitDate', 'width' => '170']) !!} --}}
-		            				</div>
-		            			</fieldset>
-		        			{{-- {!! Form::close() !!} --}}
-						</div>
-					</div>
-					<div class="descTopLeft2">
-						<div class="wrapDescrip">
-							<div class="number nTwo"></div>
-							<h3 class="gray2">PLEASE SELECT A MEETING ROOM AND OPTIONS</h3>
-							{{-- <form action="" id="mrForm" name="mr-main-form" method="post"> --}}
-							@if($errors->has('mr_id'))
-								<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
-									{!! $errors->get('mr_id')[0]!!}
-								</div>
-							@endif
-							<div id="mrForm">
-								$form_extras
-								<table id="hor-minimalist-b" summary="Meeting Room Summary" class="MRoptionT gray2">
-									<tr>
-										<th scope="col" style="">&nbsp;</th>
-										<th scope="col" style=" text-align: left;">MEETING ROOM</th>
-										<th scope="col" style="text-align: center;">CAPACITY</th>
-										<th scope="col" style=" text-align: center;">RATE</th>
-										<th scope="col" style="text-align: center;">TOTAL</th>
-									</tr>
-									{{-- dd($center->meeting_rooms) --}}
-									@foreach($center->meeting_rooms as $mr)
-										@if($mr->name != '')
-											<tr class="MRline totalCost Mroom" Mroom="{!! $mr->id !!}" cost="$first_amount" bgcolor="#F3F4F4" >
-												<td style="text-align: center; min-width:30px;">
-												<input name="mr_id" type="radio" value="{!! $mr->id !!}" class="Mroom SelectMR" $js_alert />
-												</td>
-												<td class="theMR">{!! $mr->name !!}</td>
-												<td style="text-align: center;">up to {!! $mr->capacity !!}</td>
-												<td class="thePrice" style="text-align: center;"><span class="convert">${!! $mr->hourly_rate !!}</span>/hr</td>
-												<td class="total bold" style="text-align: center;">$$first_amount</td>
-											</tr>
-											<tr class="service" Mroom="{!! $mr->id !!}" style="" cost="0">
-												<td colspan="5" class="no-border">
-													@if($mr->options && $mr->options->room_description != '')
-													<h3>Room Description</h3>
-													<div class="mr-description">{!! $mr->room_description !!}</div>
-													@endif
-													<br><h2>INCLUDED AMENITIES</h2>
-													<div class="mr-incl-amenities-box">
-														<ul>
-															@foreach($mr->included as $amenity)
-																<li>{!! $amenity !!}</li>
-															@endforeach
-														</ul>
-													</div>
-													<div class="clear"></div>
-												</td>
-											</tr>
-											@if(count($mr->paid) > 0)
-												<tr class="service" Mroom="{!! $mr->id !!}" style="" cost="0">
-													<td colspan="5" class="no-border">
-														<h2>ADDITIONAL AMENITIES AVAILABLE</h2>
-													</td>
-												</tr>
-											@endif
-										@endif
-									@endforeach
-								</table>
-							</div>
-						</div>
-						<div class="descTopLeft2 noMbottom" $hideShow>
+					{!! Form::open(['action' => 'MeetingRoomsController@bookMeetingRoom', 'method' => 'POST']) !!}
+						<div class="descTopLeft2">
 							<div class="wrapDescrip">
-								<div class="number nThree"></div>
-								<h3 class="gray2">SUBMIT</h3>
-								<div class="wrapSN3">
-									<input type="submit" class="submitBook aquaBtn" value="SUBMIT BOOKING">
-									<div class="bookOwrap">
-										<div class="OtherRadios gray3"></div>
-									</div>
-								</div>
+								<div class="number nOne"></div>
+								<h3 class="gray2">SET YOUR DATE AND TIME</h3>
+								<div id="root-picker-outlet" style="margin-left:45px;"></div>
+								<div id="root-picker-outlet2" style="margin-left:45px;"></div>
 
+									{{-- <input type="hidden" name="cid" value="$_REQUEST[cid]" /> --}}
+									{{-- <input type="hidden" name="step" value="set_date_time" /> --}}
+									{!! Form::hidden('center_id', $center->id) !!}
+									@if($errors->has('date'))
+										<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+											{!! $errors->get('date')[0]!!}
+										</div>
+									@endif
+									@if($errors->has('from_time'))
+										<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+											{!! $errors->get('from_time')[0]!!}
+										</div>
+									@endif
+									@if($errors->has('to_time'))
+										<div style="color: red; padding: 5px; float: left; text-align: left; width: 400px;">
+											{!! $errors->get('to_time')[0]!!}
+										</div>
+									@endif
+
+			            			<fieldset class="dateAndTime">
+			            				@if(session('mr_request'))
+				            				<div class="yourDateT">
+				                    			Your meeting room date is: <span class="mediumBold">{{ session('mr_request.mr_date') }}</span><br>
+				                    			From: <span class="mediumBold">{{ session('mr_request.mr_start_time') }}</span> to: <span class="mediumBold">{{ session('mr_request.mr_end_time') }}</span><br>
+				                    			<a href="{{ url('reset-date') }}" style="text-decoration:none;"><div class="otherTime lightBtn">CHANGE DATE</div></a>
+				                			</div><!--/showHide-->
+				                		@else
+				            				<div>
+				                    			<label for="date">
+													<div class="label @if($errors->has('mr_date')) label-error @endif">Set Date:</div>
+												</label>
+												{!! Form::text('mr_date', null, ['id' => 'input_01', 'placeholder' => 'Please select a date', 'class' =>  'datepicker', 'required']) !!}
+												@if($errors->has('mr_date'))
+													<small class="text-error-custom" style="margin-left:145px;">{{ $errors->get('mr_date')[0] }}</small>
+												@endif
+												<br>
+				                    			<label for="fromTime">
+													<div class="label @if($errors->has('mr_start_time')) label-error @endif">Set Your Start Time:</div>
+												</label>
+												{!! Form::text('mr_start_time', null, ['id' => 'input_from', 'placeholder' => 'Please select a start time', 'class' =>  'timepicker ', 'required']) !!}
+												@if($errors->has('mr_start_time'))
+													<small class="text-error-custom" style="margin-left:145px;">{{ $errors->get('mr_start_time')[0] }}</small>
+												@endif
+												<br>
+				                    			<label for="toTime">
+													<div class="label @if($errors->has('mr_end_time')) label-error @endif">Set End Start Time:</div>
+												</label>
+												{!! Form::text('mr_end_time', null, ['id' => 'input_to', 'placeholder' => 'Please select an end time', 'class' => 'timepicker', 'required']) !!}
+												@if($errors->has('mr_end_time'))
+													<small class="text-error-custom" style="margin-left:145px;">{{ $errors->get('mr_end_time')[0] }}</small>
+												@endif
+												<br>
+				                    			<div class="label"></div>
+												{!! Form::submit('SET DATE AND TIME', ['class' => 'aquaBtn sbmitDate', 'width' => '170']) !!}
+				            				</div>
+			                			@endif
+			            			</fieldset>
+			        			{{-- {!! Form::close() !!} --}}
 							</div>
 						</div>
-					</div>
-							{!! Form::close()!!}
+						<div class="descTopLeft2">
+							<div class="wrapDescrip">
+									<div class="number nTwo"></div>
+									<h3 class="gray2">PLEASE SELECT A MEETING ROOM AND OPTIONS</h3>
+									{{-- <form action="" id="mrForm" name="mr-main-form" method="post"> --}}
+									<div id="mrForm">
+										{{-- $form_extras --}}
+										@if($errors->has('mr_id'))
+											<div style="color: red; font-size:16px;, padding: 5px; float: left; text-align: left; width: 400px;">
+												{!! $errors->get('mr_id')[0]!!}
+											</div>
+										@endif
+										<table id="hor-minimalist-b" summary="Meeting Room Summary" class="MRoptionT gray2">
+											<tr>
+												<th scope="col" style="">&nbsp;</th>
+												<th scope="col" style=" text-align: left;">MEETING ROOM</th>
+												<th scope="col" style="text-align: center;">CAPACITY</th>
+												<th scope="col" style=" text-align: center;">RATE</th>
+												<th scope="col" style="text-align: center;">TOTAL</th>
+											</tr>
+											{{-- dd($center->meeting_rooms) --}}
+											@foreach($center->meeting_rooms as $mr)
+												@if($mr->name != '')
+													{!! Form::hidden("price[".$mr->id."]", $mr->hourly_rate*session('hours')) !!}
+													<tr class="MRline totalCost Mroom" Mroom="{!! $mr->id !!}" cost="$first_amount" bgcolor="#F3F4F4" >
+														<td style="text-align: center; min-width:30px;">
+														<input name="mr_id" type="radio" value="{!! $mr->id !!}" class="Mroom SelectMR" $js_alert />
+														</td>
+														<td class="theMR">{!! $mr->name !!}</td>
+														<td style="text-align: center;">up to {!! $mr->capacity !!}</td>
+														<td class="thePrice" style="text-align: center;"><span class="convert">${!! $mr->hourly_rate !!}</span>/hr</td>
+														<td class="total bold" style="text-align: center;">${!! ceil($mr->hourly_rate*session('hours')) !!}</td>
+													</tr>
+													<tr class="service" Mroom="{!! $mr->id !!}" style="" cost="0">
+														<td colspan="5" class="no-border">
+															@if($mr->options && $mr->options->room_description != '')
+															<h3>Room Description</h3>
+															<div class="mr-description">{!! $mr->room_description !!}</div>
+															@endif
+															<br><h2>INCLUDED AMENITIES</h2>
+															<div class="mr-incl-amenities-box">
+																<ul>
+																	@foreach($mr->included as $amenity)
+																		<li>{!! $amenity !!}</li>
+																	@endforeach
+																</ul>
+															</div>
+															<div class="clear"></div>
+														</td>
+													</tr>
+													@if(count($mr->paid) > 0)
+														<tr class="service" Mroom="{!! $mr->id !!}" style="" cost="0">
+															<td colspan="5" class="no-border">
+																<h2>ADDITIONAL AMENITIES AVAILABLE</h2>
+															</td>
+														</tr>
+													@endif
+												@endif
+											@endforeach
+										</table>
+									</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="nearWrap">
-					<h3 class="gray2">NEARBY CENTERS</h3>
-					@foreach($nearby_centers as $_center)
-						@if($_center->id != $center->id)
-							<a href="{!! URL::action('MeetingRoomsController@getMeetingRoomShowPage', ['country_code' => $center->country, 'city_slug' => $_center->city? $_center->city->slug : '', 'center_slug' => $_center->slug])!!}">
-								<div class="cNear">
-									<div class="nearImg">
-										<div class="img-wrapper4">
-											@if(count($_center->photos))
-												<img src="http://www.abcn.com/images/photos/{!! $_center->photos[0]->path !!}" alt="$_center->photos[0]->alt">
-											@else
-												<img src="http://www.abcn.com/images/photos/no_pic.gif">
-											@endif
+						@if(session('mr_request'))
+							<div class="descTopLeft2 noMbottom" $hideShow>
+								<div class="wrapDescrip">
+									<div class="number nThree"></div>
+									<h3 class="gray2">SUBMIT</h3>
+									<div class="wrapSN3">
+										<input type="submit" class="submitBook aquaBtn" value="SUBMIT BOOKING">
+										<div class="bookOwrap">
+											<div class="OtherRadios gray3"></div>
 										</div>
 									</div>
-									<div class="nearInfo gray2 medium">{!! $_center->building_name? $_center->building_name : $_center->city->name." Virtual Office"!!}
-										<span class="gray3 light"> <br />({!! $_center->distance !!} miles away)</span>
-									</div>
+
 								</div>
-							</a>
+							</div>
 						@endif
-					@endforeach
+					{!! Form::close()!!}
 				</div>
 			</div>
 		</div>
-
+		<div class="nearWrap">
+			<h3 class="gray2">NEARBY CENTERS</h3>
+			@foreach($nearby_centers as $_center)
+				@if($_center->id != $center->id)
+					<a href="{!! URL::action('MeetingRoomsController@getMeetingRoomShowPage', ['country_code' => $center->country, 'city_slug' => $_center->city? $_center->city->slug : '', 'center_slug' => $_center->slug])!!}">
+						<div class="cNear">
+							<div class="nearImg">
+								<div class="img-wrapper4">
+									@if(count($_center->photos))
+										<img src="http://www.abcn.com/images/photos/{!! $_center->photos[0]->path !!}" alt="$_center->photos[0]->alt">
+									@else
+										<img src="http://www.abcn.com/images/photos/no_pic.gif">
+									@endif
+								</div>
+							</div>
+							<div class="nearInfo gray2 medium">{!! $_center->building_name? $_center->building_name : $_center->city->name." Virtual Office"!!}
+								<span class="gray3 light"> <br />({!! $_center->distance !!} miles away)</span>
+							</div>
+						</div>
+					</a>
+				@endif
+			@endforeach
+		</div>
 	</div>
+@stop
+
+@section('styles')
+	<link rel="stylesheet" href="/css/themes/classic.css">
+	<link rel="stylesheet" href="/css/themes/classic.date.css">
+	<link rel="stylesheet" href="/css/themes/classic.time.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/flat/grey.css">
 @stop
 
 @section('scripts')
@@ -341,26 +360,27 @@
 
        to_picker = to_.pickatime('picker')
 
+       if(to_picker && from_picker){
+			// Check if there's a "from" or "to" time to start with.
+			if ( from_picker.get('value') ) {
+			  to_picker.set('min', from_picker.get('select'))
+			}
+			if ( to_picker.get('value') ) {
+			  from_picker.set('max', to_picker.get('select') )
+			}
 
-		// Check if there's a "from" or "to" time to start with.
-		if ( from_picker.get('value') ) {
-		  to_picker.set('min', from_picker.get('select'))
-		}
-		if ( to_picker.get('value') ) {
-		  from_picker.set('max', to_picker.get('select') )
-		}
-
-		// When something is selected, update the "from" and "to" limits.
-		from_picker.on('set', function(event) {
-		  if ( event.select ) {
-		    to_picker.set('min', from_picker.get('select'))
-		  }
-		})
-		to_picker.on('set', function(event) {
-		  if ( event.select ) {
-		    from_picker.set('max', to_picker.get('select'))
-		  }
-		})
+			// When something is selected, update the "from" and "to" limits.
+			from_picker.on('set', function(event) {
+			  if ( event.select ) {
+			    to_picker.set('min', from_picker.get('select'))
+			  }
+			})
+			to_picker.on('set', function(event) {
+			  if ( event.select ) {
+			    from_picker.set('max', to_picker.get('select'))
+			  }
+			})
+       }
 
 		function getUrlParameter(sParam)
 		{
@@ -444,6 +464,37 @@
 	  }
 	  google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
+	<script type="text/rocketscript">
+        jQuery(document).ready(function($) {
+			
+			$( ".menuBtnLink" ).click(function() {
+			  $( ".menu" ).slideToggle( "slow", function() {
+				// Animation complete.
+			  });
+			});
+			
+			if ($(window).width() > 850) {
+			   $(".dformright2").stick_in_parent()
+			}
+			else {
+			   
+			};
+			
+			$( window ).resize(function() {
+			  if ($(window).width() < 850) {
+			   $(".dformright2").trigger("sticky_kit:detach");
+			}
+			else {
+			   $(".dformright2").stick_in_parent()
+			};;
+			});
+			
+			$('input').iCheck({
+				checkboxClass: 'icheckbox_flat-grey',
+				radioClass: 'iradio_flat-grey'
+			  });
+        });
+    </script>
 @stop
 
 @section('styles')

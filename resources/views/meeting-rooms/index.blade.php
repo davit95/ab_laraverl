@@ -15,22 +15,22 @@
         
         <div id="sticky-anchor"></div>
         <div class="searchHome" id="sticky">
-        <form action="mr-search.php" autocomplete="off" id="avoS" method="get">
-	<input type="hidden" name="step" value="search" />
-          
-          <input type="text" class="SearchInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
-         
-          
-              <select id="Services" name="avo1" class="avo1">
+            <form action="mr-search.php" autocomplete="off" id="avoS" method="get">
+    	        <input type="hidden" name="step" value="search" />
+              
+                <input type="text" class="SearchInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
+             
+              
+                <select id="Services" name="avo1" class="avo1">
                     <option value="VO">Virtual Offices</option>
                     <option value="MR" selected>Meeting Rooms</option>
-              </select> 
-              
-          <input type="hidden" name="source" value="bb">
-          <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large aquaB" id="searchBtn" >
-            <span class="mobileS">Search</span>
-          </button>
-        </form>
+                </select> 
+                  
+                <input type="hidden" name="source" value="bb">
+                <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large aquaB" id="searchBtn" >
+                    <span class="mobileS">Search</span>
+                </button>
+            </form>
         </div><!--/searchHome-->
         <div class="ViewAllLocations"><a href="#NAsection" class="white">View All Locations Here!</a></div>
        </div><!--/productContWrap-->

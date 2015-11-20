@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('role_id')->default(4);
+            $table->integer('role_id')->nullable()->unsigned()->index();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('company_name');
@@ -24,10 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('passwrod_hint');
             $table->string('address1');
             $table->string('address2');
-            $table->integer('city_id');
-            $table->integer('us_state_id');
+            $table->integer('city_id')->nullable()->unsigned()->index();
+            $table->integer('us_state_id')->nullable()->unsigned()->index();
             $table->string('postal_code');
-            $table->integer('country_id');
+            $table->integer('country_id')->nullable()->unsigned()->index();
             $table->string('password')->nullable();
             $table->string('cc_name');
             $table->string('cc_number');
@@ -41,6 +41,11 @@ class CreateUsersTable extends Migration
             $table->string('dv_phone_number');
             $table->rememberToken();
             $table->timestamps();
+
+            //$table->foreign('role_id')->references('id')->on('roles')->onUpdate('restrict')->onDelete('set null');
+            //$table->foreign('city_id')->references('id')->on('cities')->onUpdate('restrict')->onDelete('set null');
+            //$table->foreign('us_state_id')->references('id')->on('us_states')->onUpdate('restrict')->onDelete('set null');
+            //$table->foreign('country_id')->references('id')->on('countries')->onUpdate('restrict')->onDelete('set null');
         });
     }
 

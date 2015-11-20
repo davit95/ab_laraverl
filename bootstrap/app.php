@@ -41,6 +41,36 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    Admin\Contracts\OwnerInterface::class,
+    Admin\Services\OwnerService::class
+);
+
+$app->singleton(
+    Admin\Contracts\CountryInterface::class,
+    Admin\Services\CountryService::class
+);
+
+$app->singleton(
+    Admin\Contracts\CityInterface::class,
+    Admin\Services\CityService::class
+);
+
+$app->singleton(
+    Admin\Contracts\RegionInterface::class,
+    Admin\Services\RegionService::class
+);
+
+$app->singleton(
+    Admin\Contracts\UsStateInterface::class,
+    Admin\Services\UsStateService::class
+);
+
+$app->singleton(
+    Admin\Contracts\CenterInterface::class,
+    Admin\Services\CenterService::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

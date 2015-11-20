@@ -24,6 +24,7 @@ Route::group(['before' => 'auth.basic'], function(){
 		Route::get('/meeting-rooms/{country_slug}', 'MeetingRoomsController@getCountryMeetingRooms');
 		Route::get('/meeting-rooms/{country_code}/{city_slug}', 'MeetingRoomsController@getCityMeetingRooms');
 		Route::get('/meeting-rooms/{country_code}/{city_slug}/{center_slug}/{center_id}', 'MeetingRoomsController@getMeetingRoomShowPage');
+		Route::get('/reset-date', 'MeetingRoomsController@resetDate');
 		Route::post('/meeting-rooms/book-meeting-room', 'MeetingRoomsController@bookMeetingRoom');
 		//Route::post('/meeting-rooms/{country_code}/{city_slug}/{center_slug}', 'MeetingRoomsController@getMeetingRoomShowPage');
 

@@ -1,4 +1,4 @@
-@if(isset($item->vo_plan))
+@if($item->type == 'vo')
     <div class="productCartW">
         <div class="sideCartTL">
             <h4 class="bold aqua">PRODUCT:</h4>
@@ -43,6 +43,50 @@
                 <td class="sideCartL2">TOTAL:</td>
                 <td class="sideCartr2">
                     <span class="mediumBold aqua mediumBold">${!! $item->sum !!}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+@endif
+
+@if($item->type == 'mr')
+    <div class="productCartW">
+        <div class="sideCartTL">
+            <h4 class="bold aqua">PRODUCT:</h4>
+        </div>
+        <div class="sideCartTr orange">
+            <a href="#" class="gray3">Remove &nbsp;<img src="images/remove.png" class="remove"/></a>
+        </div>
+        <div class="clear"></div>
+        <p>
+            <span class="smallLine mediumBold">{{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
+            {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}</span>
+        </p>
+        <table width="100%">
+            <tr>
+                <td class="sideCartL2">MEETING ROOM:</td>
+                <td class="sideCartr2">
+                    <span class="mediumBold">${!! $item->price_per_hour !!}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="sideCartL2">TOTAL AMOUNT:</td>
+                <td class="sideCartr2">
+                    <span class="mediumBold">${!! $item->price !!}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="sideCartL2">30% DUE NOW:</td>
+                <td class="sideCartr2">
+                    <span class="mediumBold">{{ $item->price_due }}</span>
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td class="sideCartL2">TOTAL:</td>
+                <td class="sideCartr2">
+                    <span class="mediumBold aqua mediumBold">${!! $item->price_total !!}</span>
                 </td>
             </tr>
         </table>
