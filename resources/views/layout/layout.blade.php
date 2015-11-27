@@ -6,9 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="/css/autocomplete.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="/css/styles.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/css/styles-with-currency.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheets.css">
         <link href="/css/jquery.bxslider.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/css/chosen.css">
         @yield('styles')
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="/js/jquery.autocomplete1.js"></script>
@@ -124,6 +125,18 @@
             <script src="/js/waypoints.min.js"></script>
             <script src="/js/jquery.counterup.min.js"></script>
 
+            <script type="text/javascript" src="/js/chosen.jquery.js"></script>
+            <script type="text/javascript" src="/js/ImageSelect.jquery.js"></script>
+            <script type="text/javascript">
+                $(".currency-select").chosen();
+
+                jQuery(document).ready(function($) {
+
+                    $('.currency-select').on('change', function(){
+                        $(this).parents('form').submit();
+                    })
+                });
+            </script>
             @yield('scripts')
         </div>
         <div style="z-index: 1001; display: none; position: absolute;" class="acResults"></div>

@@ -65,7 +65,7 @@
                                 </tr>
                                 <tr>
                                     <td width="150">
-                                        <select name="vo_mail_forwarding_package" id="forward" class="selcDrop" onChange="changePrice(this.value, document.getElementById('freq').selectedIndex);">
+                                        <select name="vo_mail_forwarding_package" id="forward" class="selcDrop" onChange="changePrice();">
                                             <option value="">Please Select </option>
                                             <option value="20">Local Pickup</option>
                                             <option value="21">Regular Mail </option>
@@ -79,7 +79,7 @@
                                 </tr>
                                 <tr>
                                     <td class="FreqHide">
-                                        <select name="vo_mail_forwarding_frequency" id="freq" class="selcDrop" onChange="changePrice(document.form1.product.value, this.value);">
+                                        <select name="vo_mail_forwarding_frequency" id="freq" class="selcDrop" onChange="changePrice();">
                                             <option value="">Please Select </option>
                                             <option value="1">Monthly </option>
                                             <option value="2">Bi-Weekly </option>
@@ -218,9 +218,9 @@
             });
         });
 
-        function changePrice (option, freq) {
-            //console.log(option);
-            //console.log(freq);
+        function changePrice () {
+            option = $('#forward').val(); 
+            freq = $('#freq').val();
             var price = '';
             var newContent = 0;
             var priceText = '';

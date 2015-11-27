@@ -4,13 +4,25 @@
             <h4 class="bold aqua">PRODUCT:</h4>
         </div>
         <div class="sideCartTr orange">
-            <a href="#" class="gray3">Remove &nbsp;<img src="images/remove.png" class="remove"/></a>
+            {!! Form::open(['url' => url('cart/'.$item->id), 'method' => 'DELETE']) !!}
+                <a href="#" class="delete-item gray3">
+                    Remove &nbsp;
+                    <img src="images/remove.png" class="remove"/>
+                </a>
+            {!! Form::close() !!}
         </div>
         <div class="clear"></div>
         <p>
             <span class="mediumBold">Virtual Office</span>
             <br>
-            <span class="gray3">KPMG Building - 355 S. Grand Ave. Los Angeles, CA 90071</span>
+            <span class="gray3">
+                @if (!is_null($center = $item->center))
+                    - 
+                    {!! $center->address1 !!}
+                    {!! $center->address2!!}<br>
+                    {!! $center->city_name !!}, {!! $center->us_state !!} {!! $center->postal_code !!}
+                @endif
+            </span>
             <br>
             <span class="smallLine mediumBold">12 month term</span>
         </p>
@@ -55,12 +67,28 @@
             <h4 class="bold aqua">PRODUCT:</h4>
         </div>
         <div class="sideCartTr orange">
-            <a href="#" class="gray3">Remove &nbsp;<img src="images/remove.png" class="remove"/></a>
+            {!! Form::open(['url' => url('cart/'.$item->id), 'method' => 'DELETE']) !!}
+                <a href="#" class="delete-item gray3">
+                    Remove &nbsp;
+                    <img src="images/remove.png" class="remove"/>
+                </a>
+            {!! Form::close() !!}
         </div>
         <div class="clear"></div>
         <p>
-            <span class="smallLine mediumBold">{{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
-            {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}</span>
+            <span class="mediumBold">{!! is_null($center = $item->center)?'':$center->city_name !!}</span>
+            <br>
+            <span class="gray3">
+                @if (!is_null($center = $item->center)) 
+                    {!! $center->address1 !!}
+                    {!! $center->address2!!}<br>
+                    {!! $center->city_name !!}, {!! $center->us_state !!} {!! $center->postal_code !!}
+                @endif
+            </span>
+            <br>
+            <span class="smallLine mediumBold">
+                {{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
+                {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}</span>
         </p>
         <table width="100%">
             <tr>

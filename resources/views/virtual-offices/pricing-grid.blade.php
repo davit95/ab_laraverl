@@ -67,7 +67,7 @@
                 <li>Personal Mail Box</li>
                 </ul>
                 </div><!--/aPlanBottom2a-->
-                <a href="' . $next_URL . '?n=1&p=103&cid=' . $centerID . '" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
+                <a href="{{ url('/customize-mail?p=103&cid='.$center->id) }}" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
             </div><!--/aPlan2a-->
 
 	    <!-- PLATINUM WITH LR -->
@@ -101,7 +101,7 @@
                     @endforeach
                 </ul>
                 </div><!--/aPlanBottom2a-->
-                <a href="' . $next_URL . '?n=1&p=103&cid=' . $centerID . '" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
+                <a href="{{ url('/customize-mail?p=103&b=402&cid='.$center->id) }}" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
             </div><!--/aPlan2a-->
 
 
@@ -133,7 +133,7 @@
                 <li>16 Hours of Meeting Room or Private Office Time</li>
                 </ul>
                 </div><!--/aPlanBottom2a-->
-                <a href="' . $next_URL . '?n=1&p=103&cid=' . $centerID . '" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
+                <a href="{{ url('/customize-mail?p=105&cid='.$center->id) }}" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
             </div><!--/aPlan2a-->
 
 
@@ -165,7 +165,7 @@
                 <li>16 Hours of Meeting Room or Private Office Time</li>
                 </ul>
                 </div><!--/aPlanBottom2a-->
-                <a href="' . $next_URL . '?n=1&p=103&cid=' . $centerID . '" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
+                <a href="{{ url('/customize-mail?p=105&b=402&cid='.$center->id) }}" class="link planVo1" onclick="addToCart(103);"><div class="btnSelectP2a planVo1">SELECT PLAN</div></a>
             </div><!--/aPlan2a-->
 
 

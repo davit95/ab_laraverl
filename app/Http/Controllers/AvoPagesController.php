@@ -7,6 +7,7 @@ use App\Center;
 use App\Product;
 use App\Http\Requests\SendContactrequest;
 use App\Http\Requests\CustomizeMailRequest;
+use App\Http\Requests\CustomerRequest;
 use App\Http\Controllers\Controller;
 use App\Services\TelCountryService;
 use Illuminate\Cookie\CookieJar;
@@ -17,6 +18,37 @@ use Cookie;
 
 class AvoPagesController extends Controller
 {
+    /**
+     * Display cvv2 information page in popup.
+     *
+     * @return Response
+     */
+    public function cvv2()
+    {
+        return view('avo-pages.cvv2');
+    }
+
+    /**
+     * Set currency for current session.
+     *
+     * @return Response
+     */
+    public function changeCurrency(Request $request)
+    {
+        session(['currency' => $request->currency]);
+        return redirect()->back();
+    }
+
+    /**
+     * Display mr-terms information page in new tab.
+     *
+     * @return Response
+     */
+    public function mrTerms()
+    {
+        return view('avo-pages.mr-terms');
+    }
+    
     /**
      * Display the live-receptionist page.
      *
@@ -67,7 +99,19 @@ class AvoPagesController extends Controller
     public function customerInformation(TelCountryService $telCountryService)
     {
         $country_codes = $telCountryService->getAllCountriesWithList();
-        return view('avo-pages.customer-information');
+        return view('avo-pages.customer-information', ['countries' => $country_codes]);
+    }
+
+    /**
+     * Store customer information.
+     *
+     * @return Response
+     */
+    public function postCustomerInformation(CustomerRequest $request)
+    {
+        session(['customer_information' => $request->all()]);
+        //$country_codes = $telCountryService->getAllCountriesWithList();
+        return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
     }
 
     /**
@@ -100,8 +144,22 @@ class AvoPagesController extends Controller
      */
     public function orderReview(TelCountryService $telCountryService)
     {
+        if (!session('customer_information')) {
+            return redirect('customer-information');
+        }
+        $customer = session('customer_information');
         //$country_codes = $telCountryService->getAllCountriesWithList();
-        return view('avo-pages.order-review');
+        return view('avo-pages.order-review', ['customer' => (object)$customer]);
+    }
+
+    /**
+     * Display the all-features page.
+     *
+     * @return Response
+     */
+    public function postOrderReview()
+    {
+        return redirect()->back()->withWarning('Need to know what we want to do after placing the order.');
     }
 
     /**

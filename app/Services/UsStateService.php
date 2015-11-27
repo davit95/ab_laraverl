@@ -56,6 +56,7 @@ class UsStateService
 			$states[$key]->vo_url = URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $value->slug]);
 			$states[$key]->mr_url = URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $value->slug]);
 		}
+		//dd($states);
 		return $states;
 	}
 }

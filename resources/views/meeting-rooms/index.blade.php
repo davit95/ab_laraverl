@@ -15,17 +15,13 @@
         
         <div id="sticky-anchor"></div>
         <div class="searchHome" id="sticky">
-            <form action="mr-search.php" autocomplete="off" id="avoS" method="get">
-    	        <input type="hidden" name="step" value="search" />
-              
+            <form action="search2.php" autocomplete="off" id="avoS" method="get">
+                <input type="hidden" name="step" value="search" />
                 <input type="text" class="SearchInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
-             
-              
-                <select id="Services" name="avo1" class="avo1">
+                <select id="Services" name="avo1" class="avo1" >
+                    <option value="MR">Meeting Rooms</option>
                     <option value="VO">Virtual Offices</option>
-                    <option value="MR" selected>Meeting Rooms</option>
-                </select> 
-                  
+                </select>
                 <input type="hidden" name="source" value="bb">
                 <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large aquaB" id="searchBtn" >
                     <span class="mobileS">Search</span>
@@ -186,5 +182,5 @@
 @stop
 
 @section('scripts')
-<script type="text/javascript" src="/js/fixed-search-box.js"></script>
+    <script type="text/javascript" src="/js/fixed-search-box.js"></script>
 @stop

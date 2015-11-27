@@ -53,8 +53,9 @@ class CityService
 		foreach ($cities as $key => $value)
 		{
 			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
-			$cities[$key]->mt_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
+			$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
 		}
+		//dd($cities);
 		return $cities;
 	}
 

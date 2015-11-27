@@ -173,19 +173,24 @@
                     </div>
                 </div><!--/StepsContentLeft-->
                 <div class="StepsContentLeft">
+                    @if(session('warning'))
+                        <div class="alert-warning-custom"><b>Warning: </b>{{ session('warning') }}</div>
+                    @endif
+                </div>
+                <div class="StepsContentLeft">
                     <div class="wrapDescrip">
                         <h1 class="gray2">ORDER CONFIRMATION</h1>
                         <div class="reviewInfo">
                             <h3><span class="newCust">CUSTOMER INFORMATION</span></h3>
                             <br>
                             <p>
-                                <span class="mediumBold">Name:</span> $CustomerData[First_Name] $CustomerData[Last_Name]<br />
-                                <span class="mediumBold">Company:</span> $CustomerData[Company_Name]<br />
-                                <span class="mediumBold">Address:</span> $CustomerData[Address1]<br /> $Address_2 $CustomerData[City], $CustomerData[State]  $CustomerData[Postal_Code]<br />
-                                <span class="mediumBold">Country:</span> $CustomerData[Country]<br>
-                                <span class="mediumBold">Phone:</span> $CustomerData[Phone1]<br />
-                                <span class="mediumBold">Email:</span> $CustomerData[Email]<br><br>
-                                <a href="checkout-review.php" class="aqua">Edit Your Information</a><br>
+                                <span class="mediumBold">Name:</span> {{ $customer->first_name }} {{ $customer->last_name }}<br />
+                                <span class="mediumBold">Company:</span> {{ $customer->company_name }}<br />
+                                <span class="mediumBold">Address:</span> {{ $customer->address1 }}<br /> {{ isset($customer->address2)?$customer->address2:'' }} {{ isset($customer->city)?$customer->city:'' }}, {{ isset($customer->state)?$customer->state:'' }}  {{ $customer->postal_code }}<br />
+                                <span class="mediumBold">Country:</span> {{ isset($customer->country)?$customer->country:'No selected country' }}<br>
+                                <span class="mediumBold">Phone:</span> {{ $customer->phone }}<br />
+                                <span class="mediumBold">Email:</span> {{ $customer->email }}<br><br>
+                                <a href="{{ url('customer-information') }}" class="aqua">Edit Your Information</a><br>
                             </p>
 
                             <div class="clear"></div>
@@ -194,11 +199,12 @@
                                 <h3><span class="newCust">$col_head_text</span></h3>
                                 <p>$bottom_review_text</p>
                             </div><!--/recurringCharge-->
-                            <form action="" method="post" style="margin: 0;" name="form1">
-                                <input type="hidden" name="step" value="next">
-                                <input type="hidden" name="multiple" value="$multiple">
-                                <input type="hidden" name="returning" value="$returning">
-                                <input type="submit" value="PLACE ORDER" class="aquaBtn changeMtop minW" name="submit" />
+                            {!! Form::open(['name' => 'form1']) !!}
+                                {!! Form::hidden('step', 'next') !!}
+                                {!! Form::hidden('multiple', '$multiple') !!}
+                                {!! Form::hidden('returning', '$returning') !!}
+                                {!! Form::submit('PLACE ORDER', ['class' => 'aquaBtn changeMtop minW']) !!}
+                            {!! Form::close() !!}
                             </form>
                         </div><!--/reviewInfo-->
                     </div><!--/wrapDescrip-->
@@ -213,9 +219,14 @@
     <!--/intWrap-->
 @stop
 
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
+@stop 
 @section('scripts')
-    <script src="/js/icheck.js"></script>
-    <script>
+    <script type="text/rocketscript" data-rocketsrc="/js/jquery.tooltipster.min.js"></script>
+    <script type="text/rocketscript" src="/js/icheck.js"></script>
+    <script type="text/rocketscript">
         jQuery(document).ready(function($) {
             $( ".menuBtnLink" ).click(function() {
                 $( ".menu" ).slideToggle( "slow", function() {
@@ -255,5 +266,5 @@
 @stop
 
 @section('styles')
-  <link href="css/flat/grey.css" rel="stylesheet">
+  <link href="/css/flat/grey.css" rel="stylesheet">
 @stop

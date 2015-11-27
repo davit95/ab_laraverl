@@ -22,7 +22,7 @@
                         <div class="planFtsLine EFline">*Extra fees may apply</div>
                     </div><!--/planFts-->
                 </div><!--/PlanFtsHeight-->
-                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
+                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="{{ url('/customize-mail?p=103&cid='.$center->id) }}"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt1-->
 
             <!-- Platinum with LR plan -->
@@ -45,7 +45,7 @@
                         @endforeach
                     </div><!--/planFts-->
                 </div><!--/PlanFtsHeight-->
-                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
+                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="{{ url('/customize-mail?p=103&b=402&cid='.$center->id) }}"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt2-->
 
             <!-- Platinum Plus plan -->
@@ -66,7 +66,7 @@
                         <div class="planFtsLine"><div class="planListR"><div class="includedIcon"></div>16 Hours of Meeting Room or Private Office Time</div></div><!--/planFtsLine-->
                     </div><!--/planFts-->
                 </div><!--/PlanFtsHeight-->
-                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
+                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="{{ url('/customize-mail?p=105&cid='.$center->id) }}"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt3-->
 
             <!-- Platinum Plus with LR plan -->
@@ -87,7 +87,7 @@
                         <div class="planFtsLine"><div class="planListR"><div class="includedIcon"></div>16 Hours of Meeting Room or Private Office Time</div></div><!--/planFtsLine-->
                     </div><!--/planFts-->
                  </div><!--/PlanFtsHeight-->
-                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="' . $next_URL . '?n=1&p=103&cid=' . $center_ID . '"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
+                    <div class="PlanFtsBtns"><a class="popup-with-form" href="/pricing-grids/{!! $center->id !!}"><div class="PlanFtsbtnL">COMPARE</div></a><a href="{{ url('/customize-mail?p=105&b=402&cid='.$center->id) }}"><div class="PlanFtsbtnR">SELECT</div></a></div><!--/PlanFtsBtns-->
                 </div><!--/PlanFt4-->
     <!-- Platinum plan -->
         <div class="RplansBox">

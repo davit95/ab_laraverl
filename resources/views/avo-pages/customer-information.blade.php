@@ -124,7 +124,7 @@
                             </form>
                         </div><!--/signin-info-->
 
-                        <form action="" method="post" class="custInfoForm" name="form1" >
+                        {!! Form::model(session('customer_information'), ['class' => 'custInfoForm', 'name' => 'form1']) !!}
                             <input type="hidden" name="new_customer" value="1" >
                             <div class="newCinfo">
                                 <h3><span class="newCust">NEW CUSTOMERS - <span class="medium">ENTER YOUR BILLING INFORMATION</span></span></h3>
@@ -132,74 +132,105 @@
                                 <span class="smallLine"><span class="orange">*</span> Indicates a required field</span><br>
 
                                 <div class="clear"></div>
-                                <div class="newL"><label>First Name <span class="orange">*</span></label><input type="text" name="First_Name" value=""/></div>
-                                <div class="newL"><label>Last Name <span class="orange">*</span></label><input type="text" name="Last_Name" value=""/></div>
+                                <div class="newL">
+                                    <label>First Name <span class="orange">*</span></label>
+                                    {!! Form::text('first_name', null) !!}
+                                </div>
+                                <div class="newL">
+                                    <label>Last Name <span class="orange">*</span></label>
+                                    {!! Form::text('last_name', null) !!}
+                                </div>
                                 <div class="clear"></div>
-                                <div class="newL"><label>Email <span class="orange">*</span></label><input type="text" name="Email_Address" value=""/></div>
-                                <div class="newL"><label>Phone Number <span class="orange">*</span></label><input type="text" name="Phone_Number" value=""/></div>
+                                <div class="newL">
+                                    <label>Email <span class="orange">*</span></label>
+                                    {!! Form::email('email', null) !!}
+                                </div>
+                                <div class="newL">
+                                    <label>Phone Number <span class="orange">*</span></label>
+                                    {!! Form::text('phone', null) !!}
+                                </div>
                                 <div class="clear"></div>
-                                <div class="newL2"><label>Company <span class="orange">*</span></label><input class="inputLong" type="text" name="Company_Name" value=""/></div>
-                                <div class="newL2"><label>Address 1 <span class="orange">*</span></label><br><input class="inputLong" type="text" name="Address_1" value=""/></div>
-                                <div class="newL2"><label>Address 2</label><br><input class="inputLong" type="text" name="Address_2" value=""/></div>
+                                <div class="newL2">
+                                    <label>Company <span class="orange">*</span></label>
+                                    {!! Form::text('company_name', null, ['class' => 'inputLong']) !!}
+                                </div>
+                                <div class="newL2">
+                                    <label>Address 1 <span class="orange">*</span></label><br>
+                                    {!! Form::text('address1', null, ['class' => 'inputLong']) !!}
+                                </div>
+                                <div class="newL2">
+                                    <label>Address 2</label><br>
+                                    {!! Form::text('address2', null, ['class' => 'inputLong']) !!}
+                                </div>
                                 <div class="clear"></div>
                                 <div class="newL">
                                 <label>Country</label><br/>
-                                    <select name="Country" class="field-select">
-                                        <option value="">Please Select A Country </option>
-                                    </select>
+                                    {!! Form::select('country_id', ['' => 'Please Select A Country']+$countries , null, ['class' => 'field-select']) !!}
                                 </div>
                                 <div class="clear"></div>
-                                <div class="newL3"><label>City</label><input class="inputSmall" type="text" name="City" value=""/></div>
-                                <div class="newL3"><label>State</label><input class="inputSmall" type="text" name="State" value=""/></div>
-                                <div class="newL3"><label>Postal Code<span class="orange">*</span></label><input class="inputSmall" type="text" name="Postal_Code" value=""/></div>
+                                <div class="newL3">
+                                    <label>City</label>
+                                    {!! Form::text('city', null, ['class' => 'inputSmall']) !!}
+                                </div>
+                                <div class="newL3">
+                                    <label>State</label>
+                                    {!! Form::text('state', null, ['class' => 'inputSmall']) !!}
+                                </div>
+                                <div class="newL3">
+                                    <label>Postal Code<span class="orange">*</span></label>
+                                    {!! Form::text('postal_code', null, ['class' => 'inputSmall']) !!}
+                                </div>
                             </div><!--/newCinfo-->
                             <!-- end billing info //-->
 
                             <div class="mailFinfo">
                                 <h3><span class="newCust">MAIL FORWARDING INFORMATION</span></h3>
-                                <p><input type="checkbox" class="MFcheck" name="mfsame" value="yes" onclick="mfchange(this.form,'First_Name','MF_First_Name','Last_Name','MF_Last_Name','Address_1','MF_Address1','Address_2','MF_Address2','City','MF_City','State','MF_State','Postal_Code','MF_Postal_Code','Company_Name','MF_Company_Name','Country','MF_Country');" style=""> Yes, I'd like my mail forwarded to my billing address.</p>
+                                <p>
+                                    {!! Form::checkbox('mf_same', 'yes', null ,  ['class' => 'inputSmall', 'onclick' => "mfchange();"]) !!}
+                                    Yes, I'd like my mail forwarded to my billing address.
+                                </p>
                                 <br>
                                 <div class="newL">
                                     <label>First Name <span class="orange">*</span></label>
-                                    <input type="text" name="MF_First_Name" value="" />
+                                    {!! Form::text('mf_first_name', null) !!}
                                 </div>
                                 <div class="newL">
                                     <label>Last Name <span class="orange">*</span></label>
-                                    <input type="text" name="MF_Last_Name" value="" />
+                                    {!! Form::text('mf_last_name', null) !!}
                                 </div>
                                 <div class="clear"></div>
 
                                 <div class="newL2">
                                     <label>Address 1 <span class="orange">*</span></label>
-                                    <input class="inputLong" type="text" name="MF_Address1" value="" />
+                                    {!! Form::text('mf_address1', null, ['class' => 'inputLong']) !!}
                                 </div>
                                 <div class="newL2">
                                     <label>Address 2</label>
-                                    <input class="inputLong" type="text" name="MF_Address2" value="" />
+                                    {!! Form::text('mf_address2', null, ['class' => 'inputLong']) !!}
                                 </div>
-                                <div class="newL2"><label>Company Name <span class="orange">*</span></label>
-                                    <input class="inputLong" type="text" name="MF_Company_Name" value="" />
+                                <div class="newL2">
+                                    <label>Company Name <span class="orange">*</span></label>
+                                    {!! Form::text('mf_company_name', null, ['class' => 'inputLong']) !!}
                                 </div>
 
-                                <div class="newL"><label>Country <span class="orange">*</span></label><br/>
-                                    <select name="MF_Country">
-                                        <option value="">Please Select A Country </option>
-                                    </select>
+                                <div class="newL">
+                                    <label>Country <span class="orange">*</span></label><br/>
+                                    {!! Form::select('mf_country_id', ['' => 'Please Select A Country']+$countries, null) !!}
                                 </div>
 
                                 <div class="clear"></div>
                                 <div class="newL3">
                                     <label>City</label>
-                                    <input class="inputSmall" type="text" name="MF_City" value="" />
+                                    {!! Form::text('mf_city', null, ['class' => 'inputSmall']) !!}
                                 </div>
 
                                 <div class="newL3">
                                     <label>State</label>
-                                    <input class="inputSmall" type="text" name="MF_State" value="" />
+                                    {!! Form::text('mf_state', null, ['class' => 'inputSmall']) !!}
                                 </div>
                                 <div class="newL3">
                                     <label>Postal Code <span class="orange">*</span></label>
-                                    <input class="inputSmall" type="text" name="MF_Postal_Code" value="" />
+                                    {!! Form::text('mf_postal_code', null, ['class' => 'inputSmall']) !!}
                                 </div>
 
                                 <div class="clear"></div>
@@ -211,11 +242,12 @@
                                 <h3><span class="newCust">ACCOUNT PASSWORD INFORMATION</span></h3>
                                 <div class="newL">
                                     <label>Password <span class="orange">*</span></label><br/>
-                                    <input type="password" name="Password" value=""/><br><span class="smallLine">10 character limit</span>
+                                    {!! Form::password('password', null) !!}<br>
+                                    <span class="smallLine">10 character limit</span>
                                 </div>
                                 <div class="newL">
                                     <label>Confirm Password <span class="orange">*</span></label><br/>
-                                    <input type="password" name="Password_2" value=""/>
+                                    {!! Form::password('password_confirmation', null) !!}<br>
                                 </div>
                                 <div class="clear"></div>
                                 <!-- end username information//-->
@@ -223,60 +255,34 @@
 
                             <div class="PaymentInfo">
                                 <h3><span class="newCust">PAYMENT INFORMATION</span></h3>
-                                <input type="radio" name="payType" id="creditCard" value="cc"> Pay by Credit Card  &nbsp; &nbsp;
-                                <input type="radio" name="payType" id="bitcoin" value="bitcoin">Pay with Bitcoin<br>
+                                <input type="radio" name="payType" id="creditCard" value="cc" onclick="paymentMethod();"> Pay by Credit Card  &nbsp; &nbsp;
+                                <input type="radio" name="payType" id="bitcoin" value="bitcoin" onclick="paymentMethod();">Pay with Bitcoin<br>
                                 <div class="clear"></div>
 
                                 <div id="checkout-fields" style="display:none;">
                                     <div class="newL2">
                                         <label>Cardholder's Name<span class="orange">*</span></label>
-                                        <input class="inputLong" name="CC_Name" type="text">
+                                        {!! Form::text('cc_name', null, ['class' => 'inputLong']) !!}
                                     </div>
                                     <div class="newL">
                                         <label>Card Number<span class="orange">*</span></label>
-                                        <input name="CC_Number" type="text">
+                                        {!! Form::text('cc_number', null) !!}
                                     </div>
                                     <div class="newL">
                                         <label>CVV2 Number<span class="orange">*</span></label>
-                                        <input name="CVV2" id="CVV2" type="text"><br/>
+                                        {!! Form::text('ccv3', null) !!}<br/>
                                         <abbr>
-                                            <a href="cvv2.html" class="aqua smallLine" onclick="window.open (this.href, 'child', 'height=300,width=600, scrollbars=yes'); return false" title="Click for more information">Where's my CVV2?</a>
+                                            <a href="{{ url('cvv2') }}" class="aqua smallLine" onclick="window.open (this.href, 'child', 'height=300,width=600, scrollbars=yes'); return false" title="Click for more information">Where's my CVV2?</a>
                                         </abbr>
                                     </div>
                                     <div class="clear"></div>
                                     <div class="newL">
                                         <label>Expiration Date: <span class="orange">*</span></label>
-                                        <select name="CC_Month">
-                                            <option value="01">January (01)</option>
-                                            <option value="02">February (02)</option>
-                                            <option value="03">March (03)</option>
-                                            <option value="04">April (04)</option>
-                                            <option value="05">May (05)</option>
-                                            <option value="06">June (06)</option>
-                                            <option value="07">July (07)</option>
-                                            <option value="08">August (08)</option>
-                                            <option value="09">September (09)</option>
-                                            <option value="10">October (10)</option>
-                                            <option value="11">November (11)</option>
-                                            <option value="12">December (12)</option>
-                                        </select>
+                                        {!! Form::select('cc_month', ['01' => 'January (01)', '02' => 'February (02)', '03' => 'March (03)', '04' => 'April (04)', '05' => 'May (05)', '06' => 'June (06)', '07' => 'July (07)', '08' => 'August (08)', '09' => 'September (09)', '10' => 'October (10)', '11' => 'November (11)', '12' => 'December (12)'], null) !!}
                                     </div>
                                     <div class="newL">
                                         <label>Expiration Date: <span class="orange">*</span></label>
-                                        <select name="CC_Year">
-                                            <option value="14">2014
-                                            </option><option value="15">2015
-                                            </option><option value="16">2016
-                                            </option><option value="17">2017
-                                            </option><option value="18">2018
-                                            </option><option value="19">2019
-                                            </option><option value="20">2020
-                                            </option><option value="21">2021
-                                            </option><option value="22">2022
-                                            </option><option value="23">2023
-                                            </option><option value="24">2024
-                                            </option>
-                                        </select>
+                                        {!! Form::select('cc_year', ['14' => 2014, '15' => 2015, '16' => 2016, '17' => 2017, '18' => 2018, '19' => 2019, '20' => 2020, '21' => 2021, '22' => 2022, '23' => 2023, '24' => 2024], null) !!}
                                     </div>
                                     <div class="clear"></div>
                                 </div>
@@ -292,15 +298,16 @@
 
 
                             <div class="acceptTerms">
-                                <input name="agree" value="yes" type="checkbox">
-                                <label> <span class="orange">*</span> I agree to the Terms of Service - </label> <a href="$term_link" class="aqua" target="V">Terms of Service</a>
+                                {!! Form::checkbox('agree', 'yes', null) !!}
+                                <label><span class="orange">*</span> I agree to the Terms of Service - </label>
+                                <a href="{{ url('mr-terms') }}" class="aqua" target="V">Terms of Service</a>
                                 <br/><br/>
-                                <input value="CONTINUE" class="aquaBtn changeMtop continueBTN" type="submit">
+                                {!! Form::submit('CONTINUE', ['class' => 'aquaBtn changeMtop continueBTN' ]) !!}
 
                                 <div class="clear"></div>
                             </div><!--/acceptTerms-->
                             <!-- end terms information//-->
-                        </form>
+                        {!! Form::close() !!}
                         <!-- END BRM CODE //-->
 
                         
@@ -320,8 +327,18 @@
 
 @section('scripts')
     <script src="/js/icheck.js"></script>
-    <script>
+    <script type="text/rocketscript" data-rocketsrc="/js/jquery.tooltipster.min.js"></script>
+    <script type="text/rocketscript" data-rocketsrc="/js/icheck.js"></script>
+    <script type="text/rocketscript">
         jQuery(document).ready(function($) {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_flat-grey',
+                radioClass: 'iradio_flat-grey'
+            });
+
+            $('.iCheck-helper').on('click', function() {
+                $(this).siblings('input').click();
+            });
             $( ".menuBtnLink" ).click(function() {
                 $( ".menu" ).slideToggle( "slow", function() {
                 // Animation complete.
@@ -356,24 +373,49 @@
                 radioClass: 'iradio_flat-grey'
             });
 
-            $('#creditCard').on('ifChecked', function(event) {
-                if($('#creditCard').is(':checked')){
-                    $('#checkout-fields').show();
-                    $('#bitpay-fields').hide();
-                }else{
-                }
-            });
-            $('#bitcoin').on('ifChecked', function(event) {
-                if($('#bitcoin').is(':checked')){
-                    $('#bitpay-fields').show();
-                    $('#checkout-fields').hide();
-                }else{
-                }
-            });
         });
+
+        function mfchange() {
+            var mf_same = $("input[name='mf_same']");
+            var checked = !mf_same[0].checked;
+            var name;
+            var val = '';
+            var inputs = [
+                'first_name', 'last_name', 'email', 'phone', 'company_name', 'address1', 
+                'address2', 'country_id','city', 'state', 'postal_code'
+            ];
+            /*if(!checked && !confirm('You sure want to unuse this field, all "MAIL FORWARDING INFORMATION" inputs will be empty.')) {
+                return false;
+            }*/
+            for( key in inputs ){
+                name = inputs[key];
+                if(checked) {
+                    val = $("input[name='"+name+"']").val();
+                    $("input[name='mf_"+name+"']").val(val);
+                }
+            }
+        }
+
+        function paymentMethod() {
+            var cc = document.getElementById('creditCard');
+            var bitcoin = document.getElementById('bitcoin');
+            //console.log(cc);
+            //console.log(bitcoin);
+            if(cc.checked) {
+                $('#checkout-fields').show();
+                $('#bitpay-fields').hide();
+            }
+            if(bitcoin.checked) {
+                $('#checkout-fields').hide();
+                $('#bitpay-fields').show();
+            }
+        }
     </script>
 @stop
 
 @section('styles')
+    <link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/flat/grey.css">
     <link href="css/flat/grey.css" rel="stylesheet">
 @stop

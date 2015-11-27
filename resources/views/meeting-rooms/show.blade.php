@@ -30,10 +30,10 @@
 				<div class="detailTopLeft">
 					<div class="dimg">
 						<div class="img-wrapper2">
-							@if(count($center->photos))
-								<img src="http://www.abcn.com/images/photos/{!! $center->photos[0]->path !!}" alt="{!! $center->photos[0]->alt !!}">
-							@else
+							@if(is_null($photo = $center->mr_photos()->first()))
 								<img src="http://www.abcn.com/images/photos/no_pic.gif">
+							@else
+								<img src="/mr-photos/all/{!! $photo->path !!}" alt="{!! $photo->alt !!}">
 							@endif
 						</div>
 					</div>
@@ -305,9 +305,11 @@
 	<link rel="stylesheet" href="/css/themes/classic.date.css">
 	<link rel="stylesheet" href="/css/themes/classic.time.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/flat/grey.css">
+	<link href="/css/flat/grey.css" rel="stylesheet">
 @stop
 
 @section('scripts')
+	<script src="/js/icheck.js"></script>
 
 	<script src="/js/picker.js" type="text/javascript"></script>
 	<script src="/js/picker.date.js" type="text/javascript"></script>
@@ -316,7 +318,16 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
+    	
+      
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-grey',
+            radioClass: 'iradio_flat-grey'
+        });
 
+        $('.iCheck-helper').on('click', function() {
+            $(this).siblings('input').click();
+        });
         $( '.datepicker' ).pickadate({
 	    	format: 'mm/dd/yyyy',
             formatSubmit: 'mm/dd/yyyy',

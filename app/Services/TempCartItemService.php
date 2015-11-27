@@ -48,4 +48,11 @@ class TempCartItemService
         return $this->tempCartItem->where('temp_user_id', $temp_user_id)->update( $inputs );
     }
 
+    /*
+     * Remove the specified resource from storage.
+     */
+    public function destroyItem($id, $temp_user_id)
+    {
+        return $this->tempCartItem->where('temp_user_id', $temp_user_id)->where('id', $id)->delete();
+    }
 }

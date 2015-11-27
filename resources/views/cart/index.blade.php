@@ -76,7 +76,7 @@
                     </div>
                     <div class="clear"></div>
                     <div class="theSideCartWrap changeMtop">
-                        <div class="MyCart2">ORDER TOTAL: &nbsp; <span class="aqua">$194</span></div>
+                        <div class="MyCart2">ORDER TOTAL: &nbsp; <span class="aqua">${{ $price_total }}</span></div>
                         <div class="sideCartLine">
                             <div class="aquaBtn">PLACE ORDER NOW</div>
                         </div>
@@ -91,4 +91,17 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.delete-item').click(function() {
+                if(confirm('Are you sure you want to delete this Item?')){
+                    $(this).parent().submit();
+                }
+                return false;
+            });
+        });
+    </script>
 @stop

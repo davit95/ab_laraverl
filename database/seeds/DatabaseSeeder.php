@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(RolesPermissionsTableSeeder::class);
         $this->call(UserTableSeeder::class);
+        $this->call(CurrencyTableSeeder::class);
 
         Model::reguard();
     }

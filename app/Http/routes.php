@@ -35,7 +35,9 @@ Route::group(['before' => 'auth.basic'], function(){
 		Route::post('/save-phone-settings', 'AvoPagesController@storePhoneSettings');
 		Route::get('/customize-mail', 'AvoPagesController@customizeMail');
 		Route::get('/customer-information', 'AvoPagesController@customerInformation');
+		Route::post('/customer-information', 'AvoPagesController@postCustomerInformation');
 		Route::get('/order-review', 'AvoPagesController@orderReview');
+		Route::post('/order-review', 'AvoPagesController@postOrderReview');
 		Route::get('/get-area-codes', 'PhonesController@getAreaCodes');
 		Route::get('/get-area-numbers', 'PhonesController@getAreaNumbers');
 		Route::get('/get-toll-free-numbers', 'PhonesController@getTollFreeNumbers');
@@ -60,4 +62,8 @@ Route::group(['before' => 'auth.basic'], function(){
 		});
 
         Route::resource('/cart', 'CartController');
+
+        Route::get('cvv2', 'AvoPagesController@cvv2');
+        Route::get('mr-terms', 'AvoPagesController@mrTerms');
+        Route::get('change-currency', 'AvoPagesController@changeCurrency');
 });

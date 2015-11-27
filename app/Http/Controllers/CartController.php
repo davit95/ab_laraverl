@@ -21,18 +21,20 @@ class CartController extends Controller
     public function index(Guard $auth, TempCartItemService $tempCartItemService)
     {
         if($auth->guest()) {
+            $price_total = 0;
             if(null != $temp_user_id = Cookie::get('temp_user_id')) {
                 $items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
-
                 foreach($items as $item) {
-                    if(isset($item->vo_plan)) {
-                        $item->sum = $item->price + $item->vo_mail_forwarding_price + 100;
-                    } else {
+                    if(is_null($item->vo_plan)) {
                         $mr_start_time = strtotime($item->mr_start_time);
                         $mr_end_time = strtotime($item->mr_end_time);
-                        $item->price_per_hour = $item->price/(($mr_end_time - $mr_start_time)/3600);
+                        $item->price_per_hour = floor($item->price/(($mr_end_time - $mr_start_time)/3600));
                         $item->price_due = $item->price*30/100;
                         $item->price_total = $item->price-$item->price_due;
+                        $price_total += $item->price_total;
+                    } else {
+                        $item->sum = $item->price + $item->vo_mail_forwarding_price + 100;
+                        $price_total += $item->sum;
                     }
                 }
 
@@ -40,7 +42,7 @@ class CartController extends Controller
                 $items = [];
             }
             //dd($items);
-            return view('cart.index', ['items' => $items]);
+            return view('cart.index', ['items' => $items, 'price_total' => $price_total]);
         }
     }
 
@@ -105,8 +107,15 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Guard $auth, TempCartItemService $tempCartItemService)
     {
-        //
+        if($auth->guest()) {
+            if(null != $temp_user_id = Cookie::get('temp_user_id')) {
+                if ($tempCartItemService->destroyItem($id, $temp_user_id)) {
+                    return redirect()->back()->withSuccess('Item has been successfully deleted from cart.');
+                }
+            }
+        }
+        return redirect()->back()->withSuccess('Whoops, looks like something went wrong, please try later.'); 
     }
 }

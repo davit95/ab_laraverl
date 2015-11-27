@@ -132,7 +132,7 @@
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
 
-						    <a href="{!! url().'/customize-mail?p=103&cid='.$center->id !!}" class="link">
+						    <a href="{!! url('/customize-mail?p=103&cid='.$center->id) !!}" class="link">
 						    	<div class="btnSelectP2">SELECT PLAN</div>
 						    </a>
 						    <div class="gray2 showFplans2 triggerShow">Show and compare plan features</div>
@@ -162,7 +162,7 @@
 								    <div class="clear"></div>
 							    </div><!--/wrapPP-->
 
-								<a href="{!! url().'/customize-mail?p=103&b=402&cid='.$center->id !!}" class="link">
+								<a href="{!! url('/customize-mail?p=103&b=402&cid='.$center->id) !!}" class="link">
 									<div class="btnSelectP2 orb">SELECT PLAN</div>
 								</a>
 
@@ -206,7 +206,7 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url().'/customize-mail?p=105&cid='.$center->id !!}" class="link">
+						    <a href="{!! url('/customize-mail?p=105&cid='.$center->id) !!}" class="link">
 						    	<div class="btnSelectP2">SELECT PLAN</div>
 						    </a>
 
@@ -220,7 +220,7 @@
 						    <li>PLUS</li>
 						    </ul>
 						    <ul class="check gray3">
-						    <li>$meeting_room_text</li>
+						    <li>16 Hours of Meeting Room or Private Office Time</li>
 						    </ul>
 						    </div>
 						</div>
@@ -249,7 +249,7 @@
 							    </div>
 						    	<div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url().'/customize-mail?p=105&b=402&cid='.$center->id !!}" class="link">
+						    <a href="{!! url('/customize-mail?p=105&b=402&cid='.$center->id) !!}" class="link">
 						    	<div class="btnSelectP2 orb">SELECT PLAN</div>
 						    </a>
 						    <a href="#" class="gray2 triggerShow"><div class="gray2 showFplans2 triggerShow">Show and compare plan features</div></a>
@@ -262,7 +262,7 @@
 						    <li>PLUS</li>
 						    </ul>
 						    <ul class="check gray3">
-						    <li>$meeting_room_text</li>
+						    <li>16 Hours of Meeting Room or Private Office Time</li>
 						    </ul>
 						    </div>
 						</div>
