@@ -15,7 +15,7 @@ class CurrencyTableSeeder extends Seeder
             ['name' => 'USD', 'symbol' => '$', 'image' => 'usd.png'],
             ['name' => 'EUR', 'symbol' => '€', 'image' => 'eur.png'],
             ['name' => 'GBP', 'symbol' => '£', 'image' => 'gbp.png'],
-            ['name' => 'AUD', 'symbol' => '$', 'image' => 'aud.png']
+            ['name' => 'AUD', 'symbol' => 'AUD', 'image' => 'aud.png']
         );
         DB::table('currencies')->truncate();
         DB::table('currencies')->insert($currencies);
