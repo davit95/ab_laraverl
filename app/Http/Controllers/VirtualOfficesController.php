@@ -142,6 +142,10 @@ class VirtualOfficesController extends Controller
                 $packages['Platinum Plus'] = $price;
             }
         }
+        /*foreach ($packages as $key => $package) {
+            var_dump($package->currentCurrencyPrice);
+        }
+        dd();*/
         return $packages;
     }
 }

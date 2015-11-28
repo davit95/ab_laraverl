@@ -9,7 +9,7 @@
             <select class="currency-select" name="currency">
                 @foreach($currencies as $currency)
                      {{ var_dump($currency->name, session('currency')) }}
-                    <option data-img-src="{{ url('/images/currencies/'.$currency->image) }}" value="{{ $currency->name }}" @if(session('currency') == $currency->name ) selected="selected" @endif><span class="light">&nbsp;{{ $currency->symbol }}</span></option>
+                    <option data-img-src="{{ url('/images/currencies/'.$currency->image) }}" value="{{ $currency->name }}" @if(session('currency.name') == $currency->name ) selected="selected" @endif><span class="light">&nbsp;{{ $currency->symbol }}</span></option>
                 @endforeach
             </select>
         {!! Form::close() !!}
