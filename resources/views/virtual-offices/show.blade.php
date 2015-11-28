@@ -123,8 +123,8 @@
 						    <div class="wrapPP">
 						    <div id="startPlan" class="firstline gray2"><h3 class="cf1">&nbsp; PLATINUM <img src="/images/info.png" class="tooltip"/></h3></div>
 						    <div class="secondline gray3">
-						    	@if(isset($packages['Platinum'])  && $packages['Platinum']->price)
-						    		<span class="price">${!! $packages['Platinum']->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">$100 Set up fee</p>
+						    	@if(isset($packages['Platinum'])  && $packages['Platinum']->current_currency_price->price)
+						    		<span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">$100 Set up fee</p>
 						    	@else
 						    		<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
 						    	@endif
@@ -152,8 +152,8 @@
 							    <div class="wrapPP">
 								    <div class="firstline gray2"><h3 class="cf1">&nbsp; PLATINUM<a href="#" title=""> <img src="/images/info.png" class="tooltip2"/></a><br><span class="smallLine">WITH LIVE RECEPTIONIST</span></h3></div>
 									    <div class="secondline gray3">
-									    	<span class="nonPrice orange cf1 bold">&nbsp;${!! $packages['Platinum']->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
-										    <span class="price">${!! $packages['Platinum']->with_live_receptionist_pack_price !!}</span><span class="pMonth"> /MONTH</span>
+									    	<span class="nonPrice orange cf1 bold">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
+										    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->with_live_receptionist_pack_price !!}</span><span class="pMonth"> /MONTH</span>
 										    <br>
 										    <p class="save">
 										    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
@@ -198,8 +198,8 @@
 						    <div class="wrapPP">
 						    <div class="firstline gray2"><h3 class="cf1">&nbsp; PLATINUM PLUS<a href="#" title=""> <img src="/images/info.png" class="tooltip3"/></a></h3></div>
 						    <div class="secondline gray3">
-						    	@if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->price)
-						    		<span class="price">${!! $packages['Platinum Plus']->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">$100 Set up fee</p>
+						    	@if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price)
+						    		<span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">$100 Set up fee</p>
 						    	@else
 						    		<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
 						    	@endif
@@ -239,8 +239,8 @@
 						    	</div>
 
 							    <div class="secondline gray3">
-							    	<span class="nonPrice orange cf1 bold">&nbsp;${!! $packages['Platinum Plus']->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
-								    <span class="price">${!! $packages['Platinum Plus']->with_live_receptionist_pack_price !!}</span>
+							    	<span class="nonPrice orange cf1 bold">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
+								    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_pack_price !!}</span>
 								    <span class="pMonth"> /MONTH</span>
 								    <br>
 								    <p class="save">

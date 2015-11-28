@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Session\SessionServiceProvider as ServiceProvider;
 use App\Models\Currency;
 use GuzzleHttp\Client;
 
@@ -13,7 +13,7 @@ class ViewServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Currency $currency, Client $client)
+    public function boot(Currency $currencyModel, Client $client)
     {
         if (is_null(session('rates'))) {
             $response = $client->get('https://openexchangerates.org/api/latest.json?app_id='.config('abcn.openexchangerates.app_id'))->json();
@@ -25,16 +25,17 @@ class ViewServiceProvider extends ServiceProvider
         }
 
         if (is_null(session('currency'))) {
-            session(['currency' => 'USD']);
+            $currency = $currencyModel->find(1);
+            $currency = ['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
+            session(['currency' => $currency]);
         }
         if (is_null(session('currencies'))) {
             $currencies = [];
-            foreach ($currency->all() as $key => $currency) {
+            foreach ($currencyModel->all() as $key => $currency) {
                 $currencies[] = (object)['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
             }
             session(['currencies' => $currencies]);
         }
-        //var_dump(session('currencies'),session('currency'),session('rates'));
 
         view()->share('currencies', session('currencies'));
     }

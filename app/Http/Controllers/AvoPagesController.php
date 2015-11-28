@@ -35,7 +35,13 @@ class AvoPagesController extends Controller
      */
     public function changeCurrency(Request $request)
     {
-        session(['currency' => $request->currency]);
+        foreach (session('currencies') as $key => $currency) {
+            if ($request->currency == $currency->name) {
+                $currency_id = $currency->id;
+                session(['currency' => (array)$currency]);
+                break;
+            }
+        }
         return redirect()->back();
     }
 
