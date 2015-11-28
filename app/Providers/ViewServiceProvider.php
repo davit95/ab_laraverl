@@ -15,7 +15,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(Currency $currency, Client $client)
     {
-        /*if (is_null(session('rates'))) {
+        if (is_null(session('rates'))) {
             $response = $client->get('https://openexchangerates.org/api/latest.json?app_id='.config('abcn.openexchangerates.app_id'))->json();
             $rates['USD'] = $response['rates']['USD'];
             $rates['GBP'] = $response['rates']['GBP'];
@@ -33,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider
                 $currencies[] = (object)['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
             }
             session(['currencies' => $currencies]);
-        }*/
+        }
         //var_dump(session('currencies'),session('currency'),session('rates'));
 
         view()->share('currencies', session('currencies'));

@@ -120,7 +120,6 @@
     <body>
         <div class="contentWrap">
             @include('layout.parts.menu')
-            {{ var_dump(session('currencies'),session('currency'),session('rates')) }}
             @yield('content')
             @include('layout.parts.footer')
             <script src="/js/waypoints.min.js"></script>
