@@ -150,14 +150,34 @@ class AvoPagesController extends Controller
      *
      * @return Response
      */
-    public function orderReview(TelCountryService $telCountryService)
+    public function orderReview(TelCountryService $telCountryService, TempCartItemService $tempCartItemService)
     {
         if (!session('customer_information')) {
             return redirect('customer-information');
         }
         $customer = session('customer_information');
         //$country_codes = $telCountryService->getAllCountriesWithList();
-        return view('avo-pages.order-review', ['customer' => (object)$customer]);
+        $price_total = 0;
+        if(null != $temp_user_id = Cookie::get('temp_user_id')) {
+            $items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
+            foreach($items as $item) {
+                if(is_null($item->vo_plan)) {
+                    $mr_start_time = strtotime($item->mr_start_time);
+                    $mr_end_time = strtotime($item->mr_end_time);
+                    $item->price_per_hour = $item->price/(($mr_end_time - $mr_start_time)/3600);
+                    $item->price_due = $item->price*30/100;
+                    $item->price_total = $item->price-$item->price_due;
+                    $price_total += $item->price_total;
+                } else {
+                    $item->sum = $item->price + $item->vo_mail_forwarding_price + 100;
+                    $price_total += $item->sum;
+                }
+            }
+
+        } else {
+            $items = [];
+        }
+        return view('avo-pages.order-review', ['customer' => (object)$customer, 'items' => $items, 'price_total' => round($price_total, 2)]);
     }
 
     /**
