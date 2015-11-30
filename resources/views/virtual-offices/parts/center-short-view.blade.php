@@ -8,7 +8,7 @@
                     <div class="PlanFtName">
                         <div class="RPBleft bold lh1">Platinum</div>
                         @if(isset($center->packages_arr['Platinum']))
-                            <div class="RPBright lh1">$ {{$center->packages_arr['Platinum']->price}}<span class="smallText">/MONTH</span>
+                            <div class="RPBright lh1">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->price*session('rate'), 2)}}<span class="smallText">/MONTH</span>
                             </div>
                         @else
                         <span>Not Available</span>
@@ -32,7 +32,7 @@
                     <div class="PlanFtName">
                         <div class="RPBleft2 bold">Platinum<br>with Live Receptionist</div>
                         @if(isset($center->packages_arr['Platinum']))
-                            <div class="RPBright2"><span class="lineTrough smallText">$ {{$center->packages_arr['Platinum']->with_live_receptionist_full_price}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {{$center->packages_arr['Platinum']->with_live_receptionist_pack_price}}</span><span class="smallText">/MONTH</span></span></div>
+                            <div class="RPBright2"><span class="lineTrough smallText">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->with_live_receptionist_full_price*session('rate'), 2)}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->with_live_receptionist_pack_price*session('rate'), 2) }}</span><span class="smallText">/MONTH</span></span></div>
                         @else
                             <span>Not Available</span>
                         @endif
@@ -55,7 +55,7 @@
                     <div class="PlanFtName">
                         <div class="RPBleft bold lh1">Platinum Plus</div>
                         @if(isset($center->packages_arr['Platinum Plus']))
-                            <div class="RPBright lh1">$ {{$center->packages_arr['Platinum Plus']->price}} <span class="smallText">/MONTH</span></div>
+                            <div class="RPBright lh1">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->price*session('rate'), 2) }} <span class="smallText">/MONTH</span></div>
                         @else
                             <span>Not Available</span>
                         @endif
@@ -76,7 +76,7 @@
                     <div class="PlanFtName">
                       <div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>
                       @if(isset($center->packages_arr['Platinum Plus']))
-                          <div class="RPBright2"><span class="lineTrough smallText">$ {{$center->packages_arr['Platinum Plus']->with_live_receptionist_full_price}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {{$center->packages_arr['Platinum Plus']->with_live_receptionist_pack_price}}</span><span class="smallText">/MONTH</span></span></div>
+                          <div class="RPBright2"><span class="lineTrough smallText">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->with_live_receptionist_full_price*session('rate'), 2) }}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->with_live_receptionist_pack_price*session('rate'), 2)}}</span><span class="smallText">/MONTH</span></span></div>
                       @else
                           <span>Not Available</span>
                       @endif
@@ -95,7 +95,7 @@
         <div class="RPBplan1"><div class="RPBplan1T"><div class="planNum">1</div></div>
         <div class="RPBinfoPlan"><div class="RPBleft lh1">Platinum</div>
         @if(isset($center->packages_arr['Platinum']))
-            <div class="RPBright lh1">$ {{$center->packages_arr['Platinum']->price}}<span class="smallText">/MONTH</span>
+            <div class="RPBright lh1">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->price*session('rate'), 2)}}<span class="smallText">/MONTH</span>
             </div>
         @else
         <span>Not Available</span>
@@ -107,7 +107,7 @@
         <div class="RPBplan2"><div class="RPBplan2T"><div class="planNum">2</div><div class="tleft">BEST DEAL</div><div class="tright">You save $10 a month</div></div>
         <div class="RPBinfoPlan2"><div class="RPBleft2 bold">Platinum<br>with Live Receptionist</div>
         @if(isset($center->packages_arr['Platinum']))
-            <div class="RPBright2"><span class="lineTrough smallText">$ {{$center->packages_arr['Platinum']->with_live_receptionist_full_price}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {{$center->packages_arr['Platinum']->with_live_receptionist_pack_price}}</span><span class="smallText">/MONTH</span></span></div>
+            <div class="RPBright2"><span class="lineTrough smallText">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->with_live_receptionist_full_price*session('rate'), 2)}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->with_live_receptionist_pack_price*session('rate'), 2)}}</span><span class="smallText">/MONTH</span></span></div>
         @else
             <span>Not Available</span>
         @endif
@@ -118,7 +118,7 @@
         <div class="RPBplan3"><div class="RPBplan1T topShadow"><div class="planNum">3</div></div>
         <div class="RPBinfoPlan"><div class="RPBleft lh1">Platinum Plus</div>
         @if(isset($center->packages_arr['Platinum Plus']))
-            <div class="RPBright lh1">$ {{$center->packages_arr['Platinum Plus']->price}} <span class="smallText">/MONTH</span></div>
+            <div class="RPBright lh1">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->price*session('rate'), 2) }} <span class="smallText">/MONTH</span></div>
         @else
             <span>Not Available</span>
         @endif
@@ -129,7 +129,7 @@
         <div class="RPBplan4"><div class="RPBplan1T"><div class="planNum">4</div><div class="tleft">GREAT DEAL</div><div class="tright">You save $10 a month</div></div>
         <div class="RPBinfoPlan2"><div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>
             @if(isset($center->packages_arr['Platinum Plus']))
-                <div class="RPBright2"><span class="lineTrough smallText">$ {{$center->packages_arr['Platinum Plus']->with_live_receptionist_full_price}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {{$center->packages_arr['Platinum Plus']->with_live_receptionist_pack_price}}</span><span class="smallText">/MONTH</span></span></div>
+                <div class="RPBright2"><span class="lineTrough smallText">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->with_live_receptionist_full_price*session('rate'), 2) }}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {{ round( $center->packages_arr['Platinum Plus']->with_live_receptionist_pack_price*session('rate'), 2) }}</span><span class="smallText">/MONTH</span></span></div>
             @else
                 <span>Not Available</span>
             @endif
@@ -167,7 +167,7 @@
         </div>
         <div class='CenterPrice gray1'>
             @if($center->virtual_office_lowest_price && $center->virtual_office_lowest_price->min_price)
-                <span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">{!! $center->virtual_office_lowest_price->min_price !!}</span>
+                <span class="starting gray3">STARTING AT:</span> <span class="signo">{!! session('currency.symbol') !!}</span><span class="ammount">{!! round($center->virtual_office_lowest_price->min_price*session('rate'), 2) !!}</span>
                 <span class="usd">USD</span>
             @else
                 <span class="starting gray3">CALL FOR PRICING</span>

@@ -89,7 +89,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><div id="price">$0.00</div><div id="price_text">&nbsp;</div></td>
+                                    <td><div id="price">{!! session('currency.symbol') !!}0.00</div><div id="price_text">&nbsp;</div></td>
                                 </tr>
                             </table>
                             @if($package_option == 103)
@@ -129,14 +129,14 @@
                         <div class="sideCartLine">
                             <div class="sideCartL">PLATINUM PLAN:</div>
                             <div class="sideCartr">
-                                <span class="mediumBold">$80</span>/month
+                                <span class="mediumBold">{!! session('currency.symbol') !!} {{ round(80*session('rate'), 2) }}</span>/month
                             </div>
                         </div><!--/sideCartLine-->
                         <div class="clear"></div>
                         <div class="sideCartLine">
                             <div class="sideCartL">MAIL FORWARDING:</div>
                             <div class="sideCartr">
-                                <span class="mediumBold">$0</span>/month
+                                <span class="mediumBold">{!! session('currency.symbol') !!}0</span>/month
                             </div>
                         </div><!--/sideCartLine-->
                         <div class="clear"></div>
@@ -238,17 +238,19 @@
             } else if( option == '24' ) {
                 price = '7.00';
             }
-
-            newContent = price * freq;
+            var rate = {{ session('rate') }}
+            newContent = price * freq * rate;
             price = newContent;
-            newContent = '$' + newContent.toFixed(2);
+            newContent = "{!! session('currency.symbol') !!}" + newContent.toFixed(2);
 
             $('#price').html(newContent);
 
             if( (option == '23') || (option == '24') || (option != '20') ) {
                 newContent = newContent + ' + postage per forwarding';
                 $('#price').html(newContent);
-                priceText = '<div style="font-size: 10px; color: #666;">*Please note that prices may vary according to frequency and amount of mail received and forwarded. Oversized shipments and items requiring special packaging will be charged duly. For international shipments requiring customs forms, an additional $5 fee will be added per forwarded shipment.</div>';
+                var affitional_price = 5*rate;
+                var symbol = "{!! session('currency.symbol') !!}";
+                priceText = '<div style="font-size: 10px; color: #666;">*Please note that prices may vary according to frequency and amount of mail received and forwarded. Oversized shipments and items requiring special packaging will be charged duly. For international shipments requiring customs forms, an additional '+symbol+affitional_price+' fee will be added per forwarded shipment.</div>';
 
             }
 

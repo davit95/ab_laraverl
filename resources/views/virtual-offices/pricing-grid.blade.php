@@ -50,7 +50,7 @@
                 <div id="startPlan" class="PNLeft lh2 gray2"><h3 class="cf1">PLATINUM</h3></div>
                 <div class="PNRight lh2 gray3">
                     @if(isset($packages_arr['Platinum']))
-                        <span class="melon bold">${!! $packages_arr['Platinum']->price !!}</span><span class="smallText medium"> /MONTH</span>
+                        <span class="melon bold">{!! session('currency.symbol') !!} {!! round($packages_arr['Platinum']->price*session('rate'), 2) !!}</span><span class="smallText medium"> /MONTH</span>
                     @else
                         <span class="smallLine orange mediumBold ">Not Available</span>
                     @endif
@@ -79,7 +79,7 @@
                 <div class="PNLeft2 gray2"><h3 class="cf1">PLATINUM<a href="#" title=""></a><br><span class="smallLine">WITH LIVE RECEPTIONIST</span></h3></div>
                 <div class="PNRight2 gray3">
                     @if(isset($packages_arr['Platinum']))
-                        <span class="lineTrough smallText">${!! $packages_arr['Platinum']->with_live_receptionist_full_price!!}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {!! $packages_arr['Platinum']->with_live_receptionist_pack_price!!}</span><span class="smallText medium"> /MONTH</span></span>
+                        <span class="lineTrough smallText">{!! session('currency.symbol') !!} {!! round($packages_arr['Platinum']->with_live_receptionist_full_price*session('rate'), 2) !!}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {!! round($packages_arr['Platinum']->with_live_receptionist_pack_price*session('rate') , 2) !!}</span><span class="smallText medium"> /MONTH</span></span>
                     @else
                         <span class="smallLine orange mediumBold ">Not Available</span>
                     @endif
@@ -113,7 +113,7 @@
                 <div id="startPlan" class="PNLeft lh2 gray2"><h3 class="cf1">PLATINUM PLUS</h3></div>
                 <div class="PNRight lh2 gray3">
                     @if(isset($packages_arr['Platinum Plus']))
-                        <span class="melon bold">${!! $packages_arr['Platinum Plus']->price !!}</span><span class="smallText medium"> /MONTH</span>
+                        <span class="melon bold">{!! session('currency.symbol') !!} {!! round($packages_arr['Platinum Plus']->price*session('rate'), 2) !!}</span><span class="smallText medium"> /MONTH</span>
                     @else
                         <span class="smallLine orange mediumBold ">Not Available</span>
                     @endif
@@ -145,7 +145,7 @@
                 <div class="PNLeft2 gray2"><h3 class="cf1">PLATINUM PLUS<a href="#" title=""></a><br><span class="smallLine">WITH LIVE RECEPTIONIST</span></h3></div>
                 <div class="PNRight2 gray3">
                     @if(isset($packages_arr['Platinum Plus']))
-                        <span class="lineTrough smallText">${!! $packages_arr['Platinum Plus']->with_live_receptionist_full_price!!}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">$ {!! $packages_arr['Platinum Plus']->with_live_receptionist_pack_price!!}</span><span class="smallText medium"> /MONTH</span></span>
+                        <span class="lineTrough smallText">{!! session('currency.symbol') !!} {!! round($packages_arr['Platinum Plus']->with_live_receptionist_full_price*session('rate'), 2)!!}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {!! round($packages_arr['Platinum Plus']->with_live_receptionist_pack_price*session('rate'), 2) !!}</span><span class="smallText medium"> /MONTH</span></span>
                     @else
                         <span class="smallLine orange mediumBold ">Not Available</span>
                     @endif

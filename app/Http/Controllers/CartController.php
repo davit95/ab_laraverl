@@ -28,7 +28,7 @@ class CartController extends Controller
                     if(is_null($item->vo_plan)) {
                         $mr_start_time = strtotime($item->mr_start_time);
                         $mr_end_time = strtotime($item->mr_end_time);
-                        $item->price_per_hour = floor($item->price/(($mr_end_time - $mr_start_time)/3600));
+                        $item->price_per_hour = $item->price/(($mr_end_time - $mr_start_time)/3600);
                         $item->price_due = $item->price*30/100;
                         $item->price_total = $item->price-$item->price_due;
                         $price_total += $item->price_total;
@@ -42,7 +42,7 @@ class CartController extends Controller
                 $items = [];
             }
             //dd($items);
-            return view('cart.index', ['items' => $items, 'price_total' => $price_total]);
+            return view('cart.index', ['items' => $items, 'price_total' => round($price_total, 2)]);
         }
     }
 

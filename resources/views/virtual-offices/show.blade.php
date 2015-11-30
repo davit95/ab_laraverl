@@ -206,10 +206,11 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url('/customize-mail?p=105&cid='.$center->id) !!}" class="link">
-						    	<div class="btnSelectP2">SELECT PLAN</div>
-						    </a>
-
+						    @if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price)
+							    <a href="{!! url('/customize-mail?p=105&cid='.$center->id) !!}" class="link">
+							    	<div class="btnSelectP2">SELECT PLAN</div>
+							    </a>
+							@endif
 						    <a href="#" class="gray2 triggerShow"><div class="gray2 showFplans2 triggerShow">Show and compare plan features</div></a>
 						    </div><!--/aPlanTop2-->
 						    <div class="aPlanBottom2 changeH2 bordeRight hide">
@@ -239,19 +240,25 @@
 						    	</div>
 
 							    <div class="secondline gray3">
-							    	<span class="nonPrice orange cf1 bold">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
-								    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_pack_price !!}</span>
-								    <span class="pMonth"> /MONTH</span>
-								    <br>
-								    <p class="save">
-								    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
-								    </p>
+								    @if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price)
+								    	<span class="nonPrice orange cf1 bold">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
+									    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_pack_price !!}</span>
+									    <span class="pMonth"> /MONTH</span>
+									    <br>
+									    <p class="save">
+									    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
+									    </p>
+							    	@else
+							    		<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
+							    	@endif
 							    </div>
 						    	<div class="clear"></div>
 						    </div><!--/wrapPP-->
-						    <a href="{!! url('/customize-mail?p=105&b=402&cid='.$center->id) !!}" class="link">
-						    	<div class="btnSelectP2 orb">SELECT PLAN</div>
-						    </a>
+						    @if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price)
+							    <a href="{!! url('/customize-mail?p=105&b=402&cid='.$center->id) !!}" class="link">
+							    	<div class="btnSelectP2 orb">SELECT PLAN</div>
+							    </a>
+						    @endif
 						    <a href="#" class="gray2 triggerShow"><div class="gray2 showFplans2 triggerShow">Show and compare plan features</div></a>
 						    </div><!--/aPlanTop2-->
 						    <div class="aPlanBottom2 changeH2 hide">
