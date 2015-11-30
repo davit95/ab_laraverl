@@ -20,138 +20,99 @@
                         <img src="images/myCart.png" class="myCartImg"/>
                     </div><!--/MyCart-->
 
-                    <div class="eachSCartWrap marginTop paddingtop">
-                        <h3 class=" bold">Virtual Office</h3>
-                        <h4 class="bold blue">ADDRESS</h4>
-                        <p>
-                            <span class="mediumBold">$center_building_name</span><br>
-                            $center_address_1 $center_address_2 $center_city, $center_state_abbrv $center_postal_code<br>
-                            <span class="smallLine mediumBold">$Package_Terms month term</span>
-                        </p>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">$Package_Name:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold">$$Disp_Package_Price</span>
-                                    <span class="smallLine gray3"> /month</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="sideCartL3">MAIL FORWARDING:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold">$$MF_Total</span>
-                                    <span class="smallLine gray3"> /month</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="sideCartL3">SET UP FEE:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold">$$Disp_Setup_Price</span>
-                                    <span class="smallLine gray3">(one time only)</span>
-                                </td>
-                            </tr>
-                        </table>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">TOTAL:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold aqua mediumBold">$$line_total</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div><!--/eachSCartWrap-->
+                    @foreach ($items as $item)
+                        @if($item->type == 'mr')
+                            <div class="eachSCartWrap marginTop paddingtop">
+                                <h3 class=" bold">Meeting Room</h3>
+                                <h4 class="bold blue">ADDRESS</h4>
+                                <p>
+                                    <span>{!! is_null($center = $item->center)?'':$center->city_name !!}</span>
+                                    {!! $center->address1 !!} {!! $center->address2!!} {!! $center->city_name !!} {!! $center->us_state !!} {!! $center->postal_code !!}<br><span class="smallLine mediumBold">
+                                    {{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
+                                    {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}
+                                    </span>
+                                </p>
+                                <table width="100%">
+                                    <tr>
+                                        <td class="sideCartL2">{!! is_null($center = $item->center)?'':$center->city_name !!}:</td>
+                                        <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price_per_hour*session('rate'),2) !!}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sideCartL2">TOTAL AMOUNT:</td>
+                                        <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'), 2) !!}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sideCartL2">30% DUE NOW:</td>
+                                        <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{{ round(($item->price_due*session('rate')),2) }}</span></td>
+                                    </tr>
+                                </table>
+                                <table width="100%">
+                                    <tr>
+                                        <td class="sideCartL3">TOTAL:</td>
+                                        <td class="sideCartr2"><span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_total*session('rate')), 2) !!}</span></td>
+                                    </tr>
+                                </table>
+                            </div><!--/eachSCartWrap-->
+                        @else
+                            @if (!is_null($center = $item->center))
+                                <span class="mediumBold">Virtual Office</span>
+                                <div class="eachSCartWrap marginTop paddingtop">
+                                    <h3 class=" bold">Virtual Office</h3>
+                                    <h4 class="bold blue">ADDRESS</h4>
+                                    <p>
+                                        <span class="mediumBold">{!! is_null($center = $item->center)?'':$center->city_name !!}</span><br>
+                                        {!! $center->address1 !!} {!! $center->address2!!} {!! $center->city_name !!}, {!! $center->us_state !!} {!! $center->postal_code !!}<br>
+                                    </p>
+                                    <table width="100%">
+                                        <tr>
+                                            <td class="sideCartL3">{!! $item->vo_plan !!}:</td>
+                                            <td class="sideCartr2">
+                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
+                                                <span class="smallLine gray3"> /month</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sideCartL3">MAIL FORWARDING:</td>
+                                            <td class="sideCartr2">
+                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->vo_mail_forwarding_price*session('rate') !!}</span>
+                                                <span class="smallLine gray3"> /month</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sideCartL3">SET UP FEE:</td>
+                                            <td class="sideCartr2">
+                                                <span class="mediumBold">$100</span>
+                                                <span class="smallLine gray3">(one time only)</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table width="100%">
+                                        <tr>
+                                            <td class="sideCartL3">TOTAL:</td>
+                                            <td class="sideCartr2">
+                                                <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! $item->sum*session('rate') !!}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            @endif
+                        @endif
 
-                    <div class="eachSCartWrap marginTop paddingtop">
-                        <h3 class=" bold">Phone Plan</h3>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">$CP_Plan:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold">$$CP_Total</span>
-                                    <span class="smallLine gray3"> /month</span>
-                                </td>
-                            </tr>
-                            <tr>
-                              <td class="sideCartL3">$taxes</td>
-                            </tr>
-                        </table>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">TOTAL:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold aqua mediumBold">$$line_total</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div><!--/eachSCartWrap-->
-
-                    <div class="eachSCartWrap marginTop paddingtop">
-                        <h3 class=" bold">Phone Plan</h3>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">$CP_Plan:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold">$$CP_Total</span>
-                                    <span class="smallLine gray3"> /month</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="sideCartL3">$taxes</td>
-                            </tr>
-                        </table>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">TOTAL:</td>
-                                <td class="sideCartr2">
-                                    <span class="mediumBold aqua mediumBold">$$line_total</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div><!--/eachSCartWrap-->
-
-
-                    <div class="eachSCartWrap marginTop paddingtop">
-                        <h3 class=" bold">Meeting Room</h3>
-                        <h4 class="bold blue">ADDRESS</h4>
-                        <p>
-                            <span>$mr_center_building_name</span>
-                            $mr_center_address1 $mr_center_address2 $mr_center_city $mr_center_state $mr_center_zip<br><span class="smallLine mediumBold">$MRData[Meeting_Date]<br>$stime_in_12_hour_format - $etime_in_12_hour_format</span>
-                        </p>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL2">$MRData[Name]:</td>
-                                <td class="sideCartr2"><span class="mediumBold">$$mr_total_disp</span></td>
-                            </tr>
-                            <tr>
-                                <td class="sideCartL2">TOTAL AMOUNT:</td>
-                                <td class="sideCartr2"><span class="mediumBold">$$full_line_total</span></td>
-                            </tr>
-                            <tr>
-                                <td class="sideCartL2">$mr_center_percentage% DUE NOW:</td>
-                                <td class="sideCartr2"><span class="mediumBold">$$line_total</span></td>
-                            </tr>
-                        </table>
-                        <table width="100%">
-                            <tr>
-                                <td class="sideCartL3">TOTAL:</td>
-                                <td class="sideCartr2"><span class="mediumBold aqua mediumBold">$$line_total</span></td>
-                            </tr>
-                        </table>
-                    </div><!--/eachSCartWrap-->
+                    @endforeach
 
                     <table class="totalLine" width="100%">
                         <tr>
                             <td class="sideCartL3">ORDER TOTAL:</td>
                             <td class="sideCartr2">
-                                <span class="mediumBold aqua mediumBold">$$grand_total</span>
+                                <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!}</span>
                             </td>
                         </tr>
                     </table>
 
                     <div class="clear"></div>
                     <div class="bottomSideCart">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aenean a leo eu tellus ultricies pretium ac eget purus. Proin eu diam dignissim.
+                        {{-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Aenean a leo eu tellus ultricies pretium ac eget purus. Proin eu diam dignissim. --}}
                     </div><!--/bottomSideCart-->
                 </div><!--/theSideCartWrap-->
             </div><!--/dsidecart-->
@@ -196,8 +157,21 @@
                             <div class="clear"></div>
 
                             <div class="recurringCharge changeMtop2 ">
-                                <h3><span class="newCust">$col_head_text</span></h3>
-                                <p>$bottom_review_text</p>
+                                <h3><span class="newCust">Meeting Room Charge Agreement{{-- FIXME: need to be text --}}</span></h3>
+                                <p>You are about to request your meeting room. Alliance Virtual Offices will confirm your request within 48 hours (most likely a lot sooner); until then your meeting room is not scheduled. We will NOT charge your card until we have your meeting room completely confirmed.
+                                <br>
+                                <br>
+                                By clicking "Place Order" you authorize Alliance Virtual Offices to charge your credit card for the amount of {!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!} upon confirmation of your meeting room. The remaining balance of $162.22, plus any additional charges incurred, will be charged at the time of your meeting. Please have your credit card available at the meeting room facility to finalize your charges.
+                                <br>
+                                <br>
+                                You will not have any recurring fees.
+                                <br>
+                                <br>
+                                For any <strong>cancelation or rescheduling</strong> we will need a <strong>48 hours</strong> notification.
+                                Any reschedule after this time we will not be able to ensure availability.</p>
+
+
+
                             </div><!--/recurringCharge-->
                             {!! Form::open(['name' => 'form1']) !!}
                                 {!! Form::hidden('step', 'next') !!}
