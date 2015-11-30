@@ -222,8 +222,8 @@
 														</td>
 														<td class="theMR">{!! $mr->name !!}</td>
 														<td style="text-align: center;">up to {!! $mr->capacity !!}</td>
-														<td class="thePrice" style="text-align: center;"><span class="convert">${!! $mr->hourly_rate !!}</span>/hr</td>
-														<td class="total bold" style="text-align: center;">${!! ceil($mr->hourly_rate*session('hours')) !!}</td>
+														<td class="thePrice" style="text-align: center;"><span class="convert">{!! session('currency.symbol') !!}{!! round($mr->hourly_rate*session('rate'),2) !!}</span>/hr</td>
+														<td class="total bold" style="text-align: center;">{!! session('currency.symbol') !!}{!! round(ceil($mr->hourly_rate*session('hours'))*session('rate'),2) !!}</td>
 													</tr>
 													<tr class="service" Mroom="{!! $mr->id !!}" style="" cost="0">
 														<td colspan="5" class="no-border">

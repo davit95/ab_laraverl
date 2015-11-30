@@ -39,6 +39,8 @@ class AvoPagesController extends Controller
             if ($request->currency == $currency->name) {
                 $currency_id = $currency->id;
                 session(['currency' => (array)$currency]);
+                $rates = session('rates');
+                session(['rate' => round($rates[$currency->name], 2) ]);
                 break;
             }
         }

@@ -41,11 +41,11 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 					<button type="submit" id="submit2">FIND OUT MORE</button> <br/><br/><br/>		
 				<script language="JavaScript" type="text/javascript" xml:space="preserve">//<![CDATA[
                 //You should create the validator only after the definition of the HTML form
-                  var frmvalidator  = new Validator("signup");
-                  frmvalidator.addValidation("name","req","Please enter your Full Name");
-                  frmvalidator.addValidation("email","maxlen=50");
-                  frmvalidator.addValidation("email","req", "Please enter your Email Address");
-                  frmvalidator.addValidation("email","email");
+                  //var frmvalidator  = new Validator("signup");
+                  //frmvalidator.addValidation("name","req","Please enter your Full Name");
+                  //frmvalidator.addValidation("email","maxlen=50");
+                  //frmvalidator.addValidation("email","req", "Please enter your Email Address");
+                  //frmvalidator.addValidation("email","email");
                 
                 //]]></script>
                 
@@ -153,10 +153,10 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
       <tr>
 
         <td class="bgGray firstFT"><b>Monthly Cost</b></td>
-        <td class="bgGray borderBottom"><span class="melon bold bigPrice">$95</span></td>
-        <td class="bgGray borderBottom"><span class="melon bold bigPrice">$145</span></td>
-        <td class="bgGray borderBottom"><span class="melon bold bigPrice">$225</span></td>
-        <td class="bgGray borderBottom"><span class="melon bold bigPrice">$40</span></td>
+        <td class="bgGray borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 95*session('rate') }}</span></td>
+        <td class="bgGray borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 145*session('rate') }}</span></td>
+        <td class="bgGray borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 225*session('rate') }}</span></td>
+        <td class="bgGray borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 40*session('rate') }}</span></td>
       </tr>
 
       <tr>

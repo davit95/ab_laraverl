@@ -30,14 +30,14 @@
             <tr>
                 <td class="sideCartL2">{!! $item->vo_plan !!}:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold">${!! $item->price !!}</span>
+                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
                     <span class="smallLine gray3"> /month</span>
                 </td>
             </tr>
             <tr>
                 <td class="sideCartL2">MAIL FORWARDING:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold">${!! $item->vo_mail_forwarding_price !!}</span>
+                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->vo_mail_forwarding_price*session('rate') !!}</span>
                     <span class="smallLine gray3"> /month</span>
                 </td>
             </tr>
@@ -54,7 +54,7 @@
             <tr>
                 <td class="sideCartL2">TOTAL:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold aqua mediumBold">${!! $item->sum !!}</span>
+                    <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! $item->sum*session('rate') !!}</span>
                 </td>
             </tr>
         </table>
@@ -94,19 +94,20 @@
             <tr>
                 <td class="sideCartL2">MEETING ROOM:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold">${!! $item->price_per_hour !!}</span>
+                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price_per_hour*session('rate'),2) !!}</span>
+                    <span class="smallLine gray3"> /hour</span>
                 </td>
             </tr>
             <tr>
                 <td class="sideCartL2">TOTAL AMOUNT:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold">${!! $item->price !!}</span>
+                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'), 2) !!}</span>
                 </td>
             </tr>
             <tr>
                 <td class="sideCartL2">30% DUE NOW:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold">{{ $item->price_due }}</span>
+                    <span class="mediumBold">{!! session('currency.symbol') !!}{{ round(($item->price_due*session('rate')),2) }}</span>
                 </td>
             </tr>
         </table>
@@ -114,7 +115,7 @@
             <tr>
                 <td class="sideCartL2">TOTAL:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold aqua mediumBold">${!! $item->price_total !!}</span>
+                    <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_total*session('rate')), 2) !!}</span>
                 </td>
             </tr>
         </table>

@@ -125,6 +125,15 @@
                         </div><!--/signin-info-->
 
                         {!! Form::model(session('customer_information'), ['class' => 'custInfoForm', 'name' => 'form1']) !!}
+                            @if($errors->has())
+                                <div class="alert-error-custom">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <input type="hidden" name="new_customer" value="1" >
                             <div class="newCinfo">
                                 <h3><span class="newCust">NEW CUSTOMERS - <span class="medium">ENTER YOUR BILLING INFORMATION</span></span></h3>
@@ -417,5 +426,4 @@
     <link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
     <link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/flat/grey.css">
-    <link href="css/flat/grey.css" rel="stylesheet">
 @stop

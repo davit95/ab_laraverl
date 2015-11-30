@@ -15,6 +15,12 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(Currency $currencyModel, Client $client)
     {
+        if (is_null(session('currency'))) {
+            $currency = $currencyModel->find(1);
+            $currency = ['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
+            session(['currency' => $currency]);
+        }
+
         if (is_null(session('rates'))) {
             $response = $client->get('https://openexchangerates.org/api/latest.json?app_id='.config('abcn.openexchangerates.app_id'))->json();
             $rates['USD'] = $response['rates']['USD'];
@@ -22,13 +28,9 @@ class ViewServiceProvider extends ServiceProvider
             $rates['EUR'] = $response['rates']['EUR'];
             $rates['AUD'] = $response['rates']['AUD'];
             session(['rates' => $rates]);
+            session(['rate' => $response['rates'][$currency['name']]]);
         }
 
-        if (is_null(session('currency'))) {
-            $currency = $currencyModel->find(1);
-            $currency = ['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
-            session(['currency' => $currency]);
-        }
         if (is_null(session('currencies'))) {
             $currencies = [];
             foreach ($currencyModel->all() as $key => $currency) {

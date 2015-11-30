@@ -19,7 +19,7 @@
     <div class='ResultBtns'><a href="{!! URL::action('MeetingRoomsController@getMeetingRoomShowPage', ['contry_code' => $center->city->country_code, 'city_slug' => $center->city->slug, 'center_slug' => $center->slug, 'center_id' => $center->id])!!}"><div class='btnMoreInfo' style='width: 100%;'>MORE INFORMATION</div></a></div>
     <div class='CenterPrice gray1'>
         @if($center->meeting_room_lowest_price && $center->meeting_room_lowest_price->min_price )
-            <span class="starting gray3">STARTING AT:</span> <span class="signo">$</span><span class="ammount">{!! $center->meeting_room_lowest_price->min_price !!}</span>
+            <span class="starting gray3">STARTING AT:</span> <span class="signo">{!! session('currency.symbol') !!}</span><span class="ammount">{!! round($center->meeting_room_lowest_price->min_price*session('rate'), 2) !!}</span>
             <span class="usd">per hour</span>
         @else
             <span class="starting gray3">CALL FOR PRICING</span>

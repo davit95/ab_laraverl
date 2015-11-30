@@ -76,7 +76,7 @@
                     </div>
                     <div class="clear"></div>
                     <div class="theSideCartWrap changeMtop">
-                        <div class="MyCart2">ORDER TOTAL: &nbsp; <span class="aqua">${{ $price_total }}</span></div>
+                        <div class="MyCart2">ORDER TOTAL: &nbsp; <span class="aqua">{!! session('currency.symbol') !!}{{ round($price_total*session('rate'), 2) }}</span></div>
                         <div class="sideCartLine">
                             <div class="aquaBtn">PLACE ORDER NOW</div>
                         </div>
