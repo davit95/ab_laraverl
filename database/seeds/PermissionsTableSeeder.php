@@ -26,7 +26,7 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'invite_and_delete_other_owner_users_owner_restricted_users'],
             ['name' => 'invite_and_delete_other_users_restricted_users_abcn_personnel'],
         );
-        DB::table('permissions')->truncate();
+        //DB::table('permissions')->truncate();
         DB::table('permissions')->insert($permissions);
     }
 }

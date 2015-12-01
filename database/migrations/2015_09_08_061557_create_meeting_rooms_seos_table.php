@@ -14,8 +14,8 @@ class CreateMeetingRoomsSeosTable extends Migration
     {
         Schema::create('meeting_rooms_seos', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('center_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('center_id')->unsigned()->index();
             $table->text('sentence1');
             $table->text('sentence2');
             $table->text('sentence3');
@@ -30,6 +30,10 @@ class CreateMeetingRoomsSeosTable extends Migration
             $table->text('abcn_description');
             $table->text('abcn_title');
             $table->string('subhead');
+            /**
+             * Table relations
+             */
+            $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

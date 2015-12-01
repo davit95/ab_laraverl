@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RolesPermissions extends Migration
+class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,12 @@ class RolesPermissions extends Migration
      */
     public function up()
     {
-        Schema::create('roles_permissions', function(Blueprint $table)
+        Schema::create('currencies', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->string('role_id');
-            $table->string('permission_id');
+            $table->bigIncrements('id');
+            $table->string('name', 4);
+            $table->string('symbol', 4);
+            $table->string('image');
         });
     }
 
@@ -27,6 +28,6 @@ class RolesPermissions extends Migration
      */
     public function down()
     {
-        Schema::drop('roles_permissions');
+        Schema::drop('currencies');
     }
 }

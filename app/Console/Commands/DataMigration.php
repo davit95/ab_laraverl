@@ -16,7 +16,7 @@ class DataMigration extends Command
      *
      * @var string
      */
-    protected $signature = "data:migrate {--host=localhost} {--database=abcn-old} {--username=homestead} {--password=secret}";
+    protected $signature = "data:migrate {--host=localhost} {--database=abcn} {--username=homestead} {--password=secret}";
 
     /**
      * The console command description.
@@ -49,25 +49,25 @@ class DataMigration extends Command
         $this->us_states();
         $this->countries();
         $this->cities();
-        $this->centers();
-        $this->virtual_offices_seos();
-        $this->meeting_rooms_seos();
-        $this->detect_active_cities();
-        $this->centers_coordinates();
-        $this->centers_emails();
-        $this->centers_photos();
-        $this->vo_photos();
-        $this->centers_filters();
-        $this->centers_prices();
-        $this->products();
+        $this->users();
         $this->users_files();
         $this->owners();
-        $this->users();
+        $this->products();
+        $this->centers();
+        $this->centers_coordinates();
+        $this->centers_emails();
+        $this->centers_prices();
+        $this->centers_filters();
         $this->meeting_rooms();
+        $this->meeting_rooms_seos();
         $this->meeting_rooms_options();
+        $this->virtual_offices_seos();
+        $this->centers_photos();
+        $this->vo_photos();
+        $this->telephony_package_includes();
         $this->tel_countries();
         $this->tel_prefixes();
-        $this->telephony_package_includes();
+        $this->detect_active_cities();
     }
 
     private function centers()
@@ -80,11 +80,13 @@ class DataMigration extends Command
         $unknown_countries_count = 0;
         $unknown_states_count = 0;
         $bar = $this->output->createProgressBar(count($collection));
+        //$count = 0;
         foreach($collection as $key => $value)
         {
             $city = DB::table('cities')->where('name', $value->City)->first();
             $country = DB::table('countries')->where('code', $value->Country)->first();
             $state = DB::table('us_states')->where('code', $value->State)->first();
+            $owner_ids = DB::table('owners')->lists('id');
             if(null != $city)
             {
                 $city_id = $city->id;
@@ -112,18 +114,22 @@ class DataMigration extends Command
                 $unknown_states_count++;
                 $state_id = null;
             }
-            $new_collection[] =
+            $owner_id = $value->OwnerID;
+            if (!in_array($owner_id, $owner_ids)) {
+                $owner_id = null;
+            }
+            $new_collection[$value->CenterID] =
             [
                 'id'                => $value->CenterID,
                 'slug'              => str_slug(preg_replace('/^[^a-zA-Z]*/', '', $value->Address1)),
-                'owner_id'          => $value->OwnerID,
+                'owner_id'          => $owner_id,
                 'city_name'         => $value->City,
                 'city_id'           => $city_id,
                 'country'           => $value->Country,
                 'country_id'        => $country_id,
                 'us_state'          => $value->State,
                 'us_state_id'       => $state_id,
-                'region_id'         => '-------------',
+                //'region_id'         => '-------------',
                 'company_name'      => $value->CompanyName,
                 'building_name'     => $value->BuildingName,
                 'address1'          => $value->Address1,
@@ -143,7 +149,7 @@ class DataMigration extends Command
             ];
             $bar->advance();
         }
-        DB::table('centers')->truncate();
+        //DB::table('centers')->truncate();
         DB::table('centers')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -155,20 +161,23 @@ class DataMigration extends Command
         $this->info("\n migrating centers_coordnates table");
         $this->make_new_connection();
         $collection = DB::table('Center_Coords')->get();
+        DB::setDefaultConnection('mysql');
+        $center_ids = DB::table('centers')->lists('id');
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
-            $new_collection[] =
-            [
-                'id'        => $value->Object_ID,
-                'center_id' => $value->Center_ID,
-                'lat'       => $value->Latitude,
-                'lng'       => $value->Longitude
-            ];
+            if (in_array($value->Center_ID, $center_ids)) {
+                $new_collection[] =
+                [
+                    'id'        => $value->Object_ID,
+                    'center_id' => $value->Center_ID,
+                    'lat'       => $value->Latitude,
+                    'lng'       => $value->Longitude
+                ];
+            }
             $bar->advance();
         }
-        DB::setDefaultConnection('mysql');
-        DB::table('centers_coordinates')->truncate();
+        //DB::table('centers_coordinates')->truncate();
         DB::table('centers_coordinates')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -180,17 +189,20 @@ class DataMigration extends Command
         $this->make_new_connection();
         $collection = DB::table('Center_Emails')->get();
         $bar = $this->output->createProgressBar(count($collection));
+        DB::setDefaultConnection('mysql');
+        $center_ids = DB::table('centers')->lists('id');
         foreach($collection as $key => $value)
         {
-            $new_collection[] =
-            [
-                'center_id' => $value->Center_ID,
-                'email'     => $value->Email
-            ];
+            if (in_array($value->Center_ID, $center_ids)) {
+                $new_collection[] =
+                [
+                    'center_id' => $value->Center_ID,
+                    'email'     => $value->Email
+                ];
+            }
             $bar->advance();
         }
-        DB::setDefaultConnection('mysql');
-        DB::table('centers_emails')->truncate();
+        //DB::table('centers_emails')->truncate();
         DB::table('centers_emails')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -253,7 +265,7 @@ class DataMigration extends Command
             $final_collection[] = $item;
         }
         DB::setDefaultConnection('mysql');
-        DB::table('photos')->truncate();
+        //DB::table('photos')->truncate();
         DB::table('photos')->insert($final_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -278,7 +290,7 @@ class DataMigration extends Command
                 }
             }
         }
-        DB::table('vo_photos')->truncate();
+        //DB::table('vo_photos')->truncate();
         DB::table('vo_photos')->insert($vo_photos);
         $bar->finish();
         $this->info(' ✔');
@@ -290,30 +302,33 @@ class DataMigration extends Command
         $this->make_new_connection();
         $collection = DB::table('Center_SEO')->get();
         $bar = $this->output->createProgressBar(count($collection));
+        DB::setDefaultConnection('mysql');
+        $center_ids = DB::table('centers')->lists('id');
         foreach($collection as $key => $value)
         {
-            $new_collection[] =
-            [
-                'center_id'        => $value->Center_ID,
-                'sentence1'        => $value->Sentence_1,
-                'sentence2'        => $value->Sentence_2,
-                'sentence3'        => $value->Sentence_3,
-                'avo_description'  => $value->AVO_Description,
-                'meta_title'       => $value->Meta_Title,
-                'meta_description' => $value->Meta_Description,
-                'meta_keywords'    => $value->Meta_Keywords,
-                'h1'               => $value->H1,
-                'h2'               => $value->H2,
-                'h3'               => $value->H3,
-                'seo_footer'       => $value->SEO_Footer,
-                'abcn_description' => $value->ABCN_Description,
-                'abcn_title'       => $value->ABCN_Title,
-                'subhead'          => $value->Subhead
-            ];
+            if (in_array($value->Center_ID, $center_ids)) {
+                $new_collection[] =
+                [
+                    'center_id'        => $value->Center_ID,
+                    'sentence1'        => $value->Sentence_1,
+                    'sentence2'        => $value->Sentence_2,
+                    'sentence3'        => $value->Sentence_3,
+                    'avo_description'  => $value->AVO_Description,
+                    'meta_title'       => $value->Meta_Title,
+                    'meta_description' => $value->Meta_Description,
+                    'meta_keywords'    => $value->Meta_Keywords,
+                    'h1'               => $value->H1,
+                    'h2'               => $value->H2,
+                    'h3'               => $value->H3,
+                    'seo_footer'       => $value->SEO_Footer,
+                    'abcn_description' => $value->ABCN_Description,
+                    'abcn_title'       => $value->ABCN_Title,
+                    'subhead'          => $value->Subhead
+                ];
+            }
             $bar->advance();
         }
-        DB::setDefaultConnection('mysql');
-        DB::table('virtual_offices_seos')->truncate();
+        //DB::table('virtual_offices_seos')->truncate();
         DB::table('virtual_offices_seos')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -324,31 +339,34 @@ class DataMigration extends Command
         $this->info("\n migrating meeting_rooms_seos table");
         $this->make_new_connection();
         $collection = DB::table('Center_SEO_MR')->get();
+        DB::setDefaultConnection('mysql');
+        $center_ids = DB::table('centers')->lists('id');
         $bar = $this->output->createProgressBar(count($collection));
         foreach($collection as $key => $value)
         {
-            $new_collection[] =
-            [
-                'center_id'        => $value->Center_ID,
-                'sentence1'        => $value->Sentence_1,
-                'sentence2'        => $value->Sentence_2,
-                'sentence3'        => $value->Sentence_3,
-                'avo_description'  => $value->AVO_Description,
-                'meta_title'       => $value->Meta_Title,
-                'meta_description' => $value->Meta_Description,
-                'meta_keywords'    => $value->Meta_Keywords,
-                'h1'               => $value->H1,
-                'h2'               => $value->H2,
-                'h3'               => $value->H3,
-                'seo_footer'       => $value->SEO_Footer,
-                'abcn_description' => $value->ABCN_Description,
-                'abcn_title'       => $value->ABCN_Title,
-                'subhead'          => $value->Subhead
-            ];
+            if (in_array($value->Center_ID, $center_ids)) {
+                $new_collection[] =
+                [
+                    'center_id'        => $value->Center_ID,
+                    'sentence1'        => $value->Sentence_1,
+                    'sentence2'        => $value->Sentence_2,
+                    'sentence3'        => $value->Sentence_3,
+                    'avo_description'  => $value->AVO_Description,
+                    'meta_title'       => $value->Meta_Title,
+                    'meta_description' => $value->Meta_Description,
+                    'meta_keywords'    => $value->Meta_Keywords,
+                    'h1'               => $value->H1,
+                    'h2'               => $value->H2,
+                    'h3'               => $value->H3,
+                    'seo_footer'       => $value->SEO_Footer,
+                    'abcn_description' => $value->ABCN_Description,
+                    'abcn_title'       => $value->ABCN_Title,
+                    'subhead'          => $value->Subhead
+                ];
+            }
             $bar->advance();
         }
-        DB::setDefaultConnection('mysql');
-        DB::table('meeting_rooms_seos')->truncate();
+        //DB::table('meeting_rooms_seos')->truncate();
         DB::table('meeting_rooms_seos')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -377,7 +395,7 @@ class DataMigration extends Command
             $bar->advance();
         }
         DB::setDefaultConnection('mysql');
-        DB::table('centers_filters')->truncate();
+        //DB::table('centers_filters')->truncate();
         DB::table('centers_filters')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -389,29 +407,33 @@ class DataMigration extends Command
         $this->make_new_connection();
         $prices = DB::table('Center_Package_Pricing')->get();
         $bar = $this->output->createProgressBar(count($prices));
+        DB::setDefaultConnection('mysql');
+        $center_ids = DB::table('centers')->lists('id');
+        $package_ids = DB::table('packages')->lists('id');
         foreach ($prices as $price)
         {
-            $new_collection[] =
-            [
-                'center_id'  => $price->Center_ID,
-                'package_id' => $price->Package_ID,
-                'price'      => $price->Price,
-                'with_live_receptionist_pack_price' => $price->Price+85,
-                'with_live_receptionist_full_price' => $price->Price+95,
-                'updated_at' => date('Y-m-d H:i:s', $price->Modify_Date)
-            ];
+            if (in_array($price->Center_ID, $center_ids) && in_array($price->Package_ID, $package_ids)) {
+                $new_collection[] =
+                [
+                    'center_id'  => $price->Center_ID,
+                    'package_id' => $price->Package_ID,
+                    'price'      => $price->Price,
+                    'with_live_receptionist_pack_price' => $price->Price+85,
+                    'with_live_receptionist_full_price' => $price->Price+95,
+                    'updated_at' => date('Y-m-d H:i:s', $price->Modify_Date)
+                ];
+            }
             $bar->advance();
         }
-        DB::setDefaultConnection('mysql');
-        DB::table('centers_prices')->truncate();
-        DB::table('centers_prices')->insert($new_collection);
+        //DB::table('centers_prices')->truncate();
+        DB::table('center_prices')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
     }
 
     public function products()
     {
-        $this->info("\n migrating products table");
+        $this->info("\n migrating packages table");
         $this->make_new_connection();
         $products = DB::table('Products')->get();
         $bar = $this->output->createProgressBar(count($products));
@@ -430,8 +452,8 @@ class DataMigration extends Command
         }
 
         DB::setDefaultConnection('mysql');
-        DB::table('products')->truncate();
-        DB::table('products')->insert($new_collection);
+        //DB::table('products')->truncate();
+        DB::table('packages')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
     }
@@ -445,7 +467,7 @@ class DataMigration extends Command
 
         $bar_other_ciites = $this->output->createProgressBar(count($other_cities));
         DB::setDefaultConnection('mysql');
-        DB::table('cities')->truncate();
+        //DB::table('cities')->truncate();
         $us = DB::table('countries')->where('code', 'US')->first();
         $us_id = $us->id;
         $us_state_ids = DB::table('us_states')->lists('id','name');
@@ -481,7 +503,7 @@ class DataMigration extends Command
         $bar_states->finish();
         $this->info(" ✔\n");
 
-
+        $this->info("migrating other cities table");
         foreach ($other_cities as $country => $cities)
         {
             $country_obj = DB::table('countries')->where('name', $country)->first();
@@ -529,7 +551,7 @@ class DataMigration extends Command
             $bar->advance();
         }
 
-        DB::table('countries')->truncate();
+        //DB::table('countries')->truncate();
         DB::table('countries')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -557,7 +579,7 @@ class DataMigration extends Command
             $bar->advance();
         }
         DB::setDefaultConnection('mysql');
-        DB::table('users_files')->truncate();
+        //DB::table('users_files')->truncate();
         DB::table('users_files')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -582,10 +604,10 @@ class DataMigration extends Command
                 'email'        => $value->Email,
                 'address1'     => $value->Address1,
                 'address2'     => $value->Address2,
-                'city_id'      => '------------',
-                'region_id'    => '------------',
-                'us_state_id'  => '------------',
-                'country_id'   => '------------',
+                //'city_id'      => '------------',
+                //'region_id'    => '------------',
+                //'us_state_id'  => '------------',
+                //'country_id'   => '------------',
                 'postal_code'  => $value->PostalCode,
                 'notes'        => $value->Notes,
                 'company_name' => $value->CompanyName,
@@ -593,7 +615,7 @@ class DataMigration extends Command
             $bar->advance();
         }
         DB::setDefaultConnection('mysql');
-        DB::table('owners')->truncate();
+        //DB::table('owners')->truncate();
         DB::table('owners')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -617,7 +639,7 @@ class DataMigration extends Command
             $bar->advance();
         }
         DB::setDefaultConnection('mysql');
-        DB::table('regions')->truncate();
+        //DB::table('regions')->truncate();
         DB::table('regions')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -688,7 +710,7 @@ class DataMigration extends Command
             $bar->advance();
         }
         DB::setDefaultConnection('mysql');
-        DB::table('us_states')->truncate();
+        //DB::table('us_states')->truncate();
         DB::table('us_states')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -705,16 +727,16 @@ class DataMigration extends Command
 
         $passwords = DB::table('Customer_Hashes')->lists('Password', 'Customer_ID');
         DB::setDefaultConnection('mysql');
-        DB::table('users')->truncate();
+        //DB::table('users')->truncate();
 
 
         $counter = 0;
         $int_perc = 0;
+        $new_collection = [];
+        $count = 0;
         foreach ($collection as $key => $value)
         {
-
-
-            $new_collection =
+            $new_collection[] =
             [
                 'id'              => $value->Customer_ID,
                 'first_name'      => $value->First_Name,
@@ -726,10 +748,10 @@ class DataMigration extends Command
                 'passwrod_hint'   => $value->Password_Hint,
                 'address1'        => $value->Address1,
                 'address2'        => $value->Address2,
-                'city_id'         => '---------------',
-                'us_state_id'     => '---------------',
+                //'city_id'         => '---------------',
+                //'us_state_id'     => '---------------',
                 'postal_code'     => $value->Postal_Code,
-                'country_id'      => '---------------',
+                //'country_id'      => '---------------',
                 'password'        => isset($passwords[$value->Customer_ID]) ? $passwords[$value->Customer_ID] : null,
                 'cc_name'         => $value->CC_Name,
                 'cc_number'       => $value->CC_Number,
@@ -743,17 +765,15 @@ class DataMigration extends Command
                 'dv_phone_number' => $value->DV_Phone_Number,
                 'created_at'      => date('Y-m-d H:i:s', $value->Add_Date)
             ];
-            /*$counter++;
-            $perc = ($counter / $max) * 100;
-            if((int)$perc > $int_perc)
-            {
-                $int_perc = (int)$perc;
-                $this->info($int_perc."%");
-            }*/
-
-            DB::table('users')->insert($new_collection);
+            $count++;
+            if ($count%250 == 0) {
+                DB::table('users')->insert($new_collection);
+                $count = 0;
+                $new_collection = [];
+            }
             $bar->advance();
         }
+        DB::table('users')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
     }
@@ -808,7 +828,7 @@ class DataMigration extends Command
 
 
         DB::setDefaultConnection('mysql');
-        DB::table('meeting_rooms')->truncate();
+        //DB::table('meeting_rooms')->truncate();
         DB::table('meeting_rooms')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -820,33 +840,37 @@ class DataMigration extends Command
         $this->make_new_connection();
         $meeting_rooms_options = DB::table('Meeting_Room_Options')->get();
         $bar = $this->output->createProgressBar(count($meeting_rooms_options));
+        DB::setDefaultConnection('mysql');
+        $meeting_room_ids = DB::table('meeting_rooms')->lists('id');
+        $new_collection = [];
         foreach ($meeting_rooms_options as $option)
         {
-            $new_collection[] =
-            [
-                'meeting_room_id'             =>  $option->Meeting_Room_ID,
-                'room_description'            =>  $option->Room_Description,
-                'parking_rate'                =>  $option->Parking_Rate,
-                'parking_description'         =>  $option->Parking_Description,
-                'network_rate'                =>  $option->Network_Rate,
-                'wireless_rate'               =>  $option->Wireless_Rate,
-                'phone_rate'                  =>  $option->Phone_Rate,
-                'admin_services_rate'         =>  $option->Admin_Services_Rate,
-                'whiteboard_rate'             =>  $option->Whiteboard_Rate,
-                'tvdvdplayer_rate'            =>  $option->Tvdvdplayer_Rate,
-                'projector_rate'              =>  $option->Projector_Rate,
-                'videoconferencing_rate'      =>  $option->Videoconferencing_Rate,
-                'video_equipment'             =>  $option->Video_Equipment,
-                'bridge_connection_available' =>  $option->Bridge_Connection_Available,
-                'catering'                    =>  $option->Catering,
-                'credit_cards'                =>  $option->Credit_Cards
-            ];
+            if (in_array($option->Meeting_Room_ID, $meeting_room_ids)) {
+                $new_collection[] =
+                [
+                    'meeting_room_id'             =>  $option->Meeting_Room_ID,
+                    'room_description'            =>  $option->Room_Description,
+                    'parking_rate'                =>  $option->Parking_Rate,
+                    'parking_description'         =>  $option->Parking_Description,
+                    'network_rate'                =>  $option->Network_Rate,
+                    'wireless_rate'               =>  $option->Wireless_Rate,
+                    'phone_rate'                  =>  $option->Phone_Rate,
+                    'admin_services_rate'         =>  $option->Admin_Services_Rate,
+                    'whiteboard_rate'             =>  $option->Whiteboard_Rate,
+                    'tvdvdplayer_rate'            =>  $option->Tvdvdplayer_Rate,
+                    'projector_rate'              =>  $option->Projector_Rate,
+                    'videoconferencing_rate'      =>  $option->Videoconferencing_Rate,
+                    'video_equipment'             =>  $option->Video_Equipment,
+                    'bridge_connection_available' =>  $option->Bridge_Connection_Available,
+                    'catering'                    =>  $option->Catering,
+                    'credit_cards'                =>  $option->Credit_Cards
+                ];
+            }
             $bar->advance();
         }
 
 
-        DB::setDefaultConnection('mysql');
-        DB::table('meeting_rooms_options')->truncate();
+        //DB::table('meeting_rooms_options')->truncate();
         DB::table('meeting_rooms_options')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -872,7 +896,7 @@ class DataMigration extends Command
 
 
         DB::setDefaultConnection('mysql');
-        DB::table('tel_countries')->truncate();
+        //DB::table('tel_countries')->truncate();
         DB::table('tel_countries')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -897,7 +921,7 @@ class DataMigration extends Command
 
 
         DB::setDefaultConnection('mysql');
-        DB::table('tel_prefixes')->truncate();
+        //DB::table('tel_prefixes')->truncate();
         DB::table('tel_prefixes')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');
@@ -908,21 +932,26 @@ class DataMigration extends Command
         $this->make_new_connection();
         $telephony_package_includes = DB::table('Telephony_Package_Includes')->get();
         $bar = $this->output->createProgressBar(count($telephony_package_includes));
+        DB::setDefaultConnection('mysql');
+        $center_ids = DB::table('centers')->lists('id');
+        $package_ids = DB::table('centers')->lists('id');
+        $new_collection = [];
         foreach ($telephony_package_includes as $include)
         {
-            $new_collection[] =
-            [
-                'center_id'  => $include->Center_ID,
-                'package_id' => $include->Package,
-                'include'    => $include->Include,
-                'place'      => $include->Place,
-            ];
+            if (in_array($include->Center_ID, $center_ids) && in_array($include->Package, $package_ids)) {
+                $new_collection[] =
+                [
+                    'center_id'  => $include->Center_ID,
+                    'package_id' => $include->Package,
+                    'include'    => $include->Include,
+                    'place'      => $include->Place,
+                ];
+            }
             $bar->advance();
         }
 
 
-        DB::setDefaultConnection('mysql');
-        DB::table('telephony_package_includes')->truncate();
+        //DB::table('telephony_package_includes')->truncate();
         DB::table('telephony_package_includes')->insert($new_collection);
         $bar->finish();
         $this->info(' ✔');

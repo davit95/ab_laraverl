@@ -13,11 +13,15 @@ class CreateCountriesTable extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+            $table->bigInteger('region_id')->nullable()->unsigned()->index();
             $table->string('name');
-            $table->string('code');
+            $table->string('code')->index();
             $table->string('slug');
-            $table->string('region_id');
+            /**
+             * Table relations
+             */
+            $table->foreign('region_id')->references('id')->on('regions')->onUpdate('restrict')->onDelete('set null');
         });
     }
 

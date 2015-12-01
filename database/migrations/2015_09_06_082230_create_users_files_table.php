@@ -13,13 +13,17 @@ class CreateUsersFilesTable extends Migration
     public function up()
     {
         Schema::create('users_files', function(Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned()->index();
             $table->string('file_type');
             $table->string('uploaded_by');
             $table->string('path');
             $table->string('file_category');
             $table->timestamps();
+            /**
+             * Table relations
+             */
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

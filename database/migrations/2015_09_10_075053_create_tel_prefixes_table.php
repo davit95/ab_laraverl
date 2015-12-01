@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMrPhotsTable extends Migration
+class CreateTelPrefixesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,12 @@ class CreateMrPhotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mr_photos', function(Blueprint $table)
+        Schema::create('tel_prefixes', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('photo_id');
-            $table->integer('center_id');
-            $table->integer('mr_id');
-            $table->boolean('primary');
+            $table->bigIncrements('id');
+            $table->integer('country_code');
+            $table->integer('prefix');
+            $table->integer('logtime');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateMrPhotsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('mr_photos');
+        Schema::drop('tel_prefixes');
     }
 }

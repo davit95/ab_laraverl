@@ -68,6 +68,9 @@ class MeetingRoomsImagesMigration extends Command
             }else {
                 $unique_photo_id = $unique_photo->id;
             }
+            $mr_ids = DB::table('meeting_rooms')->lists('id');
+            $center_ids = DB::table('centers')->lists('id');
+            $photo_ids = DB::table('photos')->lists('id');
             $first_underscore = strpos($file, "_");
             $center_id = substr($file, 0, $first_underscore);
             $cuted_file = substr($file, $first_underscore + 1);
@@ -75,7 +78,9 @@ class MeetingRoomsImagesMigration extends Command
             $mr_id = substr($cuted_file, 0, $second_underscore);
             if($mr_id && $center_id)
             {
-                $data[] = ['center_id' => $center_id, 'mr_id' => $mr_id, 'photo_id' => $unique_photo_id];
+                if (in_array($center_id, $center_ids) && in_array($mr_id, $mr_ids) && in_array($unique_photo_id, $photo_ids)) {
+                    $data[] = ['center_id' => $center_id, 'mr_id' => $mr_id, 'photo_id' => $unique_photo_id];
+                }
             }
             else
             {

@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCentersEmailsTable extends Migration
+class CreateMrPhotosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,19 @@ class CreateCentersEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('centers_emails', function (Blueprint $table) {
+        Schema::create('mr_photos', function(Blueprint $table)
+        {
             $table->bigIncrements('id');
+            $table->bigInteger('photo_id')->unsigned()->index();
             $table->bigInteger('center_id')->unsigned()->index();
-            $table->string('email');
+            $table->bigInteger('mr_id')->unsigned()->index();
+            $table->boolean('primary');
             /**
              * Table relations
              */
+            $table->foreign('photo_id')->references('id')->on('photos')->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('mr_id')->references('id')->on('meeting_rooms')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 
@@ -30,6 +35,6 @@ class CreateCentersEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('centers_emails');
+        Schema::drop('mr_photos');
     }
 }

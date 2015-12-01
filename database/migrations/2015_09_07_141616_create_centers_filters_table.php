@@ -14,11 +14,15 @@ class CreateCentersFiltersTable extends Migration
     {
         Schema::create('centers_filters', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('center_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('center_id')->unsigned()->index();
             $table->boolean('virtual_office');
-            $table->boolean('office');
             $table->boolean('meeting_room');
+            $table->boolean('office');
+            /**
+             * Table relations
+             */
+            $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Providers;
+namespace App\Http\Middleware;
 
-use Illuminate\Session\SessionServiceProvider as ServiceProvider;
+use Closure;
 use App\Models\Currency;
 use GuzzleHttp\Client;
 
-class ViewServiceProvider extends ServiceProvider
+class View
 {
     /**
-     * Bootstrap the application services.
+     * Handle an incoming request.
      *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
      */
-    public function boot(Currency $currencyModel, Client $client)
+    public function handle($request, Closure $next)
     {
+        $currencyModel = new Currency;
+        $client = new Client;
         if (is_null(session('currency'))) {
             $currency = $currencyModel->find(1);
             $currency = ['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
@@ -40,5 +44,6 @@ class ViewServiceProvider extends ServiceProvider
         }
 
         view()->share('currencies', session('currencies'));
+        return $next($request);
     }
 }
