@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTelPrefixesTable extends Migration
+class CreateRegionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class CreateTelPrefixesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tel_prefixes', function(Blueprint $table)
-        {
-            $table->increments('id');
-            $table->integer('country_code');
-            $table->integer('prefix');
-            $table->integer('logtime');
+        Schema::create('regions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email');
+            $table->text('contact_info');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateTelPrefixesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tel_prefixes');
+        Schema::drop('regions');
     }
 }

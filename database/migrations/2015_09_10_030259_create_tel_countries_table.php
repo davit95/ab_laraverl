@@ -14,7 +14,7 @@ class CreateTelCountriesTable extends Migration
     {
         Schema::create('tel_countries', function(Blueprint $table)
         {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('country_code');
             $table->string('full_name');
             $table->string('abbrv');

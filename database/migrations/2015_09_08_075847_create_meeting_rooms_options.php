@@ -14,8 +14,8 @@ class CreateMeetingRoomsOptions extends Migration
     {
         Schema::create('meeting_rooms_options', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('meeting_room_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('meeting_room_id')->unsigned()->index();
             $table->text('room_description');
             $table->string('parking_rate');
             $table->text('parking_description');
@@ -31,6 +31,10 @@ class CreateMeetingRoomsOptions extends Migration
             $table->string('bridge_connection_available');
             $table->string('catering');
             $table->string('credit_cards');
+            /**
+             * Table relations
+             */
+            $table->foreign('meeting_room_id')->references('id')->on('meeting_rooms')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

@@ -44,7 +44,7 @@ class RolesPermissionsTableSeeder extends Seeder
             ['role_id' => 8, 'permission_id' => 6],
             ['role_id' => 8, 'permission_id' => 10],
         );
-        DB::table('roles_permissions')->truncate();
+        //DB::table('roles_permissions')->truncate();
         DB::table('roles_permissions')->insert($roles_permissions);
     }
 }

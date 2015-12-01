@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCentersPricesTable extends Migration
+class CreatePackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class CreateCentersPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('centers_prices', function(Blueprint $table)
+        Schema::create('packages', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('center_id');
-            $table->integer('package_id');
-            $table->integer('price');
+            $table->bigIncrements('id');
+            $table->bigInteger('part_number');
+            $table->string('name');
+            $table->string('price');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateCentersPricesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('centers_prices');
+        Schema::drop('packages');
     }
 }

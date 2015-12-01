@@ -22,7 +22,7 @@ class RolesTableSeeder extends Seeder
             ['name' => 'user_abcn_personnel'],
             ['name' => 'restricted_user_abcn_personnel']
         );
-        DB::table('roles')->truncate();
+        //DB::table('roles')->truncate();
         DB::table('roles')->insert($roles);
     }
 }

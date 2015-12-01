@@ -14,9 +14,14 @@ class CreateVoPhotosTable extends Migration
     {
         Schema::create('vo_photos', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('photo_id');
-            $table->integer('center_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('photo_id')->unsigned()->index();
+            $table->bigInteger('center_id')->unsigned()->index();
+            /**
+             * Table relations
+             */
+            $table->foreign('photo_id')->references('id')->on('photos')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

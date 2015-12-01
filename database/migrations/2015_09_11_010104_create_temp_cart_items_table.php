@@ -14,16 +14,16 @@ class CreateTempCartItemsTable extends Migration
     {
         Schema::create('temp_cart_items', function(Blueprint $table)
         {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('temp_user_id');
             $table->enum('type', ['mr', 'vo', 'lr']);
-            $table->integer('center_id');
-            $table->integer('mr_id')->nullable();
+            $table->bigInteger('center_id')->unsigned()->index();
+            $table->bigInteger('mr_id')->nullable()->unsigned()->index();
             $table->date('mr_date')->nullable();
             $table->time('mr_start_time')->nullable();
             $table->time('mr_end_time')->nullable();
             $table->string('vo_plan')->nullable();
-            $table->integer('price');
+            $table->float('price');
             $table->string('vo_mail_forwarding_package')->nullable();
             $table->string('vo_mail_forwarding_frequency')->nullable();
             $table->integer('vo_mail_forwarding_price');
@@ -38,6 +38,11 @@ class CreateTempCartItemsTable extends Migration
             $table->integer('country_code');
             $table->integer('phone_number_selected');
             $table->timestamps();
+            /**
+             * Table relations
+             */
+            $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('mr_id')->references('id')->on('meeting_rooms')->onUpdate('restrict')->onDelete('set null');
         });
     }
 

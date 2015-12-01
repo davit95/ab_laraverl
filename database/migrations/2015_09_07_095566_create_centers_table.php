@@ -13,16 +13,16 @@ class CreateCentersTable extends Migration
     public function up()
     {
         Schema::create('centers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('slug');
-            $table->integer('owner_id');
+            $table->bigInteger('owner_id')->nullable()->unsigned()->index();
             $table->string('city_name');
-            $table->integer('city_id');
+            $table->bigInteger('city_id')->nullable()->unsigned()->index();
             $table->string('country');
-            $table->integer('country_id');
+            $table->bigInteger('country_id')->nullable()->unsigned()->index();
             $table->string('us_state');
-            $table->integer('us_state_id')->nullable();
-            $table->integer('region_id');
+            $table->bigInteger('us_state_id')->nullable()->unsigned()->index();
+            $table->bigInteger('region_id')->nullable()->unsigned()->index();
             $table->string('company_name');
             $table->string('building_name');
             $table->string('address1');
@@ -39,6 +39,14 @@ class CreateCentersTable extends Migration
             $table->string('map_url');
             $table->datetime('status_changed_at');
             $table->timestamps();
+            /**
+             * Table relations
+             */
+            $table->foreign('owner_id')->references('id')->on('owners')->onUpdate('restrict')->onDelete('set null');
+            $table->foreign('city_id')->references('id')->on('cities')->onUpdate('restrict')->onDelete('set null');
+            $table->foreign('country_id')->references('id')->on('countries')->onUpdate('restrict')->onDelete('set null');
+            $table->foreign('us_state_id')->references('id')->on('us_states')->onUpdate('restrict')->onDelete('set null');
+            $table->foreign('region_id')->references('id')->on('regions')->onUpdate('restrict')->onDelete('set null');
         });
     }
 

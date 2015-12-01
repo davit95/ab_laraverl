@@ -14,15 +14,19 @@ class CreateMeetingRoomsTable extends Migration
     {
         Schema::create('meeting_rooms', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('center_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('center_id')->unsigned()->index();
             $table->string('name');
             $table->string('capacity');
-            $table->string('hourly_rate');
-            $table->string('half_day_rate');
-            $table->string('full_day_rate');
+            $table->float('hourly_rate');
+            $table->float('half_day_rate');
+            $table->float('full_day_rate');
             $table->string('min_hours_req');
             $table->integer('floor');
+            /**
+             * Table relations
+             */
+            $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCurrenciesTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CreateCurrenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currencies', function(Blueprint $table)
+        Schema::create('roles', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->string('name', 4);
-            $table->string('symbol', 4);
-            $table->string('image');
+            $table->bigIncrements('id');
+            $table->string('name')->unique();
         });
     }
 
@@ -28,6 +26,6 @@ class CreateCurrenciesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('currencies');
+        Schema::drop('roles');
     }
 }
