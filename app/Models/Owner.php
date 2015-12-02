@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,14 +20,12 @@ class Owner extends Model
      */
     protected $fillable = ['name', 'phone', 'fax', 'url', 'email', 'address1', 'address2', 'city_id', 'region_id', 'us_state_id', 'country_id', 'postal_code', 'notes', 'company_name'];
 
-    //protected $appends = ['city'];
-    
     /**
      * Get all of the centers for owner.
      */
     public function centers()
     {
-        return $this->hasMany('App\Center');
+        return $this->hasMany('App\\Models\\Center');
     }
 
     /**
@@ -35,7 +33,7 @@ class Owner extends Model
      */
     public function city()
     {
-        return $this->belongsTo('App\City', 'city_id');
+        return $this->belongsTo('App\\Models\\City', 'city_id');
     }
 
     /**
@@ -52,7 +50,7 @@ class Owner extends Model
      */
     public function region()
     {
-        return $this->belongsTo('App\Region', 'region_id');
+        return $this->belongsTo('App\\Models\\Region', 'region_id');
     }
 
     /**
@@ -60,7 +58,7 @@ class Owner extends Model
      */
     public function getregionAttribute()
     {
-        $region = $this->belongsTo('App\Region', 'region_id')->first();
+        $region = $this->belongsTo('App\\Models\\Region', 'region_id')->first();
         return $region?$region->name:'';
     }
 
@@ -69,7 +67,7 @@ class Owner extends Model
      */
     public function us_state()
     {
-        return $this->belongsTo('App\UsState', 'us_state_id');
+        return $this->belongsTo('App\\Models\\UsState', 'us_state_id');
     }
 
     /**
@@ -77,7 +75,7 @@ class Owner extends Model
      */
     public function getUsStateAttribute()
     {
-        $us_state = $this->belongsTo('App\UsState', 'us_state_id')->first();
+        $us_state = $this->belongsTo('App\\Models\\UsState', 'us_state_id')->first();
         return $us_state?$us_state->name:'';
     }
 
@@ -86,7 +84,7 @@ class Owner extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country', 'country_id');
+        return $this->belongsTo('App\\Models\\Country', 'country_id');
     }
 
     /**
@@ -94,7 +92,7 @@ class Owner extends Model
      */
     public function getCountryAttribute()
     {
-        $country = $this->belongsTo('App\Country', 'country_id')->first();
+        $country = $this->belongsTo('App\\Models\\Country', 'country_id')->first();
         return $country?$country->name:'';
     }
 }

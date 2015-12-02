@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\City;
+use App\Models\City;
 use URL;
 
 class CityService

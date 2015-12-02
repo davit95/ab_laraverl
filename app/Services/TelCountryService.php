@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\TelCountry;
+use App\Models\TelCountry;
 
 class TelCountryService
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,12 +8,12 @@ class City extends Model
 {
     public function centers()
     {
-    	return $this->hasMany('App\\Center');
+    	return $this->hasMany('App\\Models\\Center');
     }
 
     public function active_virtual_offices()
     {
-    	return $this->hasMany('App\\Center')
+    	return $this->hasMany('App\\Models\\Center')
                     ->where('active_flag', 'Y')
                     ->where(function($q){
                         $q->whereHas('center_filter', function($q){
@@ -25,7 +25,7 @@ class City extends Model
 
     public function active_meeting_rooms()
     {
-        return $this->hasMany('App\\Center')
+        return $this->hasMany('App\\Models\\Center')
                     ->where('active_flag', 'Y')
                     ->where(function($q){
                         $q->whereHas('center_filter', function($q){
@@ -37,11 +37,11 @@ class City extends Model
 
     public function country()
     {
-    	return $this->belongsTo('App\\Country');
+    	return $this->belongsTo('App\\Models\\Country');
     }
 
     public function usState()
     {
-        return $this->belongsTo('App\\UsState');
+        return $this->belongsTo('App\\Models\\UsState');
     }
 }

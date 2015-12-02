@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\TelPrefix;
+use App\Models\TelPrefix;
 
 class TelPrefixService
 {

@@ -10,8 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::group(['before' => 'auth.basic', 'middleware' => 'view'], function(){
+Route::get('payment', function()
+{
+	return view('payment');
+});
+Route::group(['before' => 'auth.basic'], function(){
 		Route::get('/', 'HomeController@index');
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');

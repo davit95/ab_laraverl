@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\UsState;
+use App\Models\UsState;
 use Cache;
 use URl;
 class UsStateService

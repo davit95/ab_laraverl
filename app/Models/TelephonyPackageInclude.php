@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,6 @@ class TelephonyPackageInclude extends Model
 
     public function package()
     {
-      return $this->belongsTo('App\\Product',  'package_id', 'part_number');
+      return $this->belongsTo('App\\Models\\Package',  'package_id', 'part_number');
     }
 }

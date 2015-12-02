@@ -1,16 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class CenterPrice extends Model
 {
-    protected $table = 'centers_prices';
+    protected $table = 'center_prices';
 
     public function package()
     {
-    	return $this->belongsTo('App\\Product', 'package_id', 'part_number');
+    	return $this->belongsTo('App\\Models\\Package', 'package_id', 'part_number');
     }
 
     public function priceCurrency()

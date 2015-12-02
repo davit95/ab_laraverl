@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\TempCartItem;
-use App\Product;
+use App\Models\TempCartItem;
+use App\Models\Package;
 
 class TempCartItemService
 {
-	public function __construct(TempCartItem $tempCartItem, Product $product )
+	public function __construct(TempCartItem $tempCartItem, Package $package )
 	{
         $this->tempCartItem = $tempCartItem;
-		$this->product = $product;
+		$this->package = $package;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class TempCartItemService
      */
     public function getPackageName($part_number)
     {
-        return $this->product->where('part_number', $part_number)->first()->name;
+        return $this->package->where('part_number', $part_number)->first()->name;
     }
 
     public function update($temp_user_id, $inputs)

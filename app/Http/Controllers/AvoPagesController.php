@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Center;
+use App\Models\Center;
 use App\Product;
 use App\Http\Requests\SendContactrequest;
 use App\Http\Requests\CustomizeMailRequest;

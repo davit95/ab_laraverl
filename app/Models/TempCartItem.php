@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,6 @@ class TempCartItem extends Model
      */
     public function center()
     {
-        return $this->belongsTo('App\Center', 'center_id');
+        return $this->belongsTo('App\\Models\\Center', 'center_id');
     }
 }

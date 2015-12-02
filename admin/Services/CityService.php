@@ -5,7 +5,7 @@ namespace Admin\Services;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Admin\Contracts\CityInterface;
-use App\City;
+use App\Models\City;
 
 class CityService implements CityInterface
 {
