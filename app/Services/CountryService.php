@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Country;
+use App\Models\Country;
 use Cache;
 use URL;
 

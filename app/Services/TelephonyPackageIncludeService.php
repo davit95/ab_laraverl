@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\TelephonyPackageInclude;
+use App\Models\TelephonyPackageInclude;
 
 class TelephonyPackageIncludeService
 {

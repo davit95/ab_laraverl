@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\CenterCoordinate;
+use App\Models\CenterCoordinate;
 use DB;
 
 class CenterCoordinateService

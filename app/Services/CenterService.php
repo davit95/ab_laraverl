@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Center;
+use App\Models\Center;
 
 class CenterService
 {
@@ -34,7 +34,6 @@ class CenterService
 	public function getMeetingRoomsByCityId($id)
 	{
 		return $this->filteredMeetingRoom()->where('city_id', $id)->get();
-
 	}
 
 	/**

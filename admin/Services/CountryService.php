@@ -5,7 +5,7 @@ namespace Admin\Services;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Admin\Contracts\CountryInterface;
-use App\Country;
+use App\Models\Country;
 
 class CountryService implements CountryInterface
 {

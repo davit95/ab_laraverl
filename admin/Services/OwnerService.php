@@ -5,7 +5,7 @@ namespace Admin\Services;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Admin\Contracts\OwnerInterface;
-use App\Owner;
+use App\Models\Owner;
 
 class OwnerService implements OwnerInterface
 {

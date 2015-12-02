@@ -44,6 +44,6 @@ class User extends Model implements AuthenticatableContract,
 
     public function city()
     {
-        return $this->belongsTo('App\City');
+        return $this->belongsTo('App\\Models\\City');
     }
 }

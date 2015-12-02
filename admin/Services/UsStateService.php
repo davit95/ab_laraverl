@@ -5,7 +5,7 @@ namespace Admin\Services;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Admin\Contracts\UsStateInterface;
-use App\UsState;
+use App\Models\UsState;
 
 class UsStateService implements UsStateInterface
 {
