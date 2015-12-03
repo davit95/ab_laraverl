@@ -264,7 +264,8 @@
 
                             <div class="PaymentInfo">
                                 <h3><span class="newCust">PAYMENT INFORMATION</span></h3>
-                                <input type="radio" name="payType" id="creditCard" value="cc" onclick="paymentMethod();"> Pay by Credit Card  &nbsp; &nbsp;
+                                <input type="radio" name="payType" id="creditCard" value="cc" onclick="paymentMethod();"> Pay by Credit Card  &nbsp;
+ &nbsp;
                                 <input type="radio" name="payType" id="bitcoin" value="bitcoin" onclick="paymentMethod();">Pay with Bitcoin<br>
                                 <div class="clear"></div>
 
@@ -319,7 +320,7 @@
                         {!! Form::close() !!}
                         <!-- END BRM CODE //-->
 
-                        
+
 
                     </div><!--/wrapDescrip-->
                 </div><!--/StepsContentLeft-->
@@ -390,7 +391,7 @@
             var name;
             var val = '';
             var inputs = [
-                'first_name', 'last_name', 'email', 'phone', 'company_name', 'address1', 
+                'first_name', 'last_name', 'email', 'phone', 'company_name', 'address1',
                 'address2', 'country_id','city', 'state', 'postal_code'
             ];
             /*if(!checked && !confirm('You sure want to unuse this field, all "MAIL FORWARDING INFORMATION" inputs will be empty.')) {
@@ -401,6 +402,8 @@
                 if(checked) {
                     val = $("input[name='"+name+"']").val();
                     $("input[name='mf_"+name+"']").val(val);
+                    val = $("select[name='"+name+"']").val();
+                    $("select[name='mf_"+name+"']").val(val);
                 }
             }
         }

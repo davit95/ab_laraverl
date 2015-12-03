@@ -4,7 +4,9 @@
             <!-- Platinum plan -->
                 <div class="PlanFt1">
                 <div class="PlanFtsHeight">
-                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp; &nbsp;</div><!--/RPBtop2-->
+                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp;
+ &nbsp;
+</div><!--/RPBtop2-->
                     <div class="PlanFtName">
                         <div class="RPBleft bold lh1">Platinum</div>
                         @if(isset($center->packages_arr['Platinum']))
@@ -28,7 +30,9 @@
             <!-- Platinum with LR plan -->
                 <div class="PlanFt2">
                 <div class="PlanFtsHeight">
-                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp; &nbsp;</div><!--/RPBtop-->
+                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp;
+ &nbsp;
+</div><!--/RPBtop-->
                     <div class="PlanFtName">
                         <div class="RPBleft2 bold">Platinum<br>with Live Receptionist</div>
                         @if(isset($center->packages_arr['Platinum']))
@@ -51,7 +55,9 @@
             <!-- Platinum Plus plan -->
                 <div class="PlanFt3">
                 <div class="PlanFtsHeight">
-                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp; &nbsp;</div><!--/RPBtop-->
+                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp;
+ &nbsp;
+</div><!--/RPBtop-->
                     <div class="PlanFtName">
                         <div class="RPBleft bold lh1">Platinum Plus</div>
                         @if(isset($center->packages_arr['Platinum Plus']))
@@ -72,7 +78,9 @@
             <!-- Platinum Plus with LR plan -->
                 <div class="PlanFt4">
                 <div class="PlanFtsHeight">
-                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp; &nbsp;</div><!--/RPBtop-->
+                    <div class="RPBtop2">BACK <span class="melon bold">⟨</span> &nbsp;
+ &nbsp;
+</div><!--/RPBtop-->
                     <div class="PlanFtName">
                       <div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>
                       @if(isset($center->packages_arr['Platinum Plus']))
@@ -91,7 +99,9 @@
                 </div><!--/PlanFt4-->
     <!-- Platinum plan -->
         <div class="RplansBox">
-        <div class="RPBtop">CLOSE <span class="melon">X</span> &nbsp; &nbsp;</div><!--/RPBtop-->
+        <div class="RPBtop">CLOSE <span class="melon">X</span> &nbsp;
+ &nbsp;
+</div><!--/RPBtop-->
         <div class="RPBplan1"><div class="RPBplan1T"><div class="planNum">1</div></div>
         <div class="RPBinfoPlan"><div class="RPBleft lh1">Platinum</div>
         @if(isset($center->packages_arr['Platinum']))
@@ -168,7 +178,7 @@
         <div class='CenterPrice gray1'>
             @if($center->virtual_office_lowest_price && $center->virtual_office_lowest_price->min_price)
                 <span class="starting gray3">STARTING AT:</span> <span class="signo">{!! session('currency.symbol') !!}</span><span class="ammount">{!! round($center->virtual_office_lowest_price->min_price*session('rate'), 2) !!}</span>
-                <span class="usd">USD</span>
+                <span class="usd">{!! session('currency.name') !!}</span>
             @else
                 <span class="starting gray3">CALL FOR PRICING</span>
             @endif
