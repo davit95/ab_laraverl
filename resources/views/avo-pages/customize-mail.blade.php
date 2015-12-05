@@ -92,9 +92,16 @@
                                     <td><div id="price">{!! session('currency.symbol') !!}0.00</div><div id="price_text">&nbsp;</div></td>
                                 </tr>
                             </table>
-                            @if($package_option == 103)
+                            @if($package_option == 103 && session('remainder'))
                                 <div class="upgrade">
-                                    <p>Would you like to add <span class="bold">16 hours of conference room time</span> monhtly for only <span class="bold aqua">$$remainder</span> more per month?</p><br><br>
+                                    <p>Would you like to add <span class="bold">16 hours of conference room time</span> monhtly for only
+                                    <span class="bold aqua">
+                                        @if( isset( $live_receptionist ) && $live_receptionist == 1 )
+                                            {!! session('currency.symbol') !!}{{ round(session('with_live_receptionist_remainder')*session('rate'), 2) }}
+                                        @else
+                                            {!! session('currency.symbol') !!}{{ round(session('remainder')*session('rate'), 2) }}
+                                        @endif
+                                    </span> more per month?</p><br><br>
                                 </div>
 
                                 <p><input type="checkbox" name="upgrade" value="yes" style="width: 15px; height: auto;" /> <span class="bold">Yes!</span> I'd like to upgrade to the Platinum Plus package</p><br>
@@ -219,7 +226,7 @@
         });
 
         function changePrice () {
-            option = $('#forward').val(); 
+            option = $('#forward').val();
             freq = $('#freq').val();
             var price = '';
             var newContent = 0;

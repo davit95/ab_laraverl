@@ -17,28 +17,28 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
        </div><!--/productContWrap-->
     <div id="test-form"  class="mfp-hide">
         <div class="centerForm2 popUpF">
-            <h3>INQUIRE ABOUT 
+            <h3>INQUIRE ABOUT
             <span class="bold">LIVE RECEPTIONISTS</span></h3>
             <form name="signup" action="/sendcontact.php" method="post" onSubmit="return validate_contact_form ( );">
-			
+
 					<label for="name"><div class="label">Name:</div></label>
 					<input name="name" id="name" type="text"><br/>
-				
+
 					<label for="email"><div class="label">Email:</div></label>
 					<input name="email" id="email" type="text"><br/>
-				
+
 					<label for="company"><div class="label">Company:</div></label>
 			  		<input name="company" id="company" type="text"><br/>
-		
+
 			  		<label for="label"><div class="label">Phone:</div></label>
 			  		<input name="phone" id="label" type="text"><br/>
-                    
+
                     <label for="label"><div class="label">Comments:</div></label>
 			  		<textarea class="inpInq" name="comments" id="comments" cols="20" rows="5"></textarea><br/>
-                    
+
 					<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
 					<label for="submit"></label>
-					<button type="submit" id="submit2">FIND OUT MORE</button> <br/><br/><br/>		
+					<button type="submit" id="submit2">FIND OUT MORE</button> <br/><br/><br/>
 				<script language="JavaScript" type="text/javascript" xml:space="preserve">//<![CDATA[
                 //You should create the validator only after the definition of the HTML form
                   //var frmvalidator  = new Validator("signup");
@@ -46,9 +46,9 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
                   //frmvalidator.addValidation("email","maxlen=50");
                   //frmvalidator.addValidation("email","req", "Please enter your Email Address");
                   //frmvalidator.addValidation("email","email");
-                
+
                 //]]></script>
-                
+
                 </form></fieldset>
                 </div><!--/centerForm-->
        </div><!--/test-form-->
@@ -60,13 +60,13 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 	<div class="productContWrap">
         <div class="productTxtWrap xs">
         <h1>Live Receptionists<br>and Virtual Phone Plans</h1>
-        <p>All business calls are personally answered by live receptionists in your company name, during business hours. 
-        Choose whether to take the call, re-route it to another extension, send it to voicemail, 
+        <p>All business calls are personally answered by live receptionists in your company name, during business hours.
+        Choose whether to take the call, re-route it to another extension, send it to voicemail,
         or have a message emailed to you. A phone system is included with a local or toll-free number, custom greetings, voicemail, and more.</p>
         </div><!--/productTxtWrap-->
-      
+
       <div class="LRtableWrap2">
-      <div class="LRtableWrap">  
+      <div class="LRtableWrap">
       <table class="newLRGrid">
 
       <tr>
@@ -161,16 +161,52 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 
       <tr>
         <td class="firstFT noBorder"><a href="all-features" class="aqua mediumBold">View All Features &amp; Options</a></td>
-        <td class="noBorder"><a href="all_features.php?s=2&amp;p=402" class="noStyle" onclick="addToCart(402);"><div class="aquaBtn">SELECT</div></a></td>
-        <td class="noBorder"><a href="all_features.php?s=2&amp;p=403" class="noStyle" onclick="addToCart(403);"><div class="aquaBtn">SELECT</div></a></td>
-        <td class="noBorder"><a href="all_features.php?s=2&amp;p=404" class="noStyle" onclick="addToCart(404);"><div class="aquaBtn">SELECT</div></a></td>
-        <td class="noBorder"><a href="all_features.php?s=2&amp;p=401" class="noStyle" onclick="addToCart(401);"><div class="aquaBtn">SELECT</div></a></td>
+        <td class="noBorder">
+          {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+            <a href="#" class="noStyle select_lr_plan">
+                {!! Form::hidden('lr_id', 402) !!}
+                {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 50') !!}
+                {!! Form::hidden('price', 95) !!}
+                <div class="aquaBtn">SELECT</div>
+            </a>
+          {!! Form::close() !!}
+        </td>
+        <td class="noBorder">
+          {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+            <a href="#" class="noStyle select_lr_plan">
+                {!! Form::hidden('lr_id', 403) !!}
+                {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 100') !!}
+                {!! Form::hidden('price', 145) !!}
+                <div class="aquaBtn">SELECT</div>
+            </a>
+          {!! Form::close() !!}
+        </td>
+        <td class="noBorder">
+          {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+            <a href="#" class="noStyle select_lr_plan">
+                {!! Form::hidden('lr_id', 404) !!}
+                {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 200') !!}
+                {!! Form::hidden('price', 225) !!}
+                <div class="aquaBtn">SELECT</div>
+            </a>
+          {!! Form::close() !!}
+        </td>
+        <td class="noBorder">
+          {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+            <a href="#" class="noStyle select_lr_plan">
+                {!! Form::hidden('lr_id', 401) !!}
+                {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 0') !!}
+                {!! Form::hidden('price', 40) !!}
+                <div class="aquaBtn">SELECT</div>
+            </a>
+          {!! Form::close() !!}
+        </td>
       </tr>
 
     </table>
     </div><!--/LRtableWrap-->
     </div><!--/LRtableWrap2-->
-        
+
        </div><!--/productContWrap-->
 </div><!--/LRandVPP-->
 
@@ -178,8 +214,8 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 	<div class="productContWrap">
         <div class="productTxtWrap">
         <h1>Call Answering</h1>
-        <p>Our live receptionist service provides <span class="mediumBold">personalized call answering</span> during business hours (8am-8pm EST) 
-        by a team of trained customer service professionals. Incoming calls are received by a receptionist 
+        <p>Our live receptionist service provides <span class="mediumBold">personalized call answering</span> during business hours (8am-8pm EST)
+        by a team of trained customer service professionals. Incoming calls are received by a receptionist
         and answered in your company name. <br>You have full control over the screening process, how callers are greeted, and which calls are forwarded.</p>
         </div><!--/productTxtWrap-->
        </div><!--/productContWrap-->
@@ -189,10 +225,21 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 	<div class="productContWrap">
         <div class="productTxtWrap">
         <h1>Phone Only</h1>
-        <p>Choose a <span class="mediumBold">low-cost virtual phone plan</span> with a local or toll-free number, inclusive local and long distance minutes, 
-        and additional features such as custom greetings, extension numbers, menus, voicemail, and more. 
+        <p>Choose a <span class="mediumBold">low-cost virtual phone plan</span> with a local or toll-free number, inclusive local and long distance minutes,
+        and additional features such as custom greetings, extension numbers, menus, voicemail, and more.
         Control it all online with your own secure control panel. Phone-only plans do not include call answering from a live receptionist.</p>
         </div><!--/productTxtWrap-->
        </div><!--/productContWrap-->
 </div><!--/PhoneOnly-->
+@stop
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.select_lr_plan').click(function(){
+                $(this).parents('form').submit();
+                return false;
+            });
+        });
+    </script>
 @stop

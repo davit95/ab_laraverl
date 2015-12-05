@@ -78,7 +78,9 @@
                     <div class="theSideCartWrap changeMtop">
                         <div class="MyCart2">ORDER TOTAL: &nbsp; <span class="aqua">{!! session('currency.symbol') !!}{{ round($price_total*session('rate'), 2) }}</span></div>
                         <div class="sideCartLine">
-                            <div class="aquaBtn">PLACE ORDER NOW</div>
+                            <a style="text-decoration:none;" href="{{ url('customer-information') }}">
+                                <div class="aquaBtn">PLACE ORDER NOW</div>
+                            </a>
                         </div>
                         <div class="clear"></div>
                         <div class="bottomSideCart hide">

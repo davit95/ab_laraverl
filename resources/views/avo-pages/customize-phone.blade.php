@@ -30,10 +30,12 @@
                                     <span class="mediumBold">Select whether you would like a local or toll free number.</span>
                                 </p>
                                 <br>
-    			                
-    			                
+
+
                                 <input type="radio" id="localNumber" name="package_option" value="local" onclick="toggleTel('CountrySelect', 'TollFree');"/>
-                                <label> local number</label> &nbsp; &nbsp; 
+                                <label> local number</label> &nbsp;
+ &nbsp;
+
                                 <input type="radio" id="" name="package_option" value="toll_free" onclick="toggleTel('TollFree','CountrySelect');"/>
                                 <label> toll free number</label>
                                 <br><br>
@@ -69,7 +71,7 @@
                                 </div>
                             </div>
                             <br>
-    	                   <input value="CONTINUE"  style="display:none;" class="aquaBtn changeMtop continueBTN" type="submit" ><br> 
+    	                   <input value="CONTINUE"  style="display:none;" class="aquaBtn changeMtop continueBTN" type="submit" ><br>
                         </form>
                     </div>
                 </div>
@@ -95,16 +97,16 @@
                 </div><!--/eachSCartWrap-->
                 <div class="sideCartLine"><div class="sideCartL">TOTAL:</div><div class="sideCartr aqua mediumBold">$180</div></div><!--/sideCartLine-->
                 <div class="clear"></div>
-                <div class="bottomSideCart"><!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                <div class="bottomSideCart"><!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Aenean a leo eu tellus ultricies pretium ac eget purus. Proin eu diam dignissim. --></div><!--/bottomSideCart-->
                 </div><!--/theSideCartWrap-->
             </div><!--/dsidecart-->
-            
+
             <div class="clear"></div>
         </div><!--/detailsTopWrap2-->
-           
+
         <div class="nearWrap">
-        
+
         </div><!--/nearWrap-->
     </div><!--/intWrap-->
 @stop
@@ -126,7 +128,7 @@
                     $(".dformright2").stick_in_parent()
                 };
             });
-          
+
             $('input').iCheck({
                 checkboxClass: 'icheckbox_flat-grey',
                 radioClass: 'iradio_flat-grey'
@@ -214,7 +216,7 @@
                 success : function(data)
                 {
                     $('body').css('cursor', 'default');
-                  
+
                     $("#numbers").find('select').html("<option value=''>Please Select</option>" + data);
                     $("#numbers").show();
                 }
@@ -229,7 +231,7 @@
                 $("input[type='submit']").show();
             }
         });
-        
+
         $("#TollFree").on('change', 'select', function()
         {
             var prefix = $(this).val();
@@ -243,9 +245,16 @@
                 success : function(data)
                 {
                     $('body').css('cursor', 'default');
-                  
-                      $("select[name='full_number']").html("<option value=''>Please Select</option>" + data);
-                      $("#numbers").show();
+                    if(data != '') {
+                        html = '<div id="numSelect">'+
+                                    '<p><span class="mediumBold">Please select a number:</span></p>'+
+                                    '<select name="phone_number_selected" class="TollFPhone changeMtop"></select>'+
+                                '</div>';
+                    }
+                    $("#Prefix").hide();
+                    $("#numbers").html(html);
+                    $("#numbers").find('select').html("<option value=''>Please Select</option>" + data);
+                    $("#numbers").show();
                 }
             });
         })

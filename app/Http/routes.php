@@ -9,12 +9,11 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
-Route::get('payment', function()
-{
-	return view('payment');
-});
-Route::group(['before' => 'auth.basic'], function(){
+ */
+Route::get('payment', function () {
+		return view('payment');
+	});
+Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/', 'HomeController@index');
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
@@ -31,8 +30,10 @@ Route::group(['before' => 'auth.basic'], function(){
 		Route::post('/meeting-rooms/book-meeting-room', 'MeetingRoomsController@bookMeetingRoom');
 		//Route::post('/meeting-rooms/{country_code}/{city_slug}/{center_slug}', 'MeetingRoomsController@getMeetingRoomShowPage');
 
+		Route::get('/live-receptionist', 'LiveReceptionistsController@index');
+		Route::post('/live-receptionist-add-to-cart', 'LiveReceptionistsController@addToCart');
+
 		// Avo pages
-		Route::get('/live-receptionist', 'AvoPagesController@liveReceptionist');
 		Route::get('/all-features', 'AvoPagesController@allFeatures');
 		Route::get('/customize-phone', 'AvoPagesController@customizePhone');
 		Route::post('/save-phone-settings', 'AvoPagesController@storePhoneSettings');
@@ -45,28 +46,26 @@ Route::group(['before' => 'auth.basic'], function(){
 		Route::get('/get-area-numbers', 'PhonesController@getAreaNumbers');
 		Route::get('/get-toll-free-numbers', 'PhonesController@getTollFreeNumbers');
 
-
 		Route::get('/contact', 'AvoPagesController@contact');
 		Route::post('/sendcontact', 'AvoPagesController@sendcontact');
 		Route::get('/about', 'AvoPagesController@about');
 		Route::get('/management', 'AvoPagesController@management');
 		Route::get('/faq', 'AvoPagesController@faq');
 
-		Route::group(['prefix' => 'ajax', 'middleware' => 'guest'], function()
-		{
-			Route::get('/centers/{id}', 'CentersController@getCenterById');
-			Route::get('/autocomplete', 'CentersController@autocomplete');
-		});
+		Route::group(['prefix' => 'ajax', 'middleware' => 'guest'], function () {
+				Route::get('/centers/{id}', 'CentersController@getCenterById');
+				Route::get('/autocomplete', 'CentersController@autocomplete');
+			});
 
-		Route::get('cdn-cgi/pe/bag2',function(){
-			foreach ($_GET['r'] as $key => $route) {
-				echo "<script src='".$route."'></script>";
-			}
-		});
+		Route::get('cdn-cgi/pe/bag2', function () {
+				foreach ($_GET['r'] as $key => $route) {
+					echo "<script src='".$route."'></script>";
+				}
+			});
 
-        Route::resource('/cart', 'CartController');
+		Route::resource('/cart', 'CartController');
 
-        Route::get('cvv2', 'AvoPagesController@cvv2');
-        Route::get('mr-terms', 'AvoPagesController@mrTerms');
-        Route::get('change-currency', 'AvoPagesController@changeCurrency');
-});
+		Route::get('cvv2', 'AvoPagesController@cvv2');
+		Route::get('mr-terms', 'AvoPagesController@mrTerms');
+		Route::get('change-currency', 'AvoPagesController@changeCurrency');
+	});
