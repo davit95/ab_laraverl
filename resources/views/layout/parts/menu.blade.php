@@ -17,7 +17,7 @@
     <div class="menu">
         <div class="btnMenu"><a class="@if(Request::is('virtual-offices*')) active @endif" href="{!! URL::action('VirtualOfficesController@index') !!}">VIRTUAL OFFICES</a></div>
         <div class="btnMenu"><a class="@if(Request::is('meeting-rooms*')) active @endif" href="{!! URL::action('MeetingRoomsController@index') !!}">MEETING ROOMS</a></div>
-        <div class="btnMenu"><a class="@if(Request::is('live-receptionist*')) active @endif" href="{!! URL::action('AvoPagesController@liveReceptionist') !!}">LIVE RECEPTIONISTS</a></div>
+        <div class="btnMenu"><a class="@if(Request::is('live-receptionist*')) active @endif" href="{!! URL::action('LiveReceptionistsController@index') !!}">LIVE RECEPTIONISTS</a></div>
         <div class="btnMenu"><a href="/login.php"><span class="light">Login</span></a></div>
         <div class="btnMenu"><a class="@if(Request::is('contact*')) active @endif" href="{!! URL::action('AvoPagesController@contact') !!}"><span class="light">Contact</span></a></div>
         <div class="btnMenu"><a class="@if(Request::is('cart*')) active @endif" href="{!! URL::action('CartController@index') !!}"><span class="orange">CART</span><img src="/images/cart-icon.png" class="cartIcon" border="0" width="23" height="23"></a></div>

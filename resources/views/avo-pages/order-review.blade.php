@@ -53,9 +53,9 @@
                                     </tr>
                                 </table>
                             </div><!--/eachSCartWrap-->
-                        @else
+                        @endif
+                        @if($item->type == 'vo')
                             @if (!is_null($center = $item->center))
-                                <span class="mediumBold">Virtual Office</span>
                                 <div class="eachSCartWrap marginTop paddingtop">
                                     <h3 class=" bold">Virtual Office</h3>
                                     <h4 class="bold blue">ADDRESS</h4>
@@ -67,7 +67,11 @@
                                         <tr>
                                             <td class="sideCartL3">{!! $item->vo_plan !!}:</td>
                                             <td class="sideCartr2">
-                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
+                                                @if ($item->live_receptionist)
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! ($item->price-85)*session('rate') !!}</span>
+                                                @else
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
+                                                @endif
                                                 <span class="smallLine gray3"> /month</span>
                                             </td>
                                         </tr>
@@ -78,6 +82,22 @@
                                                 <span class="smallLine gray3"> /month</span>
                                             </td>
                                         </tr>
+                                        @if ($item->live_receptionist)
+                                            <tr>
+                                                <td class="sideCartL3">LIVE RECEPTIONIST 50:</td>
+                                                <td class="sideCartr2">
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! 95*session('rate') !!}</span>
+                                                    <span class="smallLine gray3"> /month</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="sideCartL3">PACKAGE DISCOUNT:</td>
+                                                <td class="sideCartr2">
+                                                    <span class="mediumBold">-{!! session('currency.symbol') !!}{!! 10*session('rate') !!}</span>
+                                                    <span class="smallLine gray3"> /month</span>
+                                                </td>
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <td class="sideCartL3">SET UP FEE:</td>
                                             <td class="sideCartr2">
@@ -97,7 +117,28 @@
                                 </div>
                             @endif
                         @endif
-
+                        @if($item->type == 'lr')
+                            <div class="eachSCartWrap marginTop paddingtop">
+                                <h3 class="bold">Phone Plan</h3><br>
+                                <table width="100%">
+                                    <tr>
+                                        <td class="sideCartL3">{!! $item->lr_name !!}:</td>
+                                        <td class="sideCartr2">
+                                            <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
+                                            <span class="smallLine gray3"> /month</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width="100%">
+                                    <tr>
+                                        <td class="sideCartL3">TOTAL:</td>
+                                        <td class="sideCartr2">
+                                            <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! $item->sum*session('rate') !!}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        @endif
                     @endforeach
 
                     <table class="totalLine" width="100%">
@@ -155,24 +196,32 @@
                             </p>
 
                             <div class="clear"></div>
-
-                            <div class="recurringCharge changeMtop2 ">
-                                <h3><span class="newCust">Meeting Room Charge Agreement{{-- FIXME: need to be text --}}</span></h3>
-                                <p>You are about to request your meeting room. Alliance Virtual Offices will confirm your request within 48 hours (most likely a lot sooner); until then your meeting room is not scheduled. We will NOT charge your card until we have your meeting room completely confirmed.
-                                <br>
-                                <br>
-                                By clicking "Place Order" you authorize Alliance Virtual Offices to charge your credit card for the amount of {!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!} upon confirmation of your meeting room. The remaining balance of $162.22, plus any additional charges incurred, will be charged at the time of your meeting. Please have your credit card available at the meeting room facility to finalize your charges.
-                                <br>
-                                <br>
-                                You will not have any recurring fees.
-                                <br>
-                                <br>
-                                For any <strong>cancelation or rescheduling</strong> we will need a <strong>48 hours</strong> notification.
-                                Any reschedule after this time we will not be able to ensure availability.</p>
-
-
-
-                            </div><!--/recurringCharge-->
+                            @if(!$has_vo)
+                                <div class="recurringCharge changeMtop2 ">
+                                    <h3><span class="newCust">Meeting Room Charge Agreement</span></h3>
+                                    <p>You are about to request your meeting room. Alliance Virtual Offices will confirm your request within 48 hours (most likely a lot sooner); until then your meeting room is not scheduled. We will NOT charge your card until we have your meeting room completely confirmed.
+                                    <br>
+                                    <br>
+                                    By clicking "Place Order" you authorize Alliance Virtual Offices to charge your credit card for the amount of <strong>{!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!}</strong> upon confirmation of your meeting room. The remaining balance of <strong>$162.22</strong>, plus any additional charges incurred, will be charged at the time of your meeting. Please have your credit card available at the meeting room facility to finalize your charges.
+                                    <br>
+                                    <br>
+                                    You will not have any recurring fees.
+                                    <br>
+                                    <br>
+                                    For any <strong>cancelation or rescheduling</strong> we will need a <strong>48 hours</strong> notification.
+                                    Any reschedule after this time we will not be able to ensure availability.</p>
+                                </div><!--/recurringCharge-->
+                            @else
+                                <div class="recurringCharge changeMtop2 ">
+                                    <h3><span class="newCust">Recurring Charge Agreement</span></h3>
+                                    <p>
+                                    By clicking "Place Order", you authorize Alliance Virtual Offices to charge your credit card for the amount of <strong>{!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!}</strong>.
+                                    <br>
+                                    <br>
+                                    You also warrant that you are authorized to use the credit card according to the information you have submitted, and you agree to let Alliance Virtual Offices charge you on a recurring basis for any monthly subscription products you may have selected.
+                                    </p>
+                                </div>
+                            @endif
                             {!! Form::open(['name' => 'form1']) !!}
                                 {!! Form::hidden('step', 'next') !!}
                                 {!! Form::hidden('multiple', '$multiple') !!}
@@ -196,7 +245,7 @@
 @section('styles')
     <link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
     <link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
-@stop 
+@stop
 @section('scripts')
     <script type="text/rocketscript" data-rocketsrc="/js/jquery.tooltipster.min.js"></script>
     <script type="text/rocketscript" src="/js/icheck.js"></script>

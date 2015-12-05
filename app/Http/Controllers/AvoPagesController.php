@@ -53,15 +53,6 @@ class AvoPagesController extends Controller {
 	}
 
 	/**
-	 * Display the live-receptionist page.
-	 *
-	 * @return Response
-	 */
-	public function liveReceptionist() {
-		return view('avo-pages.live-receptionist');
-	}
-
-	/**
 	 * Display the all-features page.
 	 *
 	 * @return Response
@@ -149,18 +140,25 @@ class AvoPagesController extends Controller {
 		$customer = session('customer_information');
 		//$country_codes = $telCountryService->getAllCountriesWithList();
 		$price_total = 0;
+		$has_vo      = false;
 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
 			$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
 			foreach ($items as $item) {
-				if (is_null($item->vo_plan)) {
+				if ($item->type == 'mr') {
 					$mr_start_time        = strtotime($item->mr_start_time);
 					$mr_end_time          = strtotime($item->mr_end_time);
 					$item->price_per_hour = $item->price/(($mr_end_time-$mr_start_time)/3600);
 					$item->price_due      = $item->price*30/100;
 					$item->price_total    = $item->price-$item->price_due;
 					$price_total += $item->price_total;
-				} else {
+				}
+				if ($item->type == 'vo') {
 					$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
+					$price_total += $item->sum;
+					$has_vo = true;
+				}
+				if ($item->type == 'lr') {
+					$item->sum = $item->price;
 					$price_total += $item->sum;
 				}
 			}
@@ -168,7 +166,7 @@ class AvoPagesController extends Controller {
 		} else {
 			$items = [];
 		}
-		return view('avo-pages.order-review', ['customer' => (object) $customer, 'items' => $items, 'price_total' => round($price_total, 2)]);
+		return view('avo-pages.order-review', ['customer' => (object) $customer, 'has_vo' => $has_vo, 'items' => $items, 'price_total' => round($price_total, 2)]);
 	}
 
 	/**
@@ -201,9 +199,15 @@ class AvoPagesController extends Controller {
 				$inputs['package_option'] = 105;
 			}
 		}
-		$package           = $inputs['package_option'];
-		$center_id         = $inputs['center_id'];
-		$price             = $center->find($center_id)->prices()->where('package_id', $package)->first()->price;
+		$package      = $inputs['package_option'];
+		$center_id    = $inputs['center_id'];
+		$center_price = $center->find($center_id)->prices()->where('package_id', $package)->first();
+		$price        = $center_price->price;
+		if ($request->has('live_receptionist')) {
+			$inputs['lr_id']   = 402;
+			$inputs['lr_name'] = 'VIRTUAL OFFICE LIVE RECEPTIONIST 50';
+			$price             = $center_price->with_live_receptionist_pack_price;
+		}
 		$package_option    = $tempCartItemService->getPackageName($package);
 		$inputs['price']   = $price;
 		$inputs['vo_plan'] = $package_option;
