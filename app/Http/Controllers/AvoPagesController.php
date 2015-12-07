@@ -98,7 +98,7 @@ class AvoPagesController extends Controller {
 	 */
 	public function postCustomerInformation(CustomerRequest $request) {
 		session(['customer_information' => $request->all()]);
-		//$country_codes = $telCountryService->getAllCountriesWithList();
+		//TODO: Need to know where we want to save customer information;
 		return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
 	}
 
