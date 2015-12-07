@@ -12,7 +12,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
       <h1 class="gray2">LIVE RECEPTIONISTS PLANS & FEATURES</h1>
       <div class="allFtContWrap">
         <div class="LRtableWrap2" style="margin-top:30px;">
-          <div class="LRtableWrap3">  
+          <div class="LRtableWrap3">
             <table class="newLRGrid">
 
               <tr>
@@ -24,7 +24,6 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
                 <th class="bgDGray"><span class="mediumBold smallLine">VIRTUAL OFFICE<br>LIVE RECEPTIONIST 500</span></th>
                 <th class="bgDGray noborder"><span class="mediumBold smallLine">VIRTUAL OFFICE<br><span class="smallLine">PHONE UNLIMITED</span></span></th>
              </tr>
-
               <tr>
                 <td class="firstFT">Live Answering Minutes</td>
                 <td class="bold">50</td>
@@ -87,7 +86,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 
                <tr>
                 <td class="tleftG2 ">Dial-by-Name Directory, Auto Attendant</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -95,10 +94,10 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
               </tr>
-              
+
               <tr>
                 <td class="firstFT">Custom Recordings,   Messages</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -108,17 +107,17 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Full Online Control   Panel</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
-              </tr>    
+              </tr>
               <tr>
                 <td class="firstFT">Address Book</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -128,7 +127,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">After Hours Greetings</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -138,7 +137,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Analog Phone Adapter - Add-On</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -148,7 +147,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Area Code &amp; Local Phone Selection</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -158,7 +157,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Block Surcharged Calls</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -168,7 +167,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Business Phones - Desk Phones</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -178,7 +177,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Call Blocking</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -188,7 +187,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Call Forwarding</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -198,7 +197,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Call Handling Rules</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -208,7 +207,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Call Logs</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -218,7 +217,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Call Recording</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -228,7 +227,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Call Screening</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -238,7 +237,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT"> Call Transfer</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -248,7 +247,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Call Voice Tagging</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -258,7 +257,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Call Waiting</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -268,7 +267,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Caller ID</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -278,7 +277,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Caller ID Block</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -288,7 +287,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Caller ID Routing</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -298,7 +297,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Calling Cards</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -308,7 +307,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Chatcalls</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -318,7 +317,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Click to Call Buttons</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -328,7 +327,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Conferencing</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -338,7 +337,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Custom Menu Audio</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -348,7 +347,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Dial-by-Name Directory</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -358,7 +357,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Do Not Disturb</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -368,7 +367,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">E911 / 911 Dialing</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -378,7 +377,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Extensions</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -388,7 +387,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Fax out - Internet Fax</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -398,7 +397,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Global Numbers</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -408,7 +407,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Greetings</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -418,7 +417,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">HD Voice (Hi Definition)</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -428,7 +427,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Hold Music - Bring Your Own</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -438,7 +437,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Hold Music - Pre Recorded</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -448,7 +447,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">How to Receive an Internet Fax</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -458,7 +457,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">In-Call Features</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -468,7 +467,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">International Call Blocking</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -478,7 +477,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">International Calling</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -488,7 +487,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Internet Voicemail Services</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -498,7 +497,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Internet Voicemail Services: Email &amp; Internet </td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -508,7 +507,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Voicemail Delivery</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -518,7 +517,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">iNUM - Global Numbers</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -528,7 +527,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Local Number Porting</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -538,7 +537,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Menus (IVR)</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -548,7 +547,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Mobile Office</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -558,7 +557,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Mobile VoIP</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -568,7 +567,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Online Account Management</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -578,7 +577,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Outbound Calls</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -588,7 +587,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Alliance Mobility - Avoid Roaming Charges</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -598,7 +597,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT"> Professional Recording Services</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -608,7 +607,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Queues</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -618,7 +617,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Schedules</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -628,7 +627,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Second Line</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -638,7 +637,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">SMS Send &amp; Receive</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -648,7 +647,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Special Numbers (411...)</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -658,7 +657,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Support 24x7</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -668,7 +667,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT ">Text to Greeting</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -678,7 +677,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               </tr>
               <tr>
                 <td class="firstFT">Text Voicemail (Transcription)</td>
-                
+
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
                 <td ><img src="/images/check2.png" width="15" height="15" border="0" /></td>
@@ -751,19 +750,73 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
                 <td class=" borderBottom"><span class="melon bold bigPrice">$40</span></td>
               </tr>
 
-              <tr>
+            <tr>
                 <td class="firstFT noBorder"></td>
-                <td class="noBorder"><a href="?s=2&amp;p=402" class="noStyle"><div class="aquaBtn">SELECT</div></a></td>
-                <td class="noBorder"><a href="?s=2&amp;p=403" class="noStyle"><div class="aquaBtn">SELECT</div></a></td>
-                <td class="noBorder"><a href="?s=2&amp;p=404" class="noStyle"><div class="aquaBtn">SELECT</div></a></td>
-                <td class="noBorder"><a href="?s=2&amp;p=406" class="noStyle"><div class="aquaBtn">SELECT</div></a></td>
-                <td class="noBorder"><a href="?s=2&amp;p=407" class="noStyle"><div class="aquaBtn">SELECT</div></a></td>
-                <td class="noBorder"><a href="?s=2&p=401" class="noStyle"><div class="aquaBtn">SELECT</div></a></td>
-              </tr>
+                <td class="noBorder">
+                    {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+                        <a href="#" class="noStyle select_lr_plan">
+                            {!! Form::hidden('lr_id', 402) !!}
+                            {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 50') !!}
+                            {!! Form::hidden('price', 95) !!}
+                            <div class="aquaBtn">SELECT</div>
+                        </a>
+                    {!! Form::close() !!}
+                </td>
+                <td class="noBorder">
+                    {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+                        <a href="#" class="noStyle select_lr_plan">
+                            {!! Form::hidden('lr_id', 403) !!}
+                            {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 100') !!}
+                            {!! Form::hidden('price', 145) !!}
+                            <div class="aquaBtn">SELECT</div>
+                        </a>
+                    {!! Form::close() !!}
+                </td>
+                <td class="noBorder">
+                    {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+                        <a href="#" class="noStyle select_lr_plan">
+                            {!! Form::hidden('lr_id', 404) !!}
+                            {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 200') !!}
+                            {!! Form::hidden('price', 225) !!}
+                            <div class="aquaBtn">SELECT</div>
+                        </a>
+                    {!! Form::close() !!}
+                </td>
+                <td class="noBorder">
+                    {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+                        <a href="#" class="noStyle select_lr_plan">
+                            {!! Form::hidden('lr_id', 406) !!}
+                            {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 300') !!}
+                            {!! Form::hidden('price', 325) !!}
+                            <div class="aquaBtn">SELECT</div>
+                        </a>
+                    {!! Form::close() !!}
+                </td>
+                <td class="noBorder">
+                    {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+                        <a href="#" class="noStyle select_lr_plan">
+                            {!! Form::hidden('lr_id', 407) !!}
+                            {!! Form::hidden('lr_name', 'Virtual Office Live Receptionist 500') !!}
+                            {!! Form::hidden('price', 475) !!}
+                            <div class="aquaBtn">SELECT</div>
+                        </a>
+                    {!! Form::close() !!}
+                </td>
+                <td class="noBorder">
+                    {!! Form::open(['url' => url('live-receptionist-add-to-cart')]) !!}
+                        <a href="#" class="noStyle select_lr_plan">
+                            {!! Form::hidden('lr_id', 401) !!}
+                            {!! Form::hidden('lr_name', 'Virtual Office Phone Unlimited') !!}
+                            {!! Form::hidden('price', 40) !!}
+                            <div class="aquaBtn">SELECT</div>
+                        </a>
+                    {!! Form::close() !!}
+                </td>
+            </tr>
 
             </table>
           </div><!--/LRtableWrap3 -->
-        </div><!-- /LRtableWrap2--> 
+        </div><!-- /LRtableWrap2-->
       </div><!--/allFtContWrap-->
     </div><!--/allFeatures-->
   </div><!--/contentWrap-->
@@ -773,7 +826,10 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    m=s.getElementsByTagName(o)[0];
+a.async=1;
+a.src=g;
+m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-17741668-1');
@@ -834,4 +890,15 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 
   <script type="text/javascript" src="http://dnn506yrbagrg.cloudfront.net/pages/scripts/0011/2521.js"> </script>
 
+@stop
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.select_lr_plan').click(function(){
+                $(this).parents('form').submit();
+                return false;
+            });
+        });
+    </script>
 @stop
