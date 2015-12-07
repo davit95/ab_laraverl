@@ -742,12 +742,12 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
               <tr>
 
                 <td class=" firstFT"><b>Monthly Cost</b></td>
-                <td class=" borderBottom"><span class="melon bold bigPrice">$95</span></td>
-                <td class=" borderBottom"><span class="melon bold bigPrice">$145</span></td>
-                <td class=" borderBottom"><span class="melon bold bigPrice">$225</span></td>
-                <td class=" borderBottom"><span class="melon bold bigPrice">$325</span></td>
-                <td class=" borderBottom"><span class="melon bold bigPrice">$475</span></td>
-                <td class=" borderBottom"><span class="melon bold bigPrice">$40</span></td>
+                <td class=" borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 95*session('rate') }}</span></td>
+                <td class=" borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 145*session('rate') }}</span></td>
+                <td class=" borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 225*session('rate') }}</span></td>
+                <td class=" borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 325*session('rate') }}</span></td>
+                <td class=" borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 475*session('rate') }}</span></td>
+                <td class=" borderBottom"><span class="melon bold bigPrice">{!! session('currency.symbol') !!}{{ 40*session('rate') }}</span></td>
               </tr>
 
             <tr>
