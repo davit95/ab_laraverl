@@ -113,7 +113,9 @@
 				<div class="clear"></div>
 			</div>
 			<br>
-			<p class=" mediumBold getVirt"><span class="bold orange">GET A VIRTUAL OFFICE NOW</span> - <span class="gray2">SELECT A PLAN FOR THIS ADDRESS:</span><br> <span class="gray3 medium" style="font-size:14px;">Or call: &nbsp; <span  style="font-size:18px;">[</span> North America:    +1 888.869.9494	<span  style="font-size:18px;">] &nbsp; [</span>	International:     +1 949.777.6340 <span  style="font-size:18px;">]</span></span></p>
+			<p class=" mediumBold getVirt"><span class="bold orange">GET A VIRTUAL OFFICE NOW</span> - <span class="gray2">SELECT A PLAN FOR THIS ADDRESS:</span><br> <span class="gray3 medium" style="font-size:14px;">Or call: &nbsp;
+ <span  style="font-size:18px;">[</span> North America:    +1 888.869.9494	<span  style="font-size:18px;">] &nbsp;
+ [</span>	International:     +1 949.777.6340 <span  style="font-size:18px;">]</span></span></p>
 			<div class="dPlansWrap">
 				<div class="dPlansAllWrap" style="overflow: auto;">
 					<div class="dPlansAll">
@@ -131,10 +133,11 @@
 						    </div>
 						    <div class="clear"></div>
 						    </div><!--/wrapPP-->
-
-						    <a href="{!! url('/customize-mail?p=103&cid='.$center->id) !!}" class="link">
-						    	<div class="btnSelectP2">SELECT PLAN</div>
-						    </a>
+						    @if(isset($packages['Platinum'])  && $packages['Platinum']->current_currency_price->price)
+							    <a href="{!! url('/customize-mail?p=103&cid='.$center->id) !!}" class="link">
+							    	<div class="btnSelectP2">SELECT PLAN</div>
+							    </a>
+							@endif
 						    <div class="gray2 showFplans2 triggerShow">Show and compare plan features</div>
 						    </div><!--/aPlanTop2-->
 						    <div class="aPlanBottom2 changeH bordeBottom bordeRight hide">
@@ -152,20 +155,29 @@
 							    <div class="wrapPP">
 								    <div class="firstline gray2"><h3 class="cf1">&nbsp; PLATINUM<a href="#" title=""> <img src="/images/info.png" class="tooltip2"/></a><br><span class="smallLine">WITH LIVE RECEPTIONIST</span></h3></div>
 									    <div class="secondline gray3">
-									    	<span class="nonPrice orange cf1 bold">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
-										    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->with_live_receptionist_pack_price !!}</span><span class="pMonth"> /MONTH</span>
-										    <br>
-										    <p class="save">
-										    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
-										    </p>
+										    @if(isset($packages['Platinum'])  && $packages['Platinum']->current_currency_price->price)
+										    	<span class="nonPrice orange cf1 bold">
+										    		&nbsp;
+										    		{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->with_live_receptionist_full_price !!}
+										    		&nbsp;
+										    	</span>
+											    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->with_live_receptionist_pack_price !!}
+											    </span><span class="pMonth"> /MONTH</span>
+											    <br>
+											    <p class="save">
+											    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
+											    </p>
+											@else
+												<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
+										   	@endif
 									    </div>
 								    <div class="clear"></div>
 							    </div><!--/wrapPP-->
-
-								<a href="{!! url('/customize-mail?p=103&b=402&cid='.$center->id) !!}" class="link">
-									<div class="btnSelectP2 orb">SELECT PLAN</div>
-								</a>
-
+							    @if(isset($packages['Platinum'])  && $packages['Platinum']->current_currency_price->price)
+									<a href="{!! url('/customize-mail?p=103&b=402&cid='.$center->id) !!}" class="link">
+										<div class="btnSelectP2 orb">SELECT PLAN</div>
+									</a>
+								@endif
 						    	<a href="#" class="gray2 triggerShow">
 						    		<div class="gray2 showFplans2 triggerShow">Show and compare plan features</div>
 						    	</a>
@@ -241,7 +253,11 @@
 
 							    <div class="secondline gray3">
 								    @if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price)
-								    	<span class="nonPrice orange cf1 bold">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_full_price !!}</span>&nbsp;&nbsp;
+								    	<span class="nonPrice orange cf1 bold">
+								    	&nbsp;
+											{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_full_price !!}
+										</span>
+										&nbsp;
 									    <span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->with_live_receptionist_pack_price !!}</span>
 									    <span class="pMonth"> /MONTH</span>
 									    <br>
@@ -322,14 +338,14 @@
 			<h3 class="gray2">NEARBY CENTERS</h3>
 			@foreach($nearby_centers as $_center)
 				@if($_center->id != $center->id)
-					<a href="{!! URL::action('VirtualOfficesController@getVirtualOfficeShowPage', ['country_code' => $center->country, 'city_slug' => $_center->city? $_center->city->slug : '', 'center_slug' => $_center->slug])!!}">
+					<a href="{!! URL::action('VirtualOfficesController@getVirtualOfficeShowPage', ['country_code' => $center->country, 'city_slug' => $_center->city? $_center->city->slug : '', 'center_slug' => $_center->slug, 'center_id' => $_center->id])!!}">
 						<div class="cNear">
 							<div class="nearImg">
 								<div class="img-wrapper4">
-									@if(count($_center->vo_photos))
-										<img src="http://www.abcn.com/images/photos/{!! $_center->vo_photos[0]->path !!}" alt="$_center->vo_photos[0]->alt">
+									@if(is_null($photo = $_center->vo_photos()->first()))
+										<img src="/mr-photos/no_pic.gif">
 									@else
-										<img src="http://www.abcn.com/images/photos/no_pic.gif">
+										<img src="http://www.abcn.com/images/photos/{!! $photo->path !!}" alt="$photo->alt">
 									@endif
 								</div>
 							</div>

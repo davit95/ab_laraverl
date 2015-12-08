@@ -13,10 +13,10 @@
         @yield('styles')
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="/js/jquery.autocomplete1.js"></script>
-        
+
         <script>
             jQuery(document).ready(function($) {
-            			
+
                 $( ".menuBtnLink" ).click(function() {
                     $( ".menu" ).slideToggle( "slow", function() {
                         // Animation complete.
@@ -29,7 +29,7 @@
                 });
 
                 $("#suggest1").autocomplete({
-                       url: '/ajax/autocomplete', 
+                       url: '/ajax/autocomplete',
                        minChars: 1,
             	       delay: 40,
             	       maxItemsToShow: 30,
@@ -59,8 +59,10 @@
                             var center_type = $("select[name='avo1']").val();
                             switch(center_type)
                             {
-                                case "VO" : var url = data[0].vo_url; break;
-                                case "MR" : var url = data[0].mr_url; break;
+                                case "VO" : var url = data[0].vo_url;
+ break;
+                                case "MR" : var url = data[0].mr_url;
+ break;
                             }
                             return "<a class='autocomlete-url' href='"+url+"'><span>"+value+"</span></a>";
                         },
@@ -70,24 +72,26 @@
                             var center_type = $("select[name='avo1']").val();
                             switch(center_type)
                             {
-                                case "VO" : var url = value.data[0].vo_url; break;
-                                case "MR" : var url = value.data[0].mr_url; break;
+                                case "VO" : var url = value.data[0].vo_url;
+ break;
+                                case "MR" : var url = value.data[0].mr_url;
+ break;
                             }
                             window.location.href = url;
                         }
                 });
-            	
-                $("input#suggest1").keyup(function(e){ 
+
+                $("input#suggest1").keyup(function(e){
 
                     var code = e.which;
                     if(code==13)e.preventDefault();
                     if(code==13||code==186){
             	   $("#searchBtn").click();
-                    } 
+                    }
 
                 });
-            	
-            	
+
+
             	$("#avoS").on('submit', function(){
                     return false;
                 })
@@ -95,18 +99,17 @@
                     console.log($(this).val());
                 })
                 $( ".avo1" ).change(function() {
-                    alert();
                     return false;
                     var e = document.getElementById("Services");
                     var strType = e.options[e.selectedIndex].value;
 
-                    if(strType=='VO') { 
+                    if(strType=='VO') {
                          $("#avoS").attr("action", "search2.php");
                     }
                     else{
                         $("#avoS").attr("action", "mr-search.php");
-                    } 
-            	
+                    }
+
                 });
 
             	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -147,7 +150,14 @@
         //]]>
         </script>
         <script type="text/rocketscript">
-            var $zoho= $zoho || {salesiq:{values:{},ready:function(){}}};var d=document;s=d.createElement("script");s.type="text/javascript";s.defer=true;s.src="https://salesiq.zoho.com/alliancevirtualoffices/float.ls?embedname=alliancevirtualoffices";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);
+            var $zoho= $zoho || {salesiq:{values:{},ready:function(){}}};
+var d=document;
+s=d.createElement("script");
+s.type="text/javascript";
+s.defer=true;
+s.src="https://salesiq.zoho.com/alliancevirtualoffices/float.ls?embedname=alliancevirtualoffices";
+t=d.getElementsByTagName("script")[0];
+t.parentNode.insertBefore(s,t);
         </script>
     </body>
 </html>

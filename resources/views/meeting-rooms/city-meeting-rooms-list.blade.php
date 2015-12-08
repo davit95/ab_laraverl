@@ -1,14 +1,15 @@
 @extends('layout.layout')
 @section('title') Virtual Office, Virtual Office Solutions from Alliance Virtual Offices @stop
 @section('content')
+	{!! Form::hidden('type', 'mr', ['id' => 'center_type']) !!}
 	<div class="intWrap">
 		<div class="searchInt">
 			<form action="/search2.php" autocomplete="off" id="avoS" method="get">
 				<input type="hidden" name="step" value="search">
 			    <input type="text" class="SearchInputInt" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
 	            <select id="Services" name="avo1" class="avo1" >
-	            	<option value="VO">Virtual Offices</option>
 	                <option value="MR">Meeting Rooms</option>
+	            	<option value="VO">Virtual Offices</option>
 	            </select>
 	            <input type="hidden" name="source" value="bb">
 			    <button type="submit" class="searchBtnInt" id="searchBtn" >
@@ -17,12 +18,12 @@
 			</form>
 		</div>
 		<div class="breadcrumbs">
-			<a href="/">Home</a> / <a href="/virtual-offices">Meeting Rooms</a> / {!! $city->country->name!!} / {!! $city->name !!}
+			<a href="/">Home</a> / <a href="/meeting-rooms">Meeting Rooms</a> / {!! $city->country->name!!} / {!! $city->name !!}
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
-				<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
-				<p class="gray2">On-Demand Offices and Live Receptionists</p>
+				<h1>{!! $city->name !!} Meeting Rooms | Conference Room Services</h1>
+				<p class="gray2">On-demand Meeting Rooms and Services</p>
 			</div>
 			<div class="toggleMap">
         		<div class="toggleBtns">
@@ -88,12 +89,6 @@
             </div>
         </div>
         <div class="clearLeft"></div>
-		<div class="resutsTop2a">
-    		{{-- <div class="ResutlsTitle">
-    			<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
-    			<p class="gray2">On-Demand Offices and Live Receptionists</p>
-    		</div> --}}
-    	</div>
         <div class="clearLeft"></div>
         @forelse($centers as $center)
        		@include('meeting-rooms.parts.center-short-view')
@@ -198,4 +193,7 @@
 	        });
 
 	</script>
+@stop
+@section('styles')
+	<link href="/css/map.popup.css" rel="stylesheet" />
 @stop

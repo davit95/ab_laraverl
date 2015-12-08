@@ -31,7 +31,7 @@
 					<div class="dimg">
 						<div class="img-wrapper2">
 							@if(is_null($photo = $center->mr_photos()->first()))
-								<img src="http://www.abcn.com/images/photos/no_pic.gif">
+								<img src="/mr-photos/no_pic.gif">
 							@else
 								<img src="/mr-photos/all/{!! $photo->path !!}" alt="{!! $photo->alt !!}">
 							@endif
@@ -278,14 +278,14 @@
 			<h3 class="gray2">NEARBY CENTERS</h3>
 			@foreach($nearby_centers as $_center)
 				@if($_center->id != $center->id)
-					<a href="{!! URL::action('MeetingRoomsController@getMeetingRoomShowPage', ['country_code' => $center->country, 'city_slug' => $_center->city? $_center->city->slug : '', 'center_slug' => $_center->slug])!!}">
+					<a href="{!! URL::action('MeetingRoomsController@getMeetingRoomShowPage', ['country_code' => $center->country, 'city_slug' => $_center->city? $_center->city->slug : '', 'center_slug' => $_center->slug, 'center_id' => $_center->id])!!}">
 						<div class="cNear">
 							<div class="nearImg">
 								<div class="img-wrapper4">
-									@if(count($_center->photos))
-										<img src="http://www.abcn.com/images/photos/{!! $_center->photos[0]->path !!}" alt="$_center->photos[0]->alt">
+									@if(is_null($photo = $_center->mr_photos()->first()))
+										<img src="/mr-photos/no_pic.gif">
 									@else
-										<img src="http://www.abcn.com/images/photos/no_pic.gif">
+										<img src="/mr-photos/all/{!! $photo->path !!}" alt="$photo->alt">
 									@endif
 								</div>
 							</div>
@@ -318,8 +318,8 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
-    	
-      
+
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_flat-grey',
             radioClass: 'iradio_flat-grey'
@@ -477,20 +477,20 @@
 	</script>
 	<script type="text/rocketscript">
         jQuery(document).ready(function($) {
-			
+
 			$( ".menuBtnLink" ).click(function() {
 			  $( ".menu" ).slideToggle( "slow", function() {
 				// Animation complete.
 			  });
 			});
-			
+
 			if ($(window).width() > 850) {
 			   $(".dformright2").stick_in_parent()
 			}
 			else {
-			   
+
 			};
-			
+
 			$( window ).resize(function() {
 			  if ($(window).width() < 850) {
 			   $(".dformright2").trigger("sticky_kit:detach");
@@ -499,7 +499,7 @@
 			   $(".dformright2").stick_in_parent()
 			};;
 			});
-			
+
 			$('input').iCheck({
 				checkboxClass: 'icheckbox_flat-grey',
 				radioClass: 'iradio_flat-grey'

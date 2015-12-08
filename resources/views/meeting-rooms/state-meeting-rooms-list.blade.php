@@ -7,8 +7,8 @@
 				<input type="hidden" name="step" value="search">
 			    <input type="text" class="SearchInputInt" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
 	            <select id="Services" name="avo1" class="avo1" >
-	            	<option value="VO">Virtual Offices</option>
 	                <option value="MR">Meeting Rooms</option>
+	            	<option value="VO">Virtual Offices</option>
 	            </select>
 	            <input type="hidden" name="source" value="bb">
 			    <button type="submit" class="searchBtnInt" id="searchBtn" >

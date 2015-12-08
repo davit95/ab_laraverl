@@ -1,6 +1,7 @@
 @extends('layout.layout')
 @section('title') Virtual Office, Virtual Office Solutions from Alliance Virtual Offices @stop
 @section('content')
+	{!! Form::hidden('type', 'vo', ['id' => 'center_type']) !!}
 	<div class="intWrap">
 		<div class="searchInt">
 			<form action="/search2.php" autocomplete="off" id="avoS" method="get">
@@ -17,12 +18,18 @@
 			</form>
 		</div>
 		<div class="breadcrumbs">
-			<a href="/">Home</a> / <a href="/virtual-offices">Virtual Offices</a> / {!! $city->country->name!!} / {!! $city->name !!}
+			<a href="/">Home</a> /
+			<a href="/virtual-offices">Virtual Offices</a> /
+			<a href="{{ url('/virtual-offices/'.$city->country->slug) }}">{!! $city->country->name !!}</a> /
+			@if(!is_null($city->us_state))
+				{!! $city->us_state !!} /
+			@endif
+			{!! $city->name !!}
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
-				<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
-				<p class="gray2">On-Demand Offices and Live Receptionists</p>
+				<h1>Virtual Offices in {{ $city->name }}, {{ $city->country->code }} |  {{ $city->name }} Virtual Office Services</h1>
+				<p class="gray2">Prestigious Addresses and On-demand Office Space</p>
 			</div>
 			<div class="toggleMap">
         		<div class="toggleBtns">
@@ -88,12 +95,12 @@
             </div>
         </div>
         <div class="clearLeft"></div>
-		<div class="resutsTop2a">
-    		{{-- <div class="ResutlsTitle">
+		{{-- <div class="resutsTop2a">
+    		<div class="ResutlsTitle">
     			<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
     			<p class="gray2">On-Demand Offices and Live Receptionists</p>
-    		</div> --}}
-    	</div>
+    		</div>
+    	</div>--}}
         <div class="clearLeft"></div>
         @forelse($centers as $center)
        		@include('virtual-offices.parts.center-short-view')
@@ -171,8 +178,8 @@
 
 	    $("#suggest1").autocomplete('/js/lookup.php', {
 	        minChars: 1,
-		delay: 40,
-		maxItemsToShow: 30,
+			delay: 40,
+			maxItemsToShow: 30,
 	    });
 
 	    $("input#suggest1").keyup(function(e){
@@ -236,4 +243,5 @@
 
 @section('styles')
 	<link href="/css/magnific-popup.css" rel="stylesheet" />
+	<link href="/css/map.popup.css" rel="stylesheet" />
 @stop
