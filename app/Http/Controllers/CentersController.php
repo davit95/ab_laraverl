@@ -17,9 +17,37 @@ class CentersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getCenterById($id, CenterService $centerService) {
+	public function getCenterById($id, Request $request, CenterService $centerService) {
 		if (null != $center = $centerService->getCenterByIdAjax($id)) {
-			return response()                  ->json($center);
+			$prefix = 'virtual-offices';
+			$slug   = $center->city?$center->city->slug:'';
+			if ($request->has('center_type') && $request->get('center_type') == 'mr') {
+				$prefix = 'meeting-rooms';
+				if (is_null($photo = $center->mr_photos->first())) {
+					$image_src = url('mr-photos/no_pic.gif');
+					$image_alt = '';
+				} else {
+					$image_src = url('mr-photos/all/'.$photo->path);
+					$image_alt = $photo->alt;
+				}
+			} else {
+				if (is_null($photo = $center->vo_photos->first())) {
+					$image_src = url('mr-photos/no_pic.gif');
+					$image_alt = '';
+				} else {
+					$image_src = 'http://www.abcn.com/images/photos/'.$photo->path;
+					$image_alt = $photo->alt;
+				}
+			}
+			$more_info_link = url('/'.$prefix.'/'.$center->country.'/'.$slug.'/'.$center->slug.'/'.$center->id);
+			$response       = [
+				'title'          => $center->building_name,
+				'address'        => $center->address1.' '.$center->city_name.', '.$center->us_state,
+				'image_src'      => $image_src,
+				'image_alt'      => $image_alt,
+				'more_info_link' => $more_info_link
+			];
+			return response()->json($response);
 		}
 	}
 

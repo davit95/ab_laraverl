@@ -7,8 +7,8 @@
 				<input type="hidden" name="step" value="search">
 			    <input type="text" class="SearchInputInt" id="suggest1" name="inputy" placeholder="Find Your Location Here" />
 	            <select id="Services" name="avo1" class="avo1" >
-	            	<option value="VO">Virtual Offices</option>
 	                <option value="MR">Meeting Rooms</option>
+	            	<option value="VO">Virtual Offices</option>
 	            </select>
 	            <input type="hidden" name="source" value="bb">
 			    <button type="submit" class="searchBtnInt" id="searchBtn" >
@@ -17,12 +17,12 @@
 			</form>
 		</div>
 		<div class="breadcrumbs">
-			<a href="/">Home</a> / <a href="/virtual-offices">Meeting Rooms</a> / {!! $country->name!!}
+			<a href="/">Home</a> / <a href="/meeting-rooms">Meeting Rooms</a> / {!! $country->name!!}
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
-				<h1>{!! $country->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
-				<p class="gray2">On-Demand Offices and Live Receptionists</p>
+				<h1>{!! $country->name !!} Meeting Rooms | Conference Rooms</h1>
+				<p class="gray2">On-demand Meeting Rooms and Conference Rooms</p>
 			</div>
 			{{-- <div class="toggleMap">
         		<div class="toggleBtns">
@@ -88,9 +88,9 @@
             </div>
         </div>
         <div class="clearLeft"></div>
-		<ul class='ResultsListVO'>
+		<ul class='ResultsListMR'>
         	@foreach($country->active_cities as $city)
-        		<a href="{!!URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $country->code, 'city_slug' => $city->slug])!!}">
+        		<a href="{!!URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $country->code, 'city_slug' => $city->slug])!!}">
         			<li>{!! $city->name !!}</li>
         		</a>
         	@endforeach

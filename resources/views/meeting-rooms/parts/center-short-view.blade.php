@@ -30,7 +30,7 @@
     		<h2>{!! $center->virtual_office_seo->h3 !!}</h2>
     	@endif
         <p>
-        	<span class='rcName gray2'>{!! $center->bulding_name !!}</span><br>
+        	<span class='rcName gray2'>{!! $center->building_name !!}</span><br>
             <span class='rcAddress gray3'>{!! $center->address1 !!} {!! $center->address2 !!}, {!! $center->postal_code !!}</span>
         </p>
     </div>
