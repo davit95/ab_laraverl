@@ -45,6 +45,6 @@ class LiveReceptionistsController extends Controller {
 		if (is_null($tempCartItem)) {
 			return reidrect()->back()->withWarnig('Whoops, looks like something went wrong, please try later.');
 		}
-		return redirect('cart')->withSuccess('Live Receptionist plan has been successfully added to cart.');
+		return redirect('customize-phone')->withSuccess('Live Receptionist plan has been successfully added to cart.');
 	}
 }

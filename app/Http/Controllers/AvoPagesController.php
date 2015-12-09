@@ -72,7 +72,7 @@ class AvoPagesController extends Controller {
 	}
 
 	public function storePhoneSettings(Request $request, TempCartItemService $tempCartItemService) {
-		// dd($request->all());
+		//dd($request->all());
 		$temp_user_id = Cookie::get('temp_user_id');
 		if (null != $tempCartItemService->update($temp_user_id, $request->all())) {
 			return redirect('/customer-information');
