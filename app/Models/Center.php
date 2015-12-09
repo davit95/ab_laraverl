@@ -38,7 +38,7 @@ class Center extends Model {
 	}
 
 	public function virtual_office_lowest_price() {
-		return $this->hasOne('App\\Models\\CenterPrice')->selectRaw('center_id , min(price) as min_price')->groupBy('center_id');
+		return $this->hasOne('App\\Models\\CenterPrice')->where('price', '>', 0.00)->selectRaw('center_id , min(price) as min_price')->groupBy('center_id');
 	}
 
 	public function meeting_room_lowest_price() {

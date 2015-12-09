@@ -15,7 +15,7 @@ class DataMigration extends Command {
 	 *
 	 * @var string
 	 */
-	protected $signature = "data:migrate {--host=localhost} {--database=abcn} {--username=homestead} {--password=secret}";
+	protected $signature = "data:migrate {--host=localhost} {--database=abcn-old} {--username=homestead} {--password=secret}";
 
 	/**
 	 * The console command description.
@@ -70,7 +70,8 @@ class DataMigration extends Command {
 	private function centers() {
 		$this->info("\n  migrating centers table");
 		$this->make_new_connection();
-		$collection = DB::table('Center')->get();
+		$collection     = DB::table('Center')->get();
+		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');
 		DB::setDefaultConnection('mysql');
 		$unknown_cities_count    = 0;
 		$unknown_countries_count = 0;
@@ -105,9 +106,16 @@ class DataMigration extends Command {
 			if (!in_array($owner_id, $owner_ids)) {
 				$owner_id = null;
 			}
+			$name = '';
+			if (isset($seo_collection[$value->CenterID])) {
+				$title = $seo_collection[$value->CenterID];
+				$parts = explode(' in ', $title);
+				$name  = $parts[0];
+			}
 			$new_collection[$value->CenterID] =
 			[
 				'id'          => $value->CenterID,
+				'name'        => $name,
 				'slug'        => str_slug(preg_replace('/^[^a-zA-Z]*/', '', $value->Address1)),
 				'owner_id'    => $owner_id,
 				'city_name'   => $value->City,
@@ -195,21 +203,20 @@ class DataMigration extends Command {
 		$this->info("\n migrating photos table");
 		$this->make_new_connection();
 		$collection     = DB::table('Center')->get();
-		$bar            = $this->output->createProgressBar(count($collection));
+		$bar            = $this->output->createProgressBar(count($collection)*6);
 		$counter        = 0;
 		$new_collection = [];
 		foreach ($collection as $key => $value) {
-			$curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo1)->first();
-			$curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo2)->first();
-			$curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo3)->first();
-			$curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo4)->first();
-			$curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo5)->first();
-			$curr_photos[] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo6)->first();
+			$curr_photos['Photo1'] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo1)->first();
+			$curr_photos['Photo2'] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo2)->first();
+			$curr_photos['Photo3'] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo3)->first();
+			$curr_photos['Photo4'] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo4)->first();
+			$curr_photos['Photo5'] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo5)->first();
+			$curr_photos['Photo6'] = DB::table('Image_Descriptions')->where('Image_Name', $value->Photo6)->first();
+			//dd($curr_photos);
 			foreach ($curr_photos as $k => $v) {
 				if (null != $v) {
-					//$this->info($v->Image_Name);
-
-					$new_collection[] =
+					$new_collection[$v->Image_Name] =
 					[
 						//'center_id'   => $value->CenterID,
 						'path'        => $v->Image_Name,
@@ -217,7 +224,16 @@ class DataMigration extends Command {
 						'alt'         => $v->Alt,
 						'caption'     => $v->Caption
 					];
+				} else {
+					$new_collection[$value->$k] =
+					[
+						'path'        => $value->$k,
+						'description' => '',
+						'alt'         => '',
+						'caption'     => ''
+					];
 				}
+
 				$bar->advance();
 
 			}
@@ -225,24 +241,24 @@ class DataMigration extends Command {
 		}
 		$break            = false;
 		$final_collection = [];
+		// dd(count($new_collection));
+		// foreach ($new_collection as $item) {
+		// 	foreach ($final_collection as $value) {
+		// 		if ($item['path'] == $value['path']) {
+		// 			$break = true;
+		// 			break;
+		// 		}
 
-		foreach ($new_collection as $item) {
-			foreach ($final_collection as $value) {
-				if ($item['path'] == $value['path']) {
-					$break = true;
-					break;
-				}
-
-			}
-			if ($break) {
-				$break = false;
-				break;
-			}
-			$final_collection[] = $item;
-		}
+		// 	}
+		// 	if ($break) {
+		// 		$break = false;
+		// 		break;
+		// 	}
+		// 	$final_collection[] = $item;
+		// }
 		DB::setDefaultConnection('mysql');
 		//DB::table('photos')->truncate();
-		DB::table('photos')->insert($final_collection);
+		DB::table('photos')->insert($new_collection);
 		$bar->finish();
 		$this->info(' ✔');
 	}
@@ -461,7 +477,7 @@ class DataMigration extends Command {
 		$bar_states->finish();
 		$this->info(" ✔\n");
 
-		$this->info("migrating other cities table");
+		$this->info(" migrating other cities table");
 		foreach ($other_cities as $country => $cities) {
 			$country_obj = DB::table('countries')->where('name', $country)->first();
 			if (null != $country_obj) {
