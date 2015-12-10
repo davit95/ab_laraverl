@@ -224,7 +224,7 @@ class AvoPagesController extends Controller {
 				if ($request->has('live_receptionist')) {
 					return redirect('/customize-phone');
 				} else {
-					return redirect('/cart');
+					return redirect('/customer-information');
 				}
 			}
 		}

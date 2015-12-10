@@ -102,7 +102,8 @@ class CenterService {
 		            ->where('city_id', '!=', 0)
 		            ->where(function ($q) {
 				$q->whereHas('center_filter', function ($q) {
-						$q->where('virtual_office', 1);})->orWhere(function ($q) {
+						$q->where('virtual_office', 1);
+					})->orWhere(function ($q) {
 						$q->has('center_filter', '<', 1);
 					});
 			});

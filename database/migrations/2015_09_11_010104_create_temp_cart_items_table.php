@@ -23,7 +23,7 @@ class CreateTempCartItemsTable extends Migration {
 				$table->float('price');
 				$table->string('vo_mail_forwarding_package')->nullable();
 				$table->string('vo_mail_forwarding_frequency')->nullable();
-				$table->integer('vo_mail_forwarding_price');
+				$table->float('vo_mail_forwarding_price');
 				$table->string('vo_mail_forwarding_first_name')->nullable();
 				$table->string('vo_mail_forwarding_last_name')->nullable();
 				$table->string('vo_mail_forwarding_address_1')->nullable();
@@ -34,8 +34,8 @@ class CreateTempCartItemsTable extends Migration {
 				$table->bigInteger('lr_id')->nullable()->unsigned()->index();
 				$table->string('lr_name')->nullable()->index();
 				$table->enum('package_option', ['local', 'toll_free']);
-				$table->integer('country_code');
-				$table->integer('phone_number_selected');
+				$table->bigInteger('country_code');
+				$table->bigInteger('phone_number_selected');
 				$table->timestamps();
 				/**
 				 * Table relations

@@ -57,10 +57,14 @@ class VirtualOfficesController extends Controller {
 	 */
 	public function getCityVirtualOffices($country_code, $city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService) {
 		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug)) {
-			$centers                          = $centerService->getVirtualOfficesByCityId($city->id);
-			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
-			$nearby_centers                   = $centerService->getVirtualOfficesByIds($nearby_center_ids);
-			$centers                          = $centers->merge($nearby_centers);
+			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
+			$center_ids        = $centers->lists('id')->toArray();
+			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
+			$request_ids       = array_diff($nearby_center_ids, $center_ids);
+
+			$nearby_centers = $centerService->getVirtualOfficesByIds($request_ids);
+			//dd($centers->lists('id')->toArray(), $nearby_center_ids);
+			//$centers                          = $centers->merge($nearby_centers);
 			$center_addresses_for_google_maps = [];
 			$google_maps_center_city          = $city->name;
 			foreach ($centers as $key => $center) {
@@ -72,7 +76,21 @@ class VirtualOfficesController extends Controller {
 				$center->packages_arr           = $this->packages($center);
 				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 			}
-			return view('virtual-offices.city-virtual-offices-list', ['centers' => $centers, 'city' => $city, 'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps), 'google_maps_center_city' => $google_maps_center_city]);
+			foreach ($nearby_centers as $key => $center) {
+				$center_addresses_for_google_maps[] =
+				[
+					'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
+					'id'      => $center->id
+				];
+				$center->packages_arr           = $this->packages($center);
+				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
+			}
+			return view('virtual-offices.city-virtual-offices-list', [
+					'centers'                          => $centers,
+					'nearby_centers'                   => $nearby_centers,
+					'city'                             => $city,
+					'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps),
+					'google_maps_center_city'          => $google_maps_center_city]);
 		} else {
 			return '404';
 		}

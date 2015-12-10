@@ -68,7 +68,7 @@ class DataMigration extends Command {
 	}
 
 	private function centers() {
-		$this->info("\n  migrating centers table");
+		$this->info("\n migrating centers table");
 		$this->make_new_connection();
 		$collection     = DB::table('Center')->get();
 		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');
@@ -437,10 +437,13 @@ class DataMigration extends Command {
 
 	private function cities() {
 		$this->info("\n migrating cities table");
+		$this->make_new_connection();
 		$count        = 0;
 		$states       = $this->usStates->getStates();
 		$other_cities = $this->countryCities->getCities();
-
+		//cityInformationAVONew
+		$business_infos   = DB::table('cityInformationAVONew')->lists('business_info', 'name');
+		$general_infos    = DB::table('cityInformationAVONew')->lists('general_info', 'name');
 		$bar_other_ciites = $this->output->createProgressBar(count($other_cities));
 		DB::setDefaultConnection('mysql');
 		//DB::table('cities')->truncate();
@@ -463,6 +466,8 @@ class DataMigration extends Command {
 					'us_state_id'   => $us_state_ids["$st_name"],
 					'us_state_code' => $us_state_codes["$st_name"],
 					'country_code'  => $us->code,
+					'business_info' => isset($business_infos[strtolower($city)])?$business_infos[strtolower($city)]:'',
+					'general_info'  => isset($general_infos[strtolower($city)])?$general_infos[strtolower($city)]:'',
 					'country_id'    => $us_id
 				];
 				$count++;
@@ -490,7 +495,9 @@ class DataMigration extends Command {
 						'us_state_id'   => null,
 						'us_state_code' => null,
 						'country_code'  => $country_obj->code,
-						'country_id'    => $country_obj->id
+						'country_id'    => $country_obj->id,
+						'business_info' => isset($business_infos[strtolower($city)])?$business_infos[strtolower($city)]:'',
+						'general_info'  => isset($general_infos[strtolower($city)])?$general_infos[strtolower($city)]:''
 					];
 					DB::table('cities')->insert($arr);
 				}

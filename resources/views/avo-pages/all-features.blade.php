@@ -891,13 +891,45 @@ m.parentNode.insertBefore(a,m)
   <script type="text/javascript" src="http://dnn506yrbagrg.cloudfront.net/pages/scripts/0011/2521.js"> </script>
 
 @stop
+@section('styles')
+    <link href="/css/magnific-popup.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.tosrus.all.css"/>
+@stop
 
 @section('scripts')
+    <script type="text/javascript" src="/js/jquery.tooltipster.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.tosrus.min.all.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.select_lr_plan').click(function(){
                 $(this).parents('form').submit();
                 return false;
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $( ".menuBtnLink" ).click(function() {
+                $( ".menu" ).slideToggle( "slow", function() {
+                // Animation complete.
+                });
+            });
+
+            $('.tooltip').tooltipster({
+                animation: 'fade',
+                theme: 'tooltipster-light',
+                trigger: 'hover',
+                    content: $('<span><span class="mediumBold">Add local, toll free and most iNum numbers for $6 monthly.</span><br> 718 and 917 area codes are $45 monthly.<br> 212 area codes are $75 monthly. </span>')
+            });
+
+            $('.tooltip2').tooltipster({
+                animation: 'fade',
+                theme: 'tooltipster-light',
+                trigger: 'hover',
+                    content: $('<span><span class="mediumBold">One extension is unlimited.</span> Addtional unlimited extensions are $25 each. Pay per minute extensions are free when forwarded to another number, charged at 5 cents per minute. Softphone or device extensions are $6 monthly. </span>')
             });
         });
     </script>
