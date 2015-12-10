@@ -39,77 +39,106 @@
         	</div>
         </div>
         <div class="resutsWrap">
-        <div class="contactForm">
-            <div class="contactPhones">
-            <div class="centerForm">
-                NORTH AMERICA:    <span class="melon">+1 888.869.9494</span> <br/>
-				INTERNATIONAL:    <span class="melon"> +1 949.777.6340</span>
-            </div><!--/centerForm-->
-            </div><!--/contactPhones-->
-            <style type="text/css">.cForm {padding-bottom: 20px;height: auto;}</style>
-            <div class="cForm">
-            	<div class="centerForm">
-		            <h3>INQUIRE ABOUT<br/>
-		            <span class="bold">VIRTUAL OFFICES</span></h3>
-	            	@if(session('success'))
-						<div class="alert-success-custom">
-							{{ session('success') }}
-						</div>
-					@endif
-					{!! Form::open([ 'url' => url('sendcontact') , 'method' => 'post' ]) !!}
-						<div>
-							{!! Form::label('name','Name', [ 'class' => $errors->has('name')?'label label-error':"label" ]) !!}
-							{!! Form::text('name', null,[ 'class' => $errors->has('name')?'input-error':'' , 'required']) !!}
-							@if($errors->has('name'))
-								<small class="text-error-custom">{{ $errors->get('name')[0] }}</small>
-							@endif
-						</div>
-						<div>
-							{!! Form::label('email','Email', [ 'class' => $errors->has('email')?'label label-error':"label" ]) !!}
-							{!! Form::email('email', null,[ 'class' => $errors->has('email')?'input-error':'' , 'required']) !!}
-							@if($errors->has('email'))
-								<small class="text-error-custom">{{ $errors->get('email')[0] }}</small>
-							@endif
-						</div>
-						<div>
-							{!! Form::label('company','Company', [ "class" => $errors->has('company')?'label label-error':"label" ]) !!}
-							{!! Form::text('company', null,[ 'class' => $errors->has('company')?'input-error':'' , 'required']) !!}
-							@if($errors->has('company'))
-								<small class="text-error-custom">{{ $errors->get('company')[0] }}</small>
-							@endif
-						</div>
-						<div>
-							{!! Form::label('phone','Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
-			  				{!! Form::text('phone', null,[ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
-							@if($errors->has('phone'))
-								<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
-							@endif
-						</div>
+	        <div class="contactForm">
+	            <div class="contactPhones">
+		            <div class="centerForm">
+		                NORTH AMERICA:    <span class="melon">+1 888.869.9494</span> <br/>
+						INTERNATIONAL:    <span class="melon"> +1 949.777.6340</span>
+		            </div><!--/centerForm-->
+	            </div>
+	            <style type="text/css">.cForm {padding-bottom: 20px;height: auto;}</style>
+	            <div class="cForm">
+	            	<div class="centerForm">
+			            <h3>INQUIRE ABOUT<br/>
+			            <span class="bold">VIRTUAL OFFICES</span></h3>
+		            	@if(session('success'))
+							<div class="alert-success-custom">
+								{{ session('success') }}
+							</div>
+						@endif
+						{!! Form::open([ 'url' => url('sendcontact') , 'method' => 'post' ]) !!}
+							<div>
+								{!! Form::label('name','Name', [ 'class' => $errors->has('name')?'label label-error':"label" ]) !!}
+								{!! Form::text('name', null,[ 'class' => $errors->has('name')?'input-error':'' , 'required']) !!}
+								@if($errors->has('name'))
+									<small class="text-error-custom">{{ $errors->get('name')[0] }}</small>
+								@endif
+							</div>
+							<div>
+								{!! Form::label('email','Email', [ 'class' => $errors->has('email')?'label label-error':"label" ]) !!}
+								{!! Form::email('email', null,[ 'class' => $errors->has('email')?'input-error':'' , 'required']) !!}
+								@if($errors->has('email'))
+									<small class="text-error-custom">{{ $errors->get('email')[0] }}</small>
+								@endif
+							</div>
+							<div>
+								{!! Form::label('company','Company', [ "class" => $errors->has('company')?'label label-error':"label" ]) !!}
+								{!! Form::text('company', null,[ 'class' => $errors->has('company')?'input-error':'' , 'required']) !!}
+								@if($errors->has('company'))
+									<small class="text-error-custom">{{ $errors->get('company')[0] }}</small>
+								@endif
+							</div>
+							<div>
+								{!! Form::label('phone','Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
+				  				{!! Form::text('phone', null,[ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
+								@if($errors->has('phone'))
+									<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
+								@endif
+							</div>
 
-						<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
-						<label for="submit"></label>
-						<button type="submit" id="submit2">FIND OUT MORE</button>
+							<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+							<label for="submit"></label>
+							<button type="submit" id="submit2">FIND OUT MORE</button>
 
-        			{!! Form::close() !!}
-                </div>
-            </div>
+	        			{!! Form::close() !!}
+	                </div>
+	            </div>
+	        </div>
+        	<div class="clearLeft"></div>
+			{{-- <div class="resutsTop2a">
+	    		<div class="ResutlsTitle">
+	    			<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
+	    			<p class="gray2">On-Demand Offices and Live Receptionists</p>
+	    		</div>
+	    	</div>--}}
+	        <div class="clearLeft"></div>
+	        @if (!$centers->isEmpty())
+		        @foreach($centers as $center)
+		       		@include('virtual-offices.parts.center-short-view')
+		        @endforeach
+		    @endif
+	        @if (!$nearby_centers->isEmpty())
+		        <div class="resutsTop2b">
+	       			<div class="ResutlsTitle">
+	       				<h1>Virtual Offices Near {{ $city->name }}</h1>
+	       				<p class="gray2">On-Demand Offices and Live Receptionists</p>
+	       			</div>
+	       		</div>
+		        @foreach($nearby_centers as $center)
+		       		@include('virtual-offices.parts.center-short-view')
+		        @endforeach
+	        @endif
+	        <div class='result-map-view' id='map-canvas'>Please wait. Loading maps...</div>
+		</div>
+		<div class="spotlight">
+			<h3>Virtual Office Location Spotlight: <span class="orange">{{ $city->name }}</span></h3>
+			<div class="spotlightsWrap">
+				@if ($city->business_info != '' && $city->general_info != '')
+					<div class="spotLeft">
+						<h4>BUSINESS INFORMATION</h4>
+						{!! $city->business_info !!}
+	            	</div><!--/spotLeft-->
+		           	<div class="spotRight">
+	                	<h4>GENERAL LOCATION INFORMATION</h4>
+	                	{!! $city->general_info !!}
+	            	</div><!--/spotRight-->
+	            @else
+					<p style="margin:0;">Alliance Virtual Offices is a great way to find {{ $city->name }} virtual offices, {{ $city->name }} meeting rooms, virtual receptionists and other virtual office solutions.</p>
+				@endif
+        	</div><!--/spotlightsWrap-->
         </div>
-        <div class="clearLeft"></div>
-		{{-- <div class="resutsTop2a">
-    		<div class="ResutlsTitle">
-    			<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
-    			<p class="gray2">On-Demand Offices and Live Receptionists</p>
-    		</div>
-    	</div>--}}
-        <div class="clearLeft"></div>
-        @forelse($centers as $center)
-       		@include('virtual-offices.parts.center-short-view')
-       	@empty
-       		asd
-        @endforelse
-        <div class='result-map-view' id='map-canvas'>Please wait. Loading maps..</div>
-	</div>
-
+    </div>
+    @include('layout.parts.top-cities')
 @stop
 
 @section('scripts')
