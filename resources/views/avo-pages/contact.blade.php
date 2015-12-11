@@ -36,7 +36,7 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
                     <label for="label"><div class="label">Comments:</div></label>
 			  		<textarea class="inpInq" name="comments" id="comments" cols="20" rows="5"></textarea><br/>
 
-					<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+					<label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
 					<label for="submit"></label>
 					<button type="submit" id="submit2">SEND</button> <br/><br/><br/>
 				<script language="JavaScript" type="text/javascript" xml:space="preserve">//<![CDATA[

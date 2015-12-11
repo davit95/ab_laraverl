@@ -48,9 +48,11 @@ Route::group(['before' => 'auth.basic'], function () {
 
 		Route::get('/contact', 'AvoPagesController@contact');
 		Route::post('/sendcontact', 'AvoPagesController@sendcontact');
+		Route::get('/thank-you', 'AvoPagesController@sendContactThankYou');
 		Route::get('/about', 'AvoPagesController@about');
 		Route::get('/management', 'AvoPagesController@management');
 		Route::get('/faq', 'AvoPagesController@faq');
+		Route::get('/privacy-policy', 'AvoPagesController@privacyPolicy');
 
 		Route::group(['prefix' => 'ajax', 'middleware' => 'guest'], function () {
 				Route::get('/centers/{id}', 'CentersController@getCenterById');

@@ -72,7 +72,7 @@
 								@endif
 							</div>
 
-							<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+							<label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
 							<label for="submit"></label>
 							<button type="submit" id="submit2">FIND OUT MORE</button>
 
@@ -89,8 +89,8 @@
 	        </ul>
         	<div class="clearLeft"></div>
 
-	    	@foreach($active_cities as $city)
-	    	 	<div class="resutsTop2a">
+	    	@foreach($active_cities as $key => $city)
+	    	 	<div class="@if($key == 0) resutsTop2a @else resutsTop @endif">
 	    			<div class="ResutlsTitle">
 	    				<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
 	    				<p class="gray2">On-Demand Offices and Live Receptionists</p>
@@ -103,12 +103,6 @@
 	    	@endforeach
 	    	{!! $active_cities->render() !!}
 		</div>
-        <style type="text/css">
-        	.cForm {
-        		padding-bottom: 20px;
-        		height: auto;
-        	}
-       	</style>
     </div>
 @stop
 
@@ -207,4 +201,10 @@
 
 @section('styles')
 	<link href="/css/magnific-popup.css" rel="stylesheet" />
+    <style type="text/css">
+    	.cForm {
+    		padding-bottom: 20px;
+    		height: auto;
+    	}
+   	</style>
 @stop

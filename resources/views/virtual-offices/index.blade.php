@@ -68,8 +68,15 @@
 								<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
 							@endif
 						</div>
+		                <div>
+		                    {!! Form::label('comments','Comments', [ "class" => $errors->has('comments')?'label label-error':"label" ]) !!}
+		                    {!! Form::textarea('comments', null,[ 'class' => $errors->has('comments')?'input-error':'' , 'required']) !!}
+		                    @if($errors->has('comments'))
+		                        <small class="text-error-custom">{{ $errors->get('comments')[0] }}</small>
+		                    @endif
+		                </div>
 
-						<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+						<label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
 						<label for="submit"></label>
 						<button type="submit" id="submit2">FIND OUT MORE</button>
 

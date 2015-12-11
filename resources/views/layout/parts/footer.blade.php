@@ -9,13 +9,14 @@
            </ul>
        </div>
 </div>
+
 <div class="footer">
    <div class="Wrapper">
        <div class="FooterBtns">
            <div class="footerMob">
                <ul>
                    <a href="http://www.alliancevirtualoffices.com/terms-of-use.php"><li>Terms of Use</li></a>
-                   <a href="http://www.alliancevirtualoffices.com/privacy_policy.php"><li>Privacy Policy</li></a>
+                   <a href="{{ url('privacy-policy') }}" target="_blank"><li>Privacy Policy</li></a>
                </ul>
            </div>
        </div>
