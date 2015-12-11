@@ -19,39 +19,55 @@ Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
         <div class="centerForm2 popUpF">
             <h3>INQUIRE ABOUT
             <span class="bold">LIVE RECEPTIONISTS</span></h3>
-            <form name="signup" action="/sendcontact.php" method="post" onSubmit="return validate_contact_form ( );">
+            @if(session('success'))
+                <div class="alert-success-custom">
+                    {{ session('success') }}
+                </div>
+            @endif
+            {!! Form::open([ 'url' => url('sendcontact') , 'method' => 'post' ]) !!}
+                <div>
+                    {!! Form::label('name','Name', [ 'class' => $errors->has('name')?'label label-error':"label" ]) !!}
+                    {!! Form::text('name', null,[ 'class' => $errors->has('name')?'input-error':'' , 'required']) !!}
+                    @if($errors->has('name'))
+                        <small class="text-error-custom">{{ $errors->get('name')[0] }}</small>
+                    @endif
+                </div>
+                <div>
+                    {!! Form::label('email','Email', [ 'class' => $errors->has('email')?'label label-error':"label" ]) !!}
+                    {!! Form::email('email', null,[ 'class' => $errors->has('email')?'input-error':'' , 'required']) !!}
+                    @if($errors->has('email'))
+                        <small class="text-error-custom">{{ $errors->get('email')[0] }}</small>
+                    @endif
+                </div>
+                <div>
+                    {!! Form::label('company','Company', [ "class" => $errors->has('company')?'label label-error':"label" ]) !!}
+                    {!! Form::text('company', null,[ 'class' => $errors->has('company')?'input-error':'' , 'required']) !!}
+                    @if($errors->has('company'))
+                        <small class="text-error-custom">{{ $errors->get('company')[0] }}</small>
+                    @endif
+                </div>
+                <div>
+                    {!! Form::label('phone','Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
+                    {!! Form::text('phone', null,[ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
+                    @if($errors->has('phone'))
+                        <small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
+                    @endif
+                </div>
+                <div>
+                    {!! Form::label('comments','Comments', [ "class" => $errors->has('comments')?'label label-error':"label" ]) !!}
+                    {!! Form::textarea('comments', null,[ 'class' => $errors->has('comments')?'input-error':'' , 'required']) !!}
+                    @if($errors->has('comments'))
+                        <small class="text-error-custom">{{ $errors->get('comments')[0] }}</small>
+                    @endif
+                </div>
 
-					<label for="name"><div class="label">Name:</div></label>
-					<input name="name" id="name" type="text"><br/>
+                <label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
+                <label for="submit"></label>
+                <button type="submit" id="submit2">FIND OUT MORE</button>
 
-					<label for="email"><div class="label">Email:</div></label>
-					<input name="email" id="email" type="text"><br/>
-
-					<label for="company"><div class="label">Company:</div></label>
-			  		<input name="company" id="company" type="text"><br/>
-
-			  		<label for="label"><div class="label">Phone:</div></label>
-			  		<input name="phone" id="label" type="text"><br/>
-
-                    <label for="label"><div class="label">Comments:</div></label>
-			  		<textarea class="inpInq" name="comments" id="comments" cols="20" rows="5"></textarea><br/>
-
-					<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
-					<label for="submit"></label>
-					<button type="submit" id="submit2">FIND OUT MORE</button> <br/><br/><br/>
-				<script language="JavaScript" type="text/javascript" xml:space="preserve">//<![CDATA[
-                //You should create the validator only after the definition of the HTML form
-                  //var frmvalidator  = new Validator("signup");
-                  //frmvalidator.addValidation("name","req","Please enter your Full Name");
-                  //frmvalidator.addValidation("email","maxlen=50");
-                  //frmvalidator.addValidation("email","req", "Please enter your Email Address");
-                  //frmvalidator.addValidation("email","email");
-
-                //]]></script>
-
-                </form></fieldset>
-                </div><!--/centerForm-->
-       </div><!--/test-form-->
+            {!! Form::close() !!}
+        </div><!--/centerForm-->
+    </div><!--/test-form-->
 </div><!--/LR_VoIP-->
 <div class="contactMobile2">Call: +1 888.869.9494</div>
 

@@ -33,69 +33,69 @@
         	</div>
         </div>
         <div class="resutsWrap">
-        <div class="contactForm">
-            <div class="contactPhones">
-	            <div class="centerForm">
-	                NORTH AMERICA:    <span class="melon">+1 888.869.9494</span> <br/>
-					INTERNATIONAL:    <span class="melon"> +1 949.777.6340</span>
-	            </div><!--/centerForm-->
-            </div><!--/contactPhones-->
-            <style type="text/css">.cForm {padding-bottom: 20px;height: auto;}</style>
-            <div class="cForm">
-	            <div class="centerForm">
-		            <h3>INQUIRE ABOUT<br/>
-		            <span class="bold">VIRTUAL OFFICES</span></h3>
-		            @if(session('success'))
-						<div class="alert-success-custom">
-							{{ session('success') }}
-						</div>
-					@endif
-					{!! Form::open([ 'url' => url('sendcontact') , 'method' => 'post' ]) !!}
-						<div>
-							{!! Form::label('name','Name', [ 'class' => $errors->has('name')?'label label-error':"label" ]) !!}
-							{!! Form::text('name', null,[ 'class' => $errors->has('name')?'input-error':'' , 'required']) !!}
-							@if($errors->has('name'))
-								<small class="text-error-custom">{{ $errors->get('name')[0] }}</small>
-							@endif
-						</div>
-						<div>
-							{!! Form::label('email','Email', [ 'class' => $errors->has('email')?'label label-error':"label" ]) !!}
-							{!! Form::email('email', null,[ 'class' => $errors->has('email')?'input-error':'' , 'required']) !!}
-							@if($errors->has('email'))
-								<small class="text-error-custom">{{ $errors->get('email')[0] }}</small>
-							@endif
-						</div>
-						<div>
-							{!! Form::label('company','Company', [ "class" => $errors->has('company')?'label label-error':"label" ]) !!}
-							{!! Form::text('company', null,[ 'class' => $errors->has('company')?'input-error':'' , 'required']) !!}
-							@if($errors->has('company'))
-								<small class="text-error-custom">{{ $errors->get('company')[0] }}</small>
-							@endif
-						</div>
-						<div>
-							{!! Form::label('phone','Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
-			  				{!! Form::text('phone', null,[ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
-							@if($errors->has('phone'))
-								<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
-							@endif
-						</div>
+	        <div class="contactForm">
+	            <div class="contactPhones">
+		            <div class="centerForm">
+		                NORTH AMERICA:    <span class="melon">+1 888.869.9494</span> <br/>
+						INTERNATIONAL:    <span class="melon"> +1 949.777.6340</span>
+		            </div><!--/centerForm-->
+	            </div><!--/contactPhones-->
+	            <div class="cForm">
+		            <div class="centerForm">
+			            <h3>INQUIRE ABOUT<br/>
+			            <span class="bold">VIRTUAL OFFICES</span></h3>
+			            @if(session('success'))
+							<div class="alert-success-custom">
+								{{ session('success') }}
+							</div>
+						@endif
+						{!! Form::open([ 'url' => url('sendcontact') , 'method' => 'post' ]) !!}
+							<div>
+								{!! Form::label('name','Name', [ 'class' => $errors->has('name')?'label label-error':"label" ]) !!}
+								{!! Form::text('name', null,[ 'class' => $errors->has('name')?'input-error':'' , 'required']) !!}
+								@if($errors->has('name'))
+									<small class="text-error-custom">{{ $errors->get('name')[0] }}</small>
+								@endif
+							</div>
+							<div>
+								{!! Form::label('email','Email', [ 'class' => $errors->has('email')?'label label-error':"label" ]) !!}
+								{!! Form::email('email', null,[ 'class' => $errors->has('email')?'input-error':'' , 'required']) !!}
+								@if($errors->has('email'))
+									<small class="text-error-custom">{{ $errors->get('email')[0] }}</small>
+								@endif
+							</div>
+							<div>
+								{!! Form::label('company','Company', [ "class" => $errors->has('company')?'label label-error':"label" ]) !!}
+								{!! Form::text('company', null,[ 'class' => $errors->has('company')?'input-error':'' , 'required']) !!}
+								@if($errors->has('company'))
+									<small class="text-error-custom">{{ $errors->get('company')[0] }}</small>
+								@endif
+							</div>
+							<div>
+								{!! Form::label('phone','Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
+				  				{!! Form::text('phone', null,[ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
+								@if($errors->has('phone'))
+									<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
+								@endif
+							</div>
 
-						<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
-						<label for="submit"></label>
-						<button type="submit" id="submit2">FIND OUT MORE</button>
+							<label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
+							<label for="submit"></label>
+							<button type="submit" id="submit2">FIND OUT MORE</button>
 
-        			{!! Form::close() !!}
+	        			{!! Form::close() !!}
+		            </div>
 	            </div>
-            </div>
-        </div>
-        <div class="clearLeft"></div>
-        <div class="clearLeft"></div>
-        @forelse($centers as $center)
-       		@include('meeting-rooms.parts.center-short-view')
-       	@empty
+	        </div>
+	        <div class="clearLeft"></div>
+	        <div class="clearLeft"></div>
+	        @forelse($centers as $center)
+	       		@include('meeting-rooms.parts.center-short-view')
+	       	@empty
 
-        @endforelse
-        <div class='result-map-view' id='map-canvas'>Please wait. Loading maps..</div>
+	        @endforelse
+	        <div class='result-map-view' id='map-canvas'>Please wait. Loading maps..</div>
+		</div>
 	</div>
 
 @stop
@@ -195,5 +195,6 @@
 	</script>
 @stop
 @section('styles')
+    <style type="text/css">.cForm {padding-bottom: 20px;height: auto;}</style>
 	<link href="/css/map.popup.css" rel="stylesheet" />
 @stop

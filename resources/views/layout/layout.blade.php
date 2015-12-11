@@ -13,6 +13,8 @@
         @yield('styles')
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="/js/jquery.autocomplete1.js"></script>
+        <script src="/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
+        <link href="/css/magnific-popup2.css" rel="stylesheet"/>
 
         <script>
             jQuery(document).ready(function($) {
@@ -22,7 +24,24 @@
                         // Animation complete.
                     });
                 });
+                $('.popup-with-form').magnificPopup({
+                    type: 'inline',
+                    preloader: false,
+                    focus: '#name',
+                    mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
 
+                    // When elemened is focused, some mobile browsers in some cases zoom in
+                    // It looks not nice, so we disable it:
+                    callbacks: {
+                        beforeOpen: function() {
+                            if($(window).width() < 700) {
+                                this.st.focus = false;
+                            } else {
+                                this.st.focus = '#name';
+                            }
+                        }
+                    }
+                });
                 $('.counter').counterUp({
                    delay: 50,
                    time: 4000
@@ -34,7 +53,6 @@
             	       delay: 40,
             	       maxItemsToShow: 30,
                        processData : function(data) {
-                        console.log();
                            var countries = JSON.parse(data[0].value).countries;
                            var cities = JSON.parse(data[0].value).cities;
                            var states = JSON.parse(data[0].value).states;
@@ -64,7 +82,7 @@
                                 case "MR" : var url = data[0].mr_url;
  break;
                             }
-                            return "<a class='autocomlete-url' href='"+url+"'><span>"+value+"</span></a>";
+                            return value;
                         },
                         onItemSelect : function(value)
                         {

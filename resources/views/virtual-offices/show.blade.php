@@ -102,7 +102,7 @@
 									@endif
 								</div>
 
-								<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+								<label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
 								<label for="submit"></label>
 								<button type="submit" id="submit2">FIND OUT MORE</button>
 

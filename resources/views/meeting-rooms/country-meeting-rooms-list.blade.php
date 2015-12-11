@@ -79,7 +79,7 @@
 							@endif
 						</div>
 
-						<label for="label"><div class="label"><a href="https://www.alliancevirtualoffices.com/privacy_policy.php" class="privateP">Privacy Policy</a></div></label>
+						<label for="label"><div class="label"><a href="{{ url('privacy-policy') }}" target="_blank" class="privateP">Privacy Policy</a></div></label>
 						<label for="submit"></label>
 						<button type="submit" id="submit2">FIND OUT MORE</button>
 
@@ -97,17 +97,17 @@
         </ul>
         <div class="clearLeft"></div>
 
-        	@foreach($active_cities as $city)
-        	 <div class="resutsTop2a">
-        		<div class="ResutlsTitle">
-        			<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
-        			<p class="gray2">On-Demand Offices and Live Receptionists</p>
+        	@foreach($active_cities as $key => $city)
+		    	<div class="@if($key == 0) resutsTop2a @else resutsTop @endif">
+        			<div class="ResutlsTitle">
+	        			<h1>{!! $city->name !!} Virtual Office Solutions | Virtual Receptionists</h1>
+	        			<p class="gray2">On-Demand Offices and Live Receptionists</p>
         			</div>
         		</div>
-        			 <div class="clearLeft"></div>
-        			@foreach($city->active_meeting_rooms as $center)
-        				@include('meeting-rooms.parts.center-short-view')
-        			@endforeach
+        		<div class="clearLeft"></div>
+        		@foreach($city->active_meeting_rooms as $center)
+        			@include('meeting-rooms.parts.center-short-view')
+        		@endforeach
         	@endforeach
         	{!! $active_cities->render() !!}
 	</div>

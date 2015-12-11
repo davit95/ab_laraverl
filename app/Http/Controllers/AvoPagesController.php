@@ -194,6 +194,9 @@ class AvoPagesController extends Controller {
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
 		$inputs = $request->all();
+		if (!isset($inputs['package_option'])) {
+			return redirect('thank-you');
+		}
 		if (isset($inputs['upgrade']) && $inputs['upgrade'] == 'yes') {
 			if ($inputs['package_option'] == 103) {
 				$inputs['package_option'] = 105;
@@ -230,6 +233,14 @@ class AvoPagesController extends Controller {
 		}
 
 		return redirect()->back()->withSuccess('Successfully send!');
+	}
+
+	public function sendContactThankYou() {
+		return view('avo-pages.thank-you');
+	}
+
+	public function privacyPolicy() {
+		return view('avo-pages.privacy-policy');
 	}
 
 	/**

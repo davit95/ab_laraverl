@@ -12,7 +12,11 @@
             @forelse($center->mr_photos as $photo)
                 <li><div class='img-wrapper'><img src='/mr-photos/all/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
             @empty
-                <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/no_pic.gif' alt=''></div></li>
+                @if(is_null($photo = $center->vo_photos()->first()))
+                    <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/no_pic.gif' alt=''></div></li>
+                @else
+                    <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/{!! $photo->path !!}' alt='{!! $photo->alt !!}'></div></li>
+                @endif
             @endforelse
         </ul>
     </div>
