@@ -24,12 +24,6 @@
 				<h1>{!! $country->name !!} Meeting Rooms | Conference Rooms</h1>
 				<p class="gray2">On-demand Meeting Rooms and Conference Rooms</p>
 			</div>
-			{{-- <div class="toggleMap">
-        		<div class="toggleBtns">
-            		<a href="#" class="toggleActive"><div class="listViewBtn">LIST VIEW</div></a>
-            		<a href="#"><div class="mapViewBtn">MAP VIEW</div></a>
-        		</div>
-        	</div> --}}
         </div>
         <div class="resutsWrap">
         <div class="contactForm">

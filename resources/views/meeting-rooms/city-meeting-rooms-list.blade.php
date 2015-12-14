@@ -107,94 +107,56 @@
 	<script type="text/javascript">var full_city = '<?php echo $google_maps_center_city;?>'</script>
 	<script type="text/javascript">var page_type = 'virtual-office';</script>
     <script type="text/javascript" src="/js/custom.js"></script>
-	<script>
-	        jQuery(document).ready(function($) {
+	<script type="text/javascript">
+        jQuery(document).ready(function($) {
 
-				$( ".menuBtnLink" ).click(function() {
-				  $( ".menu" ).slideToggle( "slow", function() {
+			$( ".menuBtnLink" ).click(function() {
+			  	$( ".menu" ).slideToggle( "slow", function() {
 					// Animation complete.
-				  });
-				});
+			  	});
+			});
 
-				$('.bxslider').bxSlider();
+			$('.bxslider').bxSlider();
 
-				$(".moreInfoBtn").hover(function() {
-					$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
+			$(".moreInfoBtn").hover(function() {
+				$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
 					// Animation complete.
-				  });
+			  	});
+			});
 
-				});
+    		$("#suggest1").autocomplete('/js/lookup.php', {
+        		minChars: 1,
+				delay: 40,
+				maxItemsToShow: 30,
+		    });
 
-				//LightBox
-				/*$('.popup-with-form').magnificPopup({
-					type: 'inline',
-					preloader: false,
-					focus: '#name',
+		    $("input#suggest1").keyup(function(e){
+		        var code = e.which;
+		        if(code==13)e.preventDefault();
+		        if(code==13||code==186){
+			   		$("#searchBtn").click();
+		        }
+		    });
 
-					// When elemened is focused, some mobile browsers in some cases zoom in
-					// It looks not nice, so we disable it:
-					callbacks: {
-						beforeOpen: function() {
-							if($(window).width() < 1100) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#name';
-							}
-						}
-					}
-				});
+		    $( ".avo1" ).change(function() {
+		        var e = document.getElementById("Services");
+		        var strType = e.options[e.selectedIndex].value;
 
-				$('.popup-with-form').magnificPopup({
-					type: 'iframe',
-					// When elemened is focused, some mobile browsers in some cases zoom in
-					// It looks not nice, so we disable it:
-					callbacks: {
-						beforeOpen: function() {
-							if($(window).width() < 1100) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#name';
-							}
-						}
-					}
-				});*/
-
-				//end LightBox
-
-	    $("#suggest1").autocomplete('/js/lookup.php', {
-	        minChars: 1,
-		delay: 40,
-		maxItemsToShow: 30,
-	    });
-
-	    $("input#suggest1").keyup(function(e){
-
-	        var code = e.which;
-	        if(code==13)e.preventDefault();
-	        if(code==13||code==186){
-		   $("#searchBtn").click();
-	        }
-
-	    });
-
-	    $( ".avo1" ).change(function() {
-
-	        var e = document.getElementById("Services");
-	        var strType = e.options[e.selectedIndex].value;
-
-	        if(strType=='VO') {
-	             $("#avoS").attr("action", "/search2.php");
-	        }
-	        else{
-	            $("#avoS").attr("action", "/mr-search.php");
-	        }
-
-	    });
-	        });
-
+		        if(strType=='VO') {
+		             $("#avoS").attr("action", "/search2.php");
+		        } else {
+		            $("#avoS").attr("action", "/mr-search.php");
+		        }
+		    });
+        });
 	</script>
 @stop
 @section('styles')
-    <style type="text/css">.cForm {padding-bottom: 20px;height: auto;}</style>
-	<link href="/css/map.popup.css" rel="stylesheet" />
+    <style type="text/css">
+    	.cForm {
+    		padding-bottom: 20px;
+    		height: auto;
+    	}
+    </style>
+	<link rel="stylesheet" type="text/css" href="/css/map.popup.css"/>
 @stop

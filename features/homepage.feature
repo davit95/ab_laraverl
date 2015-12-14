@@ -4,6 +4,7 @@ Feature: Homepage
     Scenario: Get homepage.
         When I go to homepage
         Then I should see "LOOKING FOR A 21st CENTURY SOLUTION FOR YOUR NEXT OFFICE?"
+        Then I should see "Login"
         And I should see "Get a smart, affordable workplace solution today."
         And the response status code should be 200
 

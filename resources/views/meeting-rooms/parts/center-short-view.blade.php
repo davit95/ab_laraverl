@@ -2,9 +2,9 @@
 	<div class='ImageInfo'>
     	<div class='moreInfoBtn'><img src='/images/moreInfo.png' border='0' /></div>
         <div class='ImageInfo2'>
-        @if($center->virtual_office_seo)
-        	<p>{!! $center->virtual_office_seo->sentence1!!} {!! $center->virtual_office_seo->sentence2!!} {!! $center->virtual_office_seo->sentence3!!}</p>
-        @endif
+            @if($center->virtual_office_seo)
+            	<p>{!! $center->virtual_office_seo->sentence1!!} {!! $center->virtual_office_seo->sentence2!!} {!! $center->virtual_office_seo->sentence3!!}</p>
+            @endif
         </div>
     </div>
     <div class='imageSlider'>

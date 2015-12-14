@@ -34,8 +34,6 @@
 
                                 <input type="radio" id="localNumber" name="package_option" value="local" onclick="toggleTel('CountrySelect', 'TollFree');"/>
                                 <label> local number</label> &nbsp;
- &nbsp;
-
                                 <input type="radio" id="" name="package_option" value="toll_free" onclick="toggleTel('TollFree','CountrySelect');"/>
                                 <label> toll free number</label>
                                 <br><br>

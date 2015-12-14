@@ -1,5 +1,9 @@
 @extends('layout.layout')
-@section('title') Virtual Office, Virtual Office Solutions from Alliance Virtual Offices @stop
+
+@section('title')
+	Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
+@stop
+
 @section('content')
 	<div class="intWrap">
 		<div class="searchInt">
@@ -109,99 +113,92 @@
 @section('scripts')
 
 	<script type="text/javascript" src="/js/see-plans.js"></script>
-	<script src="/js/jquery.bxslider.min.js"></script>
-	<script src="/js/jquery.magnific-popup.min.js"></script>
-	<script>
-	        jQuery(document).ready(function($) {
+	<script type="text/javascript" src="/js/jquery.bxslider.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.magnific-popup.min.js"></script>
+	<script type="text/javascript">
+        jQuery(document).ready(function($) {
 
-				$( ".menuBtnLink" ).click(function() {
-				  $( ".menu" ).slideToggle( "slow", function() {
+			$( ".menuBtnLink" ).click(function() {
+			  	$( ".menu" ).slideToggle( "slow", function() {
 					// Animation complete.
-				  });
-				});
+			  	});
+			});
 
-				$('.bxslider').bxSlider();
+			$('.bxslider').bxSlider();
 
-				$(".moreInfoBtn").hover(function() {
-					$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
+			$(".moreInfoBtn").hover(function() {
+				$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
 					// Animation complete.
-				  });
+			  	});
+			});
 
-				});
+			//LightBox
+			$('.popup-with-form').magnificPopup({
+				type: 'inline',
+				preloader: false,
+				focus: '#name',
 
-				//LightBox
-				$('.popup-with-form').magnificPopup({
-					type: 'inline',
-					preloader: false,
-					focus: '#name',
-
-					// When elemened is focused, some mobile browsers in some cases zoom in
-					// It looks not nice, so we disable it:
-					callbacks: {
-						beforeOpen: function() {
-							if($(window).width() < 1100) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#name';
-							}
+				// When elemened is focused, some mobile browsers in some cases zoom in
+				// It looks not nice, so we disable it:
+				callbacks: {
+					beforeOpen: function() {
+						if($(window).width() < 1100) {
+							this.st.focus = false;
+						} else {
+							this.st.focus = '#name';
 						}
 					}
-				});
+				}
+			});
 
-				$('.popup-with-form').magnificPopup({
-					type: 'iframe',
-					// When elemened is focused, some mobile browsers in some cases zoom in
-					// It looks not nice, so we disable it:
-					callbacks: {
-						beforeOpen: function() {
-							if($(window).width() < 1100) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#name';
-							}
+			$('.popup-with-form').magnificPopup({
+				type: 'iframe',
+				// When elemened is focused, some mobile browsers in some cases zoom in
+				// It looks not nice, so we disable it:
+				callbacks: {
+					beforeOpen: function() {
+						if($(window).width() < 1100) {
+							this.st.focus = false;
+						} else {
+							this.st.focus = '#name';
 						}
 					}
-				});
+				}
+			});
 
-				//end LightBox
+			//end LightBox
 
-			    $("#suggest1").autocomplete('/js/lookup.php', {
-			        minChars: 1,
-				delay: 40,
-				maxItemsToShow: 30,
-			    });
+		    $("#suggest1").autocomplete('/js/lookup.php', {
+		        minChars: 1,
+			delay: 40,
+			maxItemsToShow: 30,
+		    });
 
-			    $("input#suggest1").keyup(function(e){
+		    $("input#suggest1").keyup(function(e){
+		        var code = e.which;
+		        if(code==13)e.preventDefault();
+		        if(code==13||code==186){
+			   		$("#searchBtn").click();
+		        }
+		    });
 
-			        var code = e.which;
-			        if(code==13)e.preventDefault();
-			        if(code==13||code==186){
-				   $("#searchBtn").click();
-			        }
+		    $( ".avo1" ).change(function() {
+		        var e = document.getElementById("Services");
+		        var strType = e.options[e.selectedIndex].value;
 
-			    });
-
-			    $( ".avo1" ).change(function() {
-
-			        var e = document.getElementById("Services");
-			        var strType = e.options[e.selectedIndex].value;
-
-			        if(strType=='VO') {
-			             $("#avoS").attr("action", "/search2.php");
-			        }
-			        else{
-			            $("#avoS").attr("action", "/mr-search.php");
-			        }
-
-			    });
-	        });
-
+		        if(strType=='VO') {
+		            $("#avoS").attr("action", "/search2.php");
+		        } else {
+		            $("#avoS").attr("action", "/mr-search.php");
+		        }
+		    });
+        });
 	</script>
 @stop
 
 @section('styles')
-	<link href="/css/magnific-popup.css" rel="stylesheet" />
-    <style type="text/css">
+	<link rel="stylesheet" type="text/css" href="/css/magnific-popup.css"/>
+    <style rel="stylesheet" type="text/css">
     	.cForm {
     		padding-bottom: 20px;
     		height: auto;

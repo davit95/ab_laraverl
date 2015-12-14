@@ -15,6 +15,8 @@ Route::get('payment', function () {
 	});
 Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/', 'HomeController@index');
+		Route::get('/login', 'Auth\AuthController@getLogin');
+		Route::post('/login', 'Auth\AuthController@postLogin');
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
 		Route::get('/virtual-offices/{country_slug}', 'VirtualOfficesController@getCountryVirtualOffices');
