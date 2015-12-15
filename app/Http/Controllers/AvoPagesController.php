@@ -185,6 +185,7 @@ class AvoPagesController extends Controller {
 	 */
 	public function contact() {
 		return view('avo-pages.contact');
+		// return view('cart.index', ['items' => [], 'price_total' => 8]);
 	}
 
 	/**

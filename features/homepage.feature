@@ -36,10 +36,12 @@ Feature: Homepage
         When I go to homepage
         When I follow "Contact"
         Then the url should match "/contact"
-        And the response status code should be 200
+        And I should see "NORTH AMERICA:"
+        # And the response status code should be 200
 
     Scenario: Open cart page.
         When I go to homepage
         When I follow "CART"
         Then the url should match "/cart"
+        And I should see "MY CART"
         And the response status code should be 200
