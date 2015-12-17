@@ -17,11 +17,9 @@ class CityService
      *
      * @return Response
      */
-	public function getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id, $us_state_id)
+	public function getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)
 	{
-		if( isset($us_state_id) ){
-			return $this->city->where('country_code', $country_code)->where('slug', $city_slug)->where('id', $city_id)->where('us_state_id')->first();
-		}
+		return $this->city->where('country_code', $country_code)->where('slug', $city_slug)->where('id', $city_id)->first();
 	}
 
 	/**
