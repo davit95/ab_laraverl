@@ -46,8 +46,8 @@ class MeetingRoomsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getCityMeetingRooms($country_code, $city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
-		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug)) {
+	public function getCityMeetingRooms($country_code, $city_slug,$city_id, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
+		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
 			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);
 			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
 			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);
@@ -180,6 +180,7 @@ class MeetingRoomsController extends Controller {
 	 * @return Response
 	 */
 	public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
+		// dd( $request->all() );
 		if ($auth->guest()) {
 			if (!session('mr_request')) {
 				if ($request->has('mr_date') && $request->has('mr_start_time') && $request->has('mr_end_time')) {

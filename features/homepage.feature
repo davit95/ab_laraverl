@@ -4,12 +4,14 @@ Feature: Homepage
     Scenario: Get homepage.
         When I go to homepage
         Then I should see "LOOKING FOR A 21st CENTURY SOLUTION FOR YOUR NEXT OFFICE?"
+        Then I should see "Login"
         And I should see "Get a smart, affordable workplace solution today."
         And the response status code should be 200
 
     Scenario: Open virtual-offices page.
         Given I am on homepage
-        When I follow "VIRTUAL OFFICES"
+        When I request "GET /contact"
+        # When I follow "VIRTUAL OFFICES"
         Then the url should match "/virtual-offices"
         And the response status code should be 200
 
@@ -35,10 +37,12 @@ Feature: Homepage
         When I go to homepage
         When I follow "Contact"
         Then the url should match "/contact"
-        And the response status code should be 200
+        And I should see "NORTH AMERICA:"
+        # And the response status code should be 200
 
     Scenario: Open cart page.
         When I go to homepage
         When I follow "CART"
         Then the url should match "/cart"
+        And I should see "MY CART"
         And the response status code should be 200

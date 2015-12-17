@@ -20,6 +20,7 @@ class CountryService
      */
 	public function getAllCountries()
 	{
+		return $this->country->has('active_cities', '>', 0)->orderBy('name', 'ASC')->get();
 		if(Cache::has('active_countries'))
 		{
 			return Cache::get('active_countries');

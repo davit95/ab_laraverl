@@ -1,7 +1,9 @@
 @extends('layout.layout')
+
 @section('title')
-{!! $center->city->name !!} Virtual Offices and Conference Rooms on {!! preg_replace('/^[^a-zA-Z]*/', '', $center->address1) !!}
+	{!! $center->city->name !!} Virtual Offices and Conference Rooms on {!! preg_replace('/^[^a-zA-Z]*/', '', $center->address1) !!}
 @stop
+
 @section('content')
 	<div class='intWrap'>
 		<div class="breadcrumbs dtails">
@@ -49,14 +51,15 @@
 							<br>
 							{!! $center->address1 !!}
 							<br>
-							{!! $center->address2!!}
+							{!! $center->address2 !!}
 							<span class="city" itemprop="addressRegion">{!! $center->city->name !!}</span>
 							@if($center->city->us_state_id)
 								{!! $center->city->usState->code !!}
 							@else
 								{!! $center->city->country->name !!}
 							@endif
-							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>
+							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>							
+							<b>{!! $center->local_number->local_number !!}</b>	
 						</p>
 					</div>
 				</div>
@@ -113,13 +116,22 @@
 				<div class="clear"></div>
 			</div>
 			<br>
-			<p class=" mediumBold getVirt"><span class="bold orange">GET A VIRTUAL OFFICE NOW</span> - <span class="gray2">SELECT A PLAN FOR THIS ADDRESS:</span><br> <span class="gray3 medium" style="font-size:14px;">Or call: &nbsp;
- <span  style="font-size:18px;">[</span> North America:    +1 888.869.9494	<span  style="font-size:18px;">] &nbsp;
- [</span>	International:     +1 949.777.6340 <span  style="font-size:18px;">]</span></span></p>
+			<p class=" mediumBold getVirt">
+				<span class="bold orange">GET A VIRTUAL OFFICE NOW</span>
+				-
+				<span class="gray2">SELECT A PLAN FOR THIS ADDRESS:</span>
+				<br>
+				<span class="gray3 medium" style="font-size:14px;">
+					Or call: &nbsp;
+	 				<span  style="font-size:18px;">[</span> North America:    +1 888.869.9494
+		 			<span  style="font-size:18px;">] &nbsp; [</span>
+		 			International:     +1 949.777.6340
+		 			<span  style="font-size:18px;">]</span>
+	 			</span>
+	 		</p>
 			<div class="dPlansWrap">
 				<div class="dPlansAllWrap" style="overflow: auto;">
 					<div class="dPlansAll">
-
 						<div class="aPlan2">
 						    <div class="aPlanTop2 bordeRight">
 						    <div class="wrapPP">
@@ -289,7 +301,6 @@
 						    </ul>
 						    </div>
 						</div>
-
 					</div>
 				</div>
 				<div class="extras2 gray3 hide">
@@ -361,41 +372,38 @@
 @stop
 
 @section('styles')
-	<link href="/css/magnific-popup.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="/css/magnific-popup.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/tooltipster.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/themes/tooltipster-light.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/jquery.tosrus.all.css"/>
 @stop
 
 @section('scripts')
-	<script type="text/rocketscript" data-rocketsrc="/js/jquery.tooltipster.min.js"></script>
-	<script type="text/rocketscript" data-rocketsrc="/js/jquery.tosrus.min.all.js"></script>
-	<script type="text/rocketscript" data-rocketsrc="/js/hammer.js"></script>
-	<script type="text/rocketscript" data-rocketsrc="/js/jquery.sticky-kit.min.js"></script>
-
-
-
-	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="/js/jquery.tooltipster.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.tosrus.min.all.js"></script>
+	<script type="text/javascript" src="/js/hammer.js"></script>
+	<script type="text/javascript" src="/js/jquery.sticky-kit.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 	<script type="text/javascript">
-	  function initialize() {
-	    var myLatlng = new google.maps.LatLng({!! $center->coordinate->lat !!}, {!! $center->coordinate->lng !!});
-	    var myOptions = {
-	      zoom: 15,
-	      center: myLatlng,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    }
-	    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	    var iconBase = '/images/';
-	    var marker = new google.maps.Marker({
-	        position: myLatlng,
-	        map: map,
-			icon: iconBase + 'marker.png',
-	        title: "{!! $center->address1 !!}"
-	    });
-	  }
-	  google.maps.event.addDomListener(window, 'load', initialize);
+	  	function initialize() {
+		    var myLatlng = new google.maps.LatLng({!! $center->coordinate->lat !!}, {!! $center->coordinate->lng !!});
+		    var myOptions = {
+		      	zoom: 15,
+		      	center: myLatlng,
+		      	mapTypeId: google.maps.MapTypeId.ROADMAP
+		    }
+		    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		    var iconBase = '/images/';
+		    var marker = new google.maps.Marker({
+		        position: myLatlng,
+		        map: map,
+				icon: iconBase + 'marker.png',
+		        title: "{!! $center->address1 !!}"
+		    });
+	  	}
+	  	google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
-	<script type="text/rocketscript">
+	<script type="text/javascript">
 		function done() {
 			$( ".aPlanBottom2" ).show();
 			$( ".extras2" ).show();
@@ -403,14 +411,13 @@
 			$(".dformright").trigger("sticky_kit:detach");
 			$(".dformright").stick_in_parent();
 			$(".triggerShow").hide();
-
 		}
         jQuery(document).ready(function($) {
 
 			$( ".menuBtnLink" ).click(function() {
-			  $( ".menu" ).slideToggle( "slow", function() {
-				// Animation complete.
-			  });
+			  	$( ".menu" ).slideToggle( "slow", function() {
+					// Animation complete.
+			  	});
 			});
 
 			$( ".triggerShow" ).click(function() {
@@ -431,6 +438,7 @@
 				contentAsHTML: true,
 				interactive: true,
             });
+
 			$('.tooltip2').tooltipster({
 				animation: 'fade',
 				theme: 'tooltipster-light',
@@ -438,6 +446,7 @@
 				contentAsHTML: true,
 				interactive: true,
             });
+
 			$('.tooltip3').tooltipster({
 				animation: 'fade',
 				theme: 'tooltipster-light',
@@ -445,6 +454,7 @@
 				contentAsHTML: true,
 				interactive: true,
             });
+
 			$('.tooltip4').tooltipster({
 				animation: 'fade',
 				theme: 'tooltipster-light',
@@ -454,32 +464,26 @@
             });
 
 			$("#links a").tosrus({
-			   caption    : {
-				  add        : true
-			   }
+			   	caption : {
+				  	add : true
+			   	}
 			});
 
 			if ($(window).width() > 750) {
-			   $(".dformright").stick_in_parent()
+			   	$(".dformright").stick_in_parent()
 			}
-			else {
-
-			};
 
 			$( window ).resize(function() {
-			  if ($(window).width() < 750) {
-			   $(".dformright").trigger("sticky_kit:detach");
-			}
-			else {
-			   $(".dformright").stick_in_parent()
-			};
+			  	if ($(window).width() < 750) {
+				   	$(".dformright").trigger("sticky_kit:detach");
+				} else {
+				   	$(".dformright").stick_in_parent()
+				}
 			});
 			$('.tooltip').tooltipster('update', '<span> Entry level plan for startups looking for a way to have the lowest cost presence in a desirable market. <br><span class="bold">Receive mail anywhere; redirect it anywhere.</span><br><a class="update" href="javascript:done()"><div class="showAllFplans">Show and compare plan features</div></a> </span>');
 			$('.tooltip2').tooltipster('update', '<span> Entry level plan <span class="bold">for startups and small business</span> who want a full virtual presence. Great for those looking for those opening a remote office who need a full local presence. <br><a class="update" href="javascript:done()"><div class="showAllFplans">Show and compare plan features</div></a> </span></span>');
 			$('.tooltip3').tooltipster('update', '<span> <span class="bold">One of our most popular services.</span> Best for startups and growing businesses who expect to meet with clients and colleagues on a regular basis in a stylish business setting.<br><a class="update" href="javascript:done()"><div class="showAllFplans">Show and compare plan features</div></a> </span></span>');
 			$('.tooltip4').tooltipster('update', '<span> <span class="bold">Our most popular service.</span> Best for startups and growing businesses who want a full complement of virtual services and who expect to meet with clients and colleagues on a regular basis in a stylish business setting. <br><a class="update" href="javascript:done()"><div class="showAllFplans">Show and compare plan features</div></a> </span></span>');
         });
-
-
     </script>
 @stop

@@ -2,34 +2,30 @@
 
 namespace Admin\Services;
 
+use Admin\Contracts\RegionInterface;
+
+use App\Models\Region;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use Admin\Contracts\RegionInterface;
-use App\Region;
-
-class RegionService implements RegionInterface
-{
+class RegionService implements RegionInterface {
 	/**
-     * Create a new region service instance.
-     */
-	public function __construct(Region $region)
-	{
+	 * Create a new region service instance.
+	 */
+	public function __construct(Region $region) {
 		$this->region = $region;
 	}
 
 	/*
 	 * Get the specified resource.
 	 */
-	public function getAllRegions()
-	{
+	public function getAllRegions() {
 		return $this->region->all();
 	}
 
 	/*
 	 * Get a listing of the resource.
 	 */
-	public function getRegionByID($id)
-	{
+	public function getRegionByID($id) {
 		$region = $this->region->find($id);
 		if ($region) {
 			return $region;
@@ -40,8 +36,7 @@ class RegionService implements RegionInterface
 	/*
 	 * Get a listing of the resource for html select.
 	 */
-	public function getAllRegionsSelectList()
-	{
-		return $this->region->lists('name','id')->toArray();
+	public function getAllRegionsSelectList() {
+		return $this->region->lists('name', 'id')->toArray();
 	}
 }

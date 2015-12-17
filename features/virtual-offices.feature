@@ -30,4 +30,19 @@ Feature: Virtual Offices
         When I follow "Los Angeles"
         Then the url should match "/virtual-offices/US/los-angeles"
         And the response status code should be 200
-        And I should see "Home / Virtual Offices / United States / Los Angeles"
+        And I should see "Home / Virtual Offices / United States / California / Los Angeles"
+
+    Scenario: Book virtual office
+        Given I am on the homepage
+        When I send a POST request to "/sendcontact" with:
+          """json
+          {
+            "center_id" : "134",
+            "type"      : "vo",
+            "package_option" : "105",
+            "term"      : "6",
+            "vo_mail_forwarding_package" : "20",
+            "vo_mail_forwarding_frequency" : ""
+          }
+          """
+        Then the response status code should be 200

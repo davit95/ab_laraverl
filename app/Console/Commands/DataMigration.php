@@ -15,7 +15,7 @@ class DataMigration extends Command {
 	 *
 	 * @var string
 	 */
-	protected $signature = "data:migrate {--host=localhost} {--database=abcn-old} {--username=homestead} {--password=secret}";
+	protected $signature = "data:migrate {--host=localhost} {--database=abcn-old} {--username=root} {--password=secret}";
 
 	/**
 	 * The console command description.
@@ -52,6 +52,7 @@ class DataMigration extends Command {
 		$this->products();
 		$this->centers();
 		$this->centers_coordinates();
+		$this->centers_local_numbers();
 		$this->centers_emails();
 		$this->centers_prices();
 		$this->centers_filters();
@@ -79,7 +80,7 @@ class DataMigration extends Command {
 		$bar                     = $this->output->createProgressBar(count($collection));
 		//$count = 0;
 		foreach ($collection as $key => $value) {
-			$city      = DB::table('cities')->where('name', $value->City)->first();
+			$city      = DB::table('cities')->where('name', $value->City)->where('country_code', $value->Country)->first();
 			$country   = DB::table('countries')->where('code', $value->Country)->first();
 			$state     = DB::table('us_states')->where('code', $value->State)->first();
 			$owner_ids = DB::table('owners')->lists('id');
@@ -150,7 +151,30 @@ class DataMigration extends Command {
 		$this->info(' ✔');
 
 	}
-
+	private function centers_local_numbers() {
+		$this->info("\n migrating centers_local_numbers table");
+		$this->make_new_connection();
+		$collection = DB::table('Center_Local')->get();
+		DB::setDefaultConnection('mysql');
+		$center_ids = DB::table('centers')->lists('id');
+		$bar        = $this->output->createProgressBar(count($collection));
+		foreach ($collection as $key => $value) {
+			if (in_array($value->Center_ID, $center_ids)) {
+				$new_collection[] =
+				[
+					'id'        => $value->Object_ID,
+					'center_id' => $value->Center_ID,
+					'local_number'       => $value->Local_Number,
+				];
+			}
+			$bar->advance();
+		}
+		//DB::table('centers_coordinates')->truncate();
+		DB::table('centers_local_number')->insert($new_collection);
+		$bar->finish();
+		$this->info(' ✔');
+	}
+	
 	private function centers_coordinates() {
 		$this->info("\n migrating centers_coordnates table");
 		$this->make_new_connection();
@@ -510,6 +534,25 @@ class DataMigration extends Command {
 		$this->info(" ✔");
 	}
 
+	private function detect_active_cities() {
+		$this->info("\n detecting active cities in system");
+		DB::setDefaultConnection('mysql');
+		$cities = DB::table('cities')->get();
+		$count  = 0;
+		$key    = 0;
+		$bar    = $this->output->createProgressBar(count($cities));
+		foreach ($cities as $key => $value) {
+			if (DB::table('centers')->where('city_id', $value->id)->where('active_flag', 'Y')->first() != null) {
+				DB::table('cities')->where('id', $value->id)->update(['active' => 1]);
+			} else {
+			}
+			$count++;
+			$bar->advance();
+		}
+		$bar->finish();
+		$this->info('✔');
+	}
+
 	private function countries() {
 		$this->info("\n migrating countries table");
 		$all_countries = $this->_countries->getCountries();
@@ -739,25 +782,6 @@ class DataMigration extends Command {
 		DB::table('users')->insert($new_collection);
 		$bar->finish();
 		$this->info(' ✔');
-	}
-
-	private function detect_active_cities() {
-		$this->info("\n detecting active cities in system");
-		DB::setDefaultConnection('mysql');
-		$cities = DB::table('cities')->get();
-		$count  = 0;
-		$key    = 0;
-		$bar    = $this->output->createProgressBar(count($cities));
-		foreach ($cities as $key => $value) {
-			if (DB::table('centers')->where('city_id', $value->id)->where('active_flag', 'Y')->first() != null) {
-				DB::table('cities')->where('id', $value->id)->update(['active' => 1]);
-			} else {
-			}
-			$count++;
-			$bar->advance();
-		}
-		$bar->finish();
-		$this->info('✔');
 	}
 
 	private function meeting_rooms() {

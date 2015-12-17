@@ -1,4 +1,5 @@
 @extends('layout.layout')
+
 @section('content')
 	<div class="intWrap">
 		<div class="breadcrumbs dtails">
@@ -48,6 +49,8 @@
 							{!! $center->address1 !!}
 							<br>
 							{!! $center->address2 !!} {!! $center->city->anme !!}, {!! $center->city->us_state_id ? $center->city->us_state_code : $center->city->country->code !!}  {!! $center->postal_code !!}
+							<br>
+							<b>{!! $center->local_number->local_number !!}</b>
 						</p>
 					</div>
 				</div>
@@ -301,187 +304,183 @@
 @stop
 
 @section('styles')
-	<link rel="stylesheet" href="/css/themes/classic.css">
-	<link rel="stylesheet" href="/css/themes/classic.date.css">
-	<link rel="stylesheet" href="/css/themes/classic.time.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/flat/grey.css">
-	<link href="/css/flat/grey.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/themes/classic.css">
+	<link rel="stylesheet" type="text/css" href="/css/themes/classic.date.css">
+	<link rel="stylesheet" type="text/css" href="/css/themes/classic.time.css">
+    <link rel="stylesheet" type="text/css" href="/css/flat/grey.css">
+	<link rel="stylesheet" type="text/css" href="/css/flat/grey.css">
 @stop
 
 @section('scripts')
-	<script src="/js/icheck.js"></script>
-
-	<script src="/js/picker.js" type="text/javascript"></script>
-	<script src="/js/picker.date.js" type="text/javascript"></script>
-	<script src="/js/picker.time.js" type="text/javascript"></script>
-	<script src="/js/legacy.js" type="text/javascript"></script>
-
+	<script type="text/javascript" src="/js/icheck.js"></script>
+	<script type="text/javascript" src="/js/picker.js"></script>
+	<script type="text/javascript" src="/js/picker.date.js"></script>
+	<script type="text/javascript" src="/js/picker.time.js"></script>
+	<script type="text/javascript" src="/js/legacy.js"></script>
     <script type="text/javascript">
-    $(document).ready(function(){
+	    jQuery(document).ready(function(){
 
 
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_flat-grey',
-            radioClass: 'iradio_flat-grey'
-        });
+	        $('input').iCheck({
+	            checkboxClass: 'icheckbox_flat-grey',
+	            radioClass: 'iradio_flat-grey'
+	        });
 
-        $('.iCheck-helper').on('click', function() {
-            $(this).siblings('input').click();
-        });
-        $( '.datepicker' ).pickadate({
-	    	format: 'mm/dd/yyyy',
-            formatSubmit: 'mm/dd/yyyy',
-            min: true,
-            container: '#root-picker-outlet',
-            //editable: true,
-            closeOnSelect: true,
-            closeOnClear: false,
-			disable: [
-				1, 7
-			],
-			// Work-around for some mobile browsers clipping off the picker.
-    	    onOpen: function() { $('pre').css('overflow', 'hidden') },
-    	    onClose: function() { $('pre').css('overflow', '') }
-        });
+	        $('.iCheck-helper').on('click', function() {
+	            $(this).siblings('input').click();
+	        });
+	        $( '.datepicker' ).pickadate({
+		    	format: 'mm/dd/yyyy',
+	            formatSubmit: 'mm/dd/yyyy',
+	            min: true,
+	            container: '#root-picker-outlet',
+	            //editable: true,
+	            closeOnSelect: true,
+	            closeOnClear: false,
+				disable: [
+					1, 7
+				],
+				// Work-around for some mobile browsers clipping off the picker.
+	    	    onOpen: function() { $('pre').css('overflow', 'hidden') },
+	    	    onClose: function() { $('pre').css('overflow', '') }
+	        });
 
-		$('.timepicker').pickatime({
-		    min: [8,0],
-		    max: [17,0],
-		    container: '#root-picker-outlet2',
-		    formatSubmit: 'HH:i',
-		    onClose: function() {
-	    	        $('.timepicker').blur();
-		    }
-		});
-
-       var from_ = $('#input_from').pickatime(),
-       from_picker = from_.pickatime('picker')
-
-       var to_ = $('#input_to').pickatime({
-           formatLabel: function( timeObject ) {
-               var minObject = this.get( 'min' ),
-               hours = timeObject.hour - minObject.hour,
-               mins = ( timeObject.mins - minObject.mins ) / 60,
-               pluralize = function( number, word ) {
-                   return number + ' ' + ( number === 1 ? word : word + 's' )
-               }
-               return '<b>H</b>:i <!i>a</!i> <sm!all>(' + pluralize( hours + mins, '!hour' ) + ')</sm!all>'
-           }
-       }),
-
-       to_picker = to_.pickatime('picker')
-
-       if(to_picker && from_picker){
-			// Check if there's a "from" or "to" time to start with.
-			if ( from_picker.get('value') ) {
-			  to_picker.set('min', from_picker.get('select'))
-			}
-			if ( to_picker.get('value') ) {
-			  from_picker.set('max', to_picker.get('select') )
-			}
-
-			// When something is selected, update the "from" and "to" limits.
-			from_picker.on('set', function(event) {
-			  if ( event.select ) {
-			    to_picker.set('min', from_picker.get('select'))
-			  }
-			})
-			to_picker.on('set', function(event) {
-			  if ( event.select ) {
-			    from_picker.set('max', to_picker.get('select'))
-			  }
-			})
-       }
-
-		function getUrlParameter(sParam)
-		{
-		    var sPageURL = window.location.search.substring(1);
-		    var sURLVariables = sPageURL.split('&');
-		    for (var i = 0; i < sURLVariables.length; i++)
-		    {
-		        var sParameterName = sURLVariables[i].split('=');
-		        if (sParameterName[0] == sParam)
-		        {
-		            return sParameterName[1];
-		        }
-		    }
-		}
-
-		var date = getUrlParameter('date');
-		var firstTime = getUrlParameter('_submit');
-		var secondTime = getUrlParameter('_submit');
-
-		if(date && date.length == 0){
-	    }else{
-			$('.showHide').show();
-			$('.hideShow').hide();
-		}
-
-		$( ".otherTime" ).click(function() {
-			$('.showHide').hide();
-			$('.hideShow').show();
-		});
-    });
-
-    </script>
- 	<script type="text/rocketscript">
-        jQuery(document).ready(function($) {
-
-			$( ".menuBtnLink" ).click(function() {
-			  $( ".menu" ).slideToggle( "slow", function() {
-				// Animation complete.
-			  });
+			$('.timepicker').pickatime({
+			    min: [8,0],
+			    max: [17,0],
+			    container: '#root-picker-outlet2',
+			    formatSubmit: 'HH:i',
+			    onClose: function() {
+		    	        $('.timepicker').blur();
+			    }
 			});
 
-			if ($(window).width() > 850) {
-			   $(".dformright2").stick_in_parent()
-			}
-			else {
+	       var from_ = $('#input_from').pickatime(),
+	       from_picker = from_.pickatime('picker')
 
-			};
+	       var to_ = $('#input_to').pickatime({
+	           formatLabel: function( timeObject ) {
+	               var minObject = this.get( 'min' ),
+	               hours = timeObject.hour - minObject.hour,
+	               mins = ( timeObject.mins - minObject.mins ) / 60,
+	               pluralize = function( number, word ) {
+	                   return number + ' ' + ( number === 1 ? word : word + 's' )
+	               }
+	               return '<b>H</b>:i <!i>a</!i> <sm!all>(' + pluralize( hours + mins, '!hour' ) + ')</sm!all>'
+	           }
+	       }),
 
-			$( window ).resize(function() {
-			  if ($(window).width() < 850) {
-			   $(".dformright2").trigger("sticky_kit:detach");
+	       to_picker = to_.pickatime('picker')
+
+	       if(to_picker && from_picker){
+				// Check if there's a "from" or "to" time to start with.
+				if ( from_picker.get('value') ) {
+				  to_picker.set('min', from_picker.get('select'))
+				}
+				if ( to_picker.get('value') ) {
+				  from_picker.set('max', to_picker.get('select') )
+				}
+
+				// When something is selected, update the "from" and "to" limits.
+				from_picker.on('set', function(event) {
+				  if ( event.select ) {
+				    to_picker.set('min', from_picker.get('select'))
+				  }
+				})
+				to_picker.on('set', function(event) {
+				  if ( event.select ) {
+				    from_picker.set('max', to_picker.get('select'))
+				  }
+				})
+	       }
+
+			function getUrlParameter(sParam)
+			{
+			    var sPageURL = window.location.search.substring(1);
+			    var sURLVariables = sPageURL.split('&');
+			    for (var i = 0; i < sURLVariables.length; i++)
+			    {
+			        var sParameterName = sURLVariables[i].split('=');
+			        if (sParameterName[0] == sParam)
+			        {
+			            return sParameterName[1];
+			        }
+			    }
 			}
-			else {
-			   $(".dformright2").stick_in_parent()
-			};;
+
+			var date = getUrlParameter('date');
+			var firstTime = getUrlParameter('_submit');
+			var secondTime = getUrlParameter('_submit');
+
+			if(date && date.length == 0){
+		    } else {
+				$('.showHide').show();
+				$('.hideShow').hide();
+			}
+
+			$( ".otherTime" ).click(function() {
+				$('.showHide').hide();
+				$('.hideShow').show();
 			});
-
-			$('input').iCheck({
-				checkboxClass: 'icheckbox_flat-grey',
-				radioClass: 'iradio_flat-grey'
-			  });
-        });
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-	<script type="text/javascript">
-	  function initialize() {
-	    var myLatlng = new google.maps.LatLng({!! $center->coordinate->lat !!}, {!! $center->coordinate->lng !!});
-	    var myOptions = {
-	      zoom: 15,
-	      center: myLatlng,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    }
-	    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	    var iconBase = '/images/';
-	    var marker = new google.maps.Marker({
-	        position: myLatlng,
-	        map: map,
-			icon: iconBase + 'marker.png',
-	        title: "{!! $center->address1 !!}"
 	    });
-	  }
-	  google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
-	<script type="text/rocketscript">
+    </script>
+ 	<script type="text/javascript">
         jQuery(document).ready(function($) {
 
 			$( ".menuBtnLink" ).click(function() {
-			  $( ".menu" ).slideToggle( "slow", function() {
-				// Animation complete.
-			  });
+			  	$( ".menu" ).slideToggle( "slow", function() {
+					// Animation complete.
+			  	});
+			});
+
+			if ($(window).width() > 850) {
+			   	$(".dformright2").stick_in_parent()
+			}
+			else {
+
+			};
+
+			$( window ).resize(function() {
+			  	if ($(window).width() < 850) {
+			   		$(".dformright2").trigger("sticky_kit:detach");
+				} else {
+				   	$(".dformright2").stick_in_parent()
+				};
+			});
+
+			$('input').iCheck({
+				checkboxClass: 'icheckbox_flat-grey',
+				radioClass: 'iradio_flat-grey'
+			});
+        });
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript">
+	  	function initialize() {
+	    	var myLatlng = new google.maps.LatLng({!! $center->coordinate->lat !!}, {!! $center->coordinate->lng !!});
+	    	var myOptions = {
+	      		zoom: 15,
+	      		center: myLatlng,
+	      		mapTypeId: google.maps.MapTypeId.ROADMAP
+	   		}
+	    	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	    	var iconBase = '/images/';
+		    var marker = new google.maps.Marker({
+		        position: myLatlng,
+		        map: map,
+				icon: iconBase + 'marker.png',
+		        title: "{!! $center->address1 !!}"
+		    });
+	  	}
+	  	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	<script type="text/javascript">
+        jQuery(document).ready(function($) {
+
+			$( ".menuBtnLink" ).click(function() {
+			  	$( ".menu" ).slideToggle( "slow", function() {
+					// Animation complete.
+			  	});
 			});
 
 			if ($(window).width() > 850) {
@@ -492,25 +491,17 @@
 			};
 
 			$( window ).resize(function() {
-			  if ($(window).width() < 850) {
-			   $(".dformright2").trigger("sticky_kit:detach");
-			}
-			else {
-			   $(".dformright2").stick_in_parent()
-			};;
+			  	if ($(window).width() < 850) {
+				   $(".dformright2").trigger("sticky_kit:detach");
+				} else {
+				   $(".dformright2").stick_in_parent()
+				};
 			});
 
 			$('input').iCheck({
 				checkboxClass: 'icheckbox_flat-grey',
 				radioClass: 'iradio_flat-grey'
-			  });
+			});
         });
     </script>
-@stop
-
-@section('styles')
-	<link rel="stylesheet" href="/css/themes/classic.css">
-	<link rel="stylesheet" href="/css/themes/classic.date.css">
-	<link rel="stylesheet" href="/css/themes/classic.time.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/flat/grey.css">
 @stop

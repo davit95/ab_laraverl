@@ -19,6 +19,7 @@ class UsStateService
      */
 	public function getAllStates()
 	{
+		//return $this->usState->has('active_cities', '>', 0)->orderBy('name', 'ASC')->get();
 		if(Cache::has('active_us_state_cities'))
 		{
 			return Cache::get('active_us_state_cities');

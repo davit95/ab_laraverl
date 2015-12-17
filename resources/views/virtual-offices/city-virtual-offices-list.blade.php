@@ -1,5 +1,9 @@
 @extends('layout.layout')
-@section('title') Virtual Office, Virtual Office Solutions from Alliance Virtual Offices @stop
+
+@section('title')
+	Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
+@stop
+
 @section('content')
 	{!! Form::hidden('type', 'vo', ['id' => 'center_type']) !!}
 	<div class="intWrap">
@@ -144,96 +148,57 @@
 @section('scripts')
 
 	<script type="text/javascript" src="/js/see-plans.js"></script>
-	<script src="/js/jquery.bxslider.min.js"></script>
-	<script src="/js/jquery.magnific-popup.min.js"></script>
-	<script src='https://maps.googleapis.com/maps/api/js' type='text/javascript'></script>
-	<script type="text/javascript">var all_addresses = '<?php echo $center_addresses_for_google_maps;?>'</script>
-	<script type="text/javascript">var full_city = '<?php echo $google_maps_center_city;?>'</script>
+	<script type="text/javascript" src="/js/jquery.bxslider.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.magnific-popup.min.js"></script>
+	<script type="text/javascript" src='https://maps.googleapis.com/maps/api/js'></script>
+	<script type="text/javascript">var all_addresses = '{{ $center_addresses_for_google_maps }}'</script>
+	<script type="text/javascript">var full_city = '{{ $google_maps_center_city }}'</script>
 	<script type="text/javascript">var page_type = 'virtual-office';</script>
     <script type="text/javascript" src="/js/custom.js"></script>
-	<script>
-	        jQuery(document).ready(function($) {
+	<script type="text/javascript">
+        jQuery(document).ready(function($) {
 
-				$( ".menuBtnLink" ).click(function() {
-				  $( ".menu" ).slideToggle( "slow", function() {
+			$( ".menuBtnLink" ).click(function() {
+			  	$( ".menu" ).slideToggle( "slow", function() {
 					// Animation complete.
-				  });
-				});
+			  	});
+			});
 
-				$('.bxslider').bxSlider();
+			$('.bxslider').bxSlider();
 
-				$(".moreInfoBtn").hover(function() {
-					$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
+			$(".moreInfoBtn").hover(function() {
+				$( this).next('.ImageInfo2').fadeToggle( "fast", function() {
 					// Animation complete.
-				  });
+			 	});
+			});
 
-				});
+		    $("#suggest1").autocomplete('/js/lookup.php', {
+		        minChars: 1,
+				delay: 40,
+				maxItemsToShow: 30,
+		    });
 
-				//LightBox
-				/*$('.popup-with-form').magnificPopup({
-					type: 'inline',
-					preloader: false,
-					focus: '#name',
+		    $("input#suggest1").keyup(function(e){
 
-					// When elemened is focused, some mobile browsers in some cases zoom in
-					// It looks not nice, so we disable it:
-					callbacks: {
-						beforeOpen: function() {
-							if($(window).width() < 1100) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#name';
-							}
-						}
-					}
-				});
+		        var code = e.which;
+		        if(code==13)e.preventDefault();
+		        if(code==13||code==186){
+			   		$("#searchBtn").click();
+		        }
+		    });
 
-				$('.popup-with-form').magnificPopup({
-					type: 'iframe',
-					// When elemened is focused, some mobile browsers in some cases zoom in
-					// It looks not nice, so we disable it:
-					callbacks: {
-						beforeOpen: function() {
-							if($(window).width() < 1100) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#name';
-							}
-						}
-					}
-				});*/
+		    $( ".avo1" ).change(function() {
 
-				//end LightBox
+		        var e = document.getElementById("Services");
+		        var strType = e.options[e.selectedIndex].value;
 
-	    $("#suggest1").autocomplete('/js/lookup.php', {
-	        minChars: 1,
-			delay: 40,
-			maxItemsToShow: 30,
-	    });
+		        if(strType=='VO') {
+		             $("#avoS").attr("action", "/search2.php");
+		        } else {
+		            $("#avoS").attr("action", "/mr-search.php");
+		        }
+		    });
 
-	    $("input#suggest1").keyup(function(e){
-
-	        var code = e.which;
-	        if(code==13)e.preventDefault();
-	        if(code==13||code==186){
-		   $("#searchBtn").click();
-	        }
-
-	    });
-
-	    $( ".avo1" ).change(function() {
-
-	        var e = document.getElementById("Services");
-	        var strType = e.options[e.selectedIndex].value;
-
-	        if(strType=='VO') {
-	             $("#avoS").attr("action", "/search2.php");
-	        }
-	        else{
-	            $("#avoS").attr("action", "/mr-search.php");
-	        }
-
-	    });
 			$('.popup-with-form').magnificPopup({
 				type: 'inline',
 				preloader: false,
@@ -265,12 +230,11 @@
 					}
 				}
 			});
-	        });
-
+        });
 	</script>
 @stop
 
 @section('styles')
-	<link href="/css/magnific-popup.css" rel="stylesheet" />
-	<link href="/css/map.popup.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="/css/magnific-popup.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/map.popup.css"/>
 @stop

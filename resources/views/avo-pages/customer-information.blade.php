@@ -265,7 +265,6 @@
                             <div class="PaymentInfo">
                                 <h3><span class="newCust">PAYMENT INFORMATION</span></h3>
                                 <input type="radio" name="payType" id="creditCard" value="cc" onclick="paymentMethod();"> Pay by Credit Card  &nbsp;
- &nbsp;
                                 <input type="radio" name="payType" id="bitcoin" value="bitcoin" onclick="paymentMethod();">Pay with Bitcoin<br>
                                 <div class="clear"></div>
 
