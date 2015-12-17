@@ -49,7 +49,7 @@ class CityService
      */
 	public function searchCityByKey($key)
 	{
-		$cities = $this->city->where('name', 'LIKE', "{$key}%")->get();
+		$cities = $this->city->where('name', 'LIKE', "{$key}%")->where('active', 1)->get();
 		foreach ($cities as $key => $value)
 		{
 			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);
