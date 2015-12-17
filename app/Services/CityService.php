@@ -17,9 +17,11 @@ class CityService
      *
      * @return Response
      */
-	public function getCityByCountryCodeAndCitySlug($country_code, $city_slug)
+	public function getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id, $us_state_id)
 	{
-		return $this->city->where('country_code', $country_code)->where('slug', $city_slug)->first();
+		if( isset($us_state_id) ){
+			return $this->city->where('country_code', $country_code)->where('slug', $city_slug)->where('id', $city_id)->where('us_state_id')->first();
+		}
 	}
 
 	/**
@@ -49,11 +51,11 @@ class CityService
      */
 	public function searchCityByKey($key)
 	{
-		$cities = $this->city->where('name', 'LIKE', "{$key}%")->where('active', 1)->get();
+		$cities = $this->city->where('name', 'LIKE', "{$key}%")->get();
 		foreach ($cities as $key => $value)
 		{
-			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
-			$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
+			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);
+			$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);
 		}
 		//dd($cities);
 		return $cities;

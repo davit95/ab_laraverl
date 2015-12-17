@@ -20,13 +20,13 @@ Route::group(['before' => 'auth.basic'], function () {
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
 		Route::get('/virtual-offices/{country_slug}', 'VirtualOfficesController@getCountryVirtualOffices');
-		Route::get('/virtual-offices/{country_code}/{city_slug}', 'VirtualOfficesController@getCityVirtualOffices');
+		Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}/{us_state_id}', 'VirtualOfficesController@getCityVirtualOffices');
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}/{center_id}', 'VirtualOfficesController@getVirtualOfficeShowPage');
 		Route::get('/pricing-grids/{center_id}', 'VirtualOfficesController@getCenterPricengGrid');
 
 		Route::get('/meeting-rooms', 'MeetingRoomsController@index');
 		Route::get('/meeting-rooms/{country_slug}', 'MeetingRoomsController@getCountryMeetingRooms');
-		Route::get('/meeting-rooms/{country_code}/{city_slug}', 'MeetingRoomsController@getCityMeetingRooms');
+		Route::get('/meeting-rooms/{country_code}/{city_slug}/{city_id}', 'MeetingRoomsController@getCityMeetingRooms');
 		Route::get('/meeting-rooms/{country_code}/{city_slug}/{center_slug}/{center_id}', 'MeetingRoomsController@getMeetingRoomShowPage');
 		Route::get('/reset-date', 'MeetingRoomsController@resetDate');
 		Route::post('/meeting-rooms/book-meeting-room', 'MeetingRoomsController@bookMeetingRoom');

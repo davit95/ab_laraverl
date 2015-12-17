@@ -15,6 +15,6 @@ class UsState extends Model
 
     public function active_cities()
     {
-    	return $this->hasMany('App\\Models\\City', 'us_state_id')->where('active', 1);
+    	return $this->hasMany('App\\Models\\City', 'us_state_id')->where('active', 1)->where('country_code', 'US');
     }
 }

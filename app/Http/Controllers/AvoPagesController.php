@@ -194,7 +194,7 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
-		$inputs = $request->all();
+		$inputs = $request->all();		
 		if (!isset($inputs['package_option'])) {
 			return redirect('thank-you');
 		}
@@ -222,7 +222,6 @@ class AvoPagesController extends Controller {
 				$temp_user_id = str_random(40);
 				$cookieJar->queue('temp_user_id', $temp_user_id, 999999);
 			}
-
 			$inputs['temp_user_id'] = $temp_user_id;
 			if (null != $tempCartItemService->create($inputs)) {
 				if ($request->has('live_receptionist')) {

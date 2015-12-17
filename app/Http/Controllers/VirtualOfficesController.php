@@ -44,7 +44,7 @@ class VirtualOfficesController extends Controller {
 					$center->packages_arr           = $this->packages($center);
 					$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 				}
-			}
+			}			
 			return view('virtual-offices.country-virtual-offices-list', ['country' => $country, 'active_cities' => $active_cities]);
 		}
 
@@ -55,8 +55,8 @@ class VirtualOfficesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getCityVirtualOffices($country_code, $city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService) {
-		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug)) {
+	public function getCityVirtualOffices($country_code, $city_slug, $city_id, $us_state_id, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService) {		
+		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id, $us_state_id)) {
 			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
 			$center_ids        = $centers->lists('id')->toArray();
 			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
@@ -107,8 +107,8 @@ class VirtualOfficesController extends Controller {
 			$nearby_centers     = $centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);
 			foreach ($nearby_centers as $k => $v) {
 				$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
-			}
-			$nearby_centers = $nearby_centers->sortBy('distance');
+			}				
+			$nearby_centers = $nearby_centers->sortBy('distance');				
 			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center)]);
 		}
 	}

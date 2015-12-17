@@ -49,6 +49,8 @@
 							{!! $center->address1 !!}
 							<br>
 							{!! $center->address2 !!} {!! $center->city->anme !!}, {!! $center->city->us_state_id ? $center->city->us_state_code : $center->city->country->code !!}  {!! $center->postal_code !!}
+							<br>
+							<b>{!! $center->local_number->local_number !!}</b>
 						</p>
 					</div>
 				</div>

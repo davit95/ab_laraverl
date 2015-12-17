@@ -107,8 +107,8 @@
 
                             case "MR" : var url = data[0].mr_url;
                             break;
-                        }
-                        return value;
+                        }                          
+                        return value;                        
                     },
                     onItemSelect : function(value) {
                         var center_type = $("select[name='avo1']").val();

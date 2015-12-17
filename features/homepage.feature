@@ -10,7 +10,8 @@ Feature: Homepage
 
     Scenario: Open virtual-offices page.
         Given I am on homepage
-        When I follow "VIRTUAL OFFICES"
+        When I request "GET /contact"
+        # When I follow "VIRTUAL OFFICES"
         Then the url should match "/virtual-offices"
         And the response status code should be 200
 

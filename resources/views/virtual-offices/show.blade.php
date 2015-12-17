@@ -51,14 +51,15 @@
 							<br>
 							{!! $center->address1 !!}
 							<br>
-							{!! $center->address2!!}
+							{!! $center->address2 !!}
 							<span class="city" itemprop="addressRegion">{!! $center->city->name !!}</span>
 							@if($center->city->us_state_id)
 								{!! $center->city->usState->code !!}
 							@else
 								{!! $center->city->country->name !!}
 							@endif
-							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>
+							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>							
+							<b>{!! $center->local_number->local_number !!}</b>	
 						</p>
 					</div>
 				</div>
