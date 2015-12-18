@@ -106,11 +106,12 @@
 	    		</div>
 	    	</div>--}}
 	        <div class="clearLeft"></div>
-	        @if (!$centers->isEmpty())
+	        @if (!$centers->isEmpty())	        
 		        @foreach($centers as $center)
 		       		@include('virtual-offices.parts.center-short-view')
 		        @endforeach
 		    @endif
+		    <br>
 	        @if (!$nearby_centers->isEmpty())
 		        <div class="resutsTop2b">
 	       			<div class="ResutlsTitle">
