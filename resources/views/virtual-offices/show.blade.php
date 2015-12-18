@@ -58,7 +58,8 @@
 							@else
 								{!! $center->city->country->name !!}
 							@endif
-							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>							
+							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>
+							<br>							
 							<b>{!! $center->local_number->local_number !!}</b>	
 						</p>
 					</div>
