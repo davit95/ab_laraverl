@@ -50,7 +50,9 @@
 							<br>
 							{!! $center->address2 !!} {!! $center->city->anme !!}, {!! $center->city->us_state_id ? $center->city->us_state_code : $center->city->country->code !!}  {!! $center->postal_code !!}
 							<br>
-							<b>{!! $center->local_number->local_number !!}</b>
+							@if(null !== $center->local_number)
+								<b>{!! $center->local_number->local_number !!}</b>
+							@endif
 						</p>
 					</div>
 				</div>
@@ -79,6 +81,10 @@
 						<div class="centerForm">
 							NORTH AMERICA:    +1 888.869.9494<br>
 	    					INTERNATIONAL:     +1 949.777.6340
+	    					LOCAL:             +1 
+	    					@if(null !== $center->local_number)
+								{!! $center->local_number->local_number !!}
+							@endif
 						</div>
 					</div>
 					<div class="cForm2">
