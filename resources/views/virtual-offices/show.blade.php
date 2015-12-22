@@ -59,8 +59,10 @@
 								{!! $center->city->country->name !!}
 							@endif
 							<span class="city" itemprop="postalCode">{!! $center->postal_code !!}</span>
-							<br>							
-							<b>{!! $center->local_number->local_number !!}</b>	
+							<br>		
+							@if(null !== $center->local_number)
+								<b>{!! $center->local_number->local_number !!}</b>
+							@endif					
 						</p>
 					</div>
 				</div>
@@ -128,6 +130,11 @@
 		 			<span  style="font-size:18px;">] &nbsp; [</span>
 		 			International:     +1 949.777.6340
 		 			<span  style="font-size:18px;">]</span>
+	 				<span  style="font-size:18px;">[</span> Local:    +1 
+	 				@if(null !== $center->local_number)
+	 					{!! $center->local_number->local_number !!}
+	 				@endif
+		 			<span  style="font-size:18px;">] &nbsp;
 	 			</span>
 	 		</p>
 			<div class="dPlansWrap">

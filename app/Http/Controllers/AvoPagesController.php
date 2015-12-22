@@ -222,6 +222,7 @@ class AvoPagesController extends Controller {
 				$temp_user_id = str_random(40);
 				$cookieJar->queue('temp_user_id', $temp_user_id, 999999);
 			}
+
 			$inputs['temp_user_id'] = $temp_user_id;
 			if (null != $tempCartItemService->create($inputs)) {
 				if ($request->has('live_receptionist')) {

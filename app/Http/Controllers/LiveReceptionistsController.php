@@ -27,7 +27,7 @@ class LiveReceptionistsController extends Controller {
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function addToCart(Request $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
+	public function addToCart(Request $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {		
 		if ($auth->guest()) {
 			if (null != $cookie = Cookie::get('temp_user_id')) {
 				$temp_user_id = $cookie;

@@ -180,7 +180,7 @@ class MeetingRoomsController extends Controller {
 	 * @return Response
 	 */
 	public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
-		// dd( $request->all() );
+		// dd( $request->all() );					
 		if ($auth->guest()) {
 			if (!session('mr_request')) {
 				if ($request->has('mr_date') && $request->has('mr_start_time') && $request->has('mr_end_time')) {
@@ -198,7 +198,7 @@ class MeetingRoomsController extends Controller {
 					}
 					if (!$request->has('mr_end_time')) {
 						$errors['mr_end_time'] = 'End time field is required.';
-					}
+					}					
 					return redirect()->back()->withErrors($errors)->withInput();
 				}
 			}
@@ -212,6 +212,7 @@ class MeetingRoomsController extends Controller {
 				$temp_user_id = str_random(40);
 				$cookieJar->queue('temp_user_id', $temp_user_id, 999999);
 			}
+
 			$price                   = $request->price[$request->mr_id];
 			$params                  = session('mr_request');
 			$params['mr_id']         = $request->mr_id;
@@ -219,9 +220,8 @@ class MeetingRoomsController extends Controller {
 			$params['price']         = $price;
 			$params['mr_date']       = (new \DateTime($params['mr_date']))->format('Y-m-d');
 			$params['mr_start_time'] = (new \DateTime($params['mr_start_time']))->format('H:i:s');
-			$params['mr_end_time']   = (new \DateTime($params['mr_end_time']))->format('H:i:s');
-			//dd( $params );
-			if (!is_null($tempCartItemService->create($params))) {
+			$params['mr_end_time']   = (new \DateTime($params['mr_end_time']))->format('H:i:s');		
+			if (!is_null($tempCartItemService->create($params))) {	
 				session()                       ->forget(['mr_request', 'hours']);
 				return redirect('/customer-information');
 			}
