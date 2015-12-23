@@ -10,6 +10,7 @@ use App\Models\Center;
 
 use App\Services\TelCountryService;
 use App\Services\TempCartItemService;
+use App\Services\CountryService;
 use Cookie;
 use Illuminate\Auth\Guard;
 use Illuminate\Cookie\CookieJar;
@@ -96,8 +97,12 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function postCustomerInformation(CustomerRequest $request) {
-		session(['customer_information' => $request->all()]);
+	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ) {
+		$inputs = $request->all();
+		if( null !== $countryService->getCountryById( $request->get('country_id') ) ){
+			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
+		}
+		session(['customer_information' => $inputs]);
 		//TODO: Need to know where we want to save customer information;
 		return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
 	}
@@ -165,7 +170,7 @@ class AvoPagesController extends Controller {
 
 		} else {
 			$items = [];
-		}
+		}		
 		return view('avo-pages.order-review', ['customer' => (object) $customer, 'has_vo' => $has_vo, 'items' => $items, 'price_total' => round($price_total, 2)]);
 	}
 

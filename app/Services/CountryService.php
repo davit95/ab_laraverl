@@ -46,6 +46,16 @@ class CountryService
 	}
 
 	/**
+     * Get country by id from countries table.
+     *
+     * @return Response
+     */
+	public function getCountryById($id)
+	{
+		return $this->country->where('id', $id)->first();
+	}
+
+	/**
      * Get country by key.
      *
      * @return Response
