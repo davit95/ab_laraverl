@@ -80,7 +80,11 @@ class DataMigration extends Command {
 		$bar                     = $this->output->createProgressBar(count($collection));
 		//$count = 0;
 		foreach ($collection as $key => $value) {
-			$city      = DB::table('cities')->where('name', $value->City)->where('country_code', $value->Country)->first();
+			if(!is_null($value->State) && $value->State != '') {
+				$city      = DB::table('cities')->where('name', $value->City)->where('country_code', $value->Country)->where('us_state_code', $value->State)->first();
+			}else{
+				$city      = DB::table('cities')->where('name', $value->City)->where('country_code', $value->Country)->first();
+			}
 			$country   = DB::table('countries')->where('code', $value->Country)->first();
 			$state     = DB::table('us_states')->where('code', $value->State)->first();
 			$owner_ids = DB::table('owners')->lists('id');

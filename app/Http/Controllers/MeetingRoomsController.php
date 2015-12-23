@@ -179,15 +179,14 @@ class MeetingRoomsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
-		// dd( $request->all() );					
+	public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {				
 		if ($auth->guest()) {
 			if (!session('mr_request')) {
 				if ($request->has('mr_date') && $request->has('mr_start_time') && $request->has('mr_end_time')) {
 					$mr_start_time = strtotime($request->mr_start_time);
 					$mr_end_time   = strtotime($request->mr_end_time);
 					$hours         = ($mr_end_time-$mr_start_time)/3600;
-					session(['mr_request' => $request->all(), 'hours' => $hours]);
+					session(['mr_request' => $request->all(), 'hours' => $hours]);					
 					return redirect()->back()->withInput();
 				} else {
 					if (!$request->has('mr_date')) {
@@ -213,7 +212,7 @@ class MeetingRoomsController extends Controller {
 				$cookieJar->queue('temp_user_id', $temp_user_id, 999999);
 			}
 
-			$price                   = $request->price[$request->mr_id];
+			$price                   = floatval($request->price[$request->mr_id]);			
 			$params                  = session('mr_request');
 			$params['mr_id']         = $request->mr_id;
 			$params['temp_user_id']  = $temp_user_id;
@@ -222,7 +221,7 @@ class MeetingRoomsController extends Controller {
 			$params['mr_start_time'] = (new \DateTime($params['mr_start_time']))->format('H:i:s');
 			$params['mr_end_time']   = (new \DateTime($params['mr_end_time']))->format('H:i:s');		
 			if (!is_null($tempCartItemService->create($params))) {	
-				session()                       ->forget(['mr_request', 'hours']);
+				session()                       ->forget(['mr_request', 'hours']);				
 				return redirect('/customer-information');
 			}
 		}

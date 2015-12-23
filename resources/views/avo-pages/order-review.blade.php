@@ -185,7 +185,7 @@
                         <div class="reviewInfo">
                             <h3><span class="newCust">CUSTOMER INFORMATION</span></h3>
                             <br>
-                            <p>
+                            <p>                            
                                 <span class="mediumBold">Name:</span> {{ $customer->first_name }} {{ $customer->last_name }}<br />
                                 <span class="mediumBold">Company:</span> {{ $customer->company_name }}<br />
                                 <span class="mediumBold">Address:</span> {{ $customer->address1 }}<br /> {{ isset($customer->address2)?$customer->address2:'' }} {{ isset($customer->city)?$customer->city:'' }}, {{ isset($customer->state)?$customer->state:'' }}  {{ $customer->postal_code }}<br />

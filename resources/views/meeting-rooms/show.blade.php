@@ -30,7 +30,7 @@
 			<div class="detailsTopWrap">
 				<div class="detailTopLeft">
 					<div class="dimg">
-						<div class="img-wrapper2">
+						<div class="img-wrapper2">						
 							@if(is_null($photo = $center->mr_photos()->first()))
 								<img src="/mr-photos/no_pic.gif">
 							@else
