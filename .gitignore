@@ -3,3 +3,4 @@ vendor
 composer.phar
 /.phpintel
 tests/_output/*
+/public/testImages

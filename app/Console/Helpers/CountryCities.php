@@ -43,7 +43,7 @@ class CountryCities
 			'Singapore'         		=> ['Singapore'],
 			'Spain'             		=> ['Palma de Mallorca'],
 			'Sweden'            		=> ['Malmo', 'Stockholm'],
-			'Switzerland'       		=> ['Huenenberg', 'Pfäffikon', 'Stans', 'Zurich'],
+			'Switzerland'       		=> ['Huenenberg', 'PfÃffikon', 'Stans', 'Zurich'],
 			'Taiwan, Republic Of China' => ['Taipei'],
 			'Turkey'                    => ['Ankara', 'Istanbul'],
 			'United Arab Emirates'      => ['Dubai'],
@@ -51,7 +51,7 @@ class CountryCities
 
 		];
 	}
-
+	//SELECT * FROM `center` WHERE (`City` REGEXP '[^a-zA-Z1-9( ,-]')
 	public function getCities()
 	{
 		return $this->arr;

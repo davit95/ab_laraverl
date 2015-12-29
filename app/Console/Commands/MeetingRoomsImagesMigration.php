@@ -83,10 +83,11 @@ class MeetingRoomsImagesMigration extends Command
                 }
             }
             else
-            {
+            {                
                 $errors_count++;
             }
         }
+        
         $this->info($errors_count . " invalid file names.");
         DB::table('mr_photos')->insert($data);
 

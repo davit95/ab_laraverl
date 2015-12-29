@@ -2,21 +2,21 @@
 	<div class="Wrapper">
 		<h2 class="smallh2">TOP CITIES</h2>
 		<ul>
-			<a href="{{ url('virtual-offices/US/los-angeles') }}"><li>Los Angeles</li></a>
-			<a href="{{ url('virtual-offices/US/new-york') }}"><li>New York</li></a>
-			<a href="{{ url('virtual-offices/AU/sydney') }}"><li>Sydney</li></a>
-			<a href="{{ url('virtual-offices/US/dallas') }}"><li>Dallas</li></a>
-			<a href="https://www.alliancevirtualoffices.com/AU/melbourne-virtual-office"><li>Melbourne</li></a> {{-- FIXME: need to be local url --}}
-			<a href="{{ url('virtual-offices/US/houston') }}"><li>Houston</li></a>
-			<a href="{{ url('virtual-offices/GB/london') }}"><li>London</li></a>
-			<a href="{{ url('virtual-offices/CN/beijing') }}"><li>Beijing</li></a>
-			<a href="{{ url('virtual-offices/JP/tokyo') }}"><li>Tokyo</li></a>
-			<a href="{{ url('virtual-offices/AE/dubai') }}"><li>Dubai</li></a>
-			<a href="{{ url('virtual-offices/BE/brussels') }}"><li>Brussels</li></a>
-			<a href="{{ url('virtual-offices/NL/amsterdam') }}"><li>Amsterdam</li></a>
-			<a href="{{ url('virtual-offices/FR/paris') }}"><li>Paris</li></a>
-			<a href="{{ url('virtual-offices/US/las-vegas') }}"><li>Las Vegas</li></a>
-			<a href="{{ url('virtual-offices/US/washington') }}"><li>Washington</li></a>
+		    <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'los-angeles', 'city_id' => '2173'])!!}"><li>Los Angeles</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'new-york', 'city_id' => '15275'])!!}"><li>New York</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'chicago', 'city_id' => '5294'])!!}"><li>Chicago</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'dallas', 'city_id' => '21622'])!!}"><li>Dallas</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'atlanta', 'city_id' => '4168'])!!}"><li>Atlanta</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'houston', 'city_id' => '21899'])!!}"><li>Houston</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'GB', 'city_slug' => 'london', 'city_id' => '25311'])!!}"><li>London</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'CN', 'city_slug' => 'beijing', 'city_id' => '25186'])!!}"><li>Beijing</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'JP', 'city_slug' => 'tokyo', 'city_id' => '25256'])!!}"><li>Tokyo</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'AE', 'city_slug' => 'dubai', 'city_id' => '25303'])!!}"><li>Dubai</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'DE', 'city_slug' => 'berlin', 'city_id' => '25215'])!!}"><li>Berlin</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'NL', 'city_slug' => 'amsterdam', 'city_id' => '25278'])!!}"><li>Amsterdam</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'FR', 'city_slug' => 'paris', 'city_id' => '25209'])!!}"><li>Paris</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'las-vegas', 'city_id' => '13791'])!!}"><li>Las Vegas</li></a>
+                <a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => 'washington', 'city_id' => '3251'])!!}"><li>Washington</li></a>
 		</ul>
 	</div>
 </div>

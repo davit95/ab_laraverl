@@ -2,10 +2,8 @@
 <html>
     <head>
         <title>@yield('title')</title>
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="/css/autocomplete.css">
         <link rel="stylesheet" type="text/css" href="/css/styles-with-currency.css">

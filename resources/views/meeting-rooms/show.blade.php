@@ -30,12 +30,16 @@
 			<div class="detailsTopWrap">
 				<div class="detailTopLeft">
 					<div class="dimg">
-						<div class="img-wrapper2">						
-							@if(is_null($photo = $center->mr_photos()->first()))
-								<img src="/mr-photos/no_pic.gif">
-							@else
-								<img src="/mr-photos/all/{!! $photo->path !!}" alt="{!! $photo->alt !!}">
-							@endif
+						<div class="img-wrapper2">		
+							@forelse($center->mr_photos as $photo)
+							    <li><div class='img-wrapper'><img src='/mr-photos/all/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
+							@empty
+							    @if(is_null($photo = $center->vo_photos()->first()))
+							        <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/no_pic.gif' alt=''></div></li>
+							    @else
+							        <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/{!! $photo->path !!}' alt='{!! $photo->alt !!}'></div></li>
+							    @endif
+							@endforelse				
 						</div>
 					</div>
 					<div class="dcInfo">
