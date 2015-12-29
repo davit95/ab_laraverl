@@ -62,7 +62,7 @@ class VoImages extends Command
                 $bar->advance();
             }       
             $bar->finish();
-            $this->info(' ✔');
+            $this->info(' ✔');  
         }   
     }
 }
