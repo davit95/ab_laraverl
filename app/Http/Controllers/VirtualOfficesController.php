@@ -35,7 +35,7 @@ class VirtualOfficesController extends Controller {
 					$center->packages_arr           = $this->packages($center);
 					$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 				}
-			}
+			}			
 			return view('virtual-offices.state-virtual-offices-list', ['state' => $state, 'active_cities' => $active_cities]);
 		} elseif (null != $country = $countryService->getCountryBySlug($country_slug)) {
 			$active_cities = $cityService->getCountryActiveCitiesWithPagination($country->id);

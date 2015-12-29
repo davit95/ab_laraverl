@@ -81,9 +81,12 @@ class DataMigration extends Command {
 		//$count = 0;
 		foreach ($collection as $key => $value) {
 			if(!is_null($value->State) && $value->State != '') {
-				$city      = DB::table('cities')->where('name', $value->City)->where('country_code', $value->Country)->where('us_state_code', $value->State)->first();
+				$city      = DB::table('cities')->where('name', 'LIKE' ,'%'.$value->City.'%')->where('country_code', $value->Country)->where('us_state_code', $value->State)->first();
 			}else{
-				$city      = DB::table('cities')->where('name', $value->City)->where('country_code', $value->Country)->first();
+				if( preg_match('/[^a-zA-Z1-9( ,-]/', $value->City ) ){
+					$value->City = utf8_decode($value->City);
+				}
+				$city      = DB::table('cities')->where('name', 'LIKE' ,'%'.$value->City.'%')->where('country_code', $value->Country)->first();
 			}
 			$country   = DB::table('countries')->where('code', $value->Country)->first();
 			$state     = DB::table('us_states')->where('code', $value->State)->first();
@@ -99,7 +102,6 @@ class DataMigration extends Command {
 			} else {
 				$unknown_countries_count++;
 				$country_id = null;
-				;
 			}
 			if (null != $state) {
 				$state_id = $state->id;
@@ -120,7 +122,7 @@ class DataMigration extends Command {
 			$new_collection[$value->CenterID] =
 			[
 				'id'          => $value->CenterID,
-				'name'        => $name,
+				'name'        => preg_match('/[^a-zA-Z1-9( ,-]/', $name) ? utf8_decode($name) : $name,
 				'slug'        => str_slug(preg_replace('/^[^a-zA-Z]*/', '', $value->Address1)),
 				'owner_id'    => $owner_id,
 				'city_name'   => $value->City,
@@ -130,10 +132,10 @@ class DataMigration extends Command {
 				'us_state'    => $value->State,
 				'us_state_id' => $state_id,
 				//'region_id'         => '-------------',
-				'company_name'      => $value->CompanyName,
-				'building_name'     => $value->BuildingName,
-				'address1'          => $value->Address1,
-				'address2'          => $value->Address2,
+				'company_name'      => preg_match('/[^a-zA-Z1-9( ,-]/', $value->CompanyName) ? utf8_decode($value->CompanyName) : $value->CompanyName,
+				'building_name'     => preg_match('/[^a-zA-Z1-9( ,-]/', $value->BuildingName) ? utf8_decode($value->BuildingName) : $value->BuildingName,
+				'address1'          => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Address1) ? utf8_decode($value->Address1) : $value->Address1,
+				'address2'          => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Address2) ? utf8_decode($value->Address2) : $value->Address2,
 				'postal_code'       => $value->PostalCode,
 				'summary'           => $value->Summary,
 				'location'          => $value->Location,
@@ -301,8 +303,8 @@ class DataMigration extends Command {
 		foreach ($collection as $center) {
 			$center_photos = [$center->Photo1, $center->Photo2, $center->Photo3, $center->Photo4, $center->Photo5, $center->Photo6];
 			foreach ($center_photos as $center_photo) {
-				if ((null != $unique_iamge = DB::table('photos')->where('path', $center_photo)->first()) && ($center_photo != null || $center_photo != '')) {
-					$vo_photos[] = ['center_id' => $center->CenterID, 'photo_id' => $unique_iamge->id];
+				if ((null != $unique_image = DB::table('photos')->where('path', $center_photo)->first()) && ($center_photo != null || $center_photo != '')) {
+					$vo_photos[] = ['center_id' => $center->CenterID, 'photo_id' => $unique_image->id];
 				}
 			}
 		}
@@ -324,20 +326,20 @@ class DataMigration extends Command {
 				$new_collection[] =
 				[
 					'center_id'        => $value->Center_ID,
-					'sentence1'        => $value->Sentence_1,
-					'sentence2'        => $value->Sentence_2,
-					'sentence3'        => $value->Sentence_3,
-					'avo_description'  => $value->AVO_Description,
-					'meta_title'       => $value->Meta_Title,
-					'meta_description' => $value->Meta_Description,
-					'meta_keywords'    => $value->Meta_Keywords,
-					'h1'               => $value->H1,
-					'h2'               => $value->H2,
-					'h3'               => $value->H3,
-					'seo_footer'       => $value->SEO_Footer,
-					'abcn_description' => $value->ABCN_Description,
-					'abcn_title'       => $value->ABCN_Title,
-					'subhead'          => $value->Subhead
+					'sentence1'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_1) ? utf8_decode($value->Sentence_1) : $value->Sentence_1,
+					'sentence2'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_2) ? utf8_decode($value->Sentence_2) : $value->Sentence_2,
+					'sentence3'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_3) ? utf8_decode($value->Sentence_3) : $value->Sentence_3,
+					'avo_description'  => preg_match('/[^a-zA-Z1-9( ,-]/', $value->AVO_Description) ? utf8_decode($value->AVO_Description) : $value->AVO_Description,
+					'meta_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Title) ? utf8_decode($value->Meta_Title) : $value->Meta_Title,
+					'meta_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Description) ? utf8_decode($value->Meta_Description) : $value->Meta_Description,
+					'meta_keywords'    => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Keywords) ? utf8_decode($value->Meta_Keywords) : $value->Meta_Keywords,
+					'h1'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H1) ? utf8_decode($value->H1) : $value->H1,
+					'h2'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H2) ? utf8_decode($value->H2) : $value->H2,
+					'h3'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H3) ? utf8_decode($value->H3) : $value->H3,
+					'seo_footer'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->SEO_Footer) ? utf8_decode($value->SEO_Footer) : $value->SEO_Footer,
+					'abcn_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Description) ? utf8_decode($value->ABCN_Description) : $value->ABCN_Description,
+					'abcn_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Title) ? utf8_decode($value->ABCN_Title) : $value->ABCN_Title,
+					'subhead'          => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Subhead) ? utf8_decode($value->Subhead) : $value->Subhead,
 				];
 			}
 			$bar->advance();
@@ -360,22 +362,23 @@ class DataMigration extends Command {
 				$new_collection[] =
 				[
 					'center_id'        => $value->Center_ID,
-					'sentence1'        => $value->Sentence_1,
-					'sentence2'        => $value->Sentence_2,
-					'sentence3'        => $value->Sentence_3,
-					'avo_description'  => $value->AVO_Description,
-					'meta_title'       => $value->Meta_Title,
-					'meta_description' => $value->Meta_Description,
-					'meta_keywords'    => $value->Meta_Keywords,
-					'h1'               => $value->H1,
-					'h2'               => $value->H2,
-					'h3'               => $value->H3,
-					'seo_footer'       => $value->SEO_Footer,
-					'abcn_description' => $value->ABCN_Description,
-					'abcn_title'       => $value->ABCN_Title,
-					'subhead'          => $value->Subhead
+					'sentence1'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_1) ? utf8_decode($value->Sentence_1) : $value->Sentence_1,
+					'sentence2'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_2) ? utf8_decode($value->Sentence_2) : $value->Sentence_2,
+					'sentence3'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_3) ? utf8_decode($value->Sentence_3) : $value->Sentence_3,
+					'avo_description'  => preg_match('/[^a-zA-Z1-9( ,-]/', $value->AVO_Description) ? utf8_decode($value->AVO_Description) : $value->AVO_Description,
+					'meta_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Title) ? utf8_decode($value->Meta_Title) : $value->Meta_Title,
+					'meta_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Description) ? utf8_decode($value->Meta_Description) : $value->Meta_Description,
+					'meta_keywords'    => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Keywords) ? utf8_decode($value->Meta_Keywords) : $value->Meta_Keywords,
+					'h1'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H1) ? utf8_decode($value->H1) : $value->H1,
+					'h2'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H2) ? utf8_decode($value->H2) : $value->H2,
+					'h3'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H3) ? utf8_decode($value->H3) : $value->H3,
+					'seo_footer'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->SEO_Footer) ? utf8_decode($value->SEO_Footer) : $value->SEO_Footer,
+					'abcn_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Description) ? utf8_decode($value->ABCN_Description) : $value->ABCN_Description,
+					'abcn_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Title) ? utf8_decode($value->ABCN_Title) : $value->ABCN_Title,
+					'subhead'          => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Subhead) ? utf8_decode($value->Subhead) : $value->Subhead,
 				];
 			}
+
 			$bar->advance();
 		}
 		//DB::table('meeting_rooms_seos')->truncate();
@@ -502,6 +505,7 @@ class DataMigration extends Command {
 			}
 
 		}
+
 		$bar_states = $this->output->createProgressBar(count($cities));
 		foreach ($cities as $key => $city) {
 			DB::table('cities')->insert($city);
@@ -547,7 +551,7 @@ class DataMigration extends Command {
 		$bar    = $this->output->createProgressBar(count($cities));
 		foreach ($cities as $key => $value) {
 			if (DB::table('centers')->where('city_id', $value->id)->where('active_flag', 'Y')->first() != null) {
-				DB::table('cities')->where('id', $value->id)->update(['active' => 1]);
+				DB::table('cities')->where('id', $value->id)->update(['active' => 1]);				
 			} else {
 			}
 			$count++;

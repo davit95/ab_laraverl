@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\DataMigration::class,
         \App\Console\Commands\MeetingRoomsImagesMigration::class,
+        \App\Console\Commands\VoImages::class,
     ];
 
     /**

@@ -10,9 +10,40 @@
 | and give it the controller to call when that URI is requested.
 |
  */
+use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Config;
+use App\Models\Center;
 Route::get('payment', function () {
 		return view('payment');
 	});
+
+Route::get('test', function(Config $config){	
+	$adapter = new Local(public_path().'/testImages',null, null,[
+			'file' => [
+		        'public' => 0777,
+		        'private' => 0700,
+		    ],
+		    'dir' => [
+		        'public' => 0777,
+		        'private' => 0700,
+		    ]
+		]);
+	// $contents = file_get_contents(public_path().'/images/amex.gif');
+	$centers = Center::all();
+	foreach ($centers as $center) {
+		foreach( $center->vo_photos as $photo ){
+			$contents = file_get_contents('http://www.abcn.com/images/photos/'.$photo->path);
+			$adapter->write('images/'.$photo->path, $contents, $config);
+		}		
+	}	
+
+	// dd($contents);
+	// echo "<img src='/testImages/images/image1.png'>";
+	// echo "<img src='/testImages/images/image1.png'>";
+	dd($adapter);
+});
+
 Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/', 'HomeController@index');
 		Route::get('/login', 'Auth\AuthController@getLogin');

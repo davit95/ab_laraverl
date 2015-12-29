@@ -159,7 +159,7 @@
 
             <div class="setUpFee">One time only - $100 Set up fee for any plan.</div><!--/setUpFee-->
             <div class="featuresCompare"><a class="popup-with-form compareBtnLink" href="/pricing-grids/{!! $center->id !!}"><div class="compareBtn">SEE FEATURES AND COMPARE ALL</div></a></div><!--/featuresCompare-->
-        </div><!--/RplansBox-->
+        </div>
 
     	<div class='ImageInfo'>
         	<div class='moreInfoBtn'><img src='/images/moreInfo.png' border='0' /></div>

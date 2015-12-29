@@ -11,9 +11,12 @@
         "illuminate/html": "5.0.*@dev",
         "guzzlehttp/guzzle": "5.*",
         "codeception/codeception": "*",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "league/flysystem": "^1.0",
+        "graham-campbell/flysystem": "^3.0",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
-    "require-dev": {
+    "require-dev": {        
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",

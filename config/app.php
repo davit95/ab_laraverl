@@ -136,7 +136,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         
         Illuminate\Html\HtmlServiceProvider::class,
         /*
@@ -149,6 +148,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
 
     ],
 
@@ -201,7 +201,8 @@ return [
 
         'Form'      => Illuminate\Html\FormFacade::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
-
+        
+        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class
     ],
 
 ];
