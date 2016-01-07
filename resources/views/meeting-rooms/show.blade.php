@@ -11,7 +11,7 @@
 			@endif
 			<a href="{!! URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> /
 			@if($center->building_name)
-				{!! $center->buidling_name!!}
+				{!! $center->building_name!!}
 			@else
 				Meeting Room in {!! $center->city->name !!}
 			@endif

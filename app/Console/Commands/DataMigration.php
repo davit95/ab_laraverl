@@ -86,7 +86,11 @@ class DataMigration extends Command {
 				if( preg_match('/[^a-zA-Z1-9( ,-]/', $value->City ) ){
 					$value->City = utf8_decode($value->City);
 				}
-				$city      = DB::table('cities')->where('name', 'LIKE' ,'%'.$value->City.'%')->where('country_code', $value->Country)->first();
+				$city      = DB::table('cities')->where('name',$value->City)->where('country_code', $value->Country)->first();
+				if( null == $city ){
+					$city      = DB::table('cities')->where('name', 'LIKE' ,'%'.$value->City.'%')->where('country_code', $value->Country)->first();
+				}
+
 			}
 			$country   = DB::table('countries')->where('code', $value->Country)->first();
 			$state     = DB::table('us_states')->where('code', $value->State)->first();

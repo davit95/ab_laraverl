@@ -13,12 +13,12 @@
 			@if($center->city->us_state_id)
 				<a href="{!! URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $center->city->usState->slug])!!}">{!! $center->city->us_state !!}</a> /
 			@endif
-			<a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> /
-			@if($center->building_name)
-				{!! $center->buidling_name!!}
+			<a href="{!! URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $center->city->country->code, 'city_slug' => $center->city->slug])!!}"> {!! $center->city->name!!}</a> /				
+			@if($center->building_name)		
+				{!! $center->building_name !!}
 			@else
 				Virtual Office in {!! $center->city->name !!}
-			@endif
+			@endif			
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
@@ -29,7 +29,6 @@
 					<h1>Virtual Offices in {!! $center->city->name !!} <span class="blue">/</span> <span class="medium">{!! preg_replace('/^[^a-zA-Z]*/', '', $center->address1) !!}</span></h1>
 					<p class="gray2">Live Answering & Advanced Telephony</p>
 				@endif
-
 			</div>
 			<div style="clear:both"></div>
 			<div class="detailsTopWrap">

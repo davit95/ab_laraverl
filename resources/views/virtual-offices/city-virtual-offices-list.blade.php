@@ -152,7 +152,7 @@
 	<script type="text/javascript" src="/js/jquery.bxslider.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src='https://maps.googleapis.com/maps/api/js'></script>
-	<script type="text/javascript">var all_addresses = '{{ $center_addresses_for_google_maps }}'</script>
+	<script type="text/javascript">var all_addresses = '{!! $center_addresses_for_google_maps !!}'</script>
 	<script type="text/javascript">var full_city = '{{ $google_maps_center_city }}'</script>
 	<script type="text/javascript">var page_type = 'virtual-office';</script>
     <script type="text/javascript" src="/js/custom.js"></script>
