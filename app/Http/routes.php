@@ -14,6 +14,12 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Config;
 use App\Models\Center;
+
+Route::get('last-commit', function(){
+	echo shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit");
+    die();
+});
+
 Route::get('payment', function () {
 		return view('payment');
 	});

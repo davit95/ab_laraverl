@@ -87,7 +87,7 @@
 	        <div class="clearLeft"></div>
 	        <ul class='ResultsListVO'>
 	        	@foreach($state->active_cities as $city)
-	        		<a href="{!!URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => $city->slug])!!}">
+	        		<a href="{!!URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => 'US', 'city_slug' => $city->slug, 'city_id' => $city->id])!!}">
 	        			<li>{!! $city->name !!}</li>
 	        		</a>
 	        	@endforeach

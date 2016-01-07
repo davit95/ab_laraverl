@@ -10,12 +10,14 @@
 	border: 1px solid WindowFrame;
 	background-color: Window;
 	overflow: hidden;
+	/*margin-right: auto;
+	margin-left: auto;*/
 }
 
 .acResults ul {
 	margin: 0px;
 	padding: 0px;
-	list-style-position:outside;
+	list-style-position:fixed!important;
 	list-style: none;
 }
 

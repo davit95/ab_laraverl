@@ -347,6 +347,14 @@ background-size: cover;*/
   	-moz-box-sizing: border-box;
 }
 
+.acResults.stick {
+    position: fixed!important;
+    top: 45px!important;
+    z-index: 10000!important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .searchWrap{
 	position:relative;display:inline-block;
 	float:left;

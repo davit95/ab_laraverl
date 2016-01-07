@@ -135,7 +135,7 @@ class AvoPagesController extends Controller {
 
 	/**
 	 * Display the all-features page.
-	 *
+	 *+
 	 * @return Response
 	 */
 	public function orderReview(TelCountryService $telCountryService, TempCartItemService $tempCartItemService) {
