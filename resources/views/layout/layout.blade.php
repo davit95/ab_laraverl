@@ -8,8 +8,9 @@
         <link rel="stylesheet" type="text/css" href="/css_build/all.css"/>
         
         @yield('styles')
-
-        <script type="text/javascript" src="js_build/first.js"></script>
+        
+        <script type="text/javascript" src="/js/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/js_build/first.js"></script>  
     </head>
     <body>
         <div class="contentWrap">
@@ -20,7 +21,10 @@
             @include('layout.parts.footer')
         </div>
         <div style="z-index: 1001; display: none; position: absolute;" class="acResults"></div>
-        <script type="text/javascript" src="js_build/second.js"></script>
+        <script type="text/javascript" src="/js/waypoints.min.js"></script>     
+        <script type="text/javascript" src="/js/jquery.counterup.min.js"></script>        
+        <script type="text/javascript" src="/js/chosen.jquery.js"></script>       
+        <script type="text/javascript" src="/js/ImageSelect.jquery.js"></script>              
         <script type="text/javascript">
             // jQuery(document).ready(function($) {
 
