@@ -18,7 +18,7 @@ class VirtualOfficesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index(UsStateService $usStateService, CountryService $countryService) {
+	public function index(UsStateService $usStateService, CountryService $countryService) {				
 		return view('virtual-offices.index', ['states' => $usStateService->getAllStates(), 'countries' => $countryService->getAllCountries()]);
 	}
 

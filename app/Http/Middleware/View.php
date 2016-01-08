@@ -17,7 +17,7 @@ class View
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {                
         $currencyModel = new Currency;
         $client = new Client;
         $now = (new DateTime('now'))->format('Y-m-d H:i:s');
@@ -38,16 +38,16 @@ class View
             session(['currency' => $currency]);
         }
 
-        if (is_null(session('rates')) || is_null(session('rate'))) {
-            $response = $client->get('https://openexchangerates.org/api/latest.json?app_id='.config('abcn.openexchangerates.app_id'))->json();
-            $rates['USD'] = $response['rates']['USD'];
-            $rates['GBP'] = $response['rates']['GBP'];
-            $rates['EUR'] = $response['rates']['EUR'];
-            $rates['AUD'] = $response['rates']['AUD'];
-            session(['rates' => $rates]);
-            $currency_name = session('currency.name');
-            session(['rate' => $response['rates'][$currency_name]]);
-        }
+        // if (is_null(session('rates')) || is_null(session('rate'))) {
+        //     $response = $client->get('https://openexchangerates.org/api/latest.json?app_id='.config('abcn.openexchangerates.app_id'))->json();            
+        //     $rates['USD'] = $response['rates']['USD'];
+        //     $rates['GBP'] = $response['rates']['GBP'];
+        //     $rates['EUR'] = $response['rates']['EUR'];
+        //     $rates['AUD'] = $response['rates']['AUD'];
+        //     session(['rates' => $rates]);
+        //     $currency_name = session('currency.name');
+        //     session(['rate' => $response['rates'][$currency_name]]);
+        // }        
 
         if (is_null(session('currencies'))) {
             $currencies = [];

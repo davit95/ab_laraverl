@@ -3,7 +3,6 @@
 @section('title')
 	Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 @stop
-
 @section('content')
 	<div class="PowerUp">
 		<div class="contactTop">Call: +1 888.869.9494</div>
