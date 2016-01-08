@@ -9,7 +9,7 @@
         
         @yield('styles')
 
-        <script type="text/javascript" src="js_build/all.js"></script>
+        <script type="text/javascript" src="js_build/first.js"></script>
     </head>
     <body>
         <div class="contentWrap">
@@ -20,6 +20,7 @@
             @include('layout.parts.footer')
         </div>
         <div style="z-index: 1001; display: none; position: absolute;" class="acResults"></div>
+        <script type="text/javascript" src="js_build/second.js"></script>
         <script type="text/javascript">
             // jQuery(document).ready(function($) {
 
