@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Services\CenterCoordinateService;
-
+use Illuminate\Http\Request;
 use App\Services\CenterService;
 use App\Services\CityService;
 use App\Services\CountryService;
@@ -55,7 +55,7 @@ class VirtualOfficesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getCityVirtualOffices($country_code, $city_slug, $city_id , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService) {		
+	public function getCityVirtualOffices($country_code, $city_slug, $city_id , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , Request $request) {		
 		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
 			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
 			$center_ids        = $centers->lists('id')->toArray();
