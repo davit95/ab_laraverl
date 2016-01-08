@@ -4,3 +4,4 @@ composer.phar
 /.phpintel
 tests/_output/*
 /public/testImages
+/node_modules
