@@ -5,13 +5,13 @@ var concatCss = require('gulp-concat-css');
 var minifyCss = require('gulp-minify-css');
 
 gulp.task('uglify-1', function(){
-	gulp.src(['js/jquery/1.10.2/jquery.min.js', 'js/jquery.autocomplete1.js', 'js/jquery.magnific-popup.min.js'])
+	gulp.src(['js/jquery.autocomplete1.js', 'js/jquery.magnific-popup.min.js'])
 	.pipe(uglify())
 	.pipe(concat('first.js'))
 	.pipe(gulp.dest('js_build'));
 });
 gulp.task('uglify-2', function(){
-	gulp.src(['js/waypoints.min.js', 'js/jquery.counterup.min.js', 'js/chosen.jquery.js', 'js/ImageSelect.jquery.js'])
+	gulp.src(['js/chosen.jquery.js', 'js/ImageSelect.jquery.js', 'js/jquery.counterup.min.js', 'js/waypoints.min.js',])
 	.pipe(uglify())
 	.pipe(concat('second.js'))
 	.pipe(gulp.dest('js_build'));
@@ -28,4 +28,5 @@ gulp.task('watch', function(){
 	gulp.watch('css/*.css', ['minify-css']);
 })
 
+// gulp.task('default', ['uglify', 'minify-css', 'watch']);
 gulp.task('default', ['minify-css', 'uglify-1', 'uglify-2']);
