@@ -20,6 +20,11 @@ Route::get('payment', function () {
 		return view('payment');
 	});
 
+
+Route::get('test', function () {
+		return view('admin.reports.index');
+	});
+
 Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/', 'HomeController@index');
 		Route::get('/login', 'Auth\AuthController@getLogin');

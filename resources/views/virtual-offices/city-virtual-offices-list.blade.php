@@ -21,12 +21,12 @@
 			    </button>
 			</form>
 		</div>
-		<div class="breadcrumbs">
+		<div class="breadcrumbs">			
 			<a href="/">Home</a> /
 			<a href="/virtual-offices">Virtual Offices</a> /
 			<a href="{{ url('/virtual-offices/'.$city->country->slug) }}">{!! $city->country->name !!}</a> /
 			@if(!is_null($city->us_state))
-				{!! $city->us_state !!} /
+				<a href="{{ url('/virtual-offices/'.$city->usState->slug) }}"> {!! $city->us_state !!} /</a>
 			@endif
 			{!! $city->name !!}
 		</div>
