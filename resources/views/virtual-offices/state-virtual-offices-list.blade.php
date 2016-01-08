@@ -21,7 +21,8 @@
 			</form>
 		</div>
 		<div class="breadcrumbs">
-			<a href="/">Home</a> / <a href="/virtual-offices">Virtual Offices</a> / United States / {!! $state->name!!}
+			<a href="/">Home</a> / <a href="/virtual-offices">Virtual Offices</a> / United States / 
+			<a href="{{ url('/virtual-offices/'.$state->name) }}">{!! $state->name !!}</a>
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
