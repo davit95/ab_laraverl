@@ -227,8 +227,7 @@
 											</tr>
 											{{-- dd($center->meeting_rooms) --}}
 											@foreach($center->meeting_rooms as $mr)
-												@if($mr->name != '')
-													{!! Form::hidden("price[".$mr->id."]", $mr->hourly_rate*session('hours')) !!}
+												@if($mr->name != '')													
 													<tr class="MRline totalCost Mroom" Mroom="{!! $mr->id !!}" cost="$first_amount" bgcolor="#F3F4F4" >
 														<td style="text-align: center; min-width:30px;">
 														<input name="mr_id" type="radio" value="{!! $mr->id !!}" class="Mroom SelectMR" $js_alert />
@@ -329,8 +328,6 @@
 	<script type="text/javascript" src="/js/legacy.js"></script>
     <script type="text/javascript">
 	    jQuery(document).ready(function(){
-
-
 	        $('input').iCheck({
 	            checkboxClass: 'icheckbox_flat-grey',
 	            radioClass: 'iradio_flat-grey'
@@ -340,7 +337,7 @@
 	            $(this).siblings('input').click();
 	        });
 	        $( '.datepicker' ).pickadate({
-		    	format: 'mm/dd/yyyy',
+		    	format: 'dd/mm/yyyy',
 	            formatSubmit: 'mm/dd/yyyy',
 	            min: true,
 	            container: '#root-picker-outlet',

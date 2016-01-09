@@ -48,10 +48,9 @@ class MeetingRoomsController extends Controller {
 	 */
 	public function getCityMeetingRooms($country_code, $city_slug,$city_id, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
 		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
-			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);
+			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);			
 			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
-			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);
-			$centers                          = $centers->merge($nearby_centers);
+			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);			
 			$center_addresses_for_google_maps = [];
 			$google_maps_center_city          = $city->name;
 			foreach ($centers as $key => $center) {
@@ -61,7 +60,14 @@ class MeetingRoomsController extends Controller {
 					'id'      => $center->id
 				];
 			}
-			return view('meeting-rooms.city-meeting-rooms-list', ['centers' => $centers, 'city' => $city, 'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps), 'google_maps_center_city' => $google_maps_center_city]);
+			foreach ($nearby_centers as $key => $center) {
+				$center_addresses_for_google_maps[] =
+				[
+					'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
+					'id'      => $center->id
+				];				
+			}
+			return view('meeting-rooms.city-meeting-rooms-list', ['centers' => $centers, 'nearby_centers' => $nearby_centers, 'city' => $city, 'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps), 'google_maps_center_city' => $google_maps_center_city]);
 		} else {
 			return '404';
 		}
@@ -179,14 +185,14 @@ class MeetingRoomsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {				
-		if ($auth->guest()) {
+	public function bookMeetingRoom(MRBookRequest $request, Guard $auth, CookieJar $cookieJar, TempCartItemService $tempCartItemService, CenterService $centerService) {				
+		if ($auth->guest()) {			
 			if (!session('mr_request')) {
 				if ($request->has('mr_date') && $request->has('mr_start_time') && $request->has('mr_end_time')) {
 					$mr_start_time = strtotime($request->mr_start_time);
 					$mr_end_time   = strtotime($request->mr_end_time);
 					$hours         = ($mr_end_time-$mr_start_time)/3600;
-					session(['mr_request' => $request->all(), 'hours' => $hours]);					
+					session(['mr_request' => $request->all(), 'hours' => $hours]);										
 					return redirect()->back()->withInput();
 				} else {
 					if (!$request->has('mr_date')) {
@@ -210,16 +216,15 @@ class MeetingRoomsController extends Controller {
 			} else {
 				$temp_user_id = str_random(40);
 				$cookieJar->queue('temp_user_id', $temp_user_id, 999999);
-			}
-
-			$price                   = floatval($request->price[$request->mr_id]);			
+			}						
+			
 			$params                  = session('mr_request');
 			$params['mr_id']         = $request->mr_id;
 			$params['temp_user_id']  = $temp_user_id;
-			$params['price']         = $price;
-			$params['mr_date']       = (new \DateTime($params['mr_date']))->format('Y-m-d');
+			$params['price']         = session('hours') * $centerService->getMeetingRoomPrice($params['center_id'], $params['mr_id']);
+			$params['mr_date']       = (new \DateTime($params['mr_date_submit']))->format('Y-m-d');
 			$params['mr_start_time'] = (new \DateTime($params['mr_start_time']))->format('H:i:s');
-			$params['mr_end_time']   = (new \DateTime($params['mr_end_time']))->format('H:i:s');		
+			$params['mr_end_time']   = (new \DateTime($params['mr_end_time']))->format('H:i:s');					
 			if (!is_null($tempCartItemService->create($params))) {	
 				session()                       ->forget(['mr_request', 'hours']);				
 				return redirect('/customer-information');

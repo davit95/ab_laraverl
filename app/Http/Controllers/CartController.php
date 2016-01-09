@@ -20,7 +20,7 @@ class CartController extends Controller {
 		if ($auth->guest()) {
 			$price_total = 0;
 			if (null != $temp_user_id = Cookie::get('temp_user_id')) {
-				$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
+				$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);				
 				foreach ($items as $item) {
 					if ($item->type == 'mr') {
 						$mr_start_time        = strtotime($item->mr_start_time);
@@ -28,8 +28,8 @@ class CartController extends Controller {
 						$item->price_per_hour = $item->price/(($mr_end_time-$mr_start_time)/3600);
 						$item->price_due      = $item->price*30/100;
 						$item->price_total    = $item->price-$item->price_due;
-						$price_total += $item->price_total;
-					}
+						$price_total += $item->price_total;						
+					}					
 					if ($item->type == 'vo') {
 						$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
 						$price_total += $item->sum;
@@ -41,7 +41,7 @@ class CartController extends Controller {
 
 			} else {
 				$items = [];
-			}
+			}			
 			return view('cart.index', ['items' => $items, 'price_total' => round($price_total, 2)]);
 		}
 	}

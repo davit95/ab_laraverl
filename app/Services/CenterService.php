@@ -51,6 +51,8 @@ class CenterService {
 		return $this->filteredMeetingRoom()->whereIn('id', $ids)->get();
 	}
 
+
+
 	/**
 	 * Get center by given id.
 	 *
@@ -60,6 +62,18 @@ class CenterService {
 	public function getCenterByIdAjax($id) {
 		return $this->center->where('id', $id)->with('vo_photos')->first();
 	}
+
+	/**
+	 * Get center by given id.
+	 *
+	 * @param $id (int)
+	 * @return Response
+	 */
+	public function getMeetingRoomPrice($center_id, $mr_id) {
+		$center = $this->center->where('id', $center_id)->first();
+		return $meeting_rooms = $center->meeting_rooms->where('id', $mr_id)->first()->hourly_rate;
+	}
+
 
 	/**
 	 * Get center by given slug.

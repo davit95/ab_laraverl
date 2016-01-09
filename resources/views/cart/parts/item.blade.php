@@ -103,7 +103,7 @@
             <br>
             <span class="smallLine mediumBold">
                 {{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
-                {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}</span>
+                {{ (new DateTime($item->mr_start_time))->format('h:i a') }} - {{ (new DateTime($item->mr_end_time))->format('h:i a') }}</span>
         </p>
         <table width="100%">
             <tr>
