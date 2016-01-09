@@ -72,8 +72,8 @@
 								@endif
 							</div>
 							<div>
-								{!! Form::label('phone','Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
-				  				{!! Form::text('phone', null,[ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
+								{!! Form::label('phone', 'Phone', [ "class" => $errors->has('phone')?'label label-error':"label" ]) !!}
+				  				{!! Form::text('phone', null, [ 'class' => $errors->has('phone')?'input-error':'' , 'required']) !!}
 								@if($errors->has('phone'))
 									<small class="text-error-custom">{{ $errors->get('phone')[0] }}</small>
 								@endif
@@ -88,12 +88,24 @@
 	            </div>
 	        </div>
 	        <div class="clearLeft"></div>
-	        <div class="clearLeft"></div>
-	        @forelse($centers as $center)
-	       		@include('meeting-rooms.parts.center-short-view')
-	       	@empty
-
-	        @endforelse
+	        <div class="clearLeft"></div>	        
+            @if (!$centers->isEmpty())	        
+    	        @foreach($centers as $center)
+    	       		@include('meeting-rooms.parts.center-short-view')
+    	        @endforeach
+    	    @endif
+    	    <br>
+            @if (!$nearby_centers->isEmpty())
+    	        <div class="resutsTop2b">
+           			<div class="ResutlsTitle">
+           				<h1>Meeting Rooms Near {{ $city->name }}</h1>
+           				<p class="gray2">On-Demand Meeting Rooms and Services</p>
+           			</div>
+           		</div>
+    	        @foreach($nearby_centers as $center)
+    	       		@include('meeting-rooms.parts.center-short-view')
+    	        @endforeach
+            @endif
 	        <div class='result-map-view' id='map-canvas'>Please wait. Loading maps..</div>
 		</div>
 	</div>
