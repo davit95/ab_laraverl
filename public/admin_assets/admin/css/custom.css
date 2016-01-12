@@ -11,7 +11,23 @@ html {
   margin: 0 auto;
   text-align: center;
 }
-
+.content{
+  text-align: right;
+  font-size: 14px;
+  font-weight: 300;
+  color: #6D6E71;
+}
+.content_wrapper{
+  min-height: 560px;
+  color: #6D6E71;
+  font-weight: 400;
+}
+.content_wrapper h3{
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0px;
+  padding: 0px
+}
 .tt-menu,
 .gist {
   text-align: left;
@@ -156,3 +172,131 @@ p + p {
 th.action {
   width: 95px;
 }
+
+tbody tr td{
+  text-align: right;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  padding:10px;
+  font-family: 'Open Sans',sans-serif;
+  color: #919298;
+}
+th{
+  text-align: center;
+}
+tfoot tr td{
+  text-align: right;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  font-family: 'Open Sans',sans-serif;
+  color: #6D6E71;
+}
+.submit_w a{
+  color: white !important;  
+}
+.submit_w a:hover{  
+  text-decoration: none;
+}
+table.dataTable.no-footer{
+  border : 0;
+}
+#dataTable_paginate a{
+  color:#6D6E71;
+  text-decoration: none;
+  background: white;
+}
+.pagination{
+  background: white;
+}
+.dataTable_wrapper{
+  border: solid 1px #DDDDDD;
+  margin-top: 20px;
+  background: white;
+  padding: 25px 15px;
+}
+select.input-sm{
+  line-height: 1 !important;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+  border: 1px solid #6D6E70 !important;
+  border-radius: 2px !important;
+}
+
+.abcnfooter{
+  margin-top: 50px;
+  height:40px;
+  background: #fff;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 300;
+  color: #999;
+  padding-right: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box
+}
+.abcnfooterPosition{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+}
+.table_box tfoot th{
+  text-align: center !important;
+  font-size: 14px !important;
+  /*font-weight: 300 !important;*/
+}
+.tools_btn_l1, .tools_btn_r {
+  color:#FAFAFA !important;
+}
+.h2wrapp h2 {
+  font-size: 16px;
+  color: #6D6E71;
+  line-height: 2;
+  font-weight: 400;
+  margin: 0px;
+  padding: 0px;
+}
+.owner_show{
+  text-align: right;
+  font-size: 14px;
+  font-weight: 300;
+  color:#6D6E71;
+}
+.swb_wrapp h3.mediumBold.center{
+  min-height: 70px;
+}
+.h2wrapp.mtop1{
+  padding-top: 40px;
+}
+.s_w_box{
+  font-size: 14px;
+  font-weight: 300;   
+}
+.s_w_box h3{
+  font-size: 16px;
+  margin: 0px;
+  padding: 0px;
+  font-weight: 600;
+  color:#6D6E71;
+}
+.removeXbtn{
+  float: right;
+  margin-right: 15px;  
+}
+.formOinfo a{
+  font-size: 12px;
+};
