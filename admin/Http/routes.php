@@ -21,8 +21,10 @@ Route::get('/logout', 'Auth\AuthController@logout');
 
 Route::get('/reports', 'ReportsController@index');
 
-Route::get('/reports', 'ReportsController@index');
-
+Route::get('/owners/add-document', 'OwnersController@getAddDocument');
 Route::resource('/owners', 'OwnersController');
 
+Route::resource('/users', 'UsersController');
+
+Route::get('/centers/add-meeting-room', 'CentersController@getAddMeetingRoom');
 Route::resource('/centers', 'CentersController', [ 'only' => ['create', 'store'] ]);

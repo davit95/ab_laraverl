@@ -45,4 +45,9 @@ class CentersController extends Controller
         }
         return redirect('centers')->withWarning('Whoops, looks like something went wrong, please try later.');
     }
+
+    public function getAddMeetingRoom()
+    {
+        return view('admin.centers.add_meeting_room');
+    }
 }

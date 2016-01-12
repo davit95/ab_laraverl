@@ -33,7 +33,7 @@ class OwnersController extends Controller
      */
     public function index(Request $request, OwnerInterface $ownerService)
     {
-        $ownerService->setFilterParams( $request->all() );
+        $ownerService->setFilterParams( $request->all() );        
         return view('admin.owners.index', [ 'owners' => $ownerService->getAllOwners() ]);
     }
 
@@ -78,7 +78,7 @@ class OwnersController extends Controller
      */
     public function show($id, OwnerInterface $ownerService)
     {
-        $owner = $ownerService->getOwnerByID($id);
+        $owner = $ownerService->getOwnerByID($id);        
         return view('admin.owners.show', [ 'owner' => $owner ]);
     }
 
@@ -131,5 +131,16 @@ class OwnersController extends Controller
             return redirect('owners')->withSuccess('Owner has been successfully deleted.');
         }
         return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+    }
+
+    /**
+    * Display the add-document page.
+    *
+    * @param
+    * @return \Illuminate\Http\Response
+    */
+    public function getAddDocument()
+    {
+        return view('admin.owners.add_document');
     }
 }

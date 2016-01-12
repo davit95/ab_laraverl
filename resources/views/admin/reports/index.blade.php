@@ -3,12 +3,20 @@
 @section('page-header')
 	Reports
 @stop
-
+@section('content_top')
+    <div class="ct_icon_oc"></div> 
+    <div class="ct_wrapp">
+        <div class="ct_title"><h1>REPORTS</h1></div>
+        <div class="form-group">
+            {!! Form::select('type', ['centers' => 'Centers Report', 'owners' => 'Owners Report'], Request::get('type'), ['class' => 'form-control', 'id' => 'report-type']) !!}
+        </div>
+    </div>    
+@stop
 @section('content')
     @include('admin.reports.parts._filter')
     <div class="row">
-        <div class="col-lg-12">
-            <div class="dataTable_wrapper">
+        <div class="col-lg-12 table_box">
+            <div class="dataTable_wrapper">                
                 @if(!Request::has('type') || Request::get('type') == 'centers')
                     @include('admin.reports.parts._report-centers-index')
                 @else
@@ -17,10 +25,10 @@
             </div>
         </div>
     </div>
+    <div class="submit_w"><a href="#" class="submit_btn">Export .csv</a></div>
 @stop
 
 @section('styles')
-    <link href="/admin_assets/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
     <link href="/admin_assets/admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
 
@@ -40,6 +48,7 @@
 
     <script type="text/javascript">
         $(function() {
+            $('#dataTable').DataTable()
 
             function cb(start, end) {
                 $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));

@@ -1,4 +1,4 @@
-<ul class="nav navbar-top-links navbar-right">
+{{-- <ul class="nav navbar-top-links navbar-right">
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -14,4 +14,43 @@
             </li>
         </ul>
     </li>
-</ul>
+</ul> --}}
+
+<div class="logo"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></div>
+<div class="mobileMenu"></div>
+<div class="menu">
+    <div class="dropD_header">
+        <div class="sSelectWrap1">
+            <div class="sSelectWrap2">
+                <select id="BPSelectDD">
+                    <option selected="">CONTROL PANEL</option>
+                    <option>CSR</option>
+                    <option>OWNER CP</option>
+                    <option>CLIENT CP</option>
+                </select>
+            </div> 
+        </div> 
+    </div> 
+    <a href="{{ url('reports') }}" class="nd">
+        <div class="menu_btn @if(Request::is('reports*')) menu_active @endif">
+            <div class="@if(Request::is('reports*')) menu_btnL1_a @else menu_btnL1 @endif"></div>
+            <div class="menu_btnR lh_menu">REPORTS</div>
+        </div> 
+    </a>
+    <a href="{{ url('owners') }}" class="nd">
+        <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
+            <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
+            <div class="menu_btnR m_menu">OWNERS<br>&amp; CENTERS</div>
+        </div> 
+    </a>
+    <a href="{{ url('users') }}" class="nd">
+        <div <div class="menu_btn @if(Request::is('users*')) menu_active @endif">
+            <div class="@if(Request::is('users*')) menu_btnL3_a @else menu_btnL3 @endif"></div>
+            <div class="menu_btnR m_menu">ACCOUNTS<br>&amp; USERS</div>
+        </div> 
+    </a>
+    <a href="{{ url('logout') }}" class="nd">
+        <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
+    </a>
+</div> 
+
