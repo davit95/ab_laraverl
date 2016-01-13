@@ -72,7 +72,7 @@ class DataMigration extends Command {
 		$this->info("\n migrating centers table");
 		$this->make_new_connection();
 		$collection     = DB::table('Center')->get();
-		$center_contacts = DB::table('Center_contact')->lists('EmailFlag', 'CenterID');				
+		$center_contacts = DB::table('Center_Contact')->lists('EmailFlag', 'CenterID');				
 		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');
 		DB::setDefaultConnection('mysql');
 		$unknown_cities_count    = 0;
