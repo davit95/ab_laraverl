@@ -70,8 +70,7 @@ class CenterService {
 	 * @return Response
 	 */
 	public function getMeetingRoomPrice($center_id, $mr_id) {
-		$center = $this->center->where('id', $center_id)->first();
-		dd($center, $center->meeting_rooms, $center->meeting_rooms->where('id', (int)$mr_id)->first(),(int)$mr_id);				
+		$center = $this->center->where('id', $center_id)->first();		
 		return $meeting_rooms = $center->meeting_rooms->where('id', (int)$mr_id)->first()->hourly_rate;
 
 	}
