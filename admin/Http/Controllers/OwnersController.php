@@ -134,13 +134,35 @@ class OwnersController extends Controller
     }
 
     /**
-    * Display the add-document page.
+    * Display the add-document form.
     *
     * @param
     * @return \Illuminate\Http\Response
     */
     public function getAddDocument()
     {
-        return view('admin.owners.add_document');
+        return view('admin.owners.forms.add_document');
     }
+
+    /**
+    * Display documents
+    *
+    * @param
+    * @return \Illuminate\Http\Response
+    */
+    public function getDocuments()
+    {
+        return view('admin.owners.documents');
+    }
+
+    /**
+    * Display the add-staff form.
+    *
+    * @param
+    * @return \Illuminate\Http\Response
+    */
+    public function getAddStaff()
+    {
+        return view('admin.owners.forms.add_staff');
+    }    
 }

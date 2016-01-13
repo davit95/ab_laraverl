@@ -14,7 +14,7 @@
 			    		<div class="tools_btn_l1"></div>
 			    			<div class="tools_btn_r">Documents</div>
 	    			</div></a>
-			    <a href="#view-documents" class="tools_gray_btn lightbox">
+			    <a href="{{ url('owners/documents') }}" class="tools_gray_btn lightbox">
 				    <div><div class="tools_btn_l2"></div>
 				    	<div class="tools_btn_r">Documents</div>
 				    </div>

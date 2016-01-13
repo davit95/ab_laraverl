@@ -1,0 +1,38 @@
+.select_style{width:58%;
+	height:35px;
+	background-color:#fff;
+	color:#6D6E71;
+	font-weight:300;
+	border:solid 1px #D8D9DB;
+	position:relative;
+	cursor:pointer;
+	font-size:12px;
+	box-sizing:border-box;
+	-webkit-box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+	margin-bottom:3px;}
+.rtoolS{
+	width:140px !important;
+}
+.selectcon{background-image:url(../images/arrow.png);
+position:absolute;
+right:8px;
+top:50%;
+margin-top:-4px;
+width:8px;
+height:8px}
+
+.select_style .highlight,.select_style.active{background-color:rgba(237,237,237,1)}
+.select_style .niceselect .value_wrapper{border:solid 1px #cdcdcd;background:#fff}
+.select_style .niceselect .top p{font-size:12px;font-weight:300;color:#6D6E71}
+.select_style .niceselect .value_wrapper .values{color:#6D6E71;font-size:12px}
+.select_style .niceselect .value_wrapper .values.active,.select_style .niceselect .value_wrapper .values:hover{background:#DAF2ED}
+.select_style .niceselect .opt{font-size:12px;font-weight:400;border-bottom:5px;cursor:default}
+.select_style .niceselect .opt span{padding:10px;font-weight:700;display:block}
+.select_style{width:58%; -webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:inline-block;}
+.niceselect .value_wrapper{display:none;position:absolute;top:40px;width:100%;z-index:10}
+.niceselect .value_wrapper .opt .values{padding:10px 10px 10px 20px}
+.niceselect .value_wrapper .values{padding:10px;cursor:pointer}
+.niceselect .value_wrapper .values label{cursor:pointer}
+.niceselect{position:relative}
+.niceselect p{border:none;margin-top:0;margin-bottom:0;padding:7px}.niceselect input[type=radio]{visibility:hidden;position:absolute;left:-9999px}

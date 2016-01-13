@@ -4,7 +4,7 @@
 		<h2>Unassigned Staff Members</h2>
 	</div>
 	<div class="fleft"> &nbsp; &nbsp; 
-		<a href="#add-staff" class="gLink">
+		<a href="{{ url('owners/add-staff') }}" class="gLink">
 			<div class="txtLink">Staff</div>
 			<div class="gIcon gAdd"></div>
 		</a>
