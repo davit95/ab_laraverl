@@ -70,9 +70,8 @@ class CenterService {
 	 * @return Response
 	 */
 	public function getMeetingRoomPrice($center_id, $mr_id) {
-		$center = $this->center->where('id', $center_id)->first();		
-		return $meeting_rooms = $center->meeting_rooms->where('id', (int)$mr_id)->first()->hourly_rate;
-
+		$center = $this->center->where('id', $center_id)->first();
+		return $meeting_rooms = $center->meeting_rooms->where('id', $mr_id)->first()->hourly_rate;
 	}
 
 
@@ -139,5 +138,15 @@ class CenterService {
 						$q->has('center_filter', '<', 1);
 					});
 			});
+	}
+
+	/**
+	 * get center
+	 *
+	 * @return Response
+	 */
+	public function getCenterById($id)
+	{
+		return $this->center->find($id);
 	}
 }

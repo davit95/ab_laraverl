@@ -10,6 +10,7 @@ use App\Models\Center;
 
 use App\Services\TelCountryService;
 use App\Services\TempCartItemService;
+use App\Services\CenterService;
 use App\Services\CountryService;
 use Cookie;
 use Illuminate\Auth\Guard;
@@ -87,9 +88,11 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function customerInformation(TelCountryService $telCountryService) {
+	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService) {
 		$country_codes = $telCountryService->getAllCountriesWithList();
-		return view('avo-pages.customer-information', ['countries' => $country_codes]);
+		$center = $centerService->getCenterById(session()->get('centerid'));		
+		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;		
+		return view('avo-pages.customer-information', ['countries' => $country_codes, 'email_flag' => $email_flag]);
 	}
 
 	/**
@@ -233,7 +236,7 @@ class AvoPagesController extends Controller {
 				if ($request->has('live_receptionist')) {
 					return redirect('/customize-phone');
 				} else {
-					return redirect('/customer-information');
+					return redirect('/customer-information')->withCenterid($center_id);
 				}
 			}
 		}

@@ -72,6 +72,7 @@ class DataMigration extends Command {
 		$this->info("\n migrating centers table");
 		$this->make_new_connection();
 		$collection     = DB::table('Center')->get();
+		$center_contacts = DB::table('Center_contact')->lists('EmailFlag', 'CenterID');				
 		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');
 		DB::setDefaultConnection('mysql');
 		$unknown_cities_count    = 0;
@@ -143,12 +144,13 @@ class DataMigration extends Command {
 				'review_date'       => $value->ReviewDate,
 				'review_comments'   => $value->ReviewComments,
 				'active_flag'       => $value->ActiveFlag,
+				'email_flag'        => isset($center_contacts[$value->CenterID]) ? $center_contacts[$value->CenterID] : null,
 				'notes'             => $value->Notes,
 				'virtual_tour_url'  => $value->VirtualTourURL,
 				'map_url'           => $value->MapURL,
 				'status_changed_at' => $value->StatusChange,
 				'updated_at'        => $value->CenterChange
-			];
+			];			
 			$bar->advance();
 		}
 		//DB::table('centers')->truncate();
