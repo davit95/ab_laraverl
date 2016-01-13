@@ -33,6 +33,7 @@ class CreateCentersTable extends Migration {
 				$table->datetime('review_date');
 				$table->text('review_comments');
 				$table->enum('active_flag', ['Y', 'N', 'D', 'B', 'P'])->nullable();
+				$table->enum('email_flag', ['Y', 'N', 'D', 'B', 'P'])->nullable();
 				$table->text('notes');
 				$table->string('virtual_tour_url');
 				$table->string('map_url');

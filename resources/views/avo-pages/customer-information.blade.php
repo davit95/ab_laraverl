@@ -191,60 +191,61 @@
                                 </div>
                             </div><!--/newCinfo-->
                             <!-- end billing info //-->
+                            @if($email_flag)
+                                <div class="mailFinfo">
+                                    <h3><span class="newCust">MAIL FORWARDING INFORMATION</span></h3>
+                                    <p>
+                                        {!! Form::checkbox('mf_same', 'yes', null ,  ['class' => 'inputSmall', 'onclick' => "mfchange();"]) !!}
+                                        Yes, I'd like my mail forwarded to my billing address.
+                                    </p>
+                                    <br>
+                                    <div class="newL">
+                                        <label>First Name <span class="orange">*</span></label>
+                                        {!! Form::text('mf_first_name', null) !!}
+                                    </div>
+                                    <div class="newL">
+                                        <label>Last Name <span class="orange">*</span></label>
+                                        {!! Form::text('mf_last_name', null) !!}
+                                    </div>
+                                    <div class="clear"></div>
 
-                            <div class="mailFinfo">
-                                <h3><span class="newCust">MAIL FORWARDING INFORMATION</span></h3>
-                                <p>
-                                    {!! Form::checkbox('mf_same', 'yes', null ,  ['class' => 'inputSmall', 'onclick' => "mfchange();"]) !!}
-                                    Yes, I'd like my mail forwarded to my billing address.
-                                </p>
-                                <br>
-                                <div class="newL">
-                                    <label>First Name <span class="orange">*</span></label>
-                                    {!! Form::text('mf_first_name', null) !!}
-                                </div>
-                                <div class="newL">
-                                    <label>Last Name <span class="orange">*</span></label>
-                                    {!! Form::text('mf_last_name', null) !!}
-                                </div>
-                                <div class="clear"></div>
+                                    <div class="newL2">
+                                        <label>Address 1 <span class="orange">*</span></label>
+                                        {!! Form::text('mf_address1', null, ['class' => 'inputLong']) !!}
+                                    </div>
+                                    <div class="newL2">
+                                        <label>Address 2</label>
+                                        {!! Form::text('mf_address2', null, ['class' => 'inputLong']) !!}
+                                    </div>
+                                    <div class="newL2">
+                                        <label>Company Name <span class="orange">*</span></label>
+                                        {!! Form::text('mf_company_name', null, ['class' => 'inputLong']) !!}
+                                    </div>
 
-                                <div class="newL2">
-                                    <label>Address 1 <span class="orange">*</span></label>
-                                    {!! Form::text('mf_address1', null, ['class' => 'inputLong']) !!}
-                                </div>
-                                <div class="newL2">
-                                    <label>Address 2</label>
-                                    {!! Form::text('mf_address2', null, ['class' => 'inputLong']) !!}
-                                </div>
-                                <div class="newL2">
-                                    <label>Company Name <span class="orange">*</span></label>
-                                    {!! Form::text('mf_company_name', null, ['class' => 'inputLong']) !!}
-                                </div>
+                                    <div class="newL">
+                                        <label>Country <span class="orange">*</span></label><br/>
+                                        {!! Form::select('mf_country_id', ['' => 'Please Select A Country']+$countries, null) !!}
+                                    </div>
 
-                                <div class="newL">
-                                    <label>Country <span class="orange">*</span></label><br/>
-                                    {!! Form::select('mf_country_id', ['' => 'Please Select A Country']+$countries, null) !!}
-                                </div>
+                                    <div class="clear"></div>
+                                    <div class="newL3">
+                                        <label>City</label>
+                                        {!! Form::text('mf_city', null, ['class' => 'inputSmall']) !!}
+                                    </div>
 
-                                <div class="clear"></div>
-                                <div class="newL3">
-                                    <label>City</label>
-                                    {!! Form::text('mf_city', null, ['class' => 'inputSmall']) !!}
-                                </div>
+                                    <div class="newL3">
+                                        <label>State</label>
+                                        {!! Form::text('mf_state', null, ['class' => 'inputSmall']) !!}
+                                    </div>
+                                    <div class="newL3">
+                                        <label>Postal Code <span class="orange">*</span></label>
+                                        {!! Form::text('mf_postal_code', null, ['class' => 'inputSmall']) !!}
+                                    </div>
 
-                                <div class="newL3">
-                                    <label>State</label>
-                                    {!! Form::text('mf_state', null, ['class' => 'inputSmall']) !!}
-                                </div>
-                                <div class="newL3">
-                                    <label>Postal Code <span class="orange">*</span></label>
-                                    {!! Form::text('mf_postal_code', null, ['class' => 'inputSmall']) !!}
-                                </div>
-
-                                <div class="clear"></div>
-                                <!-- end username information//-->
-                            </div><!--/mailFinfo-->
+                                    <div class="clear"></div>
+                                    <!-- end username information//-->
+                                </div><!--/mailFinfo-->
+                            @endif
                             <!-- end mail forwarding info //-->
 
                             <div class="AccountPW">
