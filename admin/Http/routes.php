@@ -22,6 +22,8 @@ Route::get('/logout', 'Auth\AuthController@logout');
 Route::get('/reports', 'ReportsController@index');
 
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
+Route::get('/owners/documents', 'OwnersController@getDocuments');
+Route::get('/owners/add-staff', 'OwnersController@getAddStaff' );
 Route::resource('/owners', 'OwnersController');
 
 Route::resource('/users', 'UsersController');

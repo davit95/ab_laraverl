@@ -15,7 +15,7 @@
 		</div> 
 		<div class="sBox_btns">
 			<div class="edit_cBtn bordR">
-				<a href="#" class="gLink">
+				<a href="{{ url('centers/create') }}" class="gLink">
 					<div class="sBox_icons edit_green"></div>
 					Center
 				</a>
@@ -27,7 +27,7 @@
 				</a>
 			</div>
 			<div class="add_StaffBtn">
-				<a href="#add-staff" class="gLink lightbox">
+				<a href="{{ url('owners/add-staff') }}" class="gLink lightbox">
 					<div class="sBox_icons add_green"></div>
 					Staff
 				</a>

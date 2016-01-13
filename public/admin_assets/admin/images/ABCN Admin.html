@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://admin.abcn.dev/centers/create -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>ABCN Admin</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="./ABCN Admin_files/abcnCom_style.css" rel="stylesheet">
+    <link href="./ABCN Admin_files/jquery-ui.css" rel="stylesheet">
+    <link href="./ABCN Admin_files/jquery.dataTables.css" rel="stylesheet">
+    <link href="./ABCN Admin_files/nice_select.css" rel="stylesheet">
+    
+    <link href="./ABCN Admin_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="./ABCN Admin_files/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="./ABCN Admin_files/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="./ABCN Admin_files/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="./ABCN Admin_files/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="./ABCN Admin_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./ABCN Admin_files/custom.css">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="./ABCN Admin_files/jquery.min.js"></script>
+        <script type="text/javascript" src="./ABCN Admin_files/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./ABCN Admin_files/nice_select.min.js"></script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+    
+        <!-- Navigation -->
+        <div class="header">        
+            <div class="logo"><img src="./ABCN Admin_files/admin_logo.png" width="200" height="62" border="0"></div>
+<div class="mobileMenu"></div>
+<div class="menu">
+    <div class="dropD_header">
+        <div class="sSelectWrap1">
+            <div class="sSelectWrap2">
+                <select id="BPSelectDD">
+                    <option selected="">CONTROL PANEL</option>
+                    <option>CSR</option>
+                    <option>OWNER CP</option>
+                    <option>CLIENT CP</option>
+                </select>
+            </div> 
+        </div> 
+    </div> 
+    <a href="http://admin.abcn.dev/reports" class="nd">
+        <div class="menu_btn ">
+            <div class=" menu_btnL1 "></div>
+            <div class="menu_btnR lh_menu">REPORTS</div>
+        </div> 
+    </a>
+    <a href="http://admin.abcn.dev/owners" class="nd">
+        <div class="menu_btn ">
+            <div class=" menu_btnL2 "></div>
+            <div class="menu_btnR m_menu">OWNERS<br>&amp; CENTERS</div>
+        </div> 
+    </a>
+    <a href="http://admin.abcn.dev/users" class="nd">
+        <div <div="" class="menu_btn ">
+            <div class=" menu_btnL3 "></div>
+            <div class="menu_btnR m_menu">ACCOUNTS<br>&amp; USERS</div>
+        </div> 
+    </a>
+    <a href="http://admin.abcn.dev/logout" class="nd">
+        <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
+    </a>
+</div> 
+
+        </div>
+        <div class="content_wrapper">
+            <div class="content_top">
+                	<div class="ct_icon_oc"></div> 
+	    <div class="ct_wrapp">
+	    <div class="ct_title"><h1>OWNERS &amp; CENTERS</h1></div> 
+	    <div class="ct_tools">
+	        <form method="GET" action="http://admin.abcn.dev/owners" accept-charset="UTF-8" class="pull-left">
+	            <input class="ct_input" id="company_or_owner_name" name="company_or_owner_name" type="text">
+	            <button type="submit" class="search_btn"></button>
+	        </form>            
+	            <a href="http://admin.abcn.dev/owners/create" class="tools_gray_btn lightbox">
+	                <div>
+	                    <div class="tools_btn_l1"></div>
+	                        <div class="tools_btn_r">New Owner</div>
+	                </div>
+	            </a>
+	        </div> 
+	    </div> 
+	<div class="clear"></div>    
+            </div>
+            <div class="content_wrapp2">
+                	
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="w_box">
+	<div class="ga_right">
+		<span class="lh_f">Sites:</span>&nbsp;
+		<div class="select_style change"><span class="selectcon">&nbsp;</span><div class="niceselect undefined" data-multi="true"><p class="top">Select</p><div class="value_wrapper"><div class="values"><input type="checkbox" style=" pointer-events: none;" name="undefined[]" value="1" data-text="AVO" id="0undefined0"> <label class="nice_label">AVO</label></div><div class="values"><input type="checkbox" style=" pointer-events: none;" name="undefined[]" value="2" data-text="ABCN" id="1undefined1"> <label class="nice_label">ABCN</label></div><div class="values"><input type="checkbox" style=" pointer-events: none;" name="undefined[]" value="3" data-text="OT" id="2undefined2"> <label class="nice_label">OT</label></div><div class="values"><input type="checkbox" style=" pointer-events: none;" name="undefined[]" value="4" data-text="Flexado" id="3undefined3"> <label class="nice_label">Flexado</label></div></div></div></div>
+	</div> 
+	<div class="ga_right lh_f">
+	Services: 
+		<div class="services_wrapp">
+			<input type="checkbox" name="services" value="VO" id="1" checked="">
+			<label for="1">			
+			</label> 
+			VO &nbsp; &nbsp;
+				<input type="checkbox" name="services" value="MR" id="2" checked="">
+				<label for="2">
+					
+				</label> 
+			MR &nbsp; &nbsp;
+				<input type="checkbox" name="services" value="LR" id="3" checked="">
+				<label for="3"></label> 
+			LR
+		</div> 
+	</div> 
+	<div class="clear"></div>
+</div>
+<div class="h2wrapp mtop1">
+	<div class="h2Icon add"></div>
+	<div class="h2txt">
+		<h2>CENTER'S PHOTOS</h2>
+	</div>
+</div>
+<div class="w_box centerPics">
+	<div class="photoLine">
+		<div class="photoLineD">
+			<div class="plb lh_f">Photo 1: &nbsp; </div> 
+			<div class="plb2 lh_f">
+				<a href="http://admin.abcn.dev/centers/create#" class="gray_btn2">Upload</a>
+			</div> 
+			<div class="plb3 lh_f left">&nbsp; No file chosen</div> 
+		</div> 
+		<div class="photoLineD">
+			<div class="plb lh_f">Category:&nbsp;</div> 
+			<div class="plb2">
+				<div class="g_select2">
+					<select id="category" class="rule_d f1_s">
+						<option value="">Select</option>
+						<option value="BuildingExterior">Building Exterior</option>
+						<option value="IndividualOffice">Individual Office</option>
+						<option value="lobby">Lobby</option>
+						<option value="BreakRoom">Break Room</option>
+						<option value="CommonArea">Common Area</option>
+						<option value="MeetingRoom">Meeting Room</option>
+						<option value="unknown">Unknown / Other</option>
+					</select>
+				</div> 
+			</div> 
+			<div class="plb3 lh_f">&nbsp; 
+				<a class="txtLink2 customSEO">(Custom SEO)</a>
+			</div> 
+		</div> 
+		<div class="customSeoBox">
+			AVO Alt: <input type="text" class="f1" name="AVOalt"><br>
+			AVO Caption: <input type="text" class="f1" name="AVOcaption"><br>
+			ABCN Alt: <input type="text" class="f1" name="ABCNalt"><br>
+			ABCN Caption: <input type="text" class="f1" name="ABCNcaption">
+		</div> 
+	</div> 
+	<div class="photoLine">
+		<div class="photoLineD">
+			<div class="plb lh_f">Photo 2: &nbsp; </div> 
+			<div class="plb2 lh_f">
+				<a href="http://admin.abcn.dev/centers/create#" class="gray_btn2">Upload</a></div> 
+			<div class="plb3 lh_f left">&nbsp; No file chosen</div> 
+		</div> 
+		<div class="photoLineD">
+			<div class="plb lh_f">Category:&nbsp;</div> 
+			<div class="plb2">
+				<div class="g_select2">
+					<select id="category" class="rule_d f1_s">
+						<option value="">Select</option>
+						<option value="BuildingExterior">Building Exterior</option>
+						<option value="IndividualOffice">Individual Office</option>
+						<option value="lobby">Lobby</option>
+						<option value="BreakRoom">Break Room</option>
+						<option value="CommonArea">Common Area</option>
+						<option value="MeetingRoom">Meeting Room</option>
+						<option value="unknown">Unknown / Other</option>
+					</select>
+				</div> 
+			</div> 
+			<div class="plb3 lh_f">&nbsp; <a class="txtLink2 customSEO">(Custom SEO)</a></div> 
+		</div> 
+		<div class="customSeoBox">
+		AVO Alt: <input type="text" class="f1" name="AVOalt"><br>
+		AVO Caption: <input type="text" class="f1" name="AVOcaption"><br>
+		ABCN Alt: <input type="text" class="f1" name="ABCNalt"><br>
+		ABCN Caption: <input type="text" class="f1" name="ABCNcaption">
+		</div> 
+	</div> 
+	<div class="photoLine">
+		<div class="photoLineD">
+			<div class="plb lh_f">Photo 3: &nbsp; </div> 
+			<div class="plb2 lh_f">
+				<a href="http://admin.abcn.dev/centers/create#" class="gray_btn2">Upload</a>
+			</div> 
+			<div class="plb3 lh_f left">&nbsp; No file chosen</div> 
+		</div> 
+		<div class="photoLineD">
+			<div class="plb lh_f">Category:&nbsp;</div> 
+			<div class="plb2">
+				<div class="g_select2">
+					<select id="category" class="rule_d f1_s">
+						<option value="">Select</option>
+						<option value="BuildingExterior">Building Exterior</option>
+						<option value="IndividualOffice">Individual Office</option>
+						<option value="lobby">Lobby</option>
+						<option value="BreakRoom">Break Room</option>
+						<option value="CommonArea">Common Area</option>
+						<option value="MeetingRoom">Meeting Room</option>
+						<option value="unknown">Unknown / Other</option>
+					</select>
+				</div> 
+			</div> 
+			<div class="plb3 lh_f">&nbsp; 
+				<a class="txtLink2 customSEO">(Custom SEO)</a>
+			</div> 
+		</div> 
+		<div class="customSeoBox">
+		AVO Alt: <input type="text" class="f1" name="AVOalt"><br>
+		AVO Caption: <input type="text" class="f1" name="AVOcaption"><br>
+		ABCN Alt: <input type="text" class="f1" name="ABCNalt"><br>
+		ABCN Caption: <input type="text" class="f1" name="ABCNcaption">
+		</div> 
+	</div> 
+	<div class="photoLine">
+		<div class="photoLineD">
+			<div class="plb lh_f">Photo 4: &nbsp; </div> 
+			<div class="plb2 lh_f">
+				<a href="http://admin.abcn.dev/centers/create#" class="gray_btn2">Upload</a>
+			</div> 
+			<div class="plb3 lh_f left">&nbsp; No file chosen</div> 
+		</div> 
+		<div class="photoLineD">
+			<div class="plb lh_f">Category:&nbsp;</div> 
+			<div class="plb2">
+				<div class="g_select2">
+					<select id="category" class="rule_d f1_s">
+						<option value="">Select</option>
+						<option value="BuildingExterior">Building Exterior</option>
+						<option value="IndividualOffice">Individual Office</option>
+						<option value="lobby">Lobby</option>
+						<option value="BreakRoom">Break Room</option>
+						<option value="CommonArea">Common Area</option>
+						<option value="MeetingRoom">Meeting Room</option>
+						<option value="unknown">Unknown / Other</option>
+					</select>
+				</div> 
+			</div> 
+			<div class="plb3 lh_f">&nbsp; 
+				<a class="txtLink2 customSEO">(Custom SEO)</a>
+			</div> 
+		</div> 
+		<div class="customSeoBox">
+		AVO Alt: <input type="text" class="f1" name="AVOalt"><br>
+		AVO Caption: <input type="text" class="f1" name="AVOcaption"><br>
+		ABCN Alt: <input type="text" class="f1" name="ABCNalt"><br>
+		ABCN Caption: <input type="text" class="f1" name="ABCNcaption">
+		</div> 
+	</div> 
+	<div class="photoLine">
+		<div class="photoLineD">
+			<div class="plb lh_f">Photo 5: &nbsp; </div> 
+			<div class="plb2 lh_f">
+				<a href="http://admin.abcn.dev/centers/create#" class="gray_btn2">Upload</a>
+			</div> 
+			<div class="plb3 lh_f left">&nbsp; No file chosen</div> 
+		</div> 
+		<div class="photoLineD">
+			<div class="plb lh_f">Category:&nbsp;</div> 
+			<div class="plb2">
+				<div class="g_select2">
+					<select id="category" class="rule_d f1_s">
+						<option value="">Select</option>
+						<option value="BuildingExterior">Building Exterior</option>
+						<option value="IndividualOffice">Individual Office</option>
+						<option value="lobby">Lobby</option>
+						<option value="BreakRoom">Break Room</option>
+						<option value="CommonArea">Common Area</option>
+						<option value="MeetingRoom">Meeting Room</option>
+						<option value="unknown">Unknown / Other</option>
+					</select>
+				</div> 
+			</div> 
+			<div class="plb3 lh_f">&nbsp; <a class="txtLink2 customSEO">(Custom SEO)</a></div> 
+		</div> 
+		<div class="customSeoBox">
+		AVO Alt: <input type="text" class="f1" name="AVOalt"><br>
+		AVO Caption: <input type="text" class="f1" name="AVOcaption"><br>
+		ABCN Alt: <input type="text" class="f1" name="ABCNalt"><br>
+		ABCN Caption: <input type="text" class="f1" name="ABCNcaption">
+		</div> 
+	</div> 
+	<div class="photoLine">
+		<div class="photoLineD">
+			<div class="plb lh_f">Photo 6: &nbsp; </div> 
+			<div class="plb2 lh_f">
+				<a href="http://admin.abcn.dev/centers/create#" class="gray_btn2">Upload</a>
+			</div> 
+			<div class="plb3 lh_f left">&nbsp; No file chosen</div> 
+		</div> 
+		<div class="photoLineD">
+			<div class="plb lh_f">Category:&nbsp;</div> 
+			<div class="plb2">
+				<div class="g_select2">
+					<select id="category" class="rule_d f1_s">
+						<option value="">Select</option>
+						<option value="BuildingExterior">Building Exterior</option>
+						<option value="IndividualOffice">Individual Office</option>
+						<option value="lobby">Lobby</option>
+						<option value="BreakRoom">Break Room</option>
+						<option value="CommonArea">Common Area</option>
+						<option value="MeetingRoom">Meeting Room</option>
+						<option value="unknown">Unknown / Other</option>
+					</select>
+				</div> 
+			</div> 
+			<div class="plb3 lh_f">&nbsp; <a class="txtLink2 customSEO">(Custom SEO)</a></div> 
+		</div> 
+		<div class="customSeoBox">
+		AVO Alt: <input type="text" class="f1" name="AVOalt"><br>
+		AVO Caption: <input type="text" class="f1" name="AVOcaption"><br>
+		ABCN Alt: <input type="text" class="f1" name="ABCNalt"><br>
+		ABCN Caption: <input type="text" class="f1" name="ABCNcaption">
+		</div> 
+	</div> 
+	<div class="clear"></div>
+</div>
+<div class="h2wrapp mtop1">
+	<div class="h2Icon add"></div>
+	<div class="h2txt">
+		<h2>CENTER'S BASIC INFORMATION</h2>
+	</div>
+</div>
+<div class="select_style change"><span class="selectcon">&nbsp;</span><div class="niceselect undefined" data-multi="false"><p class="top">Select</p><div class="value_wrapper"><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="1" data-text="Select Country" id="0undefined0"> <label class="nice_label">Select Country</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="2" data-text="Country" id="1undefined1"> <label class="nice_label">Country</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="3" data-text="Country" id="2undefined2"> <label class="nice_label">Country</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="4" data-text="Country" id="3undefined3"> <label class="nice_label">Country</label></div></div></div></div><br>	
+<div class="w_box">
+	<div class="form_left">
+		Building Name: <input type="text" class="f1" name="buildingName"><br>
+		*Address 1: <input type="text" class="f1" name="Address1"><br>
+		Floor / Suite #: <input type="text" class="f1" name="Suite"><br>
+		*Country:&nbsp;																																	
+		<div class="select_style change active"><span class="selectcon">&nbsp;</span><div class="niceselect undefined" data-multi="false"><p class="top">Select</p><div class="value_wrapper" style="display: block;"><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="1" data-text="Select Country" id="0undefined0"> <label class="nice_label">Select Country</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="2" data-text="Country" id="1undefined1"> <label class="nice_label">Country</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="3" data-text="Country" id="2undefined2"> <label class="nice_label">Country</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="4" data-text="Country" id="3undefined3"> <label class="nice_label">Country</label></div></div></div></div><br>	
+		State:&nbsp;
+		<div class="select_style change"><span class="selectcon">&nbsp;</span><div class="niceselect undefined" data-multi="false"><p class="top">Select</p><div class="value_wrapper"><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="1" data-text="State" id="0undefined0"> <label class="nice_label">State</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="2" data-text="State" id="1undefined1"> <label class="nice_label">State</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="3" data-text="State" id="2undefined2"> <label class="nice_label">State</label></div><div class="values"><input type="radio" style=" pointer-events: none;" name="undefined" value="4" data-text="State" id="3undefined3"> <label class="nice_label">State</label></div></div></div></div>	
+	</div> 				
+<div class="form_right">
+*City: <input type="text" class="f1" name="city"><br>
+County / Region: <input type="text" class="f1" name="region"><br>
+*Postal Code: <input type="text" class="f1" name="postalCode"><br>
+*Address Latitude: 
+	<input type="text" class="f1b" name="Lat"> 
+	<a href="http://admin.abcn.dev/centers/create#" class="getBtn">GET</a>
+	<div class="clear"></div>
+*Address Longitude: 
+	<input type="text" class="f1b" name="Long">
+	<a href="http://admin.abcn.dev/centers/create#" class="getBtn">GET</a>
+	<div class="clear"></div>
+</div> 
+<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	$(document).on('ready', function(){
+		$('.change').niceselect();
+	})
+</script>    	</div>
+    </div>
+            </div>
+        </div>
+        <div class="abcnfooter">©2016 Alliance Business Centers Network. All rights reserved.</div>          
+    </div>
+    <script type="text/javascript">
+        // if($('body').height()>$(window).height()){
+        //    $('.abcnft').addClass('abcnfooter')  
+        //    console.log('ASD');           
+        // }else{
+        //     console.log('zxc');
+        //     $('.abcnft').addClass('abcnfooterPosition')             
+        // }
+    </script>
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="./ABCN Admin_files/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="./ABCN Admin_files/metisMenu.min.js"></script>
+
+    
+
+
+
+</body></html>
