@@ -135,6 +135,7 @@
                                 </div>
                             @endif
                             <input type="hidden" name="new_customer" value="1" >
+                            <input type="hidden" name="email_flag" value="{{$email_flag}}" >
                             <div class="newCinfo">
                                 <h3><span class="newCust">NEW CUSTOMERS - <span class="medium">ENTER YOUR BILLING INFORMATION</span></span></h3>
                                 <br><p>Please enter the required information about yourself below.</p>

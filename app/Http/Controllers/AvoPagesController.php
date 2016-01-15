@@ -202,7 +202,7 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
-		$inputs = $request->all();		
+		$inputs = $request->all();	
 		if (!isset($inputs['package_option'])) {
 			return redirect('thank-you');
 		}
