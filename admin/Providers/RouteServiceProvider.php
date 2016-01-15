@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace, 'prefix' => 'admin' ], function ($router) {
+        $router->group(['namespace' => $this->namespace , 'domain' => env("ADMIN_DOMAIN", "admin.abcn.com") ], function ($router) {
             require __DIR__.'/../Http/routes.php';
         });
     }
