@@ -2,7 +2,7 @@
 	<tr>
 		<td valign="top" class="col_one">
 			@foreach($countries as $counter => $country)
-				<div class="city-header"><a href="{!! URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $country->slug])!!}" class="style5" title="irtual offices">{!! $country->name !!}</a></div>
+				<div class="city-header"><a href="{!! URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $country->slug])!!}" class="style5" title="Virtual offices">{!! $country->name !!}</a></div>
 				@if($counter === 9)
 					</td><td valign="top" class="col_two">
 				@endif

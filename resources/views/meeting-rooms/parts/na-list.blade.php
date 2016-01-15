@@ -4,9 +4,9 @@
 		<?php $counter = 0; ?>
 		@foreach($states as $key => $state)
 				<?php $counter++; ?>
-				<div class="state-header"><a href="{!! URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $state->slug])!!}" title="$StateData[0] virtual offices">Meeting Rooms in {!! $state->name !!}</a></div>
+				<div class="state-header"><a href="{!! URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $state->slug])!!}" title="{{ $state->name }} virtual offices">Meeting Rooms in {!! $state->name !!}</a></div>
 				@foreach($state->active_cities as $city)
-					<div class="city-header"><a href="{!! URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $city->country_code, 'city-slug' => $city->slug, 'city_id' => $city->id])!!}" class="style5" title="$CityData[0] virtual offices">{!! $city->name !!}</a></div>
+					<div class="city-header"><a href="{!! URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $city->country_code, 'city-slug' => $city->slug, 'city_id' => $city->id])!!}" class="style5" title="{{ $city->name }} virtual offices">{!! $city->name !!}</a></div>
 				@endforeach
 				@if($counter === 10)
 					</td><td valign="top" class="col_two">
