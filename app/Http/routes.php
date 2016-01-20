@@ -32,7 +32,10 @@ Route::group(['before' => 'auth.basic'], function () {
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
 		Route::get('/virtual-offices/{country_slug}', 'VirtualOfficesController@getCountryVirtualOffices');
-		Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}', 'VirtualOfficesController@getCityVirtualOffices');
+		//Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}', 'VirtualOfficesController@getCityVirtualOffices');
+		/*here*/
+		Route::get('/virtual-offices/{country_code}/{us_state}/{city_name}', 'VirtualOfficesController@getCityVirtualOffices');
+		/*here*/
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}/{center_id}', 'VirtualOfficesController@getVirtualOfficeShowPage');
 		Route::get('/pricing-grids/{center_id}', 'VirtualOfficesController@getCenterPricengGrid');
 
