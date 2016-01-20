@@ -67,7 +67,7 @@ class CenterService {
 	 * Get center by given id.
 	 *
 	 * @param $id (int)
-	 * @return Response
+	 * @return m_responsekeys(conn, identifier)
 	 */
 	public function getMeetingRoomPrice($center_id, $mr_id) {
 		$center = $this->center->where('id', $center_id)->first();

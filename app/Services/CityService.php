@@ -11,15 +11,22 @@ class CityService
 	{
 		$this->city = $city;
 	}
-
+	/*old*/
 	/**
      * Get city by county code and city slug.
      *
      * @return Response
      */
-	public function getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)
+	/*public function getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)
 	{
-		return $this->city->where('country_code', $country_code)->where('slug', $city_slug)->where('id', $city_id)->first();
+		return $this->city->where('country_code', $country_code)->where('us_state', $city_slug)->where('name', $city_id)->first();
+		//return $this->city->where('country_code', $country_code)->where('slug', $city_slug)->where('id', $city_id)->first();
+	}*/
+
+	/*new*/
+	public function getCityByCountryCodeAndCitySlug($country_code, $us_state, $city_name)
+	{
+		return $this->city->where('country_code', $country_code)->where('us_state', $us_state)->where('name', $city_name)->first();
 	}
 
 	/**

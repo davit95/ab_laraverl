@@ -29,7 +29,7 @@ class CartController extends Controller {
 						$item->price_due      = $item->price*30/100;
 						$item->price_total    = $item->price-$item->price_due;
 						$price_total += $item->price_total;						
-					}					
+					}
 					if ($item->type == 'vo') {
 						$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
 						$price_total += $item->sum;
@@ -41,7 +41,7 @@ class CartController extends Controller {
 
 			} else {
 				$items = [];
-			}			
+			}		
 			return view('cart.index', ['items' => $items, 'price_total' => round($price_total, 2)]);
 		}
 	}

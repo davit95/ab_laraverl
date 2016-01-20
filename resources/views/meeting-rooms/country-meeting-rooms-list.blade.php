@@ -1,4 +1,4 @@
-@extends('layout.layout')
+	@extends('layout.layout')
 @section('title') Virtual Office, Virtual Office Solutions from Alliance Virtual Offices @stop
 @section('content')
 	<div class="intWrap">
@@ -84,7 +84,7 @@
         <div class="clearLeft"></div>
 		<ul class='ResultsListMR'>
         	@foreach($country->active_cities as $city)
-        		<a href="{!!URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $country->code, 'city_slug' => $city->slug])!!}">
+        		<a href="{!!URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $country->code, 'city_slug' => $city->slug, 'city_id' => $city->id])!!}">
         			<li>{!! $city->name !!}</li>
         		</a>
         	@endforeach
@@ -99,6 +99,7 @@
         			</div>
         		</div>
         		<div class="clearLeft"></div>
+        		
         		@foreach($city->active_meeting_rooms as $center)
         			@include('meeting-rooms.parts.center-short-view')
         		@endforeach
