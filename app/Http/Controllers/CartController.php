@@ -11,34 +11,91 @@ use Illuminate\Auth\Guard;
 use Illuminate\Http\Request;
 
 class CartController extends Controller {
+	/*old index*/
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
+	// public function index(Guard $auth, TempCartItemService $tempCartItemService) {
+	// 	if ($auth->guest()) {
+	// 		$price_total = 0;
+	// 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
+	// 			$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);	
+	// 			for($i=0;$i<count($items);$i++)	{
+	// 				if($items[$i]->type == 'mr') {
+	// 					/*item->price + item->price_total*/
+	// 					if($i == 0) {
+	// 						$mr_start_time        = strtotime($items[$i]->mr_start_time);
+	// 						$mr_end_time          = strtotime($items[$i]->mr_end_time);
+	// 						$items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+	// 						$items[$i]->price_due      = $items[$i]->price*30/100;
+	// 						$items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+	// 						$price_total += $items[$i]->price_total;
+	// 					}
+	// 					else {
+	// 						$mr_start_time        = strtotime($items[$i]->mr_start_time);
+	// 						$mr_end_time          = strtotime($items[$i]->mr_end_time);
+	// 						$items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+	// 						$items[$i]->price = 	$items[$i-1]->price_due +  $items[$i]->price;				
+	// 						$items[$i]->price_due      = $items[$i]->price*30/100;
+	// 						$items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due ;
+	// 						$price_total += $items[$i]->price_total;	
+	// 					}
+	// 				}
+	// 			}	
+	// 			/*foreach ($items as $item) {
+	// 				if ($item->type == 'mr') {
+	// 					$mr_start_time        = strtotime($item->mr_start_time);
+	// 					$mr_end_time          = strtotime($item->mr_end_time);
+	// 					$item->price_per_hour = $item->price/(($mr_end_time-$mr_start_time)/3600);
+	// 					$item->price_due      = $item->price*30/100;
+	// 					$item->price_total    = $item->price-$item->price_due;
+	// 					$price_total += $item->price_total;						
+	// 				}
+	// 				if ($item->type == 'vo') {
+	// 					$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
+	// 					$price_total += $item->sum;
+	// 				}
+	// 				if ($item->type == 'lr') {
+	// 					$price_total += $item->price;
+	// 				}
+	// 			}*/
+
+	// 		} else {
+	// 			$items = [];
+	// 		}		
+	// 		return view('cart.index', ['items' => $items, 'price_total' => round($price_total, 2)]);
+	// 	}
+	// }
+	/*new index here*/
 	public function index(Guard $auth, TempCartItemService $tempCartItemService) {
 		if ($auth->guest()) {
 			$price_total = 0;
 			if (null != $temp_user_id = Cookie::get('temp_user_id')) {
-				$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);				
-				foreach ($items as $item) {
-					if ($item->type == 'mr') {
-						$mr_start_time        = strtotime($item->mr_start_time);
-						$mr_end_time          = strtotime($item->mr_end_time);
-						$item->price_per_hour = $item->price/(($mr_end_time-$mr_start_time)/3600);
-						$item->price_due      = $item->price*30/100;
-						$item->price_total    = $item->price-$item->price_due;
-						$price_total += $item->price_total;						
+				$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);	
+				for($i=(count($items)-1);$i>=0;$i--)	{
+					if($items[$i]->type == 'mr') {
+						if($i == count($items)-1) {
+						//dd('asd');
+							$mr_start_time        = strtotime($items[$i]->mr_start_time);
+							$mr_end_time          = strtotime($items[$i]->mr_end_time);
+							$items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+							$items[$i]->price_due      = $items[$i]->price*30/100;
+							$items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+							$price_total += $items[$i]->price_total;
+						}
+						else {
+							$mr_start_time        = strtotime($items[$i]->mr_start_time);
+							$mr_end_time          = strtotime($items[$i]->mr_end_time);
+							$items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+							$items[$i]->price = 	$items[$i+1]->price_due +  $items[$i]->price;				
+							$items[$i]->price_due      = $items[$i]->price*30/100;
+							$items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due ;
+							$price_total += $items[$i]->price_total;	
+						}
 					}
-					if ($item->type == 'vo') {
-						$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
-						$price_total += $item->sum;
-					}
-					if ($item->type == 'lr') {
-						$price_total += $item->price;
-					}
-				}
-
+				}	
 			} else {
 				$items = [];
 			}		

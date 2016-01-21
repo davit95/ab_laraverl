@@ -158,7 +158,7 @@ class AvoPagesController extends Controller {
 					$item->price_per_hour = $item->price/(($mr_end_time-$mr_start_time)/3600);
 					$item->price_due      = $item->price*30/100;
 					$item->price_total    = $item->price-$item->price_due;
-					$price_total += $item->price_total;
+					$price_total += $item->price_due;
 				}
 				if ($item->type == 'vo') {
 					$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
@@ -170,7 +170,6 @@ class AvoPagesController extends Controller {
 					$price_total += $item->sum;
 				}
 			}
-
 		} else {
 			$items = [];
 		}				
