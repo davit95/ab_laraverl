@@ -1,7 +1,7 @@
 @extends('layout.layout')
-@section('title')
-    Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
-@stop
+    @section('title')
+        Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
+    @stop
 @section('content')
     <!--[if lt IE 9]>
         <script>document.createElement('section')</script>

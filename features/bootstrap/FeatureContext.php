@@ -48,8 +48,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 	{	
 		$this->temp_cart_items_count = count(Capsule::table('temp_cart_items')->get());
 		$params = (array)json_decode(implode($pystring->getStrings()));		
-		// $uri = $this->filter_uri($uri);
-		if( isset( $params["file_path"] ) ){
+		if( isset( $params["file_path"] ) ) {
 			$params['path'] = public_path().$params['file_path'];
 			$request = $this->client->createRequest($method, $uri, [
 			'cookies'         => $this->jar,
@@ -58,7 +57,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 			    $params['file_name'] => fopen( public_path().$params['file_path'] , 'r'),               
 			]
 			]);         
-		}else{
+		}else {
 			$params['price'] = [
 					220 => "0",
 					221 => "0"
@@ -103,8 +102,4 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 	{						
 		PHPUnit_Framework_Assert::assertEquals(count(Capsule::table('temp_cart_items')->get()), $this->temp_cart_items_count + 1);
 	}
-	// private function filter_uri($uri) {
-	//   // var_dump($this->insert_id);
-	//   return str_replace('{insert_id}', $this->insert_id, $uri);
-	// }
 }

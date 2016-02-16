@@ -50,11 +50,10 @@ class Center extends Model {
 	}
 
 	public function local_number() {
-		return $this->hasOne('App\\Models\\CenterLocalNumber', 'center_id' , 'id');
+		return $this->hasOne('App\\Models\\CenterLocalNumber', 'center_id', 'id');
 	}
 
 	public function telephony_includes() {
 		return $this->hasMany('App\\Models\\TelephonyPackageInclude', 'center_id', 'id');
-
 	}
 }

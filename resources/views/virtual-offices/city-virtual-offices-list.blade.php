@@ -32,8 +32,8 @@
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
-				<h1>Virtual Offices in {{ $city->name }}, {{ $city->country->code }} |  {{ $city->name }} Virtual Office Services</h1>
-				<p class="gray2">Prestigious Addresses and On-demand Office Space</p>
+				<h1>{{$location->H1}}</h1>
+				<p class="gray2">{{$location->H2}}</p>
 			</div>
 			<div class="toggleMap">
         		<div class="toggleBtns">

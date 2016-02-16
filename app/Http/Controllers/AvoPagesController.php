@@ -74,7 +74,6 @@ class AvoPagesController extends Controller {
 	}
 
 	public function storePhoneSettings(Request $request, TempCartItemService $tempCartItemService) {
-		//dd($request->all());
 		$temp_user_id = Cookie::get('temp_user_id');
 		if (null != $tempCartItemService->update($temp_user_id, $request->all())) {
 			return redirect('/customer-information');
@@ -102,11 +101,10 @@ class AvoPagesController extends Controller {
 	 */
 	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ) {
 		$inputs = $request->all();
-		if( null !== $countryService->getCountryById( $request->get('country_id') ) ){
+		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 		}
 		session(['customer_information' => $inputs]);
-		//TODO: Need to know where we want to save customer information;
 		return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
 	}
 
@@ -132,7 +130,6 @@ class AvoPagesController extends Controller {
 			'live_receptionist' => $live_receptionist,
 			'package_option'    => $package_option
 		];
-		//$country_codes = $telCountryService->getAllCountriesWithList();
 		return view('avo-pages.customize-mail', $response);
 	}
 
@@ -146,7 +143,6 @@ class AvoPagesController extends Controller {
 			return redirect('customer-information');
 		}
 		$customer = session('customer_information');
-		//$country_codes = $telCountryService->getAllCountriesWithList();
 		$price_total = 0;
 		$has_vo      = false;
 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
@@ -158,7 +154,7 @@ class AvoPagesController extends Controller {
 					$item->price_per_hour = $item->price/(($mr_end_time-$mr_start_time)/3600);
 					$item->price_due      = $item->price*30/100;
 					$item->price_total    = $item->price-$item->price_due;
-					$price_total += $item->price_total;
+					$price_total += $item->price_due;
 				}
 				if ($item->type == 'vo') {
 					$item->sum = $item->price+$item->vo_mail_forwarding_price+100;
@@ -170,7 +166,6 @@ class AvoPagesController extends Controller {
 					$price_total += $item->sum;
 				}
 			}
-
 		} else {
 			$items = [];
 		}				
@@ -193,7 +188,6 @@ class AvoPagesController extends Controller {
 	 */
 	public function contact() {
 		return view('avo-pages.contact');
-		// return view('cart.index', ['items' => [], 'price_total' => 8]);
 	}
 
 	/**

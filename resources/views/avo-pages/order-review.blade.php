@@ -49,7 +49,7 @@
                                 <table width="100%">
                                     <tr>
                                         <td class="sideCartL3">TOTAL:</td>
-                                        <td class="sideCartr2"><span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_total*session('rate')), 2) !!}</span></td>
+                                        <td class="sideCartr2"><span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_due*session('rate')),2) !!}</span></td>
                                     </tr>
                                 </table>
                             </div><!--/eachSCartWrap-->
@@ -202,7 +202,7 @@
                                     <p>You are about to request your meeting room. Alliance Virtual Offices will confirm your request within 48 hours (most likely a lot sooner); until then your meeting room is not scheduled. We will NOT charge your card until we have your meeting room completely confirmed.
                                     <br>
                                     <br>
-                                    By clicking "Place Order" you authorize Alliance Virtual Offices to charge your credit card for the amount of <strong>{!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!}</strong> upon confirmation of your meeting room. The remaining balance of <strong>$162.22</strong>, plus any additional charges incurred, will be charged at the time of your meeting. Please have your credit card available at the meeting room facility to finalize your charges.
+                                    By clicking "Place Order" you authorize Alliance Virtual Offices to charge your credit card for the amount of <strong>{!! session('currency.symbol') !!}{!! round(($price_total*session('rate')), 2) !!}</strong> upon confirmation of your meeting room. The remaining balance of <strong>{!! session('currency.symbol') !!}{!! round($item->price*session('rate'), 2) - round(($item->price_due*session('rate')),2)!!}</strong>, plus any additional charges incurred, will be charged at the time of your meeting. Please have your credit card available at the meeting room facility to finalize your charges.
                                     <br>
                                     <br>
                                     You will not have any recurring fees.

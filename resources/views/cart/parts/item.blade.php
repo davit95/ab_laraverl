@@ -130,7 +130,7 @@
             <tr>
                 <td class="sideCartL2">TOTAL:</td>
                 <td class="sideCartr2">
-                    <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_total*session('rate')), 2) !!}</span>
+                    <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_due*session('rate')),2) !!}</span>
                 </td>
             </tr>
         </table>

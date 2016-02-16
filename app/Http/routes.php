@@ -31,21 +31,27 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('/login', 'Auth\AuthController@postLogin');
 
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
+
 		Route::get('/virtual-offices/{country_slug}', 'VirtualOfficesController@getCountryVirtualOffices');
-		//Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}', 'VirtualOfficesController@getCityVirtualOffices');
-		/*here*/
-		Route::get('/virtual-offices/{country_code}/{us_state}/{city_name}', 'VirtualOfficesController@getCityVirtualOffices');
-		/*here*/
+		/*old*/
+		Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}', 'VirtualOfficesController@getCityVirtualOffices');
+		//here new
+		Route::get('/virtual-offices/{country_code}/{city_slug}', 'VirtualOfficesController@getCityVirtualOfficesWithoutId');
+		//here
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}/{center_id}', 'VirtualOfficesController@getVirtualOfficeShowPage');
 		Route::get('/pricing-grids/{center_id}', 'VirtualOfficesController@getCenterPricengGrid');
 
 		Route::get('/meeting-rooms', 'MeetingRoomsController@index');
 		Route::get('/meeting-rooms/{country_slug}', 'MeetingRoomsController@getCountryMeetingRooms');
+		//new here
+		Route::get('/meeting-rooms/{country_code}/{country_slug}', 'MeetingRoomsController@getCityMeetingRooms');
+		//here
 		Route::get('/meeting-rooms/{country_code}/{city_slug}/{city_id}', 'MeetingRoomsController@getCityMeetingRooms');
+
 		Route::get('/meeting-rooms/{country_code}/{city_slug}/{center_slug}/{center_id}', 'MeetingRoomsController@getMeetingRoomShowPage');
 		Route::get('/reset-date', 'MeetingRoomsController@resetDate');
 		Route::post('/meeting-rooms/book-meeting-room', 'MeetingRoomsController@bookMeetingRoom');
-		//Route::post('/meeting-rooms/{country_code}/{city_slug}/{center_slug}', 'MeetingRoomsController@getMeetingRoomShowPage');
+		
 
 		Route::get('/live-receptionist', 'LiveReceptionistsController@index');
 		Route::post('/live-receptionist-add-to-cart', 'LiveReceptionistsController@addToCart');

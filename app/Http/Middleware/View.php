@@ -29,9 +29,6 @@ class View
             session()->forget('rate');
             session(['last_refresh_time' => $now]);
         }
-        // var_dump(session('rates'));
-        // 12:36 array(4) { ["USD"]=> int(1) ["GBP"]=> float(0.663552) ["EUR"]=> float(0.941814) ["AUD"]=> float(1.367075) }
-        // 15:11 array(4) { ["USD"]=> int(1) ["GBP"]=> float(0.664254) ["EUR"]=> float(0.941269) ["AUD"]=> float(1.364812) }
         if (is_null(session('currency'))) {
             $currency = $currencyModel->find(1);
             $currency = ['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
@@ -39,7 +36,6 @@ class View
         }
 
         if (is_null(session('rates')) || is_null(session('rate'))) {
-            //$response = $client->get('https://openexchangerates.org/api/latest.json?app_id='.config('abcn.openexchangerates.app_id'))->json();            
             $response['rates'] = [
                 'USD' => 1,
                 'GBP' => 1.7,

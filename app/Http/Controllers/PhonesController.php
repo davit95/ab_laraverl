@@ -45,7 +45,6 @@ class PhonesController extends Controller {
 	public function getTollFreeNumbers(Request $request, ClientService $clientService) {
 		$prefix  = $request->get('prefix');
 		$numbers = $clientService->getAreaNumbersByAreaPrefix(1, $prefix);
-		//dd($numbers);
 		return view('phones.area-codes', ['codes' => $numbers]);
 	}
 }

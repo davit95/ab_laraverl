@@ -71,7 +71,7 @@ class CenterService {
 	 */
 	public function getMeetingRoomPrice($center_id, $mr_id) {
 		$center = $this->center->where('id', $center_id)->first();
-		return $meeting_rooms = $center->meeting_rooms->where('id', (int)$mr_id)->first()->hourly_rate;
+		return $meeting_rooms = $center->meeting_rooms->where('id', $mr_id)->first()->hourly_rate;
 	}
 
 
@@ -87,7 +87,7 @@ class CenterService {
 		            ->whereHas('city', function ($q) use ($city_slug) {
 				$q->where('slug', $city_slug);
 			})
-			->where('slug', $center_slug)	->where('id', $center_id)	->first();
+			->where('slug', $center_slug)->where('id', $center_id)->first();
 	}
 
 	/**
@@ -102,7 +102,7 @@ class CenterService {
 		            ->whereHas('city', function ($q) use ($city_slug) {
 				$q->where('slug', $city_slug);
 			})
-			->where('slug', $center_slug)	->where('id', $center_id)	->first();
+			->where('slug', $center_slug)->where('id', $center_id)->first();
 	}
 
 	/**

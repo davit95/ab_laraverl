@@ -11,7 +11,7 @@ use App\Services\CityService;
 use App\Services\CountryService;
 use App\Services\TelephonyPackageIncludeService;
 use App\Services\UsStateService;
-
+use App\Services\LocationSeoService;
 class VirtualOfficesController extends Controller {
 	/**
 	 * Display a listing of the resource.
@@ -35,7 +35,7 @@ class VirtualOfficesController extends Controller {
 					$center->packages_arr           = $this->packages($center);
 					$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 				}
-			}			
+			}	
 			return view('virtual-offices.state-virtual-offices-list', ['state' => $state, 'active_cities' => $active_cities]);
 		} elseif (null != $country = $countryService->getCountryBySlug($country_slug)) {
 			$active_cities = $cityService->getCountryActiveCitiesWithPagination($country->id);
@@ -44,74 +44,23 @@ class VirtualOfficesController extends Controller {
 					$center->packages_arr           = $this->packages($center);
 					$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 				}
-			}			
+			}
 			return view('virtual-offices.country-virtual-offices-list', ['country' => $country, 'active_cities' => $active_cities]);
 		}
-
 	}
-	/*old*/
-	/**
+	
+	/** old 
 	 * Display citie's centers.
 	 *
 	 * @return Response
 	 */
-	/*public function getCityVirtualOffices($country_code, $city_slug, $city_id , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , Request $request) {		
+	public function getCityVirtualOffices($country_code, $city_slug, $city_id , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , Request $request) {		
 		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
 			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
-			//dd($centers);
 			$center_ids        = $centers->lists('id')->toArray();
 			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
 			$request_ids       = array_diff($nearby_center_ids, $center_ids);
 			$nearby_centers = $centerService->getVirtualOfficesByIds($request_ids);
-			//dd($centers->lists('id')->toArray(), $nearby_center_ids);
-			//$centers                          = $centers->merge($nearby_centers);
-			$center_addresses_for_google_maps = [];
-			$google_maps_center_city          = $city->name;
-			foreach ($centers as $key => $center) {
-				$center_addresses_for_google_maps[] =
-				[
-					'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
-					'id'      => $center->id
-				];
-				$center->packages_arr           = $this->packages($center);
-				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
-			}
-			foreach ($nearby_centers as $key => $center) {
-				$center_addresses_for_google_maps[] =
-				[
-					'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
-					'id'      => $center->id
-				];
-				$center->packages_arr           = $this->packages($center);
-				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
-			}
-			return view('virtual-offices.city-virtual-offices-list', [
-					'centers'                          => $centers,
-					'nearby_centers'                   => $nearby_centers,
-					'city'                             => $city,
-					'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps),
-					'google_maps_center_city'          => $google_maps_center_city]);
-		} else {
-			return '404';
-		}
-	}*/
-
-	/*new here*/
-	/**
-	 * Display citie's centers.
-	 *
-	 * @return Response
-	 */
-	public function getCityVirtualOffices($country_code, $us_state, $city_name , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , Request $request) {		
-		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $us_state, $city_name)) {
-			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
-			//dd($centers);
-			$center_ids        = $centers->lists('id')->toArray();
-			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
-			$request_ids       = array_diff($nearby_center_ids, $center_ids);
-			$nearby_centers = $centerService->getVirtualOfficesByIds($request_ids);
-			//dd($centers->lists('id')->toArray(), $nearby_center_ids);
-			//$centers                          = $centers->merge($nearby_centers);
 			$center_addresses_for_google_maps = [];
 			$google_maps_center_city          = $city->name;
 			foreach ($centers as $key => $center) {
@@ -142,7 +91,49 @@ class VirtualOfficesController extends Controller {
 			return '404';
 		}
 	}
-	/*here*/
+
+	public function getCityVirtualOfficesWithoutId($country_code, $city_slug , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , LocationSeoService $locationSeo, Request $request) {
+		//dd($country_code, $city_slug);
+		if (null != $city = $cityService->getCityVirtualOfficesWithoutId($country_code, $city_slug)) {
+			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
+			$center_ids        = $centers->lists('id')->toArray();
+			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
+			$request_ids       = array_diff($nearby_center_ids, $center_ids);
+			$nearby_centers = $centerService->getVirtualOfficesByIds($request_ids);
+			$center_addresses_for_google_maps = [];
+			$google_maps_center_city          = $city->name;
+			foreach ($centers as $key => $center) {
+				$center_addresses_for_google_maps[] =
+				[
+					'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
+					'id'      => $center->id
+				];
+				$center->packages_arr           = $this->packages($center);
+				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
+			}
+			foreach ($nearby_centers as $key => $center) {
+				$center_addresses_for_google_maps[] =
+				[
+					'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
+					'id'      => $center->id
+				];
+				$center->packages_arr           = $this->packages($center);
+				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
+			}
+			
+		
+			$location=$locationSeo->getCityLocationSeo(strtolower($city->slug),$city->us_state_code);
+			return view('virtual-offices.city-virtual-offices-list', [
+					'centers'                          => $centers,
+					'nearby_centers'                   => $nearby_centers,
+					'city'                             => $city,
+					'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps),
+					'location'						   => $location[0],
+					'google_maps_center_city'          => $google_maps_center_city]);
+		} else {
+			return '404';
+		}
+	}
 
 	/**
 	 * Display center's final page.

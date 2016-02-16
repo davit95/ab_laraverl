@@ -66,6 +66,7 @@ class DataMigration extends Command {
 		$this->tel_countries();
 		$this->tel_prefixes();
 		$this->detect_active_cities();
+		$this->location_SEO();
 	}
 
 	private function centers() {
@@ -948,5 +949,32 @@ class DataMigration extends Command {
 				'port'      => '3306'
 			]);
 		DB::setDefaultConnection('tmp');
+	}
+
+	private function location_SEO() {
+		$this->info("\n migrating location_SEO table");
+		$this->make_new_connection();
+		$collection = DB::table('Location_SEO')->get();
+		$bar        = $this->output->createProgressBar(count($collection));
+		foreach ($collection as $key => $value) {
+			$new_collection[] =
+			[
+				'City'         => $value->City,
+				'State'        => $value->State,
+				'Country' 	   => $value->Country,
+				'Title'        => $value->Title,
+				'H1'           => $value->H1,
+				'H2'           => $value->H2,
+				'Type'         => $value->Type,
+			];
+			$bar->advance();
+		}
+		//dd($new_collection);
+		DB::setDefaultConnection('mysql');
+		//DB::table('regions')->truncate();
+		DB::table('location_SEO')->insert($new_collection);
+		$bar->finish();
+		$this->info(' ✔');
+
 	}
 }

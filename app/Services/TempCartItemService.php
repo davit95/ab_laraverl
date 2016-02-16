@@ -40,7 +40,6 @@ class TempCartItemService {
 
 	public function update($temp_user_id, $inputs) {
 		$cart_item = $this->tempCartItem->where('temp_user_id', $temp_user_id)->orderBy('created_at', 'DESC')->first();
-		//dd($cart_item, $inputs);
 		if (is_null($cart_item)) {
 			return false;
 		}

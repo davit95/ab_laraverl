@@ -43,7 +43,5 @@ return [
         'log' => [
             'driver' => 'log',
         ],
-
     ],
-
 ];
