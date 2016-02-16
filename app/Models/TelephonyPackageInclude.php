@@ -10,6 +10,6 @@ class TelephonyPackageInclude extends Model
 
     public function package()
     {
-      return $this->belongsTo('App\\Models\\Package',  'package_id', 'part_number');
+      return $this->belongsTo('App\\Models\\Package', 'package_id', 'part_number');
     }
 }

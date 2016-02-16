@@ -18,7 +18,6 @@ class TelCountryService
      */
 	public function getAllCountriesWithList()
 	{
-		//dd($this->telCountry->orderBy('country_code', 'ASC')->lists('full_name', 'country_code')->toArray());
 		return $this->telCountry->orderBy('country_code', 'ASC')->lists('full_name', 'country_code')->toArray();
 	}
 	

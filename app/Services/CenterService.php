@@ -87,7 +87,7 @@ class CenterService {
 		            ->whereHas('city', function ($q) use ($city_slug) {
 				$q->where('slug', $city_slug);
 			})
-			->where('slug', $center_slug)	->where('id', $center_id)	->first();
+			->where('slug', $center_slug)->where('id', $center_id)->first();
 	}
 
 	/**
@@ -102,7 +102,7 @@ class CenterService {
 		            ->whereHas('city', function ($q) use ($city_slug) {
 				$q->where('slug', $city_slug);
 			})
-			->where('slug', $center_slug)	->where('id', $center_id)	->first();
+			->where('slug', $center_slug)->where('id', $center_id)->first();
 	}
 
 	/**

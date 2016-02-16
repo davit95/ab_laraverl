@@ -48,10 +48,9 @@ class CountryCities
 			'Turkey'                    => ['Ankara', 'Istanbul'],
 			'United Arab Emirates'      => ['Dubai'],
 			'United Kingdom'            => ['Birmingham', 'Brentford', 'Bristol', 'Canary Wharf', 'Cardiff', 'Cardiff Waterside', 'Central Milton Keynes', 'London', 'London City', 'London Mayfair', 'London Notting Hill', 'London West End', 'Newport', 'Nottingham', 'Reading', 'Solihull', 'Wakefield']
-
 		];
 	}
-	//SELECT * FROM `center` WHERE (`City` REGEXP '[^a-zA-Z1-9( ,-]')
+
 	public function getCities()
 	{
 		return $this->arr;

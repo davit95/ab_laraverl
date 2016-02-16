@@ -24,10 +24,7 @@ class MRBookRequest extends Request
     public function rules()
     {
         return [
-            //'mr_date'      => 'required',
-            //'mr_start_time' => 'required',
-            //'mr_end_time'   => 'required',
-            //'mr_id'        => 'required'
+            //
         ];
     }
 

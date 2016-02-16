@@ -19,13 +19,10 @@ class UsStateService
      */
 	public function getAllStates()
 	{
-		//return $this->usState->has('active_cities', '>', 0)->orderBy('name', 'ASC')->get();
-		if(Cache::has('active_us_state_cities'))
-		{
+		if(Cache::has('active_us_state_cities')) {
 			return Cache::get('active_us_state_cities');
 		}
-		else
-		{
+		else {
 			Cache::remember('active_us_state_cities', 20000, function()
 			{
 			    return $this->usState->has('active_cities', '>', 0)->orderBy('name', 'ASC')->get();
@@ -52,12 +49,10 @@ class UsStateService
 	public function searchStateByKey($key)
 	{
 		$states = $this->usState->where('name', 'LIKE', "{$key}%")->get();
-		foreach ($states as $key => $value)
-		{
+		foreach ($states as $key => $value) {
 			$states[$key]->vo_url = URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $value->slug]);
 			$states[$key]->mr_url = URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $value->slug]);
 		}
-		//dd($states);
 		return $states;
 	}
 }

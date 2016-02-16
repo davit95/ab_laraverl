@@ -34,7 +34,7 @@
 	            <div class="contactPhones">
 		            <div class="centerForm">
 		                NORTH AMERICA:    <span class="melon">+1 888.869.9494</span> <br/>
-						INTERNATIONAL:    <span class="melon"> +1 949.777.6340</span>
+						INTERNATIONAL:    <span class="melon">+1 949.777.6340</span>
 		            </div><!--/centerForm-->
 	            </div><!--/contactPhones-->
 	            <div class="cForm">
@@ -86,7 +86,10 @@
 	        </div>
 			<ul class='ResultsListVO'>
 	        	@foreach($country->active_cities as $city)
-	        		<a href="{!!URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $country->code, 'city_slug' => $city->slug , 'city_id' => $city->id])!!}">
+	        		<!-- <a href="{!!URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $country->code, 'city_slug' => $city->slug , 'city_id' => $city->id])!!}">
+	        			<li>{!! $city->name !!}</li>
+	        		</a> -->
+	        		<a href="{!!URL::action('VirtualOfficesController@getCityVirtualOfficesWithoutId', ['country_code' => $country->code, 'city_slug' => $city->slug ])!!}">
 	        			<li>{!! $city->name !!}</li>
 	        		</a>
 	        	@endforeach

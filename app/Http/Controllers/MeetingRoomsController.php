@@ -27,7 +27,7 @@ class MeetingRoomsController extends Controller {
 	}
 
 	/**
-	 * Display countrie's centers, and cities listing.
+	 * Display countrie's centers, and cities listing.            
 	 *
 	 * @return Response
 	 */
@@ -41,13 +41,46 @@ class MeetingRoomsController extends Controller {
 		}
 	}
 
-	/**
+	/** old
 	 * Display citie's centers.
 	 *
 	 * @return Response
 	 */
-	public function getCityMeetingRooms($country_code, $city_slug,$city_id, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
-		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
+	// public function getCityMeetingRooms($country_code, $city_slug,$city_id, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
+	// 	dd($country_code, $city_slug,$city_id);
+	// 	if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
+	// 		$centers                          = $centerService->getMeetingRoomsByCityId($city->id);			
+	// 		$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
+	// 		$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);			
+	// 		$center_addresses_for_google_maps = [];
+	// 		$google_maps_center_city          = $city->name;
+	// 		foreach ($centers as $key => $center) {
+	// 			$center_addresses_for_google_maps[] =
+	// 			[
+	// 				'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
+	// 				'id'      => $center->id
+	// 			];
+	// 		}
+	// 		foreach ($nearby_centers as $key => $center) {
+	// 			$center_addresses_for_google_maps[] =
+	// 			[
+	// 				'address' => $center->address1.' '.$center->address2.' '.$center->postal_code,
+	// 				'id'      => $center->id
+	// 			];				
+	// 		}
+	// 		return view('meeting-rooms.city-meeting-rooms-list', ['centers' => $centers, 'nearby_centers' => $nearby_centers, 'city' => $city, 'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps), 'google_maps_center_city' => $google_maps_center_city]);
+	// 	} else {
+	// 		return '404';
+	// 	}
+	// }
+
+	/**new
+	 * Display citie's centers.
+	 *
+	 * @return Response
+	 */
+	public function getCityMeetingRooms($country_code,$city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
+		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug1($country_code, $city_slug)) {
 			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);			
 			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
 			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);			
@@ -163,7 +196,6 @@ class MeetingRoomsController extends Controller {
 				$center->meeting_rooms[$key]->included = $included;
 				$center->meeting_rooms[$key]->paid     = $paid;
 			}
-			//dd( $center , $nearby_centers);
 			return view('meeting-rooms.show', ['center' => $center, 'nearby_centers' => $nearby_centers]);
 		} else {
 			return 'aa';
@@ -208,7 +240,7 @@ class MeetingRoomsController extends Controller {
 				}
 			}
 
-			if (!$request     ->has('mr_id')) {
+			if (!$request->has('mr_id')) {
 				return redirect()->back()->withErrors(['mr_id' => 'No selected meeting room.']);
 			}
 			if (null != $cookie = Cookie::get('temp_user_id')) {
@@ -226,7 +258,7 @@ class MeetingRoomsController extends Controller {
 			$params['mr_start_time'] = (new \DateTime($params['mr_start_time']))->format('H:i:s');
 			$params['mr_end_time']   = (new \DateTime($params['mr_end_time']))->format('H:i:s');					
 			if (!is_null($tempCartItemService->create($params))) {	
-				session()                       ->forget(['mr_request', 'hours']);				
+				session()->forget(['mr_request', 'hours']);				
 				return redirect('/customer-information');
 			}
 		}

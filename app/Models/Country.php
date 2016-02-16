@@ -14,6 +14,6 @@ class Country extends Model
 
     public function active_cities_count()
     {
-    	return $this->hasOne('App\\Models\\City')->where('active', 1)->selectRaw('country_id , count(*) as count')->groupBy('country_id');
+    	return $this->hasOne('App\\Models\\City')->where('active', 1)->selectRaw('country_id, count(*) as count')->groupBy('country_id');
     }
 }

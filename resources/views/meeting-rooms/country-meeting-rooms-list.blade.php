@@ -84,7 +84,10 @@
         <div class="clearLeft"></div>
 		<ul class='ResultsListMR'>
         	@foreach($country->active_cities as $city)
-        		<a href="{!!URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $country->code, 'city_slug' => $city->slug, 'city_id' => $city->id])!!}">
+        		<!-- <a href="{!!URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $country->code, 'city_slug' => $city->slug, 'city_id' => $city->id])!!}">
+        			<li>{!! $city->name !!}</li>
+        		</a> -->
+        		<a href="{!!URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $country->code, 'city_slug' => $city->slug])!!}">
         			<li>{!! $city->name !!}</li>
         		</a>
         	@endforeach

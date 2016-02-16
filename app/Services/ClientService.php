@@ -20,7 +20,7 @@ class ClientService
 			"clTRID"		=>	"12345678",
 			"countryCode"   =>	$country_code,
 		];
-		$response = json_decode( json_encode($this->client->post('https://control.phone.com/special/xmlapi',[ 'body' => $params ])->xml()), true);
+		$response = json_decode( json_encode($this->client->post('https://control.phone.com/special/xmlapi', [ 'body' => $params ])->xml()), true);
 		return $response['resultData']['phoneNumberList']['phoneNumber'];
 	}
 
@@ -34,7 +34,7 @@ class ClientService
 			"countryCode"   =>	$country_code,
 			"pattern"       =>  $prefix."*******"
 		];
-		$response = json_decode( json_encode($this->client->post('https://control.phone.com/special/xmlapi',[ 'body' => $params ])->xml()), true);
+		$response = json_decode( json_encode($this->client->post('https://control.phone.com/special/xmlapi', [ 'body' => $params ])->xml()), true);
 		return $response['resultData']['phoneNumberList']['phoneNumber'];
 	}
 }

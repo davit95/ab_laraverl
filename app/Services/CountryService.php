@@ -68,10 +68,6 @@ class CountryService
 			$countries[$key]->vo_url = URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $value->slug]);
 			$countries[$key]->mr_url = URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $value->slug]);
 		}
-		//dd( $countries );
 		return $countries;
-	}
-
-
-	
+	}	
 }
