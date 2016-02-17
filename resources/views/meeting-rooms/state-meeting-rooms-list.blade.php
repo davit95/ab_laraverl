@@ -21,7 +21,7 @@
 			</form>
 		</div>
 		<div class="breadcrumbs">
-			<a href="/">Home</a> / <a href="/virtual-offices">Meeting Rooms</a> / United States / {!! $state->name!!}
+			<a href="/">Home</a> > <a href="/virtual-offices">Meeting Rooms</a> > United States > {!! $state->name!!}
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">

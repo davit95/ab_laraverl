@@ -18,7 +18,8 @@
 			</form>
 		</div>
 		<div class="breadcrumbs">
-			<a href="/">Home</a> / <a href="/meeting-rooms">Meeting Rooms</a> / {!! $city->country->name!!} / {!! $city->us_state !!} / {!! $city->name !!}
+
+			<a href="/">Home</a> / <a href="/meeting-rooms">Meeting Rooms</a> / {!! $city->country->name!!}  {!! $city->us_state != null ? '/'.$city->us_state : '' !!} / {!! $city->name !!}
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">

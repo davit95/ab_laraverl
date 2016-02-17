@@ -17,8 +17,11 @@ class LocationSeoService
 	* @return mixed;
 	* get city location seo in city,state
 	*/
-	public function getCityLocationSeo($city,$state)
+	public function getCityLocationSeo($city,$state,$country_code)
 	{
-		return $this->location_seo->where(['City'=>$city,'State'=>$state,'Type'=>'city_category'])->get();
+		if(null != $this->location_seo->where(['City'=>$city,'State'=>$state,'Type'=>'city_category'])->first()) {
+			return $this->location_seo->where(['City'=>$city,'State'=>$state,'Type'=>'city_category'])->first();
+		}
+		return $this->location_seo->where(['City'=>$city,'Country'=>$country_code,'Type'=>'city_category'])->first();;
 	}
 }

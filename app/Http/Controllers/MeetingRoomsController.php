@@ -80,7 +80,7 @@ class MeetingRoomsController extends Controller {
 	 * @return Response
 	 */
 	public function getCityMeetingRooms($country_code,$city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
-		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug1($country_code, $city_slug)) {
+		if (null != $city = $cityService->getCityVirtualOfficesWithoutId($country_code, $city_slug)) {
 			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);			
 			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
 			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);			
