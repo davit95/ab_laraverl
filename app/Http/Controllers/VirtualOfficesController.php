@@ -121,14 +121,14 @@ class VirtualOfficesController extends Controller {
 				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 			}
 			
-		
-			$location=$locationSeo->getCityLocationSeo(strtolower($city->slug),$city->us_state_code);
+			
+			$location=$locationSeo->getCityLocationSeo(strtolower($city->slug),$city->us_state_code,$city->country_code);
 			return view('virtual-offices.city-virtual-offices-list', [
 					'centers'                          => $centers,
 					'nearby_centers'                   => $nearby_centers,
 					'city'                             => $city,
 					'center_addresses_for_google_maps' => json_encode($center_addresses_for_google_maps),
-					'location'						   => $location[0],
+					'location'						   => $location,
 					'google_maps_center_city'          => $google_maps_center_city]);
 		} else {
 			return '404';

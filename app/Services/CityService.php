@@ -74,14 +74,14 @@ class CityService
 		return $cities;
 	}
 
-	/**
-	* Return city by country code and city slug
-	* @param $country_code;
-	* @param $city_slug;
-	* @return Response
-	*/
-	public function getCityByCountryCodeAndCitySlug1($country_code, $city_slug)
-    {
-        return $this->city->where('us_state_code', $country_code)->where('slug', $city_slug)->first();
-    }
+	// /**
+	// * Return city by country code and city slug
+	// * @param $country_code;
+	// * @param $city_slug;
+	// * @return Response
+	// */
+	// public function getCityByCountryCodeAndCitySlug1($country_code, $city_slug)
+ //    {
+ //        return $this->city->where('us_state_code', $country_code)->where('slug', $city_slug)->first();
+ //    }
 }
