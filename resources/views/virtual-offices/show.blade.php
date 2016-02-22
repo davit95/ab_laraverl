@@ -145,7 +145,7 @@
 						    <div id="startPlan" class="firstline gray2"><h3 class="cf1">&nbsp; PLATINUM <img src="/images/info.png" class="tooltip"/></h3></div>
 						    <div class="secondline gray3">
 						    	@if(isset($packages['Platinum'])  && $packages['Platinum']->current_currency_price->price)
-						    		<span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">$100 Set up fee</p>
+						    		<span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum']->current_currency_price->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">{!! session('currency.symbol') !!}100 Set up fee</p>
 						    	@else
 						    		<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
 						    	@endif
@@ -184,7 +184,7 @@
 											    </span><span class="pMonth"> /MONTH</span>
 											    <br>
 											    <p class="save">
-											    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
+											    	<span class="orange mediumBold">You save {!! session('currency.symbol') !!}10</span> &nbsp; {!! session('currency.symbol') !!}100 Set up fee
 											    </p>
 											@else
 												<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
@@ -230,7 +230,7 @@
 						    <div class="firstline gray2"><h3 class="cf1">&nbsp; PLATINUM PLUS<a href="#" title=""> <img src="/images/info.png" class="tooltip3"/></a></h3></div>
 						    <div class="secondline gray3">
 						    	@if(isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price)
-						    		<span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">$100 Set up fee</p>
+						    		<span class="price">&nbsp;{!! session('currency.symbol') !!}{!! $packages['Platinum Plus']->current_currency_price->price !!}</span><span class="pMonth"> /MONTH</span><br><p class="save">{!! session('currency.symbol') !!}100 Set up fee</p>
 						    	@else
 						    		<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>
 						    	@endif
@@ -281,7 +281,7 @@
 									    <span class="pMonth"> /MONTH</span>
 									    <br>
 									    <p class="save">
-									    	<span class="orange mediumBold">You save $10</span> &nbsp; $100 Set up fee
+									    	<span class="orange mediumBold">You save {!! session('currency.symbol') !!}10</span> &nbsp; {!! session('currency.symbol') !!}100 Set up fee
 									    </p>
 							    	@else
 							    		<span class="price"></span><br><p class="">Not Available</p><div class="btnSpace"></div>

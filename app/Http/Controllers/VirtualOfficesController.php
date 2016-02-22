@@ -93,11 +93,11 @@ class VirtualOfficesController extends Controller {
 	}
 
 	public function getCityVirtualOfficesWithoutId($country_code, $city_slug , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , LocationSeoService $locationSeo, Request $request) {
-		//dd($country_code, $city_slug);
 		if (null != $city = $cityService->getCityVirtualOfficesWithoutId($country_code, $city_slug)) {
 			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
 			$center_ids        = $centers->lists('id')->toArray();
 			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
+			//dd($center_ids,$city->name,$nearby_center_ids);
 			$request_ids       = array_diff($nearby_center_ids, $center_ids);
 			$nearby_centers = $centerService->getVirtualOfficesByIds($request_ids);
 			$center_addresses_for_google_maps = [];
@@ -120,8 +120,6 @@ class VirtualOfficesController extends Controller {
 				$center->packages_arr           = $this->packages($center);
 				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 			}
-			
-			
 			$location=$locationSeo->getCityLocationSeo(strtolower($city->slug),$city->us_state_code,$city->country_code);
 			return view('virtual-offices.city-virtual-offices-list', [
 					'centers'                          => $centers,
@@ -147,7 +145,8 @@ class VirtualOfficesController extends Controller {
 			foreach ($nearby_centers as $k => $v) {
 				$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
 			}				
-			$nearby_centers = $nearby_centers->sortBy('distance');			
+			$nearby_centers = $nearby_centers->sortBy('distance');	
+			//dd($this->packages($center));		
 			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center)]);
 		}
 	}
@@ -172,7 +171,7 @@ class VirtualOfficesController extends Controller {
 				$packages['Platinum Plus'] = $price;
 			}
 		}
-		if (isset($packages['Platinum']) && $packages['Platinum']->current_currency_price->price &&
+		if (isset($packages['Platinum'])  && $packages['Platinum']->current_currency_price->price &&
 			isset($packages['Platinum Plus']) && $packages['Platinum Plus']->current_currency_price->price
 		) {
 			$remainder                        = round(($packages['Platinum Plus']->current_currency_price->price-$packages['Platinum']->current_currency_price->price)/session('rate'), 2);
@@ -184,4 +183,10 @@ class VirtualOfficesController extends Controller {
 		}
 		return $packages;
 	}
+
+	/*get notar page*/
+	public function getNotarPage() {
+		return view('virtual-offices.notar');
+	}
+
 }

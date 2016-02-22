@@ -35,7 +35,7 @@
     	@endif
         <p>
         	<span class='rcName gray2'>{!! $center->building_name !!}</span><br>
-            <span class='rcAddress gray3'>{!! $center->address1 !!} {!! $center->address2 !!}, {!! $center->postal_code !!}</span>
+            <span class='rcAddress gray3'>{!! $center->address1 !!} {!! $center->address2 !!}, {!! $center->city_name !!}, {!!$center->us_state!!} {!! $center->postal_code !!}</span>
         </p>
         <a href="{!! URL::action('VirtualOfficesController@getVirtualOfficeShowPage', ['country_code' => $center->country, 'city_slug' => $center->city? $center->city->slug : '', 'center_slug' => $center->slug, 'center_id' => $center->id])!!}" class="gray3 mediumBold">
             Try a {!! $center->name !!} Virtual Office

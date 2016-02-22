@@ -192,7 +192,7 @@
                                 </div>
                             </div><!--/newCinfo-->
                             <!-- end billing info //-->
-                            @if($email_flag)
+                            
                                 <div class="mailFinfo">
                                     <h3><span class="newCust">MAIL FORWARDING INFORMATION</span></h3>
                                     <p>
@@ -246,7 +246,7 @@
                                     <div class="clear"></div>
                                     <!-- end username information//-->
                                 </div><!--/mailFinfo-->
-                            @endif
+                           
                             <!-- end mail forwarding info //-->
 
                             <div class="AccountPW">

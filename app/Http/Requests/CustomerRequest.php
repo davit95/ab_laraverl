@@ -28,12 +28,12 @@ class CustomerRequest extends Request {
 			'company_name'          => 'required',
 			'address1'              => 'required',
 			'postal_code'           => 'required',
-			'mf_first_name'         => 'required_if_attribute:email_flag,!=,""',
-			'mf_last_name'          => 'required_if_attribute:email_flag,!=,""',
-			'mf_address1'           => 'required_if_attribute:email_flag,!=,""',
-			'mf_company_name'       => 'required_if_attribute:email_flag,!=,""',
-			'mf_country_id'         => 'required_if_attribute:email_flag,!=,""',
-			'mf_postal_code'        => 'required_if_attribute:email_flag,!=,""',
+			'mf_first_name'         => 'required',
+			'mf_last_name'          => 'required',
+			'mf_address1'           => 'required',
+			'mf_company_name'       => 'required',
+			'mf_country_id'         => 'required',
+			'mf_postal_code'        => 'required',//_if_attribute:email_flag,!=,""
 			'password'              => 'required',
 			'password_confirmation' => 'required',
 			'agree'                 => 'required'

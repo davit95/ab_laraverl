@@ -88,8 +88,9 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService) {
-		$country_codes = $telCountryService->getAllCountriesWithList();
-		$center = $centerService->getCenterById(session()->get('centerid'));		
+		$country_codes = $telCountryService->getAllCountriesWithList();	
+		$center = $centerService->getCenterById(session()->get('centerid'));	
+		//dd($center_id)
 		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;		
 		return view('avo-pages.customer-information', ['countries' => $country_codes, 'email_flag' => $email_flag]);
 	}
@@ -147,7 +148,48 @@ class AvoPagesController extends Controller {
 		$has_vo      = false;
 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
 			$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
-			foreach ($items as $item) {
+			for($i = count($items) -1; $i >= 0; $i--) {
+				if($i == count($items) -1) {
+					if($items[$i]->type == 'mr'){
+						$mr_start_time        = strtotime($items[$i]->mr_start_time);
+						$mr_end_time          = strtotime($items[$i]->mr_end_time);
+						$items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+						$items[$i]->price_due      = $items[$i]->price*30/100;
+						$items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+						$price_total += $items[$i]->price_due;
+					}
+					if($items[$i]->type == 'vo'){
+						$items[$i]->sum = $items[$i]->price+$items[$i]->vo_mail_forwarding_price+100;
+						$price_total += $items[$i]->sum;
+						$has_vo = true;
+					}
+					if ($items[$i]->type == 'lr') {
+						$items[$i]->sum = $items[$i]->price;
+						$price_total += $items[$i]->sum;
+					}
+				}
+				else {
+					if($items[$i]->type == 'mr'){
+						$mr_start_time        = strtotime($items[$i]->mr_start_time);
+						$mr_end_time          = strtotime($items[$i]->mr_end_time);
+						$items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+						$items[$i]->price = $items[$i]->price + $items[$i+1]->price_due;
+						$items[$i]->price_due      = $items[$i]->price*30/100;
+						$items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+						$price_total += $items[$i]->price_due;
+					}
+					if($items[$i]->type == 'vo'){
+						$items[$i]->sum = $items[$i]->price+$items[$i]->vo_mail_forwarding_price+100;
+						$price_total += $items[$i]->sum;
+						$has_vo = true;
+					}
+					if ($items[$i]->type == 'lr') {
+						$items[$i]->sum = $items[$i]->price;
+						$price_total += $items[$i]->sum;
+					}
+				}
+			}
+			/*foreach ($items as $item) {
 				if ($item->type == 'mr') {
 					$mr_start_time        = strtotime($item->mr_start_time);
 					$mr_end_time          = strtotime($item->mr_end_time);
@@ -165,7 +207,7 @@ class AvoPagesController extends Controller {
 					$item->sum = $item->price;
 					$price_total += $item->sum;
 				}
-			}
+			}*/
 		} else {
 			$items = [];
 		}				

@@ -106,6 +106,11 @@
 	    			</div>
 	    		</div>
 	    			 <div class="clearLeft"></div>
+	    			<!-- @foreach($city->active_virtual_offices as $center)
+	    				@foreach($center->packages_arr as $c)
+	    			 		{!!$c->price!!}
+	    				@endforeach
+	    			@endforeach -->
 	    			@foreach($city->active_virtual_offices as $center)
 	    				@include('virtual-offices.parts.center-short-view')
 	    			@endforeach

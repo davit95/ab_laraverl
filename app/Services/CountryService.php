@@ -65,7 +65,8 @@ class CountryService
 		$countries = $this->country->where('name', 'LIKE', "{$key}%")->get();
 		foreach ($countries as $key => $value)
 		{
-			$countries[$key]->vo_url = URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $value->slug]);
+			/*$countries[$key]->vo_url = URL::action('VirtualOfficesController@getCountryVirtualOffices', ['country_slug' => $value->slug]);*/
+			$countries[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOfficesWithoutId14', ['country_code' => $value->us_state_code, 'city_slug' => $value->slug]);
 			$countries[$key]->mr_url = URL::action('MeetingRoomsController@getCountryMeetingRooms', ['country_slug' => $value->slug]);
 		}
 		return $countries;
