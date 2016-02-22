@@ -157,7 +157,7 @@
                 </div>
             </div>
 
-            <div class="setUpFee">One time only - {!! session('currency.symbol') !!}100 Set up fee for any plan.</div><!--/setUpFee-->
+            <div class="setUpFee">One time only - {!! session('currency.symbol') !!}{!!100*session('rate')!!} Set up fee for any plan.</div><!--/setUpFee-->
             <div class="featuresCompare"><a class="popup-with-form compareBtnLink" href="/pricing-grids/{!! $center->id !!}"><div class="compareBtn">SEE FEATURES AND COMPARE ALL</div></a></div><!--/featuresCompare-->
         </div>
 
