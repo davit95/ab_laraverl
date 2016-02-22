@@ -36,11 +36,20 @@ class View
         }
 
         if (is_null(session('rates')) || is_null(session('rate'))) {
+            $url = 'https://openexchangerates.org/api/latest.json?app_id='.env('APP_ID','14ce569cde554a9a928d9af06d8e45db').'';
+            $curl = curl_init();
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec ($curl);
+            curl_close ($curl);
+            $result = json_decode($result,true);
+            $currency = $result['rates'];
+
             $response['rates'] = [
-                'USD' => 1,
-                'GBP' => 1.7,
-                'EUR' => 1.2,
-                'AUD' => 0.8
+                'USD' => $currency['USD'],//1
+                'GBP' => $currency['GBP'],//1.7
+                'EUR' => $currency['EUR'],//1.2
+                'AUD' => $currency['AUD']//0.8
             ];
             $rates['USD'] = $response['rates']['USD'];
             $rates['GBP'] = $response['rates']['GBP'];

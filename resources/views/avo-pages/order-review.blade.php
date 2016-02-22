@@ -20,7 +20,7 @@
                         <img src="images/myCart.png" class="myCartImg"/>
                     </div><!--/MyCart-->
 
-                    @foreach ($items as $item)
+                    @foreach ($items->reverse() as $item)
                         @if($item->type == 'mr')
                             <div class="eachSCartWrap marginTop paddingtop">
                                 <h3 class=" bold">Meeting Room</h3>
@@ -222,7 +222,7 @@
                                     </p>
                                 </div>
                             @endif
-                            {!! Form::open(['name' => 'form1']) !!}
+                            {!! Form::open(['name' => 'form1','url' => url('virtual-offices-confirmation'),'method' => 'POST']) !!}
                                 {!! Form::hidden('step', 'next') !!}
                                 {!! Form::hidden('multiple', '$multiple') !!}
                                 {!! Form::hidden('returning', '$returning') !!}

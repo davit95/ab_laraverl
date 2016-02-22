@@ -37,6 +37,7 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}', 'VirtualOfficesController@getCityVirtualOffices');
 		//here new
 		Route::get('/virtual-offices/{country_code}/{city_slug}', 'VirtualOfficesController@getCityVirtualOfficesWithoutId');
+		Route::post('/virtual-offices-confirmation','VirtualOfficesController@getNotarPage');
 		//here
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}/{center_id}', 'VirtualOfficesController@getVirtualOfficeShowPage');
 		Route::get('/pricing-grids/{center_id}', 'VirtualOfficesController@getCenterPricengGrid');
