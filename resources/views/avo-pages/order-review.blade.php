@@ -101,7 +101,7 @@
                                         <tr>
                                             <td class="sideCartL3">SET UP FEE:</td>
                                             <td class="sideCartr2">
-                                                <span class="mediumBold">$100</span>
+                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! 100*session('rate') !!}</span>
                                                 <span class="smallLine gray3">(one time only)</span>
                                             </td>
                                         </tr>
