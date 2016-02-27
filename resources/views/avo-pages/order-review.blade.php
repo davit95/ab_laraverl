@@ -68,9 +68,9 @@
                                             <td class="sideCartL3">{!! $item->vo_plan !!}:</td>
                                             <td class="sideCartr2">
                                                 @if ($item->live_receptionist)
-                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! ($item->price-85)*session('rate') !!}</span>
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price-85)*session('rate'),2) !!}</span>
                                                 @else
-                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'),2) !!}</span>
                                                 @endif
                                                 <span class="smallLine gray3"> /month</span>
                                             </td>
@@ -78,7 +78,7 @@
                                         <tr>
                                             <td class="sideCartL3">MAIL FORWARDING:</td>
                                             <td class="sideCartr2">
-                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->vo_mail_forwarding_price*session('rate') !!}</span>
+                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->vo_mail_forwarding_price*session('rate'),2) !!}</span>
                                                 <span class="smallLine gray3"> /month</span>
                                             </td>
                                         </tr>
@@ -86,14 +86,14 @@
                                             <tr>
                                                 <td class="sideCartL3">LIVE RECEPTIONIST 50:</td>
                                                 <td class="sideCartr2">
-                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! 95*session('rate') !!}</span>
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(95*session('rate'),2) !!}</span>
                                                     <span class="smallLine gray3"> /month</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="sideCartL3">PACKAGE DISCOUNT:</td>
                                                 <td class="sideCartr2">
-                                                    <span class="mediumBold">-{!! session('currency.symbol') !!}{!! 10*session('rate') !!}</span>
+                                                    <span class="mediumBold">-{!! session('currency.symbol') !!}{!! round(10*session('rate'),2) !!}</span>
                                                     <span class="smallLine gray3"> /month</span>
                                                 </td>
                                             </tr>
@@ -101,7 +101,7 @@
                                         <tr>
                                             <td class="sideCartL3">SET UP FEE:</td>
                                             <td class="sideCartr2">
-                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! 100*session('rate') !!}</span>
+                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(100*session('rate'),2) !!}</span>
                                                 <span class="smallLine gray3">(one time only)</span>
                                             </td>
                                         </tr>
