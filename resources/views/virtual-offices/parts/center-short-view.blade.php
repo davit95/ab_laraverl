@@ -129,7 +129,7 @@
                     @endif
                 </div>
             </div>
-            <div class="RPBplan2"><div class="RPBplan2T"><div class="planNum">2</div><div class="tleft">BEST DEAL</div><div class="tright">You save $10 a month</div></div>
+            <div class="RPBplan2"><div class="RPBplan2T"><div class="planNum">2</div><div class="tleft">BEST DEAL</div><div class="tright">You save {!! session('currency.symbol') !!}{!! round(10*session('rate'),2) !!} a month</div></div>
                 <div class="RPBinfoPlan2"><div class="RPBleft2 bold">Platinum<br>with Live Receptionist</div>
                     @if(isset($center->packages_arr['Platinum']) && $center->packages_arr['Platinum']->price != 0)
                         <div class="RPBright2"><span class="lineTrough smallText">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->with_live_receptionist_full_price*session('rate'), 2)}}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum']->with_live_receptionist_pack_price*session('rate'), 2)}}</span><span class="smallText">/MONTH</span></span></div>
@@ -140,7 +140,7 @@
             </div>
             <div class="RPBplan3"><div class="RPBplan1T topShadow"><div class="planNum">3</div></div>
                 <div class="RPBinfoPlan"><div class="RPBleft lh1">Platinum Plus</div>
-                    @if(isset($center->packages_arr['Platinum Plus']))
+                    @if(isset($center->packages_arr['Platinum Plus']) && $center->packages_arr['Platinum Plus']->price != 0)
                         <div class="RPBright lh1">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->price*session('rate'), 2) }} <span class="smallText">/MONTH</span></div>
                     @else
                         <span>Not Available</span>
@@ -149,7 +149,7 @@
             </div>
             <div class="RPBplan4"><div class="RPBplan1T"><div class="planNum">4</div><div class="tleft">GREAT DEAL</div><div class="tright">You save $10 a month</div></div>
                 <div class="RPBinfoPlan2"><div class="RPBleft2 bold">Platinum Plus<br>with Live Receptionist</div>
-                    @if(isset($center->packages_arr['Platinum Plus']))
+                    @if(isset($center->packages_arr['Platinum Plus']) &&  $center->packages_arr['Platinum Plus']->price != 0)
                         <div class="RPBright2"><span class="lineTrough smallText">{!! session('currency.symbol') !!} {{ round($center->packages_arr['Platinum Plus']->with_live_receptionist_full_price*session('rate'), 2) }}<span class="smallText">/MONTH</span></span><br><span class="melon bold"><span class="bigPrice2">{!! session('currency.symbol') !!} {{ round( $center->packages_arr['Platinum Plus']->with_live_receptionist_pack_price*session('rate'), 2) }}</span><span class="smallText">/MONTH</span></span></div>
                     @else
                         <span>Not Available</span>
