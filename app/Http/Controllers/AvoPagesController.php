@@ -90,9 +90,9 @@ class AvoPagesController extends Controller {
 	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService) {
 		$country_codes = $telCountryService->getAllCountriesWithList();	
 		$center = $centerService->getCenterById(session()->get('centerid'));	
-		//dd($center_id)
+		//dd($center,session()->get('centerid'));
 		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;		
-		return view('avo-pages.customer-information', ['countries' => $country_codes, 'email_flag' => $email_flag]);
+		return view('avo-pages.customer-information', ['countries' => $country_codes, 'email_flag' => $email_flag, 'center' => $center]);
 	}
 
 	/**

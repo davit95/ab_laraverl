@@ -19,11 +19,11 @@
                             <div id="OnlineNotary" class="aquaBtn confirmationBtns">USE OUR ONLINE NOTARY</div><span class="gray3 smallTxt">it's free with paid setup fee<br/>(webcam needed)</span><br/>
                                 <div class="OurN hide">
                                     <ul><li><a href='/downloader.php?file=F05WexJqUTuRE3XkhTV9nfWtc.pdf' class='aqua mediumBold'>Download - CMRA Form - Order #1</a></li></ul> <ol>
-                                    <li>Download and fill out the CMRA form (you can do it digitally, or print and do it by hand).</li>
-                                    <li>Scan the CMRA if filled out by hand, along with two acceptable forms of identification*. Save these documents on your computer - you'll need them for the next step.</li>
-                                    <li><a href="https://www.notarycam.com/alliancevirtualoffices/" class="popup aqua mediumBold">Schedule a session with our online notary</a>.</li>
-                                    <li>Join the session with your computer and webcam. During the session, upload your CMRA and identification documents.</li>
-                                    <li>The online notary will do the rest!</li>
+                                        <li>Download and fill out the CMRA form (you can do it digitally, or print and do it by hand).</li>
+                                        <li>Scan the CMRA if filled out by hand, along with two acceptable forms of identification*. Save these documents on your computer - you'll need them for the next step.</li>
+                                        <li><a href="https://www.notarycam.com/alliancevirtualoffices/" class="popup aqua mediumBold">Schedule a session with our online notary</a>.</li>
+                                        <li>Join the session with your computer and webcam. During the session, upload your CMRA and identification documents.</li>
+                                        <li>The online notary will do the rest!</li>
                                     </ol>
                                     <ul style="list-style:none;">
                                     * Acceptable identification include valid driver's license or state non-driver's identification card: armed forces, government, university, or recognized corporate identification card; passport, alien registration card or certificate of naturalization; current lease, mortgage or Deed of Trust, voter or vehicle registration card, or home or vehicle insurance policy.
@@ -34,11 +34,11 @@
                                     <div id="OwnNotary" class="aquaBtn confirmationBtns">USE YOUR OWN NOTARY</div><br/>
                                         <div class="OwnN hide">
                                             <ul><li><a href='/downloader.php?file=F05WexJqUTuRE3XkhTV9nfWtc.pdf' class='aqua mediumBold'>Download - CMRA Form - Order #1</a></li></ul> <ol>
-                                            <li>Download and fill out the CMRA form (you can do it digitally, or print and do it by hand).</li>
-                                            <li>Get the CMRA Form Notarized. You'll need a copy of two acceptable identifications*.</li>
-                                            <li>Plase scan and send the CMRA form and two acceptable forms of identification to: <a href="/cdn-cgi/l/email-protection#81f2e4f3f7e8e2e4f2c1e0edede8e0efe2e4f7e8f3f5f4e0edeee7e7e8e2e4f2afe2eeec" class="aqua mediumBold"><span class="__cf_email__" data-cfemail="83f0e6f1f5eae0e6f0c3e2efefeae2ede0e6f5eaf1f7f6e2efece5e5eae0e6f0ade0ecee">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
-                                            /* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>, or send via fax to: 800 589 3128</li>
-                                            </ol>
+                                                <li>Download and fill out the CMRA form (you can do it digitally, or print and do it by hand).</li>
+                                                <li>Get the CMRA Form Notarized. You'll need a copy of two acceptable identifications*.</li>
+                                                <li>Plase scan and send the CMRA form and two acceptable forms of identification to: <a href="/cdn-cgi/l/email-protection#81f2e4f3f7e8e2e4f2c1e0edede8e0efe2e4f7e8f3f5f4e0edeee7e7e8e2e4f2afe2eeec" class="aqua mediumBold"><span class="__cf_email__" data-cfemail="83f0e6f1f5eae0e6f0c3e2efefeae2ede0e6f5eaf1f7f6e2efece5e5eae0e6f0ade0ecee">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+                                                /* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>, or send via fax to: 800 589 3128</li>
+                                                </ol>
                                             <ul style="list-style:none;">
                                             * Acceptable identification include valid driver's license or state non-driver's identification card: armed forces, government, university, or recognized corporate identification card; passport, alien registration card or certificate of naturalization; current lease, mortgage or Deed of Trust, voter or vehicle registration card, or home or vehicle insurance policy.
                                             </ul>

@@ -13,10 +13,9 @@ use Admin\Contracts\RegionInterface;
 use Admin\Contracts\UsStateInterface;
 use Admin\Contracts\CountryInterface;
 use Admin\Http\Requests\OwnerRequest;
-use Admin\Http\Requests\UserRequest;
-use Admin\Contracts\UserInterface;
+use Admin\Contracts\MeetingRoomInterface;
 
-class UsersController extends Controller
+class MeetingRoomsController extends Controller
 {
     /**
      * Create a new home controller instance.
@@ -33,9 +32,11 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, OwnerInterface $ownerService, UserInterface $userService)
+    public function index(MeetingRoomInterface $meetingRoomService)
     {
-        return view('admin.users.index');
+        //dd($meetingRoomService->getMeetingRooms()->first());
+        return view('admin.owners.parts._meeting-rooms-show', 
+                    ['meetingRooms' => $meetingRoomService->getMeetingRooms()->first()]);
     }
 
     /**
@@ -54,12 +55,9 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request, UserInterface $userService)
+    public function store()
     {
-        if(null != $userService->createUser($request->all())) {
-            dd($userService->createUser($request->all()));
-            //return
-        }
+        //
     }
 
     /**

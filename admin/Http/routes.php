@@ -20,6 +20,7 @@ Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@logout');
 
 Route::get('/reports', 'ReportsController@index');
+Route::get('/reports/download', 'ReportsController@downloadCsv');
 
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
 Route::get('/owners/documents', 'OwnersController@getDocuments');
@@ -29,4 +30,9 @@ Route::resource('/owners', 'OwnersController');
 Route::resource('/users', 'UsersController');
 
 Route::get('/centers/add-meeting-room', 'CentersController@getAddMeetingRoom');
-Route::resource('/centers', 'CentersController', [ 'only' => ['create', 'store'] ]);
+Route::resource('/centers', 'CentersController');
+Route::get('/meeting-rooms', 'MeetingRoomsController@index');
+Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
+
+
+

@@ -46,28 +46,28 @@
 	    		<div class="col-md-4 text-right"><label>City</label></div>
 	    		<div class="col-md-8">
 	    			{!! Form::text('city', null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'City']) !!}
-	    			{!! Form::hidden('city_id', null, ['id' => 'city_id']) !!}
+	    			<!-- {!! Form::hidden('city_id', null, ['id' => 'city_id']) !!} -->
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>County / Region</label></div>
 	    		<div class="col-md-8">
 	    			{!! Form::text('region', null, ['class' => 'form-control', 'id' => 'region', 'placeholder' => 'County / Region']) !!}
-	    			{!! Form::hidden('region_id', null, ['id' => 'region_id']) !!}
+	    			<!-- {!! Form::hidden('region_id', null, ['id' => 'region_id']) !!} -->
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>State</label></div>
 	    		<div class="col-md-8">
 	    			{!! Form::text('us_state', null, ['class' => 'form-control', 'id' => 'us_state', 'placeholder' => 'State']) !!}
-	    			{!! Form::hidden('us_state_id', null, ['id' => 'us_state_id']) !!}
+	    			<!-- {!! Form::hidden('us_state_id', null, ['id' => 'us_state_id']) !!} -->
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Country</label></div>
 	    		<div class="col-md-8">
 	    			{!! Form::text('country', null, ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'Country']) !!}
-	    			{!! Form::hidden('country_id', null, ['id' => 'country_id']) !!}
+	    			<!-- {!! Form::hidden('country_id', null, ['id' => 'country_id']) !!} -->
 	    		</div>
 	    	</div>
 	    </div>

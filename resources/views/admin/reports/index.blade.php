@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="submit_w"><a href="#" class="submit_btn">Export .csv</a></div>
+    <div class="submit_w"><a href="{{url('reports/download')}}" class="submit_btn">Export .csv</a></div>
 @stop
 
 @section('styles')

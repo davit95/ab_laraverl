@@ -64,6 +64,7 @@ class OwnersController extends Controller
      */
     public function store(OwnerRequest $request, OwnerInterface $ownerService)
     {
+        //dd($request->all());
         if ( null != $owner = $ownerService->storeOwner( $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully created.');
         }
@@ -78,7 +79,7 @@ class OwnersController extends Controller
      */
     public function show($id, OwnerInterface $ownerService)
     {
-        $owner = $ownerService->getOwnerByID($id);        
+        $owner = $ownerService->getOwnerByID($id);
         return view('admin.owners.show', [ 'owner' => $owner ]);
     }
 
@@ -113,6 +114,7 @@ class OwnersController extends Controller
      */
     public function update($id, OwnerRequest $request, OwnerInterface $ownerService)
     {
+        //dd($request->all());
         if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
         }
@@ -164,5 +166,5 @@ class OwnersController extends Controller
     public function getAddStaff()
     {
         return view('admin.owners.forms.add_staff');
-    }    
+    }   
 }

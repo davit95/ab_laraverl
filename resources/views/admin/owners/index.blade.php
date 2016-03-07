@@ -3,12 +3,19 @@
 @section('page-header')
 	Owners & Centers
 @stop
-@section('content_top')    
-    <div class="ct_icon_oc"></div> 
+@section('content_top')   
+<!-- {!! Form::open([ 'url' => url('owners') , 'method' => 'GET' ]) !!}
+	<div class="col-md-3">
+		{!! Form::text('company_or_owner_name', Request::get('company_or_owner_name'), [ 'class' => 'form-control' , 'placeholder' => 'Company or Owner\'s Name', 'id' => 'company_or_owner_name' ]) !!}
+	</div>
+	<button type="submit" class="pull-left btn btn-success"><i class="fa fa-search"></i></button>
+{!! Form::close() !!} --> 
+    <div class="ct_icon_oc"></div>
 	    <div class="ct_wrapp">
 	    <div class="ct_title"><h1>OWNERS &amp; CENTERS</h1></div> 
 	    <div class="ct_tools">
-		    <input class="ct_input" type="text"> <a href="view-owners-centers.html" class="search_btn"></a>
+		    <input class="ct_input" type="text">
+		     <a href="view-owners-centers.html" class="search_btn"></a>	
 			    <a href="{{ url('owners/add-document') }}" class="tools_gray_btn lightbox">
 			    	<div>
 			    		<div class="tools_btn_l1"></div>

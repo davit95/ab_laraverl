@@ -34,7 +34,7 @@
 
     <link href="/admin_assets/admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link href="/admin_assets/admin/dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="/admin_assets/admin/css/custom.css" rel="stylesheet">
+    <!-- <link href="/admin_assets/admin/css/custom.css" rel="stylesheet"> -->
 @stop
 
 @section('scripts')
