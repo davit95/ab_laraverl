@@ -165,6 +165,9 @@ p + p {
 .action-icon {
   margin-right: 10px;
   font-size: 16px;
+  border: none;
+  background:transparent;
+
 }
 .action-icon:last-child {
   margin-right: 0px;

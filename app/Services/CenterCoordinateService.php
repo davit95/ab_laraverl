@@ -29,8 +29,8 @@ class CenterCoordinateService
 			$center_lat = $result['lat'];
 			$center_lng = $result['lng'];
 		}
+		//dd(3959 * acos( cos( radians($center_lat) )));		
 		$q = DB::select( DB::raw("SELECT center_id, ( 3959 * acos( cos( radians($center_lat) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians($center_lng) ) + sin( radians($center_lat) ) * sin( radians( lat ) ) ) ) AS distance FROM centers_coordinates HAVING distance < $radius ORDER BY distance"));
-		//dd($q);		
 		$ids = [];
 		foreach ($q as $key => $value)
 		{

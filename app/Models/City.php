@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
 {
+    protected $fillable = ['name', 'slug', 'country_id', 'country_code', 'us_state_id', 'us_state_code', 'us_state', 'active'];
+    public $timestamps = false;
     public function centers()
     {
     	return $this->hasMany('App\\Models\\Center');

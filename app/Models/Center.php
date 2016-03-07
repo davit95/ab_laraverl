@@ -5,6 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Center extends Model {
+
+	protected $fillable = ['city_name',
+	 					   'slug', 'owner_id',
+	  					   'city_name',
+	   					   'city_id',
+	    				   'country', 
+	    				   'country_id', 
+	    				   'us_state', 
+	    				   'us_state_id', 
+	    				   'region_id', 
+	    				   'company_name', 
+	    				   'building_name',
+	    				   'address1',
+	    				   'address2',
+	    				   'postal_code',
+	    				   'summary',
+	    				   'location',
+	    				   'amenities',
+	    				   'review_data',
+	    				   'active_flag',
+	    				   'email_flag',
+	    				   'notes',
+	    				   'virtual_tour_url',
+	    				   'map_url',
+	    				   'status_changed_at'];
 	public function vo_photos() {
 		return $this->belongsToMany('App\\Models\\Photo', 'vo_photos', 'center_id', 'photo_id');
 	}

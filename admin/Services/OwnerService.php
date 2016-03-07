@@ -79,4 +79,5 @@ class OwnerService implements OwnerInterface
 		$owner = $this->getOwnerByID($id);
 		return $owner->delete();
 	}
+	
 }

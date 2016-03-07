@@ -18,7 +18,8 @@ class VirtualOfficesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index(UsStateService $usStateService, CountryService $countryService) {	
+	public function index(UsStateService $usStateService, CountryService $countryService) {
+		//dd($usStateService->getAllStates());
 		return view('virtual-offices.index', ['states' => $usStateService->getAllStates(), 'countries' => $countryService->getAllCountries()]);
 	}
 
@@ -97,7 +98,6 @@ class VirtualOfficesController extends Controller {
 			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
 			$center_ids        = $centers->lists('id')->toArray();
 			$nearby_center_ids = $centerCoordinateService->getNearbyCentersByCityName($city->name);
-			//dd($center_ids,$city->name,$nearby_center_ids);
 			$request_ids       = array_diff($nearby_center_ids, $center_ids);
 			$nearby_centers = $centerService->getVirtualOfficesByIds($request_ids);
 			$center_addresses_for_google_maps = [];
@@ -121,6 +121,7 @@ class VirtualOfficesController extends Controller {
 				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 			}
 			$location=$locationSeo->getCityLocationSeo(strtolower($city->slug),$city->us_state_code,$city->country_code);
+			//dd($centers);
 			return view('virtual-offices.city-virtual-offices-list', [
 					'centers'                          => $centers,
 					'nearby_centers'                   => $nearby_centers,
@@ -139,14 +140,15 @@ class VirtualOfficesController extends Controller {
 	 * @return Response
 	 */
 	public function getVirtualOfficeShowPage($country_code, $city_slug, $center_slug, $center_id, CenterService $centerService, CenterCoordinateService $centerCoordinateService) {
+		dd($country_code, $city_slug, $center_slug, $center_id);
 		if (null != $center = $centerService->getVirtualOfficeByCenterSlug($country_code, $city_slug, $center_slug, $center_id)) {
 			$nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);
+			//dd($center->id,$nearby_centers_ids['ids']);		
 			$nearby_centers     = $centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);
 			foreach ($nearby_centers as $k => $v) {
 				$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
 			}				
 			$nearby_centers = $nearby_centers->sortBy('distance');	
-			//dd($this->packages($center));		
 			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center)]);
 		}
 	}
@@ -188,5 +190,4 @@ class VirtualOfficesController extends Controller {
 	public function getNotarPage() {
 		return view('virtual-offices.notar');
 	}
-
 }
