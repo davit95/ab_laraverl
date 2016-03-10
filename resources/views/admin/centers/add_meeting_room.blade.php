@@ -13,39 +13,41 @@
 	</div> 
 	<div class="clear"></div>	
 @stop
-@section('content')	
-	<form class="ownersForm">
+@section('content')
+	@include('alerts.messages')
+	{!! Form::open([ 'url' => url('/meeting-rooms') , 'method' => 'POST', 'class' => 'ownersForm']) !!}
 		<div class="w_box2 lh_f">
 			<h3 class="left mediumBold">
 				<span class="left">MEETING ROOM'S BASIC INFORMATION</span>
 			</h3><br>
-			MR Name:&nbsp; 
-				<input type="text" class="f1" name="staffFirstname"><br>
+			MR Name:&nbsp;
+				{!! Form::text('mr_name', null,[ 'class' => 'f1']) !!}
+				<br>
 			Capacity:&nbsp; 
 				<div class="inpAlign">
-					<input type="text" class="f3" name="capacity">
+					{!! Form::text('capacity', null,[ 'class' => 'f3']) !!}
 				</div>
 				<div class="clear"></div>
 			Rate:&nbsp; 
 				<div class="inpAlign">
-					<input type="text" class="f3" name="rate"> /per hour
+					{!! Form::text('rate', null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 				<div class="clear"></div>
 			<div class="inpAlign">
-				<input type="text" class="f3" name="halfDay"> / half day
+				{!! Form::text('half_day', null,[ 'class' => 'f3']) !!} / half day
 			</div>
 			<div class="clear"></div>
 			<div class="inpAlign">
-				<input type="text" class="f3" name="fullDay"> / full day
+				{!! Form::text('full_day', null,[ 'class' => 'f3']) !!} / full day
 			</div>
 			<div class="clear"></div>
 			Min. Hours Required:&nbsp; 
 				<div class="inpAlign">
-					<input type="text" class="f3" name="minHours">
+					{!! Form::text('min_hours', null,[ 'class' => 'f3']) !!}
 				</div>
 				<div class="clear"></div>
 			<div class="adjustTxt">Room Description:&nbsp;</div>
-			<textarea class="f1_t" name="roomDescription"></textarea>
+			{!! Form::textarea('room_description', null,[ 'class' => 'f1_t']) !!}
 			MR images:&nbsp;
 				<div class="inpAlign">
 					<a href="#" class="gray_btn">Select existing</a>
@@ -61,49 +63,49 @@
 			</h3><br>
 			Whiteboard:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="whiteboard" value="VO" id="1">
-					Rate: $ 
-					<input type="text" class="f3" name="whiteboardRate"> /per hour
+					{!! Form::checkbox('white_board', null, null,[ 'id' => '1']) !!}
+					Rate: $
+					{!! Form::text('white_board_rate', null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			TV/DVD Player:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="tvDvd" value="VO" id="2">
+					{!! Form::checkbox('tv_dvd', null, null,[ 'id' => '2']) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="tvDvdRate"> /per hour
+					{!! Form::text('tv_dvd_rate', null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			Projector:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="projector" value="VO" id="3">
+					{!! Form::checkbox('projector', null, null,[ 'id' => '3']) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="projectorRate"> /per hour
+					{!! Form::text('projector_rate', null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			Video Conferencing:&nbsp;
 				<div class="inpAlign">
-					<input type="checkbox" name="videoConf" value="VO" id="4">
+					{!! Form::checkbox('video_conf', null, null,[ 'id' => '4', 'value' => 1]) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="videoConfRate"> /per hour
+					{!! Form::text('video_conf_rate', null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			<div class="adjustTxt">Video Conferencing&nbsp; Equipment:&nbsp;</div>
-			<textarea class="f1_t" name="vcEquipment"></textarea><br>
+			{!! Form::textarea('vc_equipment', null,[ 'class' => 'f1_t']) !!}<br>
 			<div class="adjustTxt">Bridge Connection&nbsp; Available:&nbsp;</div>
 			<div class="inpAlign">
-				<input type="checkbox" name="bridgeConnect" value="VO" id="5">
+				{!! Form::checkbox('bridge_connect', 'yes', null,[ 'id' => '5']) !!}
 				Yes
 			</div>
 			<div class="clear"></div>
 			Catering:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="catering" value="VO" id="6">
+					{!! Form::checkbox('catering', null, null,[ 'id' => '6']) !!}
 					*Client to pay at center
 				</div>
 				<div class="clear"></div>
 			<div class="adjustTxt">Credit Cards Accepted:&nbsp;</div>
 			<div class="inpAlign">
-				<input type="checkbox" name="ccAccepted" value="VO" id="7">
+				{!! Form::checkbox('cc_accepted', null, null,[ 'id' => '7']) !!}
 				Yes
 			</div>
 			<div class="clear"></div>
@@ -115,27 +117,27 @@
 			</h3><br>
 			Network Connection:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="Nconnection" value="VO" id="8">
+					{!! Form::checkbox('n_connection', null, null,[ 'id' => '8']) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="NconnectionRate"> /per hour</div>
+					{!! Form::text('n_connection_rate', null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			Wireless:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="wireless" value="VO" id="9">
+					{!! Form::checkbox('vireless', null, null,[ 'id' => '9']) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="wirelessRate"> /per hour</div>
+					{!! Form::text('vireless_rate', null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			Phone Access:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="PhoneAccess" value="VO" id="10">
+					{!! Form::checkbox('phone_access', null, null,[ 'id' => '10']) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="PhoneAccessRate"> /per hour</div>
+					{!! Form::text('phone_access_rate', null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			Admin Services:&nbsp;
 			<div class="inpAlign">
-				<input type="checkbox" name="adminServices" value="VO" id="11">
+				{!! Form::checkbox('admin_services', null, null,[ 'id' => '11']) !!}
 				Rate: $ 
-				<input type="text" class="f3" name="adminServicesRate"> /per hour</div>
+				{!! Form::text('admin_services_rate', null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 		</div> 
 		<div class="w_box2 lh_f">
@@ -144,17 +146,17 @@
 			</h3><br>
 			Parking Available:&nbsp; 
 				<div class="inpAlign">
-					<input type="checkbox" name="parking" value="VO" id="12">
+					{!! Form::checkbox('parking', null, null,[ 'id' => '12']) !!}
 					Rate: $ 
-					<input type="text" class="f3" name="pRate"> /per hour</div>
+					{!! Form::text('parking_rate', null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			<div class="adjustTxt">Parking Description:&nbsp;</div>
-			<textarea class="f1_t" name="parkDesc"></textarea><br>
+			{!! Form::textarea('park_desc', null,[ 'class' => 'f1_t']) !!}<br>
 		</div> 
 		<div class="clear"></div>
-		<div class="submit_w"><a href="#" class="submit_btn">SUBMIT</a></div>
+		<div class="submit_w"><button type="submit" class="submit_btn">SUBMIT</button></div>
 		<div class="txtLine">All rates set to empty will be displayed as "Included" to the customer.<br>
 			<span class="mediumBold">Please enter a rate if you wish to charge for the service.</span>
 		</div>
-	</form>	
+	{!! Form::close() !!}
 @stop

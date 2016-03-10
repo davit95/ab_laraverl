@@ -28,10 +28,12 @@ Route::get('/owners/add-staff', 'OwnersController@getAddStaff' );
 Route::resource('/owners', 'OwnersController');
 
 Route::resource('/users', 'UsersController');
+Route::get('/user', 'UsersController@index');
 
 Route::get('/centers/add-meeting-room', 'CentersController@getAddMeetingRoom');
 Route::resource('/centers', 'CentersController');
-Route::get('/meeting-rooms', 'MeetingRoomsController@index');
+/*Route::get('/meeting-rooms', 'MeetingRoomsController@index');*/
+Route::resource('/meeting-rooms', 'MeetingRoomsController');
 Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
 
 

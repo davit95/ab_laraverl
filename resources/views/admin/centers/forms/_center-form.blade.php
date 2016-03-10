@@ -179,7 +179,7 @@
     </div>              
     <div class="form_right centers_basic">
         {!! Form::label('city_name','*City:') !!}
-        {!! Form::text('city_name', null,['class' => 'f1'])!!}
+        {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
         {!! Form::label('country','County / Region:') !!}
         {!! Form::text('country', null,['class' => 'f1'])!!}
@@ -189,11 +189,11 @@
         <br>
         {!! Form::label('lat','*Address Latitude: ') !!}
         {!! Form::text('lat', null,['class' => 'f1b'])!!}
-        <a href="#" class="getBtn">GET</a>
+        <a  class="getBtn" onclick="getLatAndLng()">GET</a>
         <div class="clear"></div>
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', null,['class' => 'f1b'])!!}
-        <a href="#" class="getBtn">GET</a>
+        
         <div class="clear"></div>
     </div> 
     <div class="clear"></div>
@@ -277,4 +277,23 @@
     $(document).on('ready', function(){
         $('.change').niceselect();
     })
+</script>
+
+
+<script type="text/javascript">
+function getLatAndLng(){
+    var state = $( "#states option:selected" ).text();
+    var country = $( "#countries option:selected" ).text();
+    var city = $('#city').val();
+    var address = city + ' ' + state + ' ' + country;
+    $.ajax({
+      url: "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
+      type: "POST",
+      success: function(res){
+         $('#lat').val(res.results[0].geometry.location.lat);
+         $('#lng').val(res.results[0].geometry.location.lng);
+      }
+    });
+} 
+    
 </script>

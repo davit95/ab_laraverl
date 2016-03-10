@@ -13,6 +13,7 @@ use Admin\Contracts\RegionInterface;
 use Admin\Contracts\UsStateInterface;
 use Admin\Contracts\CountryInterface;
 use Admin\Http\Requests\OwnerRequest;
+use Admin\Http\Requests\MeetingRoomRequest;
 use Admin\Contracts\MeetingRoomInterface;
 
 class MeetingRoomsController extends Controller
@@ -55,9 +56,9 @@ class MeetingRoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
-        //
+        dd($meetingRoomService->addMeetingRoom($request->all()));
     }
 
     /**
