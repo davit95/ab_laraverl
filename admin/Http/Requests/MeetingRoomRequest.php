@@ -52,7 +52,7 @@ class MeetingRoomRequest extends Request
             'admin_services_rate' => 'required',
             'parking' => 'required',
             'parking_rate' => 'required',
-            'park_desc' => 'required' ,
+            'park_desc' => 'required',
             'asd' => 'required'
         ];
     }
