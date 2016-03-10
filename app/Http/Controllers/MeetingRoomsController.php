@@ -82,6 +82,7 @@ class MeetingRoomsController extends Controller {
 	public function getCityMeetingRooms($country_code,$city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
 		if (null != $city = $cityService->getCityVirtualOfficesWithoutId($country_code, $city_slug)) {
 			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);			
+			//dd($centers);
 			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
 			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);			
 			$center_addresses_for_google_maps = [];
@@ -119,6 +120,7 @@ class MeetingRoomsController extends Controller {
 				$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
 			}
 			$nearby_centers = $nearby_centers->sortBy('distance');
+			dd($center->meeting_rooms);
 			foreach ($center->meeting_rooms as $key => $mr) {
 				$included = [];
 				$paid     = [];

@@ -121,7 +121,6 @@ class VirtualOfficesController extends Controller {
 				$center->telephony_includes_arr = $telephonyPackageIncludeService->getByPartNumber($center->id, 402);
 			}
 			$location=$locationSeo->getCityLocationSeo(strtolower($city->slug),$city->us_state_code,$city->country_code);
-			//dd($centers);
 			return view('virtual-offices.city-virtual-offices-list', [
 					'centers'                          => $centers,
 					'nearby_centers'                   => $nearby_centers,
@@ -139,17 +138,17 @@ class VirtualOfficesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getVirtualOfficeShowPage($country_code, $city_slug, $center_slug, $center_id, CenterService $centerService, CenterCoordinateService $centerCoordinateService) {
-		dd($country_code, $city_slug, $center_slug, $center_id);
+	public function getVirtualOfficeShowPage($country_code, $city_slug, $center_slug, $center_id, CenterService $centerService, CenterCoordinateService $centerCoordinateService, LocationSeoService $locationSeo) {
 		if (null != $center = $centerService->getVirtualOfficeByCenterSlug($country_code, $city_slug, $center_slug, $center_id)) {
-			$nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);
-			//dd($center->id,$nearby_centers_ids['ids']);		
+			$nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);	
 			$nearby_centers     = $centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);
 			foreach ($nearby_centers as $k => $v) {
 				$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
 			}				
-			$nearby_centers = $nearby_centers->sortBy('distance');	
-			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center)]);
+			$nearby_centers = $nearby_centers->sortBy('distance');
+			$location=$locationSeo->getCityLocationSeo(strtolower($city_slug),null,$country_code);
+			//dd($center->virtual_office_seo);
+			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center), 'location' => $location]);
 		}
 	}
 
