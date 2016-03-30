@@ -4,14 +4,17 @@ namespace Admin\Services;
 
 use Admin\Contracts\UserInterface;
 use App\Models\User;
+use App\Models\Role;
+use Auth;
 
 class UserService implements UserInterface
 {
 	/**
 	 * Create a new user service instance.
 	 */
-	public function __construct(User $user) {
+	public function __construct(User $user, Role $role) {
 		$this->user = $user;
+		$this->role = $role;
 	}
 
 	/**
@@ -42,5 +45,12 @@ class UserService implements UserInterface
 			});
 		}
 		return $this->owner->orderBy('id', 'DESC')->paginate($this->per_page);*/
+	}
+
+	public function getUsersRole()
+	{
+		// //dd(Auth::user()->role);
+		// $user_role = 
+		// dd($user_role);
 	}
 }

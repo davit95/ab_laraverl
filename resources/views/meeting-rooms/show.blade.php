@@ -24,7 +24,7 @@
 				@else
 					<h1>{!! preg_replace('/^[^a-zA-Z]*/', '', $center->address1) !!} Meeting Room / {!! $center->city->name !!}, {!! $center->city->us_state_id ? $center->city->us_state_code : $center->city->country->code !!}</h1>
 					<p class="gray2">Live Answering & Advanced Telephony</p>
-				@endif
+				@endif	
 			</div>
 			<div style="clear:both"></div>
 			<div class="detailsTopWrap">
@@ -52,7 +52,7 @@
 							<br>
 							{!! $center->address1 !!}
 							<br>
-							{!! $center->address2 !!} {!! $center->city->anme !!}, {!! $center->city->us_state_id ? $center->city->us_state_code : $center->city->country->code !!}  {!! $center->postal_code !!}
+							{!! $center->address2 !!} {!! $center->city->name !!}, {!! $center->city->us_state_id ? $center->city->us_state_code : $center->city->country->code !!}  {!! $center->postal_code !!}
 							<br>
 							@if(null !== $center->local_number)
 								<b>{!! $center->local_number->local_number !!}</b>

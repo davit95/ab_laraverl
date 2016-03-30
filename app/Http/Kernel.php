@@ -30,6 +30,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'ajax' => \App\Http\Middleware\AjaxMiddleware::class,
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
-        'view' => \App\Http\Middleware\View::class
+        'view' => \App\Http\Middleware\View::class,
+        'superAdmin' => \App\Http\Middleware\SuperAdmin::class,
     ];
 }

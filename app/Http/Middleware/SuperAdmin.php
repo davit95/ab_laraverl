@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class Authenticate
+class SuperAdmin
 {
+
     /**
      * The Guard implementation.
      *
@@ -28,21 +29,16 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $reqsuest
      * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                //dd('as');
-                return redirect()->guest('login');
-            }
+        if(auth()->user()->isSuperAdmin())
+        {
+            return $next($request);
         }
-
-        return $next($request);
+        return redirect('/users');
     }
 }

@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CenterPrice extends Model {
 	protected $table = 'center_prices';
-
+	protected $fillable = ['center_id','package_id','price', 'with_live_receptionist_pack_price', 'with_live_receptionist_full_price'];
+	public $timestamps = false;
+	
 	public function package() {
 		return $this->belongsTo('App\\Models\\Package', 'package_id', 'part_number');
 	}

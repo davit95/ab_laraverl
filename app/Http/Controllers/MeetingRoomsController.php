@@ -81,8 +81,7 @@ class MeetingRoomsController extends Controller {
 	 */
 	public function getCityMeetingRooms($country_code,$city_slug, CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService) {
 		if (null != $city = $cityService->getCityVirtualOfficesWithoutId($country_code, $city_slug)) {
-			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);			
-			//dd($centers);
+			$centers                          = $centerService->getMeetingRoomsByCityId($city->id);	
 			$nearby_center_ids                = $centerCoordinateService->getNearbyCentersByCityName($city->name);
 			$nearby_centers                   = $centerService->getMeetingRoomsByIds($nearby_center_ids);			
 			$center_addresses_for_google_maps = [];
@@ -113,6 +112,7 @@ class MeetingRoomsController extends Controller {
 	 * @return Response
 	 */
 	public function getMeetingRoomShowPage($country_code, $city_slug, $center_slug, $center_id, CenterService $centerService, CenterCoordinateService $centerCoordinateService) {
+		//dd($country_code, $city_slug, $center_slug, $center_id);
 		if (null != $center = $centerService->getMeetingRoomByCenterSlug($country_code, $city_slug, $center_slug, $center_id)) {
 			$nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);
 			$nearby_centers     = $centerService->getMeetingRoomsByIds($nearby_centers_ids['ids']);
@@ -120,11 +120,9 @@ class MeetingRoomsController extends Controller {
 				$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
 			}
 			$nearby_centers = $nearby_centers->sortBy('distance');
-			dd($center->meeting_rooms);
 			foreach ($center->meeting_rooms as $key => $mr) {
 				$included = [];
 				$paid     = [];
-
 				$phone_rates = explode('||', $mr->options->phone_rate);
 				if ($phone_rates[0] < '1' || $phone_rates[0] == '') {
 					$included[] = 'Phone Access';
@@ -133,6 +131,7 @@ class MeetingRoomsController extends Controller {
 				}
 
 				$network_rates = explode('||', $mr->options->network_rate);
+				//dd($network_rates[0]);
 				if ($network_rates[0] < '1' || $network_rates[0] == '') {
 					$included[] = 'Network Connection';
 				} elseif ($network_rates[0] != 'NA') {
@@ -198,6 +197,7 @@ class MeetingRoomsController extends Controller {
 				$center->meeting_rooms[$key]->included = $included;
 				$center->meeting_rooms[$key]->paid     = $paid;
 			}
+			//dd($center->mr_photos);
 			return view('meeting-rooms.show', ['center' => $center, 'nearby_centers' => $nearby_centers]);
 		} else {
 			return 'aa';

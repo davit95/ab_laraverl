@@ -20,6 +20,7 @@
 				Virtual Office in {!! $center->city->name !!}
 			@endif			
 		</div>
+
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
 				@if($center->virtual_office_seo)
@@ -353,6 +354,7 @@
 			</div>
 		</div>
 		<div class="nearWrap">
+
 			<h3 class="gray2">NEARBY CENTERS</h3>
 			@foreach($nearby_centers as $_center)
 				@if($_center->id != $center->id)

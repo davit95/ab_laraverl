@@ -20,7 +20,6 @@ class CityService
      */
 	public function getCityVirtualOfficesWithoutId($country_code, $city_slug)
 	{
-		/*return $this->city->where('us_state_code', $country_code)->where('slug', $city_slug)->first();*/
 		if( null != $this->city->where('us_state_code', $country_code)->where('slug', $city_slug)->first()) {
 			return $this->city->where('us_state_code', $country_code)->where('slug', $city_slug)->first();
 		}
@@ -68,7 +67,8 @@ class CityService
 		{
 			/*$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);*/
 			/*$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);*/
-			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOfficesWithoutId', ['country_code' => $value->us_state_code, 'city_slug' => $value->slug]);
+																						//isset($center->city_name) ? $center->city_name : null
+			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOfficesWithoutId', ['country_code' => isset($value->us_state_code) ? $value->us_state_code : $value->country_code, 'city_slug' => $value->slug]);
 			$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
 		}
 		return $cities;

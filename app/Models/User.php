@@ -14,4 +14,9 @@ class User extends Model
      * @var array
      */
     protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password'];
+
+    public function role()
+    {
+    	return $this->hasOne('App\Models\Role', 'role_id', 'id');	
+    }
 }

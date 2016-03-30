@@ -9,6 +9,8 @@ use App\Http\Requests;
 use Admin\Http\Requests\CenterRequest;
 
 use App\Http\Controllers\Controller;
+use App\Exceptions\Custom\FailedTransactionException;
+
 
 
 use Admin\Services\CenterService;
@@ -30,9 +32,9 @@ class CentersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CenterService $centerService)
     {
-        dd('asd'); 
+        dd('need more information...');
     }
 
     /**
@@ -40,9 +42,10 @@ class CentersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(UsStateService $usStateService, CountryService $countryService)
+    public function create(UsStateService $usStateService,
+                           CountryService $countryService,
+                           CenterService $centerService)
     {   
-        //dd($usStateService->getAllStates()->lists('name', 'name')->toArray());
         $selectArray = [
             'select' => 'select',
             'IndividualOffice' => 'Individual Office',
@@ -52,7 +55,18 @@ class CentersController extends Controller
             'MeetingRoom' => 'Meeting Room',
             'unknown' => 'Unknown'
         ];
-        return view('admin.centers.create', ['selectArray' => $selectArray,'states' => $usStateService->getAllStates()->lists('name', 'name')->toArray(),'countries' => $countryService->getAllCountries()->lists('name', 'name')->toArray()]);
+        $packages = [];
+        //$states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
+        //dd($states);
+        $packages['platinum Package']      = 'platinum Package';
+        $packages['Platinum Plus Package'] = 'Platinum Plus Package';
+        //dd($packages);
+        return view('admin.centers.create', [
+                                            'selectArray' => $selectArray,
+                                            'states' =>  [''=>'select state'] + $usStateService->getAllStates()->lists('name', 'name')->toArray(),
+                                            'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+                                            'packages' => $packages,
+                                            'photos' => []]);
     }
 
     /**
@@ -63,13 +77,17 @@ class CentersController extends Controller
      */
     public function store(CenterRequest $request, CenterService $centerService)
     {
-        //dd($request->all());
-        //$centerService->storeCenter($request->all());
-        //return redirect('centers/create')->withWarning('This Section not finished yet.');
-        if ( null != $center = $centerService->storeCenter( $request->all() ) ) {
-            return redirect('owners')->withSuccess('Center has been successfully added.');
+        try {
+            if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
+                return redirect('owners')->withSuccess('Center has been successfully added.');
+            }
         }
-        return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        catch(FailedTransactionException $e)
+        {
+            if($e->getCode() === -1) {
+                return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+            }
+        }
     }
 
     /**
@@ -78,9 +96,34 @@ class CentersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, CenterService $centerService,CountryService $countryService,
+                           UsStateService $usStateService)
     {
-        dd('edit');
+        //dd($centerService->getVirtualOfficeById($id)->meeting_room_seo);
+        /*'packages' => $centerService->getPackages()->lists('name', 'name')->toArray(),*/
+         //dd($centerService->test($id));
+         $selectArray = [
+            'select' => 'select',
+            'IndividualOffice' => 'Individual Office',
+            'lobby' => 'Lobby',
+            'BreakRoom' => 'Break Room',
+            'CommonArea' => 'Common Area',
+            'MeetingRoom' => 'Meeting Room',
+            'unknown' => 'Unknown'
+        ];
+        $packages = [
+            'platinum package' => 'Platinum Package',
+            'platinum plus package' => 'Platinum Plus Package'
+        ];
+        return view('admin.centers.create', [
+                                            'selectArray' => $selectArray,
+                                            'states' => $usStateService->getAllStates()->lists('name', 'name')->toArray(),
+                                            'countries' => $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+                                            'packages' => $packages,
+                                            'center' => $centerService->getVirtualOfficeById($id),
+                                            'center_coordinates' => $centerService->getCentersCoordinatesByCenterId($id),
+                                            'prices' => $centerService->getCenterPrices($id)[0],
+                                            'photos' => $centerService->test($id)]);
     }
 
     /**
@@ -90,13 +133,29 @@ class CentersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, CenterRequest $request, CenterService $centerService)
     {
-        //
+        //dd($request->all());
+        try {
+            if ($center = $centerService->updateCenter($id, $request->all(), $request->file()) ) {
+                return redirect('centers/create')->withSuccess('Center has been successfully updated.');
+            }
+        }
+        catch(FailedTransactionException $e)
+        {
+            if($e->getCode() === -1) {
+                return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+            }
+        }
+        //dd($centerService->updateCenter($id, $request->all()));
+        /*if ($center = $centerService->updateCenter($id, $request->all()) ) {
+            return redirect('centers/create')->withSuccess('Center has been successfully updated.');
+        }
+        return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');*/
     }
 
-    public function getAddMeetingRoom()
+    public function show($id)
     {
-        return view('admin.centers.add_meeting_room');
-    }
+        dd($id);
+    } 
 }

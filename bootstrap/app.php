@@ -81,6 +81,11 @@ $app->singleton(
     Admin\Services\MeetingRoomService::class
 );
 
+$app->singleton(
+    Admin\Contracts\StaffInterface::class,
+    Admin\Services\StaffService::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

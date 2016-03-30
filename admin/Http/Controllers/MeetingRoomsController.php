@@ -15,6 +15,7 @@ use Admin\Contracts\CountryInterface;
 use Admin\Http\Requests\OwnerRequest;
 use Admin\Http\Requests\MeetingRoomRequest;
 use Admin\Contracts\MeetingRoomInterface;
+use App\Exceptions\Custom\FailedTransactionException;
 
 class MeetingRoomsController extends Controller
 {
@@ -35,7 +36,7 @@ class MeetingRoomsController extends Controller
      */
     public function index(MeetingRoomInterface $meetingRoomService)
     {
-        //dd($meetingRoomService->getMeetingRooms()->first());
+        // //dd($meetingRoomService->getMeetingRooms()->first());
         return view('admin.owners.parts._meeting-rooms-show', 
                     ['meetingRooms' => $meetingRoomService->getMeetingRooms()->first()]);
     }
@@ -47,7 +48,7 @@ class MeetingRoomsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.centers.add_meeting_room');
     }
 
     /**
@@ -58,7 +59,18 @@ class MeetingRoomsController extends Controller
      */
     public function store(MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
-        dd($meetingRoomService->addMeetingRoom($request->all()));
+        try {
+            if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
+                return redirect('meeting-rooms/create')->withSuccess('meeting room has been successfully added.');
+            }
+        }
+        catch(FailedTransactionException $e)
+        {
+            if($e->getCode() === -1) {
+                return redirect('meeting-rooms/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+            }
+        }
+        //dd($meetingRoomService->addMeetingRoom($request->all()));
     }
 
     /**
@@ -78,9 +90,13 @@ class MeetingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, MeetingRoomInterface $meetingRoomService)
     {
-        //
+        //dd($meetingRoomService->getMeetingRoomOptionsById($id));
+        return view('admin.centers.add_meeting_room', [
+                'mr' => $meetingRoomService->getMeetingRoomById($id),
+                'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id)              
+            ]);
     }
 
     /**
@@ -90,9 +106,19 @@ class MeetingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, Request $request, MeetingRoomInterface $meetingRoomService)
     {
-        //
+        try {
+            if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all()) ) {
+                return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
+            }
+        }
+        catch(FailedTransactionException $e)
+        {
+            if($e->getCode() === -1) {
+                return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+            }
+        }
     }
 
     /**

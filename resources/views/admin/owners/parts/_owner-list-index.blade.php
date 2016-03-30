@@ -10,7 +10,6 @@
         <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Email</th>        
         <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Action</th>        
     </tr>
-
 </thead>
     <tbody>
         @forelse( $owners as $owner )
@@ -63,5 +62,4 @@
             });
         });
     </script>
-
 @stop

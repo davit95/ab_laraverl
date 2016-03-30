@@ -13,8 +13,36 @@
     </div> 
     <div class="clear"></div>
 @stop
-@section('content')   
-    <form class="ownersForm">
+@section('content')
+@include('alerts.messages')
+{!! Form::open([ 'url' => url('/staffs') , 'method' => 'POST', 'class' => 'ownersForm']) !!}
+    <div class="addstaffMember">
+        <div class="w_box lh_f">
+            <div class="form_left">
+                First Name: {!! Form::text('staff_first_name', null,[ 'class' => 'f1']) !!}<br>
+                Last Name: {!! Form::text('staff_last_name', null,[ 'class' => 'f1']) !!}<br>
+                Title: {!! Form::text('staff_title', null,[ 'class' => 'f1']) !!}
+            </div>
+            <div class="form_right">
+                Email: {!! Form::email('staff_email', null,[ 'class' => 'f1']) !!} <br>
+                Phone: {!! Form::text('staff_phone', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('staff_ext', null,[ 'class' => 'f2']) !!}<br>
+                Phone: {!! Form::text('staff_phone_2', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('staff_ext_2', null,[ 'class' => 'f2']) !!}
+            </div>
+            <div class="form_right">
+                password: {!! Form::text('password', null,[ 'class' => 'f1']) !!}
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="add_box">
+        <a id="addstaffMember" class="gLink"><div class="txtLink">ADD STAFF</div><div class="gIcon gAdd"></div></a>
+        <div class="clear"></div>
+    </div> 
+    <div class="submit_w">
+        <button type="submit" class="submit_btn">SUBMIT</button>
+    </div>
+{!! Form::close() !!} 
+    <!-- <form class="ownersForm">
       <div class="addstaffMember">
         <div class="w_box lh_f">
           <div class="form_left">
@@ -37,5 +65,5 @@
       <div class="submit_w">
         <a href="#" class="btn submit_btn">SUBMIT</a>
       </div>
-    </form>
+    </form> -->
 @stop

@@ -35,7 +35,7 @@ class ReportsController extends Controller
         $countries = $countryService->getAllCountries()->toArray();
         $centers = array_merge($usCenters,$countries);*/
         //dd($centers);
-        $centers = $centerService->getAllUscenters();
+        $centers = [];
         $packages = [];
         foreach ($centers as $center) {
             $packages[] = $this->packages($center);

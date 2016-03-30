@@ -46,4 +46,40 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsTo('App\\Models\\City');
     }
+
+    public function role()
+    {
+        return $this->hasOne('App\Models\Role', 'id', 'role_id');
+    }
+
+    public function isSuperAdmin()
+    {
+        $role = $this->role;
+        if( !$role )
+        {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if( $role->name == 'super_admin' )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function checkForRole( $role )
+    {
+        $role = $this->role;
+        if( !$role )
+        {
+            throw new \App\Exceptions\Custom\RoleException("Role for $this->name not defined", 1);     
+        }
+        if( $role->name == $role )
+        {
+            return true;
+        }
+        return false;
+    }
+
+
 }

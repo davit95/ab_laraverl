@@ -16,6 +16,8 @@ use Admin\Http\Requests\OwnerRequest;
 use Admin\Http\Requests\UserRequest;
 use Admin\Contracts\UserInterface;
 
+
+
 class UsersController extends Controller
 {
     /**
@@ -35,6 +37,15 @@ class UsersController extends Controller
      */
     public function index(Request $request, OwnerInterface $ownerService, UserInterface $userService)
     {
+        //dd('asdefewrtfresd');
+       /* if(auth()->user()->isSuperAdmin()) {
+            return redirect('/reports');
+        }
+        else {
+            dd('asd');
+            return redirect('/staffs');
+        }*/
+        //dd(  );
         return view('admin.users.index');
     }
 

@@ -19,7 +19,6 @@ class VirtualOfficesController extends Controller {
 	 * @return Response
 	 */
 	public function index(UsStateService $usStateService, CountryService $countryService) {
-		//dd($usStateService->getAllStates());
 		return view('virtual-offices.index', ['states' => $usStateService->getAllStates(), 'countries' => $countryService->getAllCountries()]);
 	}
 
@@ -50,7 +49,7 @@ class VirtualOfficesController extends Controller {
 		}
 	}
 	
-	/** old 
+	/** old
 	 * Display citie's centers.
 	 *
 	 * @return Response
@@ -147,7 +146,8 @@ class VirtualOfficesController extends Controller {
 			}				
 			$nearby_centers = $nearby_centers->sortBy('distance');
 			$location=$locationSeo->getCityLocationSeo(strtolower($city_slug),null,$country_code);
-			//dd($center->virtual_office_seo);
+			 //dd( $center);
+			//dd($this->packages($center));
 			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center), 'location' => $location]);
 		}
 	}

@@ -7,6 +7,6 @@ interface CenterInterface
 	/*
 	 * Store a newly created resource in storage.
 	 */
-	public function storeCenter($params);
+	public function storeCenter($params, $files);
 
 }
