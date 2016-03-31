@@ -46,9 +46,9 @@ class MeetingRoomsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($center_id)
     {
-        return view('admin.centers.add_meeting_room');
+        return view('admin.centers.add_meeting_room',['center_id' => $center_id]);
     }
 
     /**
@@ -61,7 +61,7 @@ class MeetingRoomsController extends Controller
     {
         try {
             if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
-                return redirect('meeting-rooms/create')->withSuccess('meeting room has been successfully added.');
+                return redirect('meeting-rooms')->withSuccess('meeting room has been successfully added.');
             }
         }
         catch(FailedTransactionException $e)

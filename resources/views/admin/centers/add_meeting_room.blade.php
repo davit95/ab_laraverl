@@ -159,7 +159,8 @@
 				<div class="inpAlign">
 					{!! Form::checkbox('parking', null, null,[ 'id' => '12']) !!}
 					Rate: $ 
-					{!! Form::text('parking_rate', isset($mr_options->parking_rate) ? $mr_options->parking_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
+					{!! Form::text('parking_rate', isset($mr_options->parking_rate) ? $mr_options->parking_rate : null,[ 'class' => 'f3']) !!} /per hour
+					{!! Form::hidden('center_id', isset($center_id) ? $center_id : null,[ 'class' => 'f3']) !!}</div>
 			<div class="clear"></div>
 			<div class="adjustTxt">Parking Description:&nbsp;</div>
 			{!! Form::textarea('park_desc', isset($mr_options->parking_description) ? $mr_options->parking_description : null,[ 'class' => 'f1_t']) !!}<br>

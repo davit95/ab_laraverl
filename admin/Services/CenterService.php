@@ -49,6 +49,12 @@ class CenterService implements CenterInterface {
 		$this->meetingRoomSeo = $meetingRoomSeo;
 	}
 
+						/******************************/
+						/*                            */
+						/*   Center Create Section    */
+						/*                            */
+						/******************************/
+
 	/**
 	 * upload images for virtual office
 	 *
@@ -56,7 +62,6 @@ class CenterService implements CenterInterface {
 	 */
 	public function uploadFile($files)
 	{
-		//dd($files);
 		$file_names = [];
 		if ($files) {
 			foreach ($files as $file) {
@@ -78,6 +83,120 @@ class CenterService implements CenterInterface {
 		$max_photo_id = $this->photo->max('id');
 		$ids = $this->photo->where('id', '>', $max_photo_id - count($this->uploadFile($files)))->lists('id')->toArray();
 		return $ids;
+	}
+
+	/*
+	 * @return array with city params
+	 */
+	public function getCenterParams($inputs)
+	{
+		$state = $this->usState->where('name', $inputs['states'])->first();
+		if($state) {
+			$inputs['us_state_id'] = $state->id;
+			$inputs['us_state_code'] = $state->code;
+			$inputs['us_state'] = $state->code;	
+		}
+		$country = $this->country->where('name', $inputs['countries'])->first();
+		$inputs['name'] = $inputs['name'];
+		$inputs['city_name'] = $inputs['city_name'];
+		$inputs['address1'] = $inputs['address1'];
+		$inputs['slug'] = strtolower($inputs['name']);
+		$inputs['country_id'] = $country->id;
+		$inputs['country_code'] = $country->code;
+		$inputs['country'] = $country->code;
+		$inputs['active_flag'] = 'Y';
+		dd($inputs);
+		return $inputs;
+	}
+
+
+	/*
+	 * @return array with prices params
+	 */
+	public function getPricesParams($inputs,$center_id)
+	{
+		$platinum = [];
+		$platinum_plus = [];
+		$platinum['price'] = $inputs['price'];
+		$platinum['package_id'] = 103;
+		$platinum['with_live_receptionist_pack_price'] = $inputs['with_live_receptionist_pak_price'];
+		$platinum['with_live_receptionist_full_price'] = $inputs['with_live_receptionist_full_price'];
+		$platinum['center_id'] = $center_id;
+		if(isset($inputs['plus_package']) && $inputs['plus_package']=== 'Platinum Plus') {
+			$platinum_plus['price'] = $inputs['plus_price'];
+			$platinum_plus['package_id'] = 105;
+			$platinum_plus['with_live_receptionist_pack_price'] = $inputs['plus_with_live_receptionist_full_price'];
+			$platinum_plus['with_live_receptionist_full_price'] = $inputs['plus_with_live_receptionist_pak_price'];
+			$platinum_plus['center_id'] = $center_id;
+			$package_arr = [$platinum,$platinum_plus];
+			return $package_arr;
+		}
+		return $platinum;
+	}
+
+
+	/**
+	 * return virtual office seo params for update center
+	 *
+	 * @return Response
+	 */
+	public function getVoSeosParams($inputs)
+	{
+		$vo_seo_params = [];
+		$vo_seo_params['sentence1'] = $inputs['sentence1'];
+		$vo_seo_params['sentence2'] = $inputs['sentence2'];
+		$vo_seo_params['sentence3'] = $inputs['sentence3'];
+		$vo_seo_params['avo_description'] = $inputs['avo_description'];
+		$vo_seo_params['meta_title'] = $inputs['meta_title'];
+		$vo_seo_params['meta_description'] = $inputs['meta_description'];
+		$vo_seo_params['meta_keywords'] = $inputs['meta_keywords'];
+		$vo_seo_params['h1'] = $inputs['h1'];
+		$vo_seo_params['h2'] = $inputs['h2'];
+		$vo_seo_params['h3'] = $inputs['h3'];
+		$vo_seo_params['seo_footer'] = $inputs['seo_footer'];
+		$vo_seo_params['abcn_description'] = $inputs['abcn_description'];
+		$vo_seo_params['subhead'] = $inputs['subhead'];
+
+		return $vo_seo_params;
+	}
+
+	/**
+	 * return virtual office seo params for update center
+	 *
+	 * @return Response
+	 */
+	public function getMrSeosParams($inputs)
+	{
+		$mr_seo_params = [];
+		$mr_seo_params['sentence1'] = $inputs['mr_sentence1'];
+		$mr_seo_params['sentence2'] = $inputs['mr_sentence2'];
+		$mr_seo_params['sentence3'] = $inputs['mr_sentence3'];
+		$mr_seo_params['avo_description'] = $inputs['mr_avo_description'];
+		$mr_seo_params['meta_title'] = $inputs['mr_meta_title'];
+		$mr_seo_params['meta_description'] = $inputs['mr_meta_description'];
+		$mr_seo_params['meta_keywords'] = $inputs['mr_meta_keywords'];
+		$mr_seo_params['h1'] = $inputs['mr_h1'];
+		$mr_seo_params['h2'] = $inputs['mr_h2'];
+		$mr_seo_params['h3'] = $inputs['mr_h3'];
+		$mr_seo_params['seo_footer'] = $inputs['mr_seo_footer'];
+		$mr_seo_params['abcn_description'] = $inputs['mr_abcn_description'];
+		$mr_seo_params['subhead'] = $inputs['mr_subhead'];
+
+		return $mr_seo_params;
+	}
+
+	/**
+	 * return virtual office coordinate params for update center
+	 *
+	 * @return Response
+	 */
+	public function getVoCoordParams($inputs)
+	{
+		$vo_coord_params = [];
+		$vo_coord_params['lat'] = $inputs['lat'];
+		$vo_coord_params['lng'] = $inputs['lng'];
+
+		return $vo_coord_params;	
 	}
 
 	/*
@@ -128,98 +247,19 @@ class CenterService implements CenterInterface {
 		return $center;
 	}
 
-	/**
-	 * return all US centers
-	 *
-	 * @return Response
-	 */
-	public function getAllUscenters()
-	{
-		return $this->center->where('active_flag', 'Y')->get();
-	}
 
-	/*
-	 * @return array with city params
-	 */
-	public function getCenterParams($inputs)
-	{
-		$state = $this->usState->where('name', $inputs['states'])->first();
-		if($state) {
-			$inputs['us_state_id'] = $state->id;
-			$inputs['us_state_code'] = $state->code;
-			$inputs['us_state'] = $state->code;	
-		}
-		$country = $this->country->where('name', $inputs['countries'])->first();
-		$inputs['name'] = $inputs['name'];
-		$inputs['city_name'] = $inputs['city_name'];
-		$inputs['address1'] = $inputs['address1'];
-		$inputs['slug'] = strtolower($inputs['name']);
-		$inputs['country_id'] = $country->id;
-		$inputs['country_code'] = $country->code;
-		$inputs['country'] = $country->code;
-		$inputs['active_flag'] = 'Y';
-		return $inputs;
-	}
+							/******************************/
+							/*                            */
+							/* Center Create Section Stop */
+							/*                            */
+							/******************************/
 
-	/**
-	 * return packeges
-	 *
-	 * @return Response
-	 */
-	public function getPackages()
-	{
-		return $this->package->get();
-	}
 
-	/*
-	 * @return array with prices params
-	 */
-	public function getPricesParams($inputs,$center_id)
-	{
-		$platinum = [];
-		$platinum_plus = [];
-		$platinum['price'] = $inputs['price'];
-		$platinum['package_id'] = 103;
-		$platinum['with_live_receptionist_pack_price'] = $inputs['with_live_receptionist_pak_price'];
-		$platinum['with_live_receptionist_full_price'] = $inputs['with_live_receptionist_full_price'];
-		$platinum['center_id'] = $center_id;
-		if(isset($inputs['plus_package']) && $inputs['plus_package']=== 'Platinum Plus') {
-			$platinum_plus['price'] = $inputs['plus_price'];
-			$platinum_plus['package_id'] = 105;
-			$platinum_plus['with_live_receptionist_pack_price'] = $inputs['plus_with_live_receptionist_full_price'];
-			$platinum_plus['with_live_receptionist_full_price'] = $inputs['plus_with_live_receptionist_pak_price'];
-			$platinum_plus['center_id'] = $center_id;
-			$package_arr = [$platinum,$platinum_plus];
-			return $package_arr;
-		}
-		return $platinum;
-	}
-
-	/*
-	 * @return array with images params
-	 */
-	public function getImagesParams($inputs)
-	{
-		$image_names = ['image1','image2','image3','image4','image5','image6'];
-		$images = [];
-		$photos = [];
-		foreach ($inputs as $key => $value) {
-			if(in_array($key, $image_names)){
-				/*array_push($photos, array($value));*/
-				$photos[] = array('path' => $value);
-			}
-		}
-		return $photos;
-	}
-
-	/**
-	 * return virtual office by center id
-	 *
-	 * @return Response
-	 */
-	public function getVirtualOfficeById($center_id) {
-		return $this->filteredVirtualOffice()->where('id', $center_id)->first();
-	}
+							/******************************/
+							/*                            */
+							/*   Center Update Section    */
+							/*                            */
+							/******************************/
 
 	/**
 	 * Filter for virtuall office before any query.
@@ -237,6 +277,94 @@ class CenterService implements CenterInterface {
 						$q->has('center_filter', '<', 1);
 					});
 			});
+	}
+
+	/**
+	 * return center filter params for update center
+	 *
+	 * @return Response
+	 */
+	public function getCenterUpdateParams($inputs)
+	{
+		$center_params = [];
+		$center_params['building_name'] = $inputs['building_name'];
+		$center_params['address1'] = $inputs['address1'];
+		$center_params['city_name'] = $inputs['city_name'];
+		$center_params['name'] = $inputs['name'];
+		return $center_params;
+	}
+
+
+	public function deleteFile($filename)
+	{
+		if(File::exists(public_path().'/mr-photos/all/'.$filename))
+		{
+			File::delete(public_path().'/mr-photos/all/'.$filename);
+		}
+		return true;
+	}
+
+	/**
+	 * update center 
+	 *
+	 * @return Response
+	 */
+	public function updateCenter($center_id, $inputs, $files)
+	{
+		//dd($this->getPricesParams($inputs,$center_id));
+		$prices_params = $this->getPricesParams($inputs,$center_id);
+		$vo_coord_params = $this->getVoCoordParams($inputs);
+		$vo_seo_params = $this->getVoSeosParams($inputs);
+		$mr_seo_params = $this->getMrSeosParams($inputs);
+		$center_params = $this->getCenterUpdateParams($inputs);
+		DB::beginTransaction();
+		try {
+			$this->center->where('id', $center_id)->update($center_params);
+			$this->centerPrice->where('center_id', $center_id)->update($prices_params);
+			$this->centerCoordinate->where('center_id', $center_id)->update($vo_coord_params);
+			$this->virtualOfficeSeo->where('center_id', $center_id)->update($vo_seo_params);
+			$this->meetingRoomSeo->where('center_id', $center_id)->update($mr_seo_params);
+		}
+		catch(\Exception $e)
+		{
+		    DB::rollback();
+			throw new FailedTransactionException('update failed', -1); 
+		}
+		DB::commit();
+		return true;	
+	}
+
+						/******************************/
+						/*                            */
+						/* Center Update Section Stop */
+						/*                            */
+						/******************************/
+
+	/**
+	 * return all US centers
+	 *
+	 * @return Response
+	 */
+	public function getAllUscenters()
+	{
+		return $this->center->where('active_flag', 'Y')->get();
+	}
+
+	
+
+	/**
+	 * return packeges
+	 *
+	 * @return Response
+	 */
+	public function getPackages()
+	{
+		return $this->package->get();
+	}
+
+	public function getAllCenters()
+	{
+		return $this->filteredVirtualOffice()->get();
 	}
 
 	/**
@@ -259,143 +387,9 @@ class CenterService implements CenterInterface {
 		return $this->filteredVirtualOffice()->where('id', $center_id)->first()->prices;
 	}
 
-	// public function updatePost($id,$inputs,$file)
-	// {
-	// 	$post = $this->getPostById($id);
-	// 	if ($file) {
-	// 	    $this->deleteFile($post->image);
-	// 	    $inputs['image'] = $this->uploadFile($file);
-	// 	}
-	// 	return $this->getPostById($id)->update($inputs);
-	// }
-
-	public function deleteFile($filename)
+	public function getCenterImagesIds($center)
 	{
-		if(File::exists(public_path().'/mr-photos/all/'.$filename))
-		{
-			File::delete(public_path().'/mr-photos/all/'.$filename);
-		}
-		return true;
-	}
-
-	/**
-	 * update center 
-	 *
-	 * @return Response
-	 */
-	public function updateCenter($center_id, $inputs, $files)
-	{
-		$center = $this->center->find($center_id);
-		dd($this->uploadFile($this->getUpdateImageParams($center->vo_photos)));
-		//dd($center_id, $inputs, $files);
-		$prices_params = $this->getPricesParams($inputs,$center_id);
-		$vo_coord_params = $this->getVoCoordParams($inputs);
-		$vo_seo_params = $this->getVoSeosParams($inputs);
-		$mr_seo_params = $this->getMrSeosParams($inputs);
-		$center_params = $this->getCenterUpdateParams($inputs);
-		DB::beginTransaction();
-		try {
-			$this->center->where('id', $center_id)->update($center_params);
-			$this->centerPrice->where('center_id', $center_id)->update($prices_params);
-			$this->centerCoordinate->where('center_id', $center_id)->update($vo_coord_params);
-			$this->virtualOfficeSeo->where('center_id', $center_id)->update($vo_seo_params);
-			$this->meetingRoomSeo->where('center_id', $center_id)->update($mr_seo_params);
-
-			//$post->vo_photo()->detach();
-			$this->photo->insert($this->uploadFile($files));
-		}
-		catch(\Exception $e)
-		{
-		    DB::rollback();
-			throw new FailedTransactionException('update failed', -1); 
-		}
-		DB::commit();
-		return true;;
-	}
-
-	public function getUpdateImageParams($files)
-	{
-		$photos = [];
-		foreach ($files as $id => $photo) {
-			$photos['image'.($id + 1)] = $photo->path;
-		}
-		return $photos;
-	}
-
-
-	/**
-	 * return center filter params for update center
-	 *
-	 * @return Response
-	 */
-	public function getCenterUpdateParams($inputs)
-	{
-		$center_params = [];
-		$center_params['building_name'] = $inputs['building_name'];
-		$center_params['address1'] = $inputs['address1'];
-		$center_params['city_name'] = $inputs['city_name'];
-		return $center_params;
-	}
-
-	/**
-	 * return virtual office seo params for update center
-	 *
-	 * @return Response
-	 */
-	public function getVoSeosParams($inputs)
-	{
-		$vo_seo_params = [];
-		$vo_seo_params['sentence1'] = $inputs['sentence1'];
-		$vo_seo_params['sentence2'] = $inputs['sentence2'];
-		$vo_seo_params['sentence3'] = $inputs['sentence3'];
-		$vo_seo_params['avo_description'] = $inputs['avo_description'];
-		$vo_seo_params['meta_title'] = $inputs['meta_title'];
-		$vo_seo_params['meta_description'] = $inputs['meta_description'];
-		$vo_seo_params['meta_keywords'] = $inputs['meta_keywords'];
-		$vo_seo_params['h1'] = $inputs['h1'];
-		$vo_seo_params['h2'] = $inputs['h2'];
-		$vo_seo_params['h3'] = $inputs['h3'];
-		$vo_seo_params['seo_footer'] = $inputs['seo_footer'];
-		$vo_seo_params['abcn_description'] = $inputs['abcn_description'];
-		$vo_seo_params['subhead'] = $inputs['subhead'];
-		return $vo_seo_params;
-	}
-
-	/**
-	 * return virtual office seo params for update center
-	 *
-	 * @return Response
-	 */
-	public function getMrSeosParams($inputs)
-	{
-		$mr_seo_params = [];
-		$mr_seo_params['sentence1'] = $inputs['mr_sentence1'];
-		$mr_seo_params['sentence2'] = $inputs['mr_sentence2'];
-		$mr_seo_params['sentence3'] = $inputs['mr_sentence3'];
-		$mr_seo_params['avo_description'] = $inputs['mr_avo_description'];
-		$mr_seo_params['meta_title'] = $inputs['mr_meta_title'];
-		$mr_seo_params['meta_description'] = $inputs['mr_meta_description'];
-		$mr_seo_params['meta_keywords'] = $inputs['mr_meta_keywords'];
-		$mr_seo_params['h1'] = $inputs['mr_h1'];
-		$mr_seo_params['h2'] = $inputs['mr_h2'];
-		$mr_seo_params['h3'] = $inputs['mr_h3'];
-		$mr_seo_params['seo_footer'] = $inputs['mr_seo_footer'];
-		$mr_seo_params['abcn_description'] = $inputs['mr_abcn_description'];
-		$mr_seo_params['subhead'] = $inputs['mr_subhead'];
-		return $mr_seo_params;
-	}
-
-	/**
-	 * return virtual office coordinate params for update center
-	 *
-	 * @return Response
-	 */
-	public function getVoCoordParams($inputs)
-	{
-		$vo_coord_params = [];
-		$vo_coord_params['lat'] = $inputs['lat'];
-		$vo_coord_params['lng'] = $inputs['lng'];
-		return $vo_coord_params;	
+		dd($center->vo_photos->lists('id'));
 	}
 
 	public function test($center_id)
@@ -406,5 +400,15 @@ class CenterService implements CenterInterface {
 			$vo_photos[$photo_id + 1] = $photo;
 		}
 		return $vo_photos;
+	}
+
+	/**
+	 * Get center by given id.
+	 *
+	 * @param $id (int)
+	 * @return Response
+	 */
+	public function getVirtualOfficeById($center_id) {
+		return $this->filteredVirtualOffice()->where('id', $center_id)->first();
 	}
 }

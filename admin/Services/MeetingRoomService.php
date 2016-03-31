@@ -76,9 +76,9 @@ class MeetingRoomService implements MeetingRoomInterface {
 		try {
 			$mr = $this->meetingRoom->create($mr_data);
 			$mr->options()->save($data);
-			$this->centerFilter->where('center_id', 3913)->update(['meeting_room' => 1]);
+			$this->centerFilter->where('center_id', $inputs['center_id'])->update(['meeting_room' => 1]);
 			$this->photo->insert($this->uploadFile($files));
-			$this->center->find(3913)->mr_photos()->attach($this->getPhotosIds($files)[0] , ['mr_id' => $mr->id]);	
+			$this->center->find($inputs['center_id'])->mr_photos()->attach($this->getPhotosIds($files)[0] , ['mr_id' => $mr->id]);	
 		}
 		catch(\Exception $e)
 		{
@@ -103,7 +103,7 @@ class MeetingRoomService implements MeetingRoomInterface {
 		$mr['full_day_rate'] = $inputs['full_day'];
 		$mr['min_hours_req'] = $inputs['min_hours'];
 		$mr['floor'] = $inputs['floor'];
-		$mr['center_id'] = 3913;
+		$mr['center_id'] = $inputs['center_id'];
 		return $mr;
 	}
 

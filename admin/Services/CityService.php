@@ -44,4 +44,24 @@ class CityService implements CityInterface
 	{
 		return $this->city->lists('name','id')->toArray();
 	}
+
+	/**
+     * Get city by key.
+     *
+     * @return Response
+     */
+	public function searchCityByKey($key)
+	{
+		$cities = $this->city->where('name', 'LIKE', "{$key}%")->where('active', 1)->get();
+		foreach ($cities as $key => $value)
+		{
+			/*$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOffices', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);*/
+			/*$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug, 'city_id' => $value->id]);*/
+																						//isset($center->city_name) ? $center->city_name : null
+			$cities[$key]->vo_url = URL::action('VirtualOfficesController@getCityVirtualOfficesWithoutId', ['country_code' => isset($value->us_state_code) ? $value->us_state_code : $value->country_code, 'city_slug' => $value->slug]);
+			$cities[$key]->mr_url = URL::action('MeetingRoomsController@getCityMeetingRooms', ['country_code' => $value->country_code, 'city_slug' => $value->slug]);
+		}
+		return $cities;
+	}
+	
 }

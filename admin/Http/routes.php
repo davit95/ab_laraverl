@@ -37,6 +37,12 @@ Route::resource('/staffs', 'StaffsController');
 /*Route::get('/meeting-rooms', 'MeetingRoomsController@index');*/
 Route::resource('/meeting-rooms', 'MeetingRoomsController');
 Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
+Route::get('center/{id}/meeting-room/create', 'MeetingRoomsController@create');
+
+/*Route::group(['prefix' => 'ajax', 'middleware' => 'auth'], function () {
+	Route::get('/centers/{id}', 'CentersController@getCenterById');
+	Route::get('/autocomplete', 'CentersController@autocomplete');
+});*/
 
 
 

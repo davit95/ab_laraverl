@@ -5,13 +5,12 @@ namespace Admin\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\UsStateService;
 use App\Services\CountryService;
+use App\Services\CityService;
 use App\Http\Requests;
 use Admin\Http\Requests\CenterRequest;
 
 use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
-
-
 
 use Admin\Services\CenterService;
 
@@ -34,7 +33,7 @@ class CentersController extends Controller
      */
     public function index(CenterService $centerService)
     {
-        dd('need more information...');
+        return view('admin.centers.index', ['centers' =>$centerService->getAllCenters()]);
     }
 
     /**
@@ -56,11 +55,8 @@ class CentersController extends Controller
             'unknown' => 'Unknown'
         ];
         $packages = [];
-        //$states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
-        //dd($states);
         $packages['platinum Package']      = 'platinum Package';
         $packages['Platinum Plus Package'] = 'Platinum Plus Package';
-        //dd($packages);
         return view('admin.centers.create', [
                                             'selectArray' => $selectArray,
                                             'states' =>  [''=>'select state'] + $usStateService->getAllStates()->lists('name', 'name')->toArray(),
@@ -135,10 +131,10 @@ class CentersController extends Controller
      */
     public function update($id, CenterRequest $request, CenterService $centerService)
     {
-        //dd($request->all());
+        //dd('asd');
         try {
             if ($center = $centerService->updateCenter($id, $request->all(), $request->file()) ) {
-                return redirect('centers/create')->withSuccess('Center has been successfully updated.');
+                return redirect('centers')->withSuccess('Center has been successfully updated.');
             }
         }
         catch(FailedTransactionException $e)
@@ -154,8 +150,71 @@ class CentersController extends Controller
         return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');*/
     }
 
-    public function show($id)
+    public function show($id, CenterService $centerService)
+    {
+        $center = $centerService->getVirtualOfficeById($id);
+        return view('admin.centers.show',['center' => $center]);
+    }
+
+    /**
+     * Display a home page of app.
+     *
+     * @return Response
+     */
+    public function getCenterById($id, Request $request, CenterService $centerService) {
+        if (null != $center = $centerService->getCenterByIdAjax($id)) {
+            $prefix = 'virtual-offices';
+            $slug   = $center->city?$center->city->slug:'';
+            if ($request->has('center_type') && $request->get('center_type') == 'mr') {
+                $prefix = 'meeting-rooms';
+                if (is_null($photo = $center->mr_photos->first())) {
+                    $image_src = url('mr-photos/no_pic.gif');
+                    $image_alt = '';
+                } else {
+                    $image_src = url('mr-photos/all/'.$photo->path);
+                    $image_alt = $photo->alt;
+                }
+            } else {
+                if (is_null($photo = $center->vo_photos->first())) {
+                    $image_src = url('mr-photos/no_pic.gif');
+                    $image_alt = '';
+                } else {
+                    $image_src = 'http://www.abcn.com/images/photos/'.$photo->path;
+                    $image_alt = $photo->alt;
+                }
+            }
+            $more_info_link = url('/'.$prefix.'/'.$center->country.'/'.$slug.'/'.$center->slug.'/'.$center->id);
+            $response       = [
+                'title'          => $center->building_name,
+                'address'        => $center->address1.' '.$center->city_name.', '.$center->us_state,
+                'image_src'      => $image_src,
+                'image_alt'      => $image_alt,
+                'more_info_link' => $more_info_link
+            ];
+            return response()->json($response);
+        }
+    }
+
+    /**
+     * Autocomplete search.
+     *
+     * @return Response
+     */
+    public function autocomplete(CenterService $centerService, Request $request, CountryService $countryService, CityService $cityService, UsStateService $usStateService) {
+        $countries = $countryService->searchCountryByKey($request->get('q'));
+        $cities    = $cityService->searchCityByKey($request->get('q'));
+        $states    = $usStateService->searchStateByKey($request->get('q'));
+        return response()->json(['countries' => $countries, 'cities' => $cities, 'states' => $states]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
         dd($id);
-    } 
+    }
 }
