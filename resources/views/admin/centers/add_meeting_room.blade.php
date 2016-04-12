@@ -61,8 +61,9 @@
 				<div class="inpAlign">
 				<!-- Select existing -->
 					{!! Form::file('mr_photo', null,[ 'class' => 'gray_btn']) !!} 
-					<!-- <a href="#" class="gray_btn">Select existing</a>
-					<a href="#" class="gray_btn">Upload</a> -->
+					@if(isset($photo))
+					    <img src="/mr-photos/all/{!! $photo->path !!}" width="70px">
+					@endif
 				</div>
 				<div class="clear"></div>
 			<div class="inpAlign">Image 1 - Image 2</div>

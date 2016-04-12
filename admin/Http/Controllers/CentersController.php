@@ -46,8 +46,9 @@ class CentersController extends Controller
                            CenterService $centerService)
     {   
         $selectArray = [
-            'select' => 'select',
+            '' => 'select',
             'IndividualOffice' => 'Individual Office',
+            'building exterior' => 'building exterior',
             'lobby' => 'Lobby',
             'BreakRoom' => 'Break Room',
             'CommonArea' => 'Common Area',
@@ -73,6 +74,7 @@ class CentersController extends Controller
      */
     public function store(CenterRequest $request, CenterService $centerService)
     {
+       //dd($request->all());
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
                 return redirect('owners')->withSuccess('Center has been successfully added.');
@@ -100,6 +102,7 @@ class CentersController extends Controller
          //dd($centerService->test($id));
          $selectArray = [
             'select' => 'select',
+            'building exterior' => 'building exterior',
             'IndividualOffice' => 'Individual Office',
             'lobby' => 'Lobby',
             'BreakRoom' => 'Break Room',
@@ -119,7 +122,7 @@ class CentersController extends Controller
                                             'center' => $centerService->getVirtualOfficeById($id),
                                             'center_coordinates' => $centerService->getCentersCoordinatesByCenterId($id),
                                             'prices' => $centerService->getCenterPrices($id)[0],
-                                            'photos' => $centerService->test($id)]);
+                                            'photos' => $centerService->getPhotosByCenterId($id)]);
     }
 
     /**
@@ -131,7 +134,6 @@ class CentersController extends Controller
      */
     public function update($id, CenterRequest $request, CenterService $centerService)
     {
-        //dd('asd');
         try {
             if ($center = $centerService->updateCenter($id, $request->all(), $request->file()) ) {
                 return redirect('centers')->withSuccess('Center has been successfully updated.');

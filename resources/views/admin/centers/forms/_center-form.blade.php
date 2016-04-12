@@ -49,6 +49,7 @@
                 {!! Form::label('Photo','Photo '.$i.':',['class' => 'plb lh_f']) !!}
                 <div class="plb2 lh_f">
                     {!! Form::file('image'.$i.'', null, []) !!}
+                    {!! Form::hidden('photo_number'.$i.'', $i, []) !!}
                     @if(isset($photos[$i]) && $photos[$i] != '')
                         <img src="/mr-photos/{!! $photos[$i]->path !!}" width="70px">
                     @endif
@@ -58,7 +59,7 @@
                 <div class="plb lh_f">Category:&nbsp;</div> 
                 <div class="plb2">
                     <div class="g_select2">
-                        {!! Form::select('select'.$i.'',$selectArray,null,['class' => 'rule_d f1_s']) !!}
+                        {!! Form::select('category'.$i.'',$selectArray,null,['class' => 'rule_d f1_s']) !!}
                     </div> 
                 </div> 
                 <div class="plb3 lh_f">&nbsp; 
@@ -290,14 +291,19 @@
     </div>
     <div class="clear"></div>
 </div>
-
 <div class="h2wrapp mtop1">
+    <div class="h2txt">
+        <input type="checkbox" class="show_plp_package"> PLATINUM PLUS PACKAGE
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="h2wrapp mtop1 pl_plus hide">
     <div class="h2Icon add"></div>
     <div class="h2txt">
         <h2>PLATINUM PLUS PACKAGE INFORMATION</h2>
     </div>
 </div>
-<div class="w_box centerPics">
+<div class="w_box centerPics pl_plus_form hide">
     <div class="form_left centers_basic">
        {!! Form::label('plus_package','package') !!}
        {!! Form::text('plus_package',null,['class' => 'f1']) !!}
@@ -310,13 +316,14 @@
        <br>
        {!! Form::label('plus_with_live_receptionist_pak_price','live_rec_price') !!}
        {!! Form::text('plus_with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
-       <br> 
+       <br>
     </div>          
     <div class="form_right centers_basic">
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
 </div>
+
    
 <div class="submit_w">
     {!! Form::submit('Submit', array('class'=>'submit_btn')) !!}
@@ -344,5 +351,15 @@ function getLatAndLng(){
       }
     });
 } 
-    
+
+    $('.show_plp_package').on('click', function(){
+        if($(this).prop('checked')) {
+            $('.pl_plus').removeClass('hide');
+            $('.pl_plus_form').removeClass('hide');
+        } else {
+            $('.pl_plus').addClass('hide');
+            $('.pl_plus_form').addClass('hide');
+        }
+    })
+
 </script>

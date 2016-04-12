@@ -13,17 +13,18 @@
 						<h1 class="gray2">Customer Log In</h1>
 						<br><p><span class="mediumBold">Enter your email address and password to log into your account.</span></p>
 						<div class="signin-info changeMtop2 ">
-							{!! Form::open() !!}
+							{!! Form::open(['method' => 'POST' , 'url' => url('login')]) !!}
 								<input type="hidden" name="step" value="2">
-								<p><span class="mediumBold">Please enter your email and password below.</span></p><br>
-								<div class="existingL"><label>Email Address</label></div>
-								<div class="existingR"><input type="text" name="Username" value=""></div>
+								<p><span class="mediumBold"> {!! Form::label('Please enter your email and password below.') !!}</span></p><br>
+								<div class="existingL">{!! Form::label('Email Address') !!}</div>
+								<div class="existingR">{!! Form::email('email', null ,[]) !!}</div>
 								<div class="clear"></div>
-								<div class="existingL"><label>Password</label></div>
-								<div class="existingR"><input type="password" name="Password"></div>
+								<div class="existingL">{!! Form::label('Password') !!}</div>
+								<div class="existingR">{!! Form::password('password', []) !!}</div>
 								<div class="clear"></div>
 								<div class="existingL"></div>
-								<input value="SUBMIT" class="aquaBtn changeMtop minW" type="submit"><br>
+								{!! Form::submit('SUBMIT',['class' => 'aquaBtn changeMtop minW' ]) !!}
+								<!-- <input value="SUBMIT" class="aquaBtn changeMtop minW" type="submit"> --><br>
 								<div class="existingL"></div>
 								<div class="help">
 									<img src="/images/info.png" class="tooltip tooltipstered"> Having problems signing in?<br>

@@ -24,7 +24,7 @@
             <div class="sSelectWrap2">
                 <select id="BPSelectDD">
                     <option selected="">CONTROL PANEL</option>
-                    <option>CSR</option>
+                    <option class="csr">CSR</option>
                     <option>OWNER CP</option>
                     <option>CLIENT CP</option>
                 </select>
@@ -35,13 +35,13 @@
         <div class="menu_btn @if(Request::is('reports*')) menu_active @endif">
             <div class="@if(Request::is('reports*')) menu_btnL1_a @else menu_btnL1 @endif"></div>
             <div class="menu_btnR lh_menu">REPORTS</div>
-        </div> 
+        </div>
     </a>
     <a href="{{ url('centers') }}" class="nd">
         <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
             <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
             <div class="menu_btnR m_menu">OWNERS<br>&amp; CENTERS</div>
-        </div> 
+        </div>
     </a>
     <a href="{{ url('users') }}" class="nd">
         <div <div class="menu_btn @if(Request::is('users*')) menu_active @endif">
@@ -53,4 +53,12 @@
         <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
     </a>
 </div> 
-
+<script type="text/javascript">
+   $( "#BPSelectDD" ).change(function() {
+        var page =  $("#BPSelectDD option:selected").text().toLowerCase();
+        var current_url = $(location).attr('href');
+        current_url = current_url.substr(0, current_url.lastIndexOf('/'));
+        url = current_url + '/' + page;
+        $(location).attr("href", url);
+    });
+</script>

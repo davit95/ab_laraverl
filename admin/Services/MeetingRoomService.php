@@ -11,6 +11,7 @@ use App\Models\CenterFilter;
 use App\Models\Center;
 use App\Models\Photo;
 use DB;
+use File;
 use Illuminate\Contracts\Validation\ValidationException;
 use App\Exceptions\Custom\FailedTransactionException;
 
@@ -130,13 +131,21 @@ class MeetingRoomService implements MeetingRoomInterface {
 	 *
 	 * @return Response
 	 */
-	public function updateMeetingRoom($mr_id, $inputs)
+	public function updateMeetingRoom($mr_id, $inputs, $file)
 	{
+		$mr = $this->meetingRoom->where('id', $mr_id)->first();
 		$mr_params = $this->getMeetingRoomsParams($inputs);
 		$mr_option_params = $this->getMrOptionParams($inputs, $mr_id);
+
 		DB::beginTransaction();
 		try {
-			$this->meetingRoom->where('id', $mr_id)->update($mr_params);
+			$mr->where('id', $mr_id)->update($mr_params);
+			$center = $this->center->find($inputs['center_id']);
+			if($file) {
+				$this->photo->insert($this->uploadFile($file));
+				$center->mr_photos()->detach();
+				$center->mr_photos()->attach($this->getPhotosIds($file)[0] , ['mr_id' => $mr->id]);
+			}
 			$this->meetingRoomOption->where('meeting_room_id', $mr_id)->update($mr_option_params);
 		}
 		catch(\Exception $e)
@@ -162,5 +171,23 @@ class MeetingRoomService implements MeetingRoomInterface {
 		$mr_option_params['tvdvdplayer_rate'] = $input['tv_dvd_rate'];
 		$mr_option_params['projector_rate'] = $input['projector_rate'];
 		return $mr_option_params;
+	}
+
+
+	public function deleteFile($filename)
+	{
+		if(File::exists(public_path().'/mr-photos/all/'.$filename))
+		{
+			File::delete(public_path().'/mr-photos/all/'.$filename);
+		}
+		return true;
+	}
+
+	public function getPhotoById($id)
+	{
+		$mr = $this->meetingRoom->where('id', $id)->first();
+		$center_id = $mr->center_id;
+		$photo = $this->center->where('id', $center_id)->first()->mr_photos()->first();
+		return $photo;
 	}
 }

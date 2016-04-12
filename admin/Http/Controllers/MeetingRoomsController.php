@@ -46,7 +46,12 @@ class MeetingRoomsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($center_id)
+    public function create()
+    {
+        return view('admin.centers.add_meeting_room');
+    }
+
+    public function addMeetingRoom($center_id)
     {
         return view('admin.centers.add_meeting_room',['center_id' => $center_id]);
     }
@@ -95,7 +100,8 @@ class MeetingRoomsController extends Controller
         //dd($meetingRoomService->getMeetingRoomOptionsById($id));
         return view('admin.centers.add_meeting_room', [
                 'mr' => $meetingRoomService->getMeetingRoomById($id),
-                'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id)              
+                'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id),
+                'photo' => $meetingRoomService->getPhotoById($id)           
             ]);
     }
 
@@ -109,7 +115,7 @@ class MeetingRoomsController extends Controller
     public function update($id, Request $request, MeetingRoomInterface $meetingRoomService)
     {
         try {
-            if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all()) ) {
+            if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all(), $request->file()) ) {
                 return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
             }
         }

@@ -105,7 +105,6 @@ class CenterService implements CenterInterface {
 		$inputs['country_code'] = $country->code;
 		$inputs['country'] = $country->code;
 		$inputs['active_flag'] = 'Y';
-		dd($inputs);
 		return $inputs;
 	}
 
@@ -199,17 +198,156 @@ class CenterService implements CenterInterface {
 		return $vo_coord_params;	
 	}
 
+	public function getPhotosALtsAndCaptions($inputs, $files, $center_city)
+	{
+		$categories = [];
+		$alts_array = [];
+		$alts = [];
+		$caps = [];
+		$final_alts_arr = [];
+		$final_capts_array = [];
+		$photos = [];
+		$key_number = 1;
+		foreach($inputs as $key => $category) {
+			if($key === 'category'.$key_number && $inputs[$key] != '') {
+				$categories[$key_number] = $category;
+				$key_number++;
+			}
+		}
+		foreach ($categories as $key => $value) {
+			if(isset($files['image'.$key])) {
+				$alts_array[] = $value;
+			}
+		}
+		//dd($alts_array);
+		foreach ($alts_array as $key => $value) {
+			if($value === 'IndividualOffice') {
+				$alt1 = 'Virtual Offices ' . $center_city . ' - Temp Offices or Meeting Room';
+				$alt2 = $center_city . ' Temporary Private Office or Meeting Room';
+				$alt3 = 'Temporary ' . $center_city . ' Office - Meeting Room';
+				array_push($alts, $alt1, $alt2, $alt3);
+				array_push($final_alts_arr, $alts);
+				$alts = [];
+
+				$cap1 = 'Try a Temporary Office or Meeting Room ';
+				$cap2 = 'Meeting Room and Private Office in ' . $center_city;
+				$cap3 = 'Temporary Office or Meeting Room in ' . $center_city;
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($final_capts_array, $caps);
+				$caps = [];
+			}
+			elseif($value === 'building exterior') {
+				$alt1 = $center_city . ' Virtual Office Address Location';
+				$alt2 = $center_city . ' Business Address - Building Location';
+				$alt3 = $center_city . ' Virtual Business Address, Office Location';
+				array_push($alts, $alt1, $alt2, $alt3);
+				array_push($final_alts_arr, $alts);
+				$alts = [];
+
+				$cap1 = 'Virtual Office ' . $center_city . ' - Business Address and Meeting Rooms';
+				$cap2 = $center_city . ' Virtual Office, Address and Conference Rooms';
+				$cap3 = 'Virtual Offices, Business Addresses in ' . $center_city;
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($final_capts_array, $caps);
+				$caps = [];
+			}
+			elseif($value === 'lobby') {
+				$alt1 = $center_city . ' Live Receptionist and Business Address Lobby';
+				$alt2 = 'Receptionist and Mail Area - ' . $center_city . ' Virtual Office';
+				$alt3 = 'Receptionist Lobby - Virtual Offices in ' . $center_city;
+				array_push($alts, $alt1, $alt2, $alt3);
+				array_push($final_alts_arr, $alts);
+				$alts = [];
+
+				$cap1 = 'Business Address Lobby in ' . $center_city;
+				$cap2 = 'Virtual Office Lobby in ' . $center_city;
+				$cap3 = $center_city . ' Virtual Office Address Lobby';
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($final_capts_array, $caps);
+				$caps = [];
+			}
+			elseif($value === 'BreakRoom') {
+				$alt1 = 'Break Room - Kitchen Area - ' . $center_city . ' Virtual Office';
+				$alt2 = 'Break Area in ' . $center_city . ' Virtual Office';
+				$alt3 = 'Break Area in ' . $center_city . ' Virtual Office Space';
+				array_push($alts, $alt1, $alt2, $alt3);
+				array_push($final_alts_arr, $alts);
+				$alts = [];
+
+				$cap1 = 'Break Room - Take Five in this Virtual Office';
+				$cap2 = 'Break Room for Our ' . $center_city . ' Office ';
+				$cap3 = 'Break Area in ' . $center_city . ' Virtual Office Space';
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($final_capts_array, $caps);
+				$caps = [];
+			}
+			elseif($value === 'CommonArea') {
+				$alt1 = $center_city . ' Virtual Office Space - Comfortable Commons Area';
+				$alt2 = $center_city . ' Virtual Office Address - Lounge Commons Area';
+				$alt3 = $center_city . ' Busines Address - Lounge Area';
+				array_push($alts, $alt1, $alt2, $alt3);
+				array_push($final_alts_arr, $alts);
+				$alts = [];
+
+				$cap1 = $center_city . ' Office Commons Area ';
+				$cap2 = 'Lounge or commons area at our ' . $center_city . ' office';
+				$cap3 = 'Business lounge commons area in ' . $center_city;
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($final_capts_array, $caps);
+				$caps = [];
+
+			}
+			elseif($value === 'MeetingRoom') {
+				$alt1 = 'Stylish ' . $center_city . ' Meeting Room';
+				$alt2 = 'Nice Conference and Meeting Rooms in ' . $center_city;
+				$alt3 = 'Turnkey ' . $center_city . ' Conference Room';
+				array_push($alts, $alt1, $alt2, $alt3);
+				array_push($final_alts_arr, $alts);
+				$alts = [];
+
+				$cap1 = 'Try an Alliance Conference Room in ' . $center_city;
+				$cap2 = 'Try an Alliance Meeting Room in  ' . $center_city;
+				$cap3 = 'Nice Meeting Venue in ' . $center_city;
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($caps, $cap1, $cap2, $cap3);
+				array_push($final_capts_array, $caps);
+				$caps = [];
+			}
+		}
+		foreach ($this->uploadFile($files) as $key => $value) {
+			if(isset($final_alts_arr[$key][rand(0,2)])) {	
+				$photos[$key]['alt'] = $final_alts_arr[$key][rand(0,2)];
+			}
+			else {
+				$photos[$key]['alt'] = '';
+			}
+			if(isset($final_capts_array[$key][rand(0,2)])) {
+				$photos[$key]['caption'] = $final_capts_array[$key][rand(0,2)];
+			}
+			else {
+				$photos[$key]['caption'] = '';
+			}
+			$photos[$key]['path'] = $this->uploadFile($files)[$key]['path'];	
+		}
+		return $photos;		
+	}
+
 	/*
 	 * Store a newly created resource in storage.
 	 */
 	public function storeCenter($inputs, $files) {
-
 		$params = $this->getCenterParams($inputs);
 
 		$city = $this->city->where('name', $params['city_name'])->where('active', 1)->first();
 
 		$params['city_id'] = $city->id;
-
+		//$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
+		//dd('a');
+		
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
 		$center_filter_data = new $this->centerFilter(['virtual_office' => 1]);
@@ -223,7 +361,8 @@ class CenterService implements CenterInterface {
 		try {
 			$center = $this->center->create($params);
 
-			$this->photo->insert($this->uploadFile($files));
+			$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
+
 			$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
 
 			$prices_data = $this->getPricesParams($inputs,$center->id);
@@ -392,7 +531,7 @@ class CenterService implements CenterInterface {
 		dd($center->vo_photos->lists('id'));
 	}
 
-	public function test($center_id)
+	public function getPhotosByCenterId($center_id)
 	{
 		$vo_photos = [];
 		$photos = $this->center->find($center_id)->vo_photos;
@@ -410,5 +549,26 @@ class CenterService implements CenterInterface {
 	 */
 	public function getVirtualOfficeById($center_id) {
 		return $this->filteredVirtualOffice()->where('id', $center_id)->first();
+	}
+
+	public function test($center_id, $files)
+	{
+		$center = $this->center->where('id', $center_id)->first();
+		$photos_ids = $center->vo_photos->lists('id');
+		$ids = [];
+		$numbers = [];
+		$matches = [];
+		foreach ($photos_ids as $key => $value) {
+			$ids[$key + 1] = $value;
+		}
+		foreach ($files as $str => $value) {
+			preg_match_all('!\d+!', $str, $matches[]);
+		}
+		foreach ($matches as $key => $value) {
+			foreach ($value as $k => $v) {
+				array_push($numbers, $v[0]);
+			}
+		}
+		dd($ids , $numbers);
 	}
 }

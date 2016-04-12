@@ -37,12 +37,14 @@ Route::resource('/staffs', 'StaffsController');
 /*Route::get('/meeting-rooms', 'MeetingRoomsController@index');*/
 Route::resource('/meeting-rooms', 'MeetingRoomsController');
 Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
-Route::get('center/{id}/meeting-room/create', 'MeetingRoomsController@create');
+Route::get('/center/{id}/meeting-room/create', 'MeetingRoomsController@addMeetingRoom');
 
-/*Route::group(['prefix' => 'ajax', 'middleware' => 'auth'], function () {
-	Route::get('/centers/{id}', 'CentersController@getCenterById');
-	Route::get('/autocomplete', 'CentersController@autocomplete');
-});*/
+Route::get('/csr' , 'CsrController@index');
+Route::get('/csr-accounting' , 'CsrController@getAccounts');
+Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
+Route::get('/csr-declined' , 'CsrController@declined');
+Route::get('/csr-pending-mrs' , 'CsrController@pending');
+
 
 
 

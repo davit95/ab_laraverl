@@ -321,4 +321,49 @@ select.input-sm{
 }
 .formOinfo a{
   font-size: 12px;
-};
+}
+
+.tabs-container .tab-content {
+  border: 0.1em outset #BBB;
+  padding: 3.3em 0.3em 0.3em 0.3em;
+  background: #ffffff;
+}
+
+.tabs-container ul.nav-tabs {
+  text-align: center;
+}
+
+.tabs-container ul.nav-tabs li {
+  float: inherit;
+  display: inline-block;
+}
+
+.accounting-buttons-cont a.btn {
+  margin-bottom: 20px;
+  max-width: 100%;
+  color: #396AB2!important;
+  border: 2px solid #369;
+  padding: 15px 10px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  font-size: 13px;
+  line-height: 30px;
+  width: 260px;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.accounting-buttons-cont a.btn:hover{
+  text-decoration: none;
+  background-color: #369;
+  color: #ffffff!important;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+}

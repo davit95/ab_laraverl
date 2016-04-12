@@ -34,7 +34,7 @@ class CustomerRequest extends Request {
 			'mf_company_name'       => 'required',
 			'mf_country_id'         => 'required',*/
 			//'mf_postal_code'        => 'required',//_if_attribute:email_flag,!=,""
-			'password'              => 'required',
+			'password'              => 'required|confirmed',
 			'password_confirmation' => 'required',
 			'agree'                 => 'required'
 		];

@@ -6,7 +6,6 @@
 @section('content_top')    
     <div class="ct_icon_oc"></div> 
         <div class="ct_wrapp">
-        
     <div class="clear"></div>    
 @stop
 @section('content')

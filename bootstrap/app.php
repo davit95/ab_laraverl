@@ -86,6 +86,7 @@ $app->singleton(
     Admin\Services\StaffService::class
 );
 
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
