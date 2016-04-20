@@ -58,7 +58,7 @@
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
         var current_url = $(location).attr('href');
         current_url = current_url.substr(0, current_url.lastIndexOf('/'));
-        url = 'http://admin.abcn.dev/' + page;
+        url = 'http://admin.abcn.com/' + page;
         $(location).attr("href", url);
     });
 </script>

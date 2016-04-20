@@ -66,7 +66,7 @@
 <script type="text/javascript">
    $( "#BPSelectDD" ).change(function() {
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
-        var url = 'http://admin.abcn.dev/'  + page;
+        var url = 'http://admin.abcn.com/'  + page;
         $(location).attr("href", url);
     });
 </script>
