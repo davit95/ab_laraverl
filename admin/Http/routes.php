@@ -46,6 +46,7 @@ Route::get('/csr-declined' , 'CsrController@declined');
 Route::get('/csr-pending-mrs' , 'CsrController@pending');
 Route::get('/charge' , 'CsrController@charge');
 Route::resource('/customers' , 'CustomersController');
+Route::get('/customers/{name}/{id}' , 'CsrController@test');
 
 
 

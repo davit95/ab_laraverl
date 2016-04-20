@@ -87,4 +87,11 @@ class CsrController extends Controller
     {
         return view('admin.csr.charge', ['customer' => []]);
     }
+
+    public function test($name, $id,CustomerService $customerService)
+    {
+        /*need more information*/
+        $customer = $customerService->getCustomerById($id);
+        return view('admin.csr.test', ['customer' => $customer]);
+    }
 }
