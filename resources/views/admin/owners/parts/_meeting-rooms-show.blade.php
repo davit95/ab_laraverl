@@ -30,7 +30,8 @@
     </div>
 </div> -->
 
-<div class="ct_icon_vod"></div> 
+<div class="ct_icon_vod"></div>
+
 <div class="ct_wrapp">
 	<div class="ct_title"><h1>MEETING ROOMS</h1></div> 
 		<div class="ct_tools">
@@ -40,180 +41,23 @@
 	<div class="clear"></div>
 </div>
 <div class="content_wrapp2">
-	<div class="s_w_box">
-		<div class="swb_wrapp min_h light">
-			<h3 class="mediumBold">Small Meeting Room</h3>
-			Hourly Rate: $20<br>
-			Half Day Rate: -<br>
-			Full Day Rate: $245
+	@foreach($meetingRooms as $mt)
+		<div class="s_w_box">
+			<div class="swb_wrapp min_h light">
+				<h3 class="mediumBold">{{$mt->name}}</h3>
+				Hourly Rate: ${{$mt->hourly_rate}}<br>
+				Half Day Rate: ${{$mt->half_day_rate}}<br>
+				Full Day Rate: ${{$mt->full_day_rate}}
+			</div> 
+			<div class="sBox_btns">
+				<div class="add_CBtn">
+					<a href="meeting-rooms/{{$mt->id}}/edit" class="gLink">
+						
+						Edit
+					</a>
+				</div>
+			</div>
 		</div> 
-		<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div> 
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Medium Conference Room</h3>
-		Hourly Rate: $45<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $345
-	</div>
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div> 
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
-</div>
-<div class="s_w_box">
-	<div class="swb_wrapp min_h light">
-		<h3 class="mediumBold">Large Conference Room</h3>
-		Hourly Rate: $50<br>
-		Half Day Rate: -<br>
-		Full Day Rate: $445
-	</div> 
-	<div class="sBox_btns">
-		<div class="add_CBtn"><a href="#" class="gLink"><div class="sBox_icons edit_green"></div>Edit</a></div>
-	</div>
+	@endforeach
 </div>
 @stop

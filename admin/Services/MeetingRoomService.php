@@ -38,7 +38,9 @@ class MeetingRoomService implements MeetingRoomInterface {
 	 */
 	public function getMeetingRooms()
 	{
-		return $this->meetingRoom->all();
+		$max_mt_id = max($this->meetingRoom->lists('id')->toArray());
+		$min_id = $max_mt_id - 20 ;
+		return $this->meetingRoom->orderBy('id', 'desc')->take(20)->get();
 	}
 
 	public function uploadFile($files)

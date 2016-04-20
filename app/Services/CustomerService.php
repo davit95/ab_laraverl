@@ -20,4 +20,15 @@ class CustomerService {
 		return $this->customer->get();
 	}
 
+	public function getCustomerById($id)
+	{
+		return $this->customer->find($id)->first();
+	}
+
+	public function updateCustomer($customer_id, $inputs)
+	{
+		$inputs = \Input::except('_method', '_token');
+		return $this->customer->where('id', $customer_id)->update($inputs);
+	}
+
 }

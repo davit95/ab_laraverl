@@ -102,14 +102,17 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService ) {
-		dd($request->all()));
+		//dd($request->all());
 		$inputs = $request->all();
 		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 		}
 		session(['customer_information' => $inputs]);
+		if(null !== $customerService->createCustomer($inputs)) {
+			return redirect('order-review')->withSuccess('Customer has been saccessfully created');
+		}
 		//dd(session('customer_information'));
-		return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
+		//return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
 	}
 
 	/**

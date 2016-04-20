@@ -33,6 +33,7 @@ class CentersController extends Controller
      */
     public function index(CenterService $centerService)
     {
+        //$centerService->test();
         return view('admin.centers.index', ['centers' =>$centerService->getAllCenters()]);
     }
 

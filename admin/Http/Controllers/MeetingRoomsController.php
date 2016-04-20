@@ -38,7 +38,7 @@ class MeetingRoomsController extends Controller
     {
         // //dd($meetingRoomService->getMeetingRooms()->first());
         return view('admin.owners.parts._meeting-rooms-show', 
-                    ['meetingRooms' => $meetingRoomService->getMeetingRooms()->first()]);
+                    ['meetingRooms' => $meetingRoomService->getMeetingRooms()]);
     }
 
     /**

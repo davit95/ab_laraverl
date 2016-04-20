@@ -4,13 +4,14 @@
 	Reports
 @stop
 @section('content_top')
+
     <div class="ct_icon_oc"></div> 
     <div class="ct_wrapp">
         <div class="ct_title"><h1>REPORTS</h1></div>
         <div class="form-group">
             {!! Form::select('type', ['centers' => 'Centers Report', 'owners' => 'Owners Report'], Request::get('type'), ['class' => 'form-control', 'id' => 'report-type']) !!}
         </div>
-    </div>    
+    </div>
 @stop
 @section('content')
     @include('admin.reports.parts._filter')

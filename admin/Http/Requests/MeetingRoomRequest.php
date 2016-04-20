@@ -24,7 +24,7 @@ class MeetingRoomRequest extends Request
     public function rules()
     {
         return [
-            /*'mr_name' => 'required',
+            'mr_name' => 'required',
             'capacity' => 'required',
             'rate' => 'required',
             'half_day' => 'required',
@@ -52,7 +52,7 @@ class MeetingRoomRequest extends Request
             'admin_services_rate' => 'required',
             'parking' => 'required',
             'parking_rate' => 'required',
-            'park_desc' => 'required'*/
+            'park_desc' => 'required'
         ];
     }
 }

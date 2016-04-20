@@ -23,8 +23,8 @@
         <div class="sSelectWrap1">
             <div class="sSelectWrap2">
                 <select id="BPSelectDD">
-                    <option selected="">CONTROL PANEL</option>
-                    <option class="csr">CSR</option>
+                    <option selected="" value="reports">CONTROL PANEL</option>
+                    <option class="csr" value="csr">CSR</option>
                     <option>OWNER CP</option>
                     <option>CLIENT CP</option>
                 </select>
@@ -55,10 +55,10 @@
 </div> 
 <script type="text/javascript">
    $( "#BPSelectDD" ).change(function() {
-        var page =  $("#BPSelectDD option:selected").text().toLowerCase();
+        var page =  $("#BPSelectDD option:selected").val().toLowerCase();
         var current_url = $(location).attr('href');
         current_url = current_url.substr(0, current_url.lastIndexOf('/'));
-        url = current_url + '/' + page;
+        url = 'http://admin.abcn.dev/' + page;
         $(location).attr("href", url);
     });
 </script>

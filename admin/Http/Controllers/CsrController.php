@@ -31,9 +31,10 @@ class CsrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CustomerService $customerService)
     {
-        return view('admin.csr.index', ['invoices' => []]);
+        $customers = $customerService->getALlCustomers();
+        return view('admin.csr.index', ['customers' => $customers]);
     }
 
     /**
@@ -74,6 +75,16 @@ class CsrController extends Controller
     public function pending(CustomerService $customerService)
     {
         $customers = $customerService->getALlCustomers();
-        return view('admin.csr.csr-pending-mrs', ['customers' => $customers]);
+        return view('admin.csr.customers.csr-pending-mrs', ['customers' => $customers]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function charge(CustomerService $customerService)
+    {
+        return view('admin.csr.charge', ['customer' => []]);
     }
 }

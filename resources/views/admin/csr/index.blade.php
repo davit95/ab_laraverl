@@ -10,14 +10,19 @@
 				    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">New Orders</a></li>
 				    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Your Orders</a></li>
 				</ul>
-				<div class="tab-content">
-				    <div role="tabpanel" class="tab-pane active" id="new_orders"></div>
-				    <div role="tabpanel" class="tab-pane" id="your_orders"></div>
+				<div id="myTabContent" class="tab-content"> 
+					<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab"> 
+						@include('alerts.messages')
+						@include('admin.csr.orders')
+					</div> 
+					<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
+						@include('alerts.messages')
+					</div>
 				</div>
 			</div>
 		    <!-- <div class="dataTable_wrapper">                
 		        @include('alerts.messages')
-	            @include('admin.csr.orders')
+	            
 		    </div> -->
 		</div>   
 	</div>

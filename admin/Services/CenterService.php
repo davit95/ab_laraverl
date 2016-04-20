@@ -551,8 +551,11 @@ class CenterService implements CenterInterface {
 		return $this->filteredVirtualOffice()->where('id', $center_id)->first();
 	}
 
-	public function test($center_id, $files)
+	public function test()
 	{
+		dd($this->center->where('id', 3920)->first()->meeting_rooms()->get());
+
+		
 		$center = $this->center->where('id', $center_id)->first();
 		$photos_ids = $center->vo_photos->lists('id');
 		$ids = [];

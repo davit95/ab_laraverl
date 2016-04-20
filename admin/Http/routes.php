@@ -44,6 +44,8 @@ Route::get('/csr-accounting' , 'CsrController@getAccounts');
 Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
 Route::get('/csr-declined' , 'CsrController@declined');
 Route::get('/csr-pending-mrs' , 'CsrController@pending');
+Route::get('/charge' , 'CsrController@charge');
+Route::resource('/customers' , 'CustomersController');
 
 
 

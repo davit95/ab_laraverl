@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-xs-8 col-xs-offset-2 text-center dataTable_wrapper accounting-buttons-cont">
-		<div><a class="btn btn-lg btn-default" href="{{url('/csr')}}" class="btnsAccount">Charge Screen</a></div>
+		<div><a class="btn btn-lg btn-default" href="{{url('/charge')}}" class="btnsAccount">Charge Screen</a></div>
 		<div><a class="btn btn-lg btn-default" href="{{url('/csr-declined')}}" class="btnsAccount">Unpaid Invoices</a></div>
 		<div><a class="btn btn-lg btn-default" href="{{url('/csr-pending-mrs')}}" class="btnsAccount">Pending Meeting Room Invoices</a></div>
 		<div><a class="btn btn-lg btn-default" href="https://www.alliancevirtualoffices.com/csr/index.php?step=owner-summary-report" class="btnsAccount">Owner Summary Report</a></div>
