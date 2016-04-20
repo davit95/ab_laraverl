@@ -83,21 +83,6 @@
 
 
 <script type="text/javascript">
-function getLatAndLng(){
-    var state = $( "#states option:selected" ).text();
-    var country = $( "#countries option:selected" ).text();
-    var city = $('#city').val();
-    var address = city + ' ' + state + ' ' + country;
-    $.ajax({
-      url: "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
-      type: "POST",
-      success: function(res){
-         $('#lat').val(res.results[0].geometry.location.lat);
-         $('#lng').val(res.results[0].geometry.location.lng);
-      }
-    });
-} 
-
     $('.show_plp_package').on('click', function(){
         if($(this).prop('checked')) {
             $('.pl_plus').removeClass('hide');
@@ -107,5 +92,4 @@ function getLatAndLng(){
             $('.pl_plus_form').addClass('hide');
         }
     })
-
 </script>

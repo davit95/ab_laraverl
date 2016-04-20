@@ -22,11 +22,11 @@
                 <strong>Customer Information:</strong></span>&nbsp;
             <div class="formOinfo">
             <p>
-                Isaac Vollaire<br>
-                39 Sage Canyon Road<br>
+                {{$customer->first_name}} {{$customer->last_name}}<br>
+                {{$customer->address1}}<br>
                 <br>
-                Pomona, CA 91766 <br>
-                ivollaire@abcn.com <br>
+                {{$customer->city}}, {{$customer->country}} {{$customer->postal_code}} <br>
+                {{$customer->email}} <br>
                 Customer Type: AVO Direct <br>
             </p>
             </div>

@@ -22,7 +22,7 @@ class CustomerService {
 
 	public function getCustomerById($id)
 	{
-		return $this->customer->find($id)->first();
+		return $this->customer->where('id', $id)->first();
 	}
 
 	public function updateCustomer($customer_id, $inputs)

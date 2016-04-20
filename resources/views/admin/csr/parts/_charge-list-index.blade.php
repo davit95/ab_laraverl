@@ -13,7 +13,7 @@
 </thead>
     <tbody>
         @forelse( $customer as $customer )
-            
+            @include('admin.csr.parts._charge-item-index')
         @empty
             @include('alerts.no-data-table')
         @endforelse
