@@ -27,7 +27,7 @@ class LocationsController extends Controller
      */
     public function index(LocationService $locationService)
     {
-        $locations = $this->locationService->getAllLocations();
+        $locations = $this->locationService->getAllLocations();        
         return response()->json($locations);
     }
 
@@ -67,9 +67,10 @@ class LocationsController extends Controller
         return response()->json(['locations' => $locations]);
     }
 
-    public function getSearchForLocation($key)
-    {
-        $locations = $this->locationService->getSearchForLocation();
+    public function getSearchLocation($key)
+    {        
+        $locations = $this->locationService->getSearchLocation($key);
+        return response()->json(['locations' => $locations]);
     }
         
 }

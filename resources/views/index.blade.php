@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('title')
-	Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
+    Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 @stop
 @section('content')
     <div class="videoTop">
@@ -13,7 +13,7 @@
                 <div id="sticky-anchor"></div>
                 <div class="searchHome" id="sticky">
                     <form action="search2.php" autocomplete="off" id="avoS" method="get">
-	                    <input type="hidden" name="step" value="search">
+                        <input type="hidden" name="step" value="search">
                         <input type="text" class="SearchInput acInput" id="suggest1" name="inputy" placeholder="Find Your Location Here" autocomplete="off">
                         <select id="Services" name="avo1" class="avo1">
                             <option value="VO">Virtual Offices</option>
@@ -23,7 +23,7 @@
                         <button type="submit" class="searchBtn search-button form-inline btn btn-primary btn-large" id="searchBtn">
                             <span class="mobileS">Search</span>
                         </button>
-                    </form>
+                     </form>
                 </div>
                 <div class="ViewAllLocations">
                     <a href="{!! URL::action('VirtualOfficesController@index') !!}#NAsection" class="aqua">View All Locations Here!</a>

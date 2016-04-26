@@ -30,4 +30,15 @@ class OAuthController extends Controller
         $response = $this->oauthService->refreshToken($request);
         return response()->json($response);
     }
+
+    public function postCheckAccessToken(Request $request)
+    {
+        $response = $this->oauthService->passOAuth($request);
+        if(isset($response['expire'])){
+            return response($response['expire'], 302);            
+        }else if(isset($response['errors'])){
+            return response($response['errors'], 511);
+        }
+        return response('success', 200);
+    }
 }

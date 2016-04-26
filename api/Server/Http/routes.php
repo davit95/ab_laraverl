@@ -11,6 +11,7 @@
 |
 */
 Route::get('/location/us/{state}', 'LocationsController@getStateLocations');
+Route::get('/location/search/{key}', 'LocationsController@getSearchLocation');
 Route::get('/location/us/{state}/{city}', 'LocationsController@getStateCityLocations');
 Route::get('/location/{country_slug}/{city}', 'LocationsController@getCityLocations');
 Route::get('/location/us/{state}/{city}/{center_id}', 'LocationsController@getStateCenterLocation');
@@ -19,3 +20,4 @@ Route::get('/location/{country_slug}', 'LocationsController@getCountryLocation')
 Route::resource('/location', 'LocationsController');
 Route::post('/authorization', 'OAuthController@postAuthorization');
 Route::post('/refresh-token', 'OAuthController@postRefreshToken');
+Route::post('/check-access-token', 'OAuthController@postCheckAccessToken');

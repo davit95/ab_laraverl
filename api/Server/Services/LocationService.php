@@ -3,14 +3,18 @@
 namespace Api\Server\Services;
 
 use App\Models\Center;
+use App\Models\City;
+use App\Models\Country;
 use DB;
 
 class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center) {
-		$this->center = $center;		
+	public function __construct(Center $center, City $city, Country $country) {
+		$this->center = $center;
+		$this->city   = $city;
+		$this->country = $country;
 	}			
 
 	public function getAllLocations()
@@ -52,13 +56,23 @@ class LocationService {
 	public function getCenterLocation($country_slug, $city, $center_id)
 	{
 		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
-		return $this->getNeccessaryOptions($locations);	
+		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getSearchForLocation($key)
+	public function getSearchLocation($key)
 	{
-		
-	}
+		$searchResult = [];
+		$usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', 'US')->distinct('name')->get(['name', 'us_state_code'])->toArray();		
+		$searchResult = array_merge($searchResult, $usCities);
+		$cities = $this->city->where('name', 'LIKE', '%'.$key.'%')->whereNull('us_state_code')->distinct('name')->get(['name'])->toArray();
+		$searchResult = array_merge($searchResult, $cities);
+		$countries = $this->country->where('name', 'LIKE', '%'.$key.'%')->distinct('name')->get(['name'])->toArray();
+		$searchResult = array_merge($searchResult, $countries);
+		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->get(['name'])->toArray();		
+		$searchResult = array_merge($searchResult, $locations);
+		dd($searchResult);
+		return $locations;
+	}	
 
 	private function getNeccessaryOptions($locations)
 	{

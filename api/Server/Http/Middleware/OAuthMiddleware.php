@@ -17,9 +17,11 @@ class OAuthMiddleware
     {
         $oauthService = new OAuthService();
         $response = $oauthService->passOauth($request);
-        if(isset($response['errors'])){
-            return $response['errors'];
-        }        
+        if(isset($response['expire'])){
+            return response($response['expire'], 302);            
+        }else if(isset($response['errors'])){
+            return response($response['errors'], 511);
+        }
         return $next($request);
     }
 }
