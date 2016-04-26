@@ -3,7 +3,6 @@
 @section('title')
 	Virtual Office, Virtual Office Solutions from Alliance Virtual Offices
 @stop
-
 @section('content')
     <div class="videoTop">
         <div class="Insidevideo">

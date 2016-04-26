@@ -15,7 +15,7 @@ class Center extends Model {
 	    				   'country_id', 
 	    				   'us_state', 
 	    				   'us_state_id', 
-	    				   'region_id', 
+	    				   'region_id',
 	    				   'company_name', 
 	    				   'building_name',
 	    				   'address1',
@@ -30,7 +30,10 @@ class Center extends Model {
 	    				   'notes',
 	    				   'virtual_tour_url',
 	    				   'map_url',
-	    				   'status_changed_at'];
+	    				   'status_changed_at',
+	    				   'tax_name',
+	    				   'tax_percentage'
+	    				   ];
 	public function vo_photos() {
 		return $this->belongsToMany('App\\Models\\Photo', 'vo_photos', 'center_id', 'photo_id');
 	}

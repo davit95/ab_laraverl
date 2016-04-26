@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\DataMigration::class,
         \App\Console\Commands\MeetingRoomsImagesMigration::class,
         \App\Console\Commands\VoImages::class,
+        \App\Console\Commands\GenerateApiKey::class,        
     ];
 
     /**

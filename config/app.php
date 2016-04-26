@@ -141,6 +141,7 @@ return [
         /*
          * Application Service Providers...
          */
+        Api\Server\Providers\RouteServiceProvider::class,
         Admin\Providers\RouteServiceProvider::class,
         
         App\Providers\AppServiceProvider::class,
@@ -149,6 +150,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -202,7 +204,8 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
         
-        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class
+        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class,
+        'Debugbar'  => Barryvdh\Debugbar\ServiceProvider::class
     ],
 
 ];
