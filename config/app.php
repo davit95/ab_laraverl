@@ -149,8 +149,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,        
 
     ],
 
@@ -204,8 +203,7 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
         
-        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class,
-        'Debugbar'  => Barryvdh\Debugbar\ServiceProvider::class
+        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class
     ],
 
 ];
