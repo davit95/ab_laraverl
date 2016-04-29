@@ -141,6 +141,7 @@ return [
         /*
          * Application Service Providers...
          */
+        Api\Server\Providers\RouteServiceProvider::class,
         Admin\Providers\RouteServiceProvider::class,
         
         App\Providers\AppServiceProvider::class,
@@ -148,7 +149,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,        
 
     ],
 

@@ -74,7 +74,8 @@ class DataMigration extends Command {
 		$this->make_new_connection();
 		$collection     = DB::table('Center')->get();
 		$center_contacts = DB::table('Center_Contact')->lists('EmailFlag', 'CenterID');				
-		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');
+		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');		
+		// dd($taxes);
 		DB::setDefaultConnection('mysql');
 		$unknown_cities_count    = 0;
 		$unknown_countries_count = 0;
@@ -121,6 +122,15 @@ class DataMigration extends Command {
 				$parts = explode(' in ', $title);
 				$name  = $parts[0];
 			}
+			$this->make_new_connection();			
+			if(null!== $tax = DB::table('Center_Taxes')->where('Center_ID', $value->CenterID)->first()){
+				$tax_name = $tax->TaxName1;
+				$tax_percentage = $tax->TaxNumber1;
+			}else{
+				$tax_name = "";
+				$tax_percentage = "";
+			}
+			DB::setDefaultConnection('mysql');		
 			$new_collection[$value->CenterID] =
 			[
 				'id'          => $value->CenterID,
@@ -150,7 +160,9 @@ class DataMigration extends Command {
 				'virtual_tour_url'  => $value->VirtualTourURL,
 				'map_url'           => $value->MapURL,
 				'status_changed_at' => $value->StatusChange,
-				'updated_at'        => $value->CenterChange
+				'updated_at'        => $value->CenterChange,
+				'tax_name'          => $tax_name,
+				'tax_percentage'    => $tax_percentage
 			];			
 			$bar->advance();
 		}
