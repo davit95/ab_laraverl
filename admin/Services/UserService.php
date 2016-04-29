@@ -5,6 +5,7 @@ namespace Admin\Services;
 use Admin\Contracts\UserInterface;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Owner;
 use Auth;
 
 class UserService implements UserInterface
@@ -12,9 +13,10 @@ class UserService implements UserInterface
 	/**
 	 * Create a new user service instance.
 	 */
-	public function __construct(User $user, Role $role) {
+	public function __construct(User $user, Role $role, Owner $owner) {
 		$this->user = $user;
 		$this->role = $role;
+		$this->owner = $owner;
 	}
 
 	/**
@@ -22,8 +24,17 @@ class UserService implements UserInterface
 	 */
 	public function createUser($input) {
 		$input['password'] = bcrypt($input['password']);
+		$input['role_id'] = 5;
+		$owner = $this->getOwnerByName($input['name']);
+		$input['owner_id'] = $owner->id;
 		return $this->user->create($input);
 	}
+
+	public function getOwnerByName($name)
+	{
+		return $this->owner->where('name', $name)->first();
+	}
+
 
 	/**
 	 * get all users

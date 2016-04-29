@@ -32,9 +32,6 @@
             <span class="lh_fi mediumBold">Locations:</span>&nbsp;
             <div class="formOinfo">{{ $center->location }}</div>
         </div>
-    </div>
-    <div class="form_right">
-    	 
         <div class="line">
             <span class="lh_fi mediumBold">Address 1:</span>&nbsp;
             <div class="formOinfo">{{ $center->address1 }}</div>
@@ -59,11 +56,78 @@
             <span class="lh_fi mediumBold">Amenities:</span>&nbsp;
             <div class="formOinfo">{{ $center->amenities }}</div>
         </div>
+    </div>
+    <div class="form_right">
+    	 <div class="line">
+             <span class="lh_fi mediumBold">Center Owner:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->name) ? $center->owner->name : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Company Name:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->company_name) ? $center->owner->company_name : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Owners Phone:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->phone) ? $center->owner->phone : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Owners Fax:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->fax) ? $center->owner->fax : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Owners Email:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->email) ? $center->owner->email : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Website:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->url) ? $center->owner->url : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Billing Address 1:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->address1) ? $center->owner->address1 : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Billing Address 2:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->address2) ? $center->owner->address2 : '' }}
+             </div>
+         </div>
+         <div class="line">
+             <span class="lh_fi mediumBold">Region/County:</span>&nbsp;
+             <div class="formOinfo">
+                 {{ isset($center->owner->region) ? $center->owner->region : '' }}
+             </div>
+         </div>
+         <div class="line">
+            <span class="lh_fi mediumBold">Country:</span>&nbsp;
+            <div class="formOinfo">
+                {{ isset($center->owner->country) ? $center->owner->country : '' }}
+            </div>
+         </div>
+        
     </div> 
     
     <div class="bBox_btns">
         <div class="add_CBtn bordL"><a href="{{ url('center/'.$center->id.'/meeting-room/create') }}" class="gLink"><div class="sBox_icons add_green"></div>Add Meeting Room</a></div>
-        <div class="edit_oBtn bordL"><a href="{{ url('centers/'.$center->id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>Center</a></div>
+        @if(!$center->owner)
+            <div class="edit_oBtn bordL"><a href="{{ url('center/'.$center->id.'/owner/create') }}" class="gLink"><div class="sBox_icons edit_green"></div>Add Owner</a></div>
+        @else
+           <div class="edit_oBtn bordL"><a href="{{ url('owners/'.$center->owner->id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>Edit Owner</a></div>
+        @endif
     </div> 
     <div class="clear"></div>
 </div>

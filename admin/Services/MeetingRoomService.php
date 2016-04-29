@@ -192,4 +192,85 @@ class MeetingRoomService implements MeetingRoomInterface {
 		$photo = $this->center->where('id', $center_id)->first()->mr_photos()->first();
 		return $photo;
 	}
+
+	public function getMeetingRoomsByOwnerId($owner_id)
+	{
+		$center_ids = $this->filteredVirtualOffice()->where('owner_id', $owner_id)->lists('id');
+		if($center_ids) {
+			$centers =  $this->filteredMeetingRoom()->whereIn('id', $center_ids)->with('meeting_rooms')->get();
+			foreach ($centers as $center) {
+				$mr[] = collect($center->meeting_rooms);
+			}
+			
+			return $mr[0];
+		} else {
+			return false;
+		}
+		
+	}
+
+	/**
+	 * Filter for virtuall office before any query.
+	 *
+	 * @return Response
+	 */
+	private function filteredVirtualOffice() {
+		return $this->center
+		            ->where('active_flag', 'Y')
+		            ->where('city_id', '!=', 0)
+		            ->where(function ($q) {
+				$q->whereHas('center_filter', function ($q) {
+						$q->where('virtual_office', 1);
+					})->orWhere(function ($q) {
+						$q->has('center_filter', '<', 1);
+					});
+			});
+	}
+
+	/**
+	 * Filter for meeting room before any query.
+	 *
+	 * @return Response
+	 */
+	private function filteredMeetingRoom() {
+		return $this->center
+		            ->where('active_flag', 'Y')
+		            ->where('city_id', '!=', 0)
+		            ->where(function ($q) {
+				$q->whereHas('center_filter', function ($q) {
+						$q->where('meeting_room', 1);})->orWhere(function ($q) {
+						$q->has('center_filter', '<', 1);
+					});
+			});
+	}
+
+	public function getOwnerMeetingRoomById($mr_id, $owner_id)
+	{
+		$mr = $this->meetingRoom->find($mr_id);
+		if($mr) {
+			$center_id = $mr->center_id;
+			$center = $this->center->find($center_id);
+		} else {
+			return false;
+		}
+		if($center->owner_id == $owner_id) {
+			return $mr;
+		} else {
+			return false;
+		}
+	}
+
+	public function getOwnerCenterByOwnerId($owner_id, $inputs)
+	{
+		$center = $this->center->where('id',$inputs['center_id'])->first();
+		if($center) {
+			if($center->owner_id == $owner_id) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			dd(404);
+		}
+	}
 }

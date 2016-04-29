@@ -37,16 +37,8 @@ class UsersController extends Controller
      */
     public function index(Request $request, OwnerInterface $ownerService, UserInterface $userService)
     {
-        //dd('asdefewrtfresd');
-       /* if(auth()->user()->isSuperAdmin()) {
-            return redirect('/reports');
-        }
-        else {
-            dd('asd');
-            return redirect('/staffs');
-        }*/
-        //dd(  );
-        return view('admin.users.index');
+        $owners = $ownerService->getOwnersLists();
+        return view('admin.users.index', ['owners' => ['' => 'Select Company / Owner Name'] + $owners]);
     }
 
     /**
@@ -65,11 +57,10 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request, UserInterface $userService)
+    public function store(Request $request, UserInterface $userService)
     {
         if(null != $userService->createUser($request->all())) {
-            dd($userService->createUser($request->all()));
-            //return
+            return redirect()->back()->withSuccess('user successfully created');
         }
     }
 

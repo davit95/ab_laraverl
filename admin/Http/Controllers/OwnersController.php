@@ -46,13 +46,18 @@ class OwnersController extends Controller
         CityInterface $cityService,
         RegionInterface $regionService,
         UsStateInterface $usStateService,
-        CountryInterface $countryService)
+        CountryInterface $countryService,
+        OwnerInterface $ownerService)
     {
         return view('admin.owners.create', [
             'cities' => json_encode($cityService->getAllCitiesSelectList()),
             'regions' => json_encode($regionService->getAllRegionsSelectList()),
             'us_states' => json_encode($usStateService->getAllUsStatesSelectList()),
             'countries' => json_encode($countryService->getAllCountriesSelectList()),
+            'select_countries' => ['' => 'no country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+            'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
+            'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
+            'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists()
         ]);
     }
 
@@ -64,8 +69,8 @@ class OwnersController extends Controller
      */
     public function store(OwnerRequest $request, OwnerInterface $ownerService)
     {
-        //dd($request->all());
-        if ( null != $owner = $ownerService->storeOwner( $request->all() ) ) {
+
+        if ( null != $owner = $ownerService->createOwner( $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully created.');
         }
         return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
@@ -98,6 +103,9 @@ class OwnersController extends Controller
     {
         return view('admin.owners.edit', [ 
             'owner' => $ownerService->getOwnerByID($id),
+            'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
+            'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
+            'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
             'cities' => json_encode($cityService->getAllCitiesSelectList()),
             'regions' => json_encode($regionService->getAllRegionsSelectList()),
             'us_states' => json_encode($usStateService->getAllUsStatesSelectList()),
@@ -133,6 +141,25 @@ class OwnersController extends Controller
             return redirect('owners')->withSuccess('Owner has been successfully deleted.');
         }
         return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+    }
+
+    public function createOrUpdateOwner($center_id, 
+                                        CityInterface $cityService,
+                                        RegionInterface $regionService,
+                                        UsStateInterface $usStateService,
+                                        CountryInterface $countryService,
+                                        OwnerInterface $ownerService)
+    {
+        return view('admin.owners.create', [
+                    'cities' => json_encode($cityService->getAllCitiesSelectList()),
+                    'regions' => json_encode($regionService->getAllRegionsSelectList()),
+                    'us_states' => json_encode($usStateService->getAllUsStatesSelectList()),
+                    'countries' => json_encode($countryService->getAllCountriesSelectList()),
+                    'countries_list' => ['' => 'no country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+                    'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
+                    'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
+                    'center_id' => $center_id
+                ]);
     }
 
     /**

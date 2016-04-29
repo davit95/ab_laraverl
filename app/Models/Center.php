@@ -47,6 +47,10 @@ class Center extends Model {
 		return $this->hasOne('App\\Models\\MeetingRoomSeo');
 	}
 
+	public function owner() {
+		return $this->hasOne('App\\Models\\Owner', 'id', 'owner_id');
+	}
+
 	public function center_filter() {
 		return $this->hasOne('App\\Models\\CenterFilter', 'center_id', 'id');
 	}

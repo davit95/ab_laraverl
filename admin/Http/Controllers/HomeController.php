@@ -26,6 +26,7 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
+        //dd('aaaa');
         return redirect('users');
         //dd(auth()->user()->isSuperAdmin());
         /*if(auth()->user()->isSuperAdmin()) {

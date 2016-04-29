@@ -36,9 +36,13 @@ class MeetingRoomsController extends Controller
      */
     public function index(MeetingRoomInterface $meetingRoomService)
     {
-        // //dd($meetingRoomService->getMeetingRooms()->first());
-        return view('admin.owners.parts._meeting-rooms-show', 
-                    ['meetingRooms' => $meetingRoomService->getMeetingRooms()]);
+        if(\Auth::user()->role_id == 1) {
+            return view('admin.owners.parts._meeting-rooms-show', 
+                ['meetingRooms' => $meetingRoomService->getMeetingRooms()]);   
+        } elseif(\Auth::user()->role_id == 5) {
+            return view('admin.owners.parts._meeting-rooms-show', 
+                ['meetingRooms' => $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::user()->owner_id)]);
+        }
     }
 
     /**
@@ -64,17 +68,36 @@ class MeetingRoomsController extends Controller
      */
     public function store(MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
-        try {
-            if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
-                return redirect('meeting-rooms')->withSuccess('meeting room has been successfully added.');
+        if(\Auth::user()->role_id == 1) {
+            try {
+                if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
+                    return redirect('meeting-rooms')->withSuccess('meeting room has been successfully added.');
+                }
+            }
+            catch(FailedTransactionException $e)
+            {
+                if($e->getCode() === -1) {
+                    return redirect('meeting-rooms/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+                }
+            }
+        } elseif(\Auth::user()->role_id == 5) {
+            if($meetingRoomService->getOwnerCenterByOwnerId(\Auth::user()->owner_id, $request->all())) {
+                try {
+                    if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
+                        return redirect('meeting-rooms')->withSuccess('meeting room has been successfully added.');
+                    }
+                }
+                catch(FailedTransactionException $e)
+                {
+                    if($e->getCode() === -1) {
+                        return redirect('meeting-rooms/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+                    }
+                }
+            } else {
+                dd(404);
             }
         }
-        catch(FailedTransactionException $e)
-        {
-            if($e->getCode() === -1) {
-                return redirect('meeting-rooms/create')->withWarning('Whoops, looks like something went wrong, please try later.');
-            }
-        }
+        
         //dd($meetingRoomService->addMeetingRoom($request->all()));
     }
 
@@ -97,12 +120,25 @@ class MeetingRoomsController extends Controller
      */
     public function edit($id, MeetingRoomInterface $meetingRoomService)
     {
-        //dd($meetingRoomService->getMeetingRoomOptionsById($id));
-        return view('admin.centers.add_meeting_room', [
+        if(\Auth::user()->role_id == 1) {
+            return view('admin.centers.add_meeting_room', [
                 'mr' => $meetingRoomService->getMeetingRoomById($id),
                 'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id),
                 'photo' => $meetingRoomService->getPhotoById($id)           
-            ]);
+            ]); 
+        } elseif(\Auth::user()->role_id == 5) {
+             if($meetingRoomService->getOwnerMeetingRoomById($id, \Auth::user()->owner_id)) {
+                return view('admin.centers.add_meeting_room', [
+                    'mr' => $meetingRoomService->getMeetingRoomById($id),
+                    'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id),
+                    'photo' => $meetingRoomService->getPhotoById($id)           
+                ]);
+             } else {
+                dd(404);
+             }
+        }
+        
+        
     }
 
     /**
@@ -112,19 +148,38 @@ class MeetingRoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request, MeetingRoomInterface $meetingRoomService)
+    public function update($id, MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
-        try {
-            if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all(), $request->file()) ) {
-                return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
+        if(\Auth::user()->role_id == 1) {
+            try {
+                if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all(), $request->file()) ) {
+                    return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
+                }
             }
-        }
-        catch(FailedTransactionException $e)
-        {
-            if($e->getCode() === -1) {
-                return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+            catch(FailedTransactionException $e)
+            {
+                if($e->getCode() === -1) {
+                    return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+                }
             }
+        } elseif(\Auth::user()->role_id == 5) {
+            if($meetingRoomService->getOwnerMeetingRoomById($id, \Auth::user()->owner_id)) {
+                try {
+                    if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all(), $request->file()) ) {
+                        return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
+                    }
+                }
+                catch(FailedTransactionException $e)
+                {
+                    if($e->getCode() === -1) {
+                        return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+                    }
+                }
+             } else {
+                dd(404);
+             }
         }
+        
     }
 
     /**
