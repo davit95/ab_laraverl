@@ -280,38 +280,38 @@
         {!! Form::label('mr_sentence3','sentence3') !!}
         {!! Form::text('mr_sentence3', isset($center->meeting_room_seo->sentence3) ? $center->meeting_room_seo->sentence3 : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('mr_avo_description','avo_description') !!}
+        {!! Form::label('mr_avo_description','Avo Description') !!}
         {!! Form::text('mr_avo_description',isset($center->meeting_room_seo->avo_description) ? $center->meeting_room_seo->avo_description : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('mr_meta_title','meta_title') !!}
+        {!! Form::label('mr_meta_title','Meta Title') !!}
         {!! Form::text('mr_meta_title',isset($center->meeting_room_seo->meta_title) ? $center->meeting_room_seo->meta_title : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('mr_meta_keywords','meta_keywords') !!}
+        {!! Form::label('mr_meta_keywords','Meta Keywords') !!}
         {!! Form::text('mr_meta_keywords',isset($center->meeting_room_seo->meta_keywords) ? $center->meeting_room_seo->meta_keywords : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_meta_description','meta_description') !!}
+        {!! Form::label('mr_meta_description','Meta Description') !!}
         {!! Form::text('mr_meta_description',isset($center->meeting_room_seo->meta_description) ? $center->meeting_room_seo->meta_description : null,['class' => 'f1']) !!}
     </div>          
     <div class="form_right centers_basic">
-        {!! Form::label('mr_h1','h1') !!}
+        {!! Form::label('mr_h1','Headline') !!}
         {!! Form::text('mr_h1', isset($center->meeting_room_seo->h1) ? $center->meeting_room_seo->h1 : null ,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('mr_h2','h2') !!}
+        {!! Form::label('mr_h2','Sub Headline') !!}
         {!! Form::text('mr_h2',isset($center->meeting_room_seo->h2) ? $center->meeting_room_seo->h2 : null,['class' => 'f1']) !!} 
         <br>
         {!! Form::label('mr_h3','h3') !!} 
         {!! Form::text('mr_h3',isset($center->meeting_room_seo->h3) ? $center->meeting_room_seo->h3 : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_seo_footer','seo_footer') !!}
+        {!! Form::label('mr_seo_footer','Seo Footer') !!}
         {!! Form::text('mr_seo_footer',isset($center->meeting_room_seo->seo_footer) ? $center->meeting_room_seo->seo_footer : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_abcn_title','abcn_title') !!}
+        {!! Form::label('mr_abcn_title','Abcn Title') !!}
         {!! Form::text('mr_abcn_title',isset($center->meeting_room_seo->abcn_title) ? $center->meeting_room_seo->abcn_title : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_abcn_description','abcn_description') !!}
+        {!! Form::label('mr_abcn_description','Abcn Description') !!}
         {!! Form::text('mr_abcn_description',isset($center->meeting_room_seo->abcn_description) ? $center->meeting_room_seo->abcn_description : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_subhead','subhead') !!}
+        {!! Form::label('mr_subhead','Subhead') !!}
         {!! Form::text('mr_subhead',isset($center->meeting_room_seo->subhead) ? $center->meeting_room_seo->subhead : null,['class' => 'f1']) !!}
         <br>
         <div class="clear"></div>
@@ -332,10 +332,10 @@
 </div>
 <div class="w_box centerPics pl_plus_form hide">
     <div class="form_left centers_basic">
-       {!! Form::label('plus_package','package') !!}
+       {!! Form::label('plus_package','Package') !!}
        {!! Form::text('plus_package',null,['class' => 'f1']) !!}
        <br>
-       {!! Form::label('plus_price','price') !!} 
+       {!! Form::label('plus_price','Price') !!} 
        {!! Form::text('plus_price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
        <br>
        {!! Form::label('plus_with_live_receptionist_full_price','live_rec_full_price') !!}
