@@ -37,12 +37,12 @@ class CenterRequest extends Request
             'seo_footer' => 'required',
             'meta_description' => 'required',
             'city_name' => 'required',
-            'abcn_title' => 'required',
+            //'abcn_title' => 'required',
             'abcn_description' => 'required',
             //'price' => 'required',
             'lat' => 'required',
             'lng' => 'required',
-            'countries' => 'required',
+            //'countries' => 'required',
             'mr_sentence1' => 'required',
             'mr_avo_description' => 'required',
             'mr_meta_title' => 'required',
@@ -52,7 +52,7 @@ class CenterRequest extends Request
             'mr_h2' => 'required',
             'mr_h3' => 'required',
             'mr_seo_footer' => 'required',
-            'mr_abcn_title' => 'required',
+            //'mr_abcn_title' => 'required',
             'mr_abcn_description' => 'required',
             'mr_subhead' => 'required'
         ];

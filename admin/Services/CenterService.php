@@ -232,6 +232,7 @@ class CenterService implements CenterInterface {
 			}
 			$number ++;
 		}
+		//dd($photos);
 		return $photos;	
 	}
 
@@ -239,6 +240,7 @@ class CenterService implements CenterInterface {
 	 * Store a newly created resource in storage.
 	 */
 	public function storeCenter($inputs, $files) {
+		//dd($this->getAvoPhotosALtsAndCaptions($inputs));
 		$params = $this->getCenterParams($inputs);
 
 		$city = $this->city->where('name', $params['city_name'])->where('active', 1)->first();
@@ -360,28 +362,83 @@ class CenterService implements CenterInterface {
 	}
 
 	/**
+	 * upload images for virtual office
+	 *
+	 * @return filenames
+	 */
+	public function getFilenamesArray($files)
+	{
+		$file_names = [];
+		if ($files) {
+			foreach ($files as $file) {
+				$file_names[] = str_random(20).".".$file->getClientOriginalExtension();
+			}
+	        
+	        return $file_names;
+		}
+		return '';
+	}
+
+	/**
+	 * return center filter params for update center
+	 *
+	 * @return Response
+	 */
+	public function getCenterPhotoUpdateParams($center_id,$inputs, $files)
+	{
+		$alt_number = 1;
+		$cap_number = 1;
+		 //dd($inputs);
+		// dd($this->getFilenamesArray($files));
+		$alts_and_caps = [];
+		foreach ($inputs as $key => $value) {
+			if($inputs['photo_2_alt'.$alt_number] !== '' || $inputs['photo_2_caption'.$alt_number] !== '') {
+				if(isset($inputs['image'.$alt_number])) {
+					$alts_and_caps[$alt_number]['photo'] = $this->uploadFile($inputs['image'.$alt_number]);
+					$alts_and_caps[$alt_number]['alt'] = $inputs['photo_2_alt'.$alt_number];
+					$alts_and_caps[$alt_number]['caption'] = $inputs['photo_2_caption'.$alt_number];
+					$alt_number++;
+				} else {
+					if(isset($inputs['photo_number'.$alt_number])) {
+						$alts_and_caps[$alt_number]['id'] = $inputs['photo_number'.$alt_number];
+						$alts_and_caps[$alt_number]['alt'] = $inputs['photo_2_alt'.$alt_number];
+						$alts_and_caps[$alt_number]['caption'] = $inputs['photo_2_caption'.$alt_number];
+						$alt_number++;
+					}
+				}
+				
+			}
+		}
+		return $alts_and_caps;
+		//$a = $this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $inputs['city_name']));
+		
+	}
+
+	/**
 	 * update center 
 	 *
 	 * @return Response
 	 */
 	public function updateCenter($center_id, $inputs, $files)
 	{
-		
-		// dd($this->getPhotosUpdateParams($inputs,$files), 'asd');
-		//$vo_photos = $this->center->where('id', $center_id)->with('vo_photos')->first()->vo_photos;
-		/*foreach ($vo_photos as $vo_photo) {
-			dd($vo_photo->update(['alt' => 'alt']));
-		}*/
 		$prices_params = $this->getPricesParams($inputs,$center_id);
 		$vo_coord_params = $this->getVoCoordParams($inputs);
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
 		$center_params = $this->getCenterUpdateParams($inputs);
 
-		//$center_filter_data = new $this->centerFilter(['virtual_office' => 0]);
-
 		DB::beginTransaction();
 		try {
+			foreach ($this->getCenterPhotoUpdateParams($center_id, $inputs, $files) as $photo) {
+				if(isset($photo['id'])) {
+					$this->photo->where('id', $photo['id'])->update(['alt' => $photo['alt'], 'caption' => $photo['caption'] ]);
+				} else {
+					//$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $inputs['city_name']));
+
+					//$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
+				}
+			}
+
 			if(isset($inputs['active'])) {
 				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
 			} else {

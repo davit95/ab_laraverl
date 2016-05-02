@@ -82,7 +82,7 @@ class CentersController extends Controller
     {
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
-                return redirect('owners')->withSuccess('Center has been successfully added.');
+                return redirect('centers')->withSuccess('Center has been successfully added.');
             }
         }
         catch(FailedTransactionException $e)
@@ -102,6 +102,7 @@ class CentersController extends Controller
     public function edit($id, CenterService $centerService,CountryService $countryService,
                            UsStateService $usStateService)
     {
+        //dd($centerService->getPhotosByCenterId($id)[1]->toArray());
         $selectArray = [
             'select' => 'select',
             'building exterior' => 'building exterior',

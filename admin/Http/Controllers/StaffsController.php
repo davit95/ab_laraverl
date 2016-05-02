@@ -33,7 +33,7 @@ class StaffsController extends Controller
      */
     public function index()
     {
-        //
+        dd('staff');
     }
 
     /**
@@ -52,7 +52,7 @@ class StaffsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StaffRequest $request, StaffInterface $staffService)
+    public function store(Request $request, StaffInterface $staffService)
     {
         dd($request->all());
     }

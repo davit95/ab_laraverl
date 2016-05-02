@@ -68,6 +68,7 @@ class MeetingRoomsController extends Controller
      */
     public function store(MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
+        //dd()
         if(\Auth::user()->role_id == 1) {
             try {
                 if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {

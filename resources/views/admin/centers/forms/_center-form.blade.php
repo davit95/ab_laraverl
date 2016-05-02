@@ -45,7 +45,7 @@
         <h2>CENTER'S BASIC INFORMATION</h2>
     </div>
 </div>
-<div class="w_box">
+<div class="w_box" style="width:100%">
     <div class="form_left centers_basic">
         {!! Form::label('building_name','Building Name:') !!}
         {!! Form::text('building_name', isset($center->building_name) ? $center->building_name : null,['class' => 'f1'])!!}       
@@ -80,7 +80,7 @@
         {!! Form::label('h2','Sub Headline') !!}
         {!! Form::text('h2',isset($center->virtual_office_seo->h2) ? $center->virtual_office_seo->h2 : null,['class' => 'f1']) !!} 
         <br>
-        {!! Form::label('h3','h3') !!} 
+        {!! Form::label('h3','Headline 2') !!} 
         {!! Form::text('h3',isset($center->virtual_office_seo->h3) ? $center->virtual_office_seo->h3 : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('seo_footer','Seo Footer') !!}
@@ -111,20 +111,20 @@
         {!! Form::label('price','price') !!} 
         {!! Form::text('price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('with_live_receptionist_full_price','live_rec_full_price') !!}
+        {!! Form::label('with_live_receptionist_full_price','Live Receptionist Full Price') !!}
         {!! Form::text('with_live_receptionist_full_price',isset($prices->with_live_receptionist_full_price) ? $prices->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('with_live_receptionist_pak_price','live_rec_price') !!}
+        {!! Form::label('with_live_receptionist_pak_price','Live Receptionist  Price') !!}
         {!! Form::text('with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('city_name','*City:') !!}
         {!! Form::text('city_name', isset($center->city_name) ? $center->city_name : null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
         {!! Form::label('countries','*Country:&nbsp;') !!}
-        {!! Form::select('countries',$countries, null, ['class' => 'change' ]) !!}
+        {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
         <br>
         {!! Form::label('states','State:&nbsp;') !!}
-        {!! Form::select('states',$states,null,['class' => 'change']) !!}
+        {!! Form::select('states',$states,null,['class' => 'state']) !!}
         <br>
         {!! Form::label('lat','*Address Latitude: ') !!}
         {!! Form::text('lat', isset($center_coordinates->lat) ? $center_coordinates->lat : null,['class' => 'f1b'])!!}
@@ -153,8 +153,8 @@
                 {!! Form::label('Photo','Photo '.$i.':',['class' => 'plb lh_f']) !!}
                 <div class="plb2 lh_f">
                     {!! Form::file('image'.$i.'', null, []) !!}
-                    {!! Form::hidden('photo_number'.$i.'', $i, []) !!}
                     @if(isset($photos[$i]) && $photos[$i] != '')
+                        {!! Form::hidden('photo_number'.$i.'', $photos[$i]->id, []) !!}
                         <img src="/mr-photos/{!! $photos[$i]->path !!}" width="70px">
                     @endif
                 </div>
@@ -299,7 +299,7 @@
         {!! Form::label('mr_h2','Sub Headline') !!}
         {!! Form::text('mr_h2',isset($center->meeting_room_seo->h2) ? $center->meeting_room_seo->h2 : null,['class' => 'f1']) !!} 
         <br>
-        {!! Form::label('mr_h3','h3') !!} 
+        {!! Form::label('mr_h3','Headline 2') !!} 
         {!! Form::text('mr_h3',isset($center->meeting_room_seo->h3) ? $center->meeting_room_seo->h3 : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('mr_seo_footer','Seo Footer') !!}
@@ -331,23 +331,21 @@
     </div>
 </div>
 <div class="w_box centerPics pl_plus_form hide">
-    <div class="form_left centers_basic">
+    <div class="centers_basic">
        {!! Form::label('plus_package','Package') !!}
        {!! Form::text('plus_package',null,['class' => 'f1']) !!}
        <br>
        {!! Form::label('plus_price','Price') !!} 
        {!! Form::text('plus_price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
        <br>
-       {!! Form::label('plus_with_live_receptionist_full_price','live_rec_full_price') !!}
+       {!! Form::label('plus_with_live_receptionist_full_price','Live Receptionist Full Price') !!}
        {!! Form::text('plus_with_live_receptionist_full_price',isset($prices->with_live_receptionist_full_price) ? $prices->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
        <br>
-       {!! Form::label('plus_with_live_receptionist_pak_price','live_rec_price') !!}
+       {!! Form::label('plus_with_live_receptionist_pak_price','Live Receptionist Price') !!}
        {!! Form::text('plus_with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
        <br>
     </div>          
-    <div class="form_right centers_basic">
-        <div class="clear"></div>
-    </div>
+    
     <div class="clear"></div>
 </div>
 
@@ -428,6 +426,9 @@ function getLatAndLng(){
             $('.center_photos').addClass('hide');
         }
     })
+
+    $('.country').css('width', 321)
+    $('.state').css('width', 321)
     
     
 
