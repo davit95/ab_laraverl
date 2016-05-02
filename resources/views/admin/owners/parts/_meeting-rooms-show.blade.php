@@ -51,8 +51,7 @@
 			</div> 
 			<div class="sBox_btns">
 				<div class="add_CBtn">
-					<a href="meeting-rooms/{{$mt->id}}/edit" class="gLink">
-						
+					<a href="meeting-rooms/{{$mt->id}}/edit" class="gLink">	
 						Edit
 					</a>
 				</div>
