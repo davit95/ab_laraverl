@@ -68,10 +68,10 @@
         {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('meta_title','meta_title') !!}
+        {!! Form::label('meta_title','Meta Title') !!}
         {!! Form::text('meta_title',isset($center->virtual_office_seo->meta_title) ? $center->virtual_office_seo->meta_title : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('meta_keywords','meta_keywords') !!}
+        {!! Form::label('meta_keywords','Meta Keywords') !!}
         {!! Form::text('meta_keywords',isset($center->virtual_office_seo->meta_keywords) ? $center->virtual_office_seo->meta_keywords : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('h1','Headline') !!}
