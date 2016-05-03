@@ -29,7 +29,7 @@
                     <option>CLIENT CP</option>
                 </select>
             </div> 
-        </div> 
+        </div>
     </div> 
     <!-- <a href="{{ url('/csr') }}" class="nd">
         <div class="menu_btn @if(Request::is('csr-home*')) menu_active @endif">

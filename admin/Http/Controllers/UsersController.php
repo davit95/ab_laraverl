@@ -59,6 +59,7 @@ class UsersController extends Controller
      */
     public function store(Request $request, UserInterface $userService)
     {
+        //dd($request->all());
         if(null != $userService->createUser($request->all())) {
             return redirect()->back()->withSuccess('user successfully created');
         }

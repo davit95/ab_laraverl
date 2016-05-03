@@ -1,6 +1,6 @@
 @if(isset($owner))
 	{!! Form::model($owner, [ 'url' => url('owners/'.$owner->id), 'method' => 'PUT' ]) !!}
-		
+	{!! Form::hidden('id', null) !!}
 @else
 	{!! Form::open([ 'url' => url('owners') ]) !!}
 @endif

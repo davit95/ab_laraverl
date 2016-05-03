@@ -106,6 +106,7 @@ class OwnerService implements OwnerInterface
 	 */
 	public function updateOwner($id, $params)
 	{
+		//dd('asdd');
 		$owner = $this->getOwnerByID($id);
 		$owner->update($params);
 		return $owner;

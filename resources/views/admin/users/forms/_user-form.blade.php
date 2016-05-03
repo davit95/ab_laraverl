@@ -1,6 +1,5 @@
 @if(isset($owner))
 	{!! Form::model($user, [ 'url' => url('users/'.$user->id), 'method' => 'PUT' ]) !!}
-		{!! Form::hidden('id', null) !!}
 @else
 	{!! Form::open([ 'url' => url('users') ]) !!}
 @endif
@@ -10,7 +9,8 @@
 		<div class="panel-body col-md-6">
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Select The Company</label></div>
-	    		<div class="col-md-8">{!! Form::select('name', $owners, null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Name' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::select('name', $owners, null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Name' ]) !!}
+	    		{!! Form::hidden('id', null) !!}</div>
 	    	</div> 
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Create A User Name</label></div>

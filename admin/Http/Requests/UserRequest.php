@@ -28,7 +28,7 @@ class UserRequest extends Request
             // 'company_name' => 'required',
              'last_name'  => 'required',
             // 'phone'        => 'required',
-            'email'       => 'required|email|max:255|unique:users',
+            'email'       => 'required|email|max:255|unique:users,'.$this->id,
             'password'    => 'required|min:6',
             'username'    => 'required',
             // 'address1'     =>'required',
