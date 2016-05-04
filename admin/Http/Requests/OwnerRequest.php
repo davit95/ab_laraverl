@@ -25,12 +25,17 @@ class OwnerRequest extends Request
     {
         return [
             'company_name' => 'required',
-            'name' => 'required',
-            'phone' => 'required',
-            'fax' => 'required',
+            'name' => 'required|unique:owners,name,'.$this->id,
+            'phone' => 'required|numeric',
+            'fax' => 'required|numeric',
             'url' => 'required',
             'email' => 'required|email|unique:owners,email,'.$this->id,
+            'postal_code' => 'required|numeric',
             'address1' => 'required',
+            'city' => 'required',
+            'region' => 'required',
+            'state' => 'required',
+            'country' => 'required'
         ];
     }
 }

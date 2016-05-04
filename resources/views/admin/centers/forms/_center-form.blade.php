@@ -5,8 +5,10 @@
         <select class="change" multiple>             
             <option value="1">AVO</option>
             <option value="2">ABCN</option>
-            <option value="3">OT</option>
-            <option value="4">Flexado</option>
+            <option value="3">ALL WORK</option>
+            <option value="3">YOUR CITY OFFICE</option>
+            <option value="3">SAME DAY VIRTUAL</option>
+            <option value="4">FLEXADO</option>
         </select>
     </div>
     <div class="ga_right lh_f">
@@ -24,17 +26,10 @@
                 <input type="checkbox" name="services" value="LR" id="3" checked="">
                 <label for="3"></label> 
             LR
-        </div> 
+        </div>
     </div> 
     <div class="clear"></div>
 </div>
-<div class="h2wrapp mtop1">
-    <div class="h2Icon add"></div>
-    <div class="h2txt">
-        <h2>CENTER'S PHOTOS</h2>
-    </div>
-</div>
-<div class="w_box centerPics">
 @if(isset($center))
     {!! Form::model($center,array('url' => '/centers/'.$center->id, 'method' => 'PUT', 'role' => 'form','files' => true)) !!}
 @else
@@ -43,43 +38,14 @@
     <!-- @foreach($photos as $photo_id => $photo)
         
     @endforeach -->
-    @for($i = 1; $i <= 6; $i++)
-        <div class="photoLine">
-            <div class="photoLineD">
-                {!! Form::label('Photo','Photo '.$i.':',['class' => 'plb lh_f']) !!}
-                <div class="plb2 lh_f">
-                    {!! Form::file('image'.$i.'', null, []) !!}
-                    {!! Form::hidden('photo_number'.$i.'', $i, []) !!}
-                    @if(isset($photos[$i]) && $photos[$i] != '')
-                        <img src="/mr-photos/{!! $photos[$i]->path !!}" width="70px">
-                    @endif
-                </div>
-            </div>
-            <div class="photoLineD">
-                <div class="plb lh_f">Category:&nbsp;</div> 
-                <div class="plb2">
-                    <div class="g_select2">
-                        {!! Form::select('category'.$i.'',$selectArray,null,['class' => 'rule_d f1_s']) !!}
-                    </div> 
-                </div> 
-                <div class="plb3 lh_f">&nbsp; 
-                    <a class="txtLink2 customSEO">(Custom SEO)</a>
-                </div> 
-            </div>
-        </div>
-    @endfor
-    
-    
-    <!--   -->
-    <div class="clear"></div>
-</div>
+
 <div class="h2wrapp mtop1">
     <div class="h2Icon add"></div>
     <div class="h2txt">
         <h2>CENTER'S BASIC INFORMATION</h2>
     </div>
 </div>
-<div class="w_box">
+<div class="w_box" style="width:100%">
     <div class="form_left centers_basic">
         {!! Form::label('building_name','Building Name:') !!}
         {!! Form::text('building_name', isset($center->building_name) ? $center->building_name : null,['class' => 'f1'])!!}       
@@ -90,7 +56,7 @@
         {!! Form::label('address1','*Address 1:') !!}
         {!! Form::text('address1', isset($center->address1) ? $center->address : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('subhead','subhead') !!}
+        {!! Form::label('subhead','Subhead') !!}
         {!! Form::text('subhead',isset($center->virtual_office_seo->subhead) ? $center->virtual_office_seo->subhead : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('sentence1','sentence1') !!}
@@ -102,58 +68,63 @@
         {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('meta_title','meta_title') !!}
+        {!! Form::label('meta_title','Meta Title') !!}
         {!! Form::text('meta_title',isset($center->virtual_office_seo->meta_title) ? $center->virtual_office_seo->meta_title : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('meta_keywords','meta_keywords') !!}
+        {!! Form::label('meta_keywords','Meta Keywords') !!}
         {!! Form::text('meta_keywords',isset($center->virtual_office_seo->meta_keywords) ? $center->virtual_office_seo->meta_keywords : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('h1','h1') !!}
+        {!! Form::label('h1','Headline') !!}
         {!! Form::text('h1', isset($center->virtual_office_seo->h1) ? $center->virtual_office_seo->h1 : null ,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('h2','h2') !!}
+        {!! Form::label('h2','Sub Headline') !!}
         {!! Form::text('h2',isset($center->virtual_office_seo->h2) ? $center->virtual_office_seo->h2 : null,['class' => 'f1']) !!} 
         <br>
-        {!! Form::label('h3','h3') !!} 
+        {!! Form::label('h3','Headline 2') !!} 
         {!! Form::text('h3',isset($center->virtual_office_seo->h3) ? $center->virtual_office_seo->h3 : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('seo_footer','seo_footer') !!}
+        {!! Form::label('seo_footer','Seo Footer') !!}
         {!! Form::text('seo_footer',isset($center->virtual_office_seo->seo_footer) ? $center->virtual_office_seo->seo_footer : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('meta_description','meta_description') !!}
-        {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}   
+        {!! Form::label('meta_description','Meta Description') !!}
+        {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
+        <br>
+        @if(isset($center))
+        {!! Form::label('Make this center active or inactive') !!}
+        {!! Form::checkbox('active',null,['class' => 'f2']) !!}
+        @endif
     </div>              
     <div class="form_right centers_basic">
         <br>
-        {!! Form::label('avo_description','avo_description') !!}
+        {!! Form::label('avo_description','Avo Description') !!}
         {!! Form::text('avo_description',isset($center->virtual_office_seo->avo_description) ? $center->virtual_office_seo->avo_description : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('floor','*Floor / Suite #:') !!}
         {!! Form::text('floor', null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('abcn_title','abcn_title') !!}
+        {!! Form::label('abcn_title','Abcn Title') !!}
         {!! Form::text('abcn_title',isset($center->virtual_office_seo->abcn_title) ? $center->virtual_office_seo->abcn_title : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('abcn_description','abcn_description') !!}
+        {!! Form::label('abcn_description','Abcn Description') !!}
         {!! Form::text('abcn_description',isset($center->virtual_office_seo->abcn_description) ? $center->virtual_office_seo->abcn_description : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('price','price') !!} 
         {!! Form::text('price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('with_live_receptionist_full_price','live_rec_full_price') !!}
+        {!! Form::label('with_live_receptionist_full_price','Live Receptionist Full Price') !!}
         {!! Form::text('with_live_receptionist_full_price',isset($prices->with_live_receptionist_full_price) ? $prices->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('with_live_receptionist_pak_price','live_rec_price') !!}
+        {!! Form::label('with_live_receptionist_pak_price','Live Receptionist  Price') !!}
         {!! Form::text('with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('city_name','*City:') !!}
         {!! Form::text('city_name', isset($center->city_name) ? $center->city_name : null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
         {!! Form::label('countries','*Country:&nbsp;') !!}
-        {!! Form::select('countries',$countries, null, [ ]) !!}
+        {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
         <br>
         {!! Form::label('states','State:&nbsp;') !!}
-        {!! Form::select('states',$states,null,[]) !!}
+        {!! Form::select('states',$states,null,['class' => 'state']) !!}
         <br>
         {!! Form::label('lat','*Address Latitude: ') !!}
         {!! Form::text('lat', isset($center_coordinates->lat) ? $center_coordinates->lat : null,['class' => 'f1b'])!!}
@@ -162,10 +133,66 @@
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('package','package') !!}
+        {!! Form::label('package','Package') !!}
         {!! Form::text('package',null,['class' => 'f1']) !!}
         <div class="clear"></div>
     </div> 
+    <div class="clear"></div>
+</div>
+
+<div class="h2wrapp mtop1 hide center_photos">
+    <div class="h2Icon add"></div>
+    <div class="h2txt">
+        <h2>CENTER'S PHOTOS</h2>
+    </div>
+</div>
+<div class="w_box centerPics hide center_photos">
+    @for($i = 1; $i <= 6; $i++)
+        <div class="photoLine">
+            <div class="photoLineD">
+                {!! Form::label('Photo','Photo '.$i.':',['class' => 'plb lh_f']) !!}
+                <div class="plb2 lh_f">
+                    {!! Form::file('image'.$i.'', null, []) !!}
+                    @if(isset($photos[$i]) && $photos[$i] != '')
+                        {!! Form::hidden('photo_number'.$i.'', $photos[$i]->id, []) !!}
+                        <img src="/mr-photos/{!! $photos[$i]->path !!}" width="70px">
+                    @endif
+                </div>
+            </div>
+            <div class="photoLineD">
+                <div class="plb lh_f">Category:&nbsp;</div> 
+                <div class="plb2">
+                    <div class="g_select2">
+                        {!! Form::select('category'.$i.'',$selectArray,null,['class' => 'rule_d'.$i. ' f1_s']) !!}
+                    </div> 
+                </div> 
+                <div class="plb3 lh_f">&nbsp; 
+                    <a class="txtLink2{{$i}} customSEO">(Custom SEO)</a>
+
+                </div> 
+            </div>
+        </div>
+        <div class = "show_custom_seo hide" id = "hide{{$i}}">
+            {!! Form::label('Photo 2 AVO Alt: ') !!}
+            {!! Form::text('photo_2_alt'.$i, isset($photos[$i]['alt']) ? $photos[$i]['alt'] : null,['class' => 'f1', 'id' => 'photo_2_avo_alt'.$i])!!}
+            <br>
+            <br>
+            {!! Form::label('Photo 2 AVO Caption: ') !!}
+            {!! Form::text('photo_2_caption'.$i,  isset($photos[$i]['alt']) ? $photos[$i]['caption'] : null,['class' => 'f1', 'id' => 'photo_2_avo_caption'.$i])!!}
+            <br>
+            <br>
+            {!! Form::label('Photo 2 ABCN Alt: ') !!}
+            {!! Form::text('photo_2_abcn_alt'.$i, null,['class' => 'f1'])!!}
+            <br>
+            <br>
+            {!! Form::label('Photo 2 ABCN Caption: ') !!}
+            {!! Form::text('photo_2_abcn_caption'.$i, null,['class' => 'f1'])!!}
+        </div>
+        <hr>
+    @endfor
+    
+    
+    <!--   -->
     <div class="clear"></div>
 </div>
 <!-- <div class="h2wrapp mtop1">
@@ -253,38 +280,38 @@
         {!! Form::label('mr_sentence3','sentence3') !!}
         {!! Form::text('mr_sentence3', isset($center->meeting_room_seo->sentence3) ? $center->meeting_room_seo->sentence3 : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('mr_avo_description','avo_description') !!}
+        {!! Form::label('mr_avo_description','Avo Description') !!}
         {!! Form::text('mr_avo_description',isset($center->meeting_room_seo->avo_description) ? $center->meeting_room_seo->avo_description : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('mr_meta_title','meta_title') !!}
+        {!! Form::label('mr_meta_title','Meta Title') !!}
         {!! Form::text('mr_meta_title',isset($center->meeting_room_seo->meta_title) ? $center->meeting_room_seo->meta_title : null,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('mr_meta_keywords','meta_keywords') !!}
+        {!! Form::label('mr_meta_keywords','Meta Keywords') !!}
         {!! Form::text('mr_meta_keywords',isset($center->meeting_room_seo->meta_keywords) ? $center->meeting_room_seo->meta_keywords : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_meta_description','meta_description') !!}
+        {!! Form::label('mr_meta_description','Meta Description') !!}
         {!! Form::text('mr_meta_description',isset($center->meeting_room_seo->meta_description) ? $center->meeting_room_seo->meta_description : null,['class' => 'f1']) !!}
     </div>          
     <div class="form_right centers_basic">
-        {!! Form::label('mr_h1','h1') !!}
+        {!! Form::label('mr_h1','Headline') !!}
         {!! Form::text('mr_h1', isset($center->meeting_room_seo->h1) ? $center->meeting_room_seo->h1 : null ,['class' => 'f1']) !!}
         <br> 
-        {!! Form::label('mr_h2','h2') !!}
+        {!! Form::label('mr_h2','Sub Headline') !!}
         {!! Form::text('mr_h2',isset($center->meeting_room_seo->h2) ? $center->meeting_room_seo->h2 : null,['class' => 'f1']) !!} 
         <br>
-        {!! Form::label('mr_h3','h3') !!} 
+        {!! Form::label('mr_h3','Headline 2') !!} 
         {!! Form::text('mr_h3',isset($center->meeting_room_seo->h3) ? $center->meeting_room_seo->h3 : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_seo_footer','seo_footer') !!}
+        {!! Form::label('mr_seo_footer','Seo Footer') !!}
         {!! Form::text('mr_seo_footer',isset($center->meeting_room_seo->seo_footer) ? $center->meeting_room_seo->seo_footer : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_abcn_title','abcn_title') !!}
+        {!! Form::label('mr_abcn_title','Abcn Title') !!}
         {!! Form::text('mr_abcn_title',isset($center->meeting_room_seo->abcn_title) ? $center->meeting_room_seo->abcn_title : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_abcn_description','abcn_description') !!}
+        {!! Form::label('mr_abcn_description','Abcn Description') !!}
         {!! Form::text('mr_abcn_description',isset($center->meeting_room_seo->abcn_description) ? $center->meeting_room_seo->abcn_description : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_subhead','subhead') !!}
+        {!! Form::label('mr_subhead','Subhead') !!}
         {!! Form::text('mr_subhead',isset($center->meeting_room_seo->subhead) ? $center->meeting_room_seo->subhead : null,['class' => 'f1']) !!}
         <br>
         <div class="clear"></div>
@@ -304,30 +331,30 @@
     </div>
 </div>
 <div class="w_box centerPics pl_plus_form hide">
-    <div class="form_left centers_basic">
-       {!! Form::label('plus_package','package') !!}
+    <div class="centers_basic">
+       {!! Form::label('plus_package','Package') !!}
        {!! Form::text('plus_package',null,['class' => 'f1']) !!}
        <br>
-       {!! Form::label('plus_price','price') !!} 
+       {!! Form::label('plus_price','Price') !!} 
        {!! Form::text('plus_price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
        <br>
-       {!! Form::label('plus_with_live_receptionist_full_price','live_rec_full_price') !!}
+       {!! Form::label('plus_with_live_receptionist_full_price','Live Receptionist Full Price') !!}
        {!! Form::text('plus_with_live_receptionist_full_price',isset($prices->with_live_receptionist_full_price) ? $prices->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
        <br>
-       {!! Form::label('plus_with_live_receptionist_pak_price','live_rec_price') !!}
+       {!! Form::label('plus_with_live_receptionist_pak_price','Live Receptionist Price') !!}
        {!! Form::text('plus_with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
        <br>
     </div>          
-    <div class="form_right centers_basic">
-        <div class="clear"></div>
-    </div>
+    
     <div class="clear"></div>
 </div>
+
 
    
 <div class="submit_w">
     {!! Form::submit('Submit', array('class'=>'submit_btn')) !!}
 </div>
+
  {!! Form::close() !!}
 <script type="text/javascript">
     $(document).on('ready', function(){
@@ -361,5 +388,48 @@ function getLatAndLng(){
             $('.pl_plus_form').addClass('hide');
         }
     })
+
+    $.each([1,2,3,4,5,6],function(i, val){
+        $('.txtLink2' + val).css('cursor', 'pointer');
+        $('.txtLink2' + val).on('click', function(){
+            if($('#hide' + val).hasClass('hide')) {
+                $('#hide' + val).removeClass('hide');
+            } else {
+                $('#hide' + val).addClass('hide');
+            }
+        })
+    })
+    $.each([1,2,3,4,5,6],function(i, val){
+        $('.rule_d' + val).change(function(){
+            $.post('/alts-and-captions', {category:$(this).val(), center_city: $('#city').val()}, function(data){
+                var rand_int = Math.floor(3*Math.random());
+                console.log($('.rule_d' + val).attr('name'));
+                var alt = data.alts[0][rand_int];
+                var caption = data.caps[0][rand_int];
+                $('#photo_2_avo_alt' + $('.rule_d' + val).attr('name').substr($('.rule_d' + val).attr('name').length - 1)).val(alt);
+                $('#photo_2_avo_caption' + $('.rule_d' + val).attr('name').substr($('.rule_d' + val).attr('name').length - 1)).val(caption);
+            })
+        })
+    })
+    if($('#city').val() !== '') {
+        $('.center_photos').removeClass('hide');
+        $('.center_photos').addClass('show');
+    }
+
+    $('#city').on('change', function(){
+        var city = $('#city').val();
+        if(city !== '') {
+            $('.center_photos').removeClass('hide');
+            $('.center_photos').addClass('show');
+        } else {
+            $('.center_photos').removeClass('show');
+            $('.center_photos').addClass('hide');
+        }
+    })
+
+    $('.country').css('width', 321)
+    $('.state').css('width', 321)
+    
+    
 
 </script>

@@ -1,6 +1,6 @@
 @if(isset($owner))
 	{!! Form::model($owner, [ 'url' => url('owners/'.$owner->id), 'method' => 'PUT' ]) !!}
-		{!! Form::hidden('id', null) !!}
+	{!! Form::hidden('id', null) !!}
 @else
 	{!! Form::open([ 'url' => url('owners') ]) !!}
 @endif
@@ -32,6 +32,10 @@
 	    		<div class="col-md-4 text-right"><label>Owner's Email</label></div>
 	    		<div class="col-md-8">{!! Form::email('email', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
 	    	</div>
+	    	<div class="row form-group">
+	    		<div class="col-md-4 text-right"><label>Postal Code</label></div>
+	    		<div class="col-md-8">{!! Form::text('postal_code', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
+	    	</div>
 	    </div>
 	    <div class="panel-body col-md-6">
 	    	<div class="row form-group">
@@ -52,21 +56,28 @@
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>County / Region</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::text('region', null, ['class' => 'form-control', 'id' => 'region', 'placeholder' => 'County / Region']) !!}
+	    			{!! Form::select('region', $regions_list, null, ['class' => 'form-control', 'id' => 'region', 'placeholder' => 'County / Region']) !!}
 	    			<!-- {!! Form::hidden('region_id', null, ['id' => 'region_id']) !!} -->
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>State</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::text('us_state', null, ['class' => 'form-control', 'id' => 'us_state', 'placeholder' => 'State']) !!}
+	    			{!! Form::select('state', $states_list, null, ['class' => 'form-control', 'id' => 'us_state', 'placeholder' => 'State']) !!}
 	    			<!-- {!! Form::hidden('us_state_id', null, ['id' => 'us_state_id']) !!} -->
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Country</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::text('country', null, ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'Country']) !!}
+	    			{!! Form::select('country', $countries_list, null, ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'Country']) !!}
+	    			<!-- {!! Form::hidden('country_id', null, ['id' => 'country_id']) !!} -->
+	    		</div>
+	    	</div>
+	    	<div class="row form-group">
+	    		<div class="col-md-4 text-right"><label>Notes</label></div>
+	    		<div class="col-md-8">
+	    			{!! Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'Notes...']) !!}
 	    			<!-- {!! Form::hidden('country_id', null, ['id' => 'country_id']) !!} -->
 	    		</div>
 	    	</div>
@@ -75,6 +86,9 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
+			@if(isset($center_id))
+				{!! Form::hidden('center_id', $center_id, ['id' => 'center_id']) !!}
+			@endif
 			{!! Form::submit('Submit', [ 'class' => 'btn btn-lg btn-success' ]) !!}
 		</div>
 	</div>

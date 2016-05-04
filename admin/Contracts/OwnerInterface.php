@@ -17,7 +17,7 @@ interface OwnerInterface
 	/*
 	 * Store a newly created resource in storage.
 	 */
-	public function storeOwner($params);
+	public function createOwner($params);
 
 	/*
 	 * Update the specified resource in storage.

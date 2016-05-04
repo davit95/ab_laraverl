@@ -20,7 +20,7 @@ Route::post('/login', 'Auth\AuthController@postLogin');
 
 Route::get('/logout', 'Auth\AuthController@logout');
 
-Route::get('/reports', 'ReportsController@index')->middleware('superAdmin');
+
 Route::get('/reports/download', 'ReportsController@downloadCsv');
 
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
@@ -28,7 +28,6 @@ Route::get('/owners/documents', 'OwnersController@getDocuments');
 Route::get('/owners/add-staff', 'OwnersController@getAddStaff' );
 Route::resource('/owners', 'OwnersController');
 
-Route::resource('/users', 'UsersController');
 //Route::get('/user', 'UsersController@index');
 
 Route::get('/centers/add-meeting-room', 'CentersController@getAddMeetingRoom');
@@ -38,17 +37,28 @@ Route::resource('/staffs', 'StaffsController');
 Route::resource('/meeting-rooms', 'MeetingRoomsController');
 Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
 Route::get('/center/{id}/meeting-room/create', 'MeetingRoomsController@addMeetingRoom');
-
-Route::get('/csr' , 'CsrController@index');
-Route::get('/csr-accounting' , 'CsrController@getAccounts');
-Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
-Route::get('/csr-declined' , 'CsrController@declined');
-Route::get('/csr-pending-mrs' , 'CsrController@pending');
-Route::get('/charge' , 'CsrController@charge');
-Route::resource('/customers' , 'CustomersController');
-Route::get('/customers/{name}/{id}' , 'CsrController@test');
+Route::get('/center/{id}/owner/create', 'OwnersController@createOrUpdateOwner');
 
 
 
 
+/*ajax*/
+Route::post('/alts-and-captions', 'CentersController@getAvoPhotosAltsAndCaptions');
 
+
+Route::group(['middleware' => 'superAdmin'], function () {
+	Route::get('/reports', 'ReportsController@index');
+	Route::resource('/users', 'UsersController');
+	
+	Route::get('/csr' , 'CsrController@index');
+	Route::get('/csr-accounting' , 'CsrController@getAccounts');
+	Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
+	Route::get('/csr-declined' , 'CsrController@declined');
+	Route::get('/csr-pending-mrs' , 'CsrController@pending');
+	Route::get('/charge' , 'CsrController@charge');
+	Route::resource('/customers' , 'CustomersController');
+	Route::get('/customers/{name}/{id}' , 'CsrController@test');
+
+});
+
+   

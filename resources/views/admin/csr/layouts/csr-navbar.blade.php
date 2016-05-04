@@ -29,7 +29,7 @@
                     <option>CLIENT CP</option>
                 </select>
             </div> 
-        </div> 
+        </div>
     </div> 
     <!-- <a href="{{ url('/csr') }}" class="nd">
         <div class="menu_btn @if(Request::is('csr-home*')) menu_active @endif">
@@ -62,11 +62,12 @@
         </div> 
     </a>
 </div> 
-
 <script type="text/javascript">
    $( "#BPSelectDD" ).change(function() {
+        var hostname;
+        hostname = window.location.hostname;
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
-        var url = 'http://admin.abcn.com/'  + page;
-        $(location).attr("href", url);
+        var url = hostname  + '/' + page;
+        window.location.replace(page);
     });
 </script>

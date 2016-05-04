@@ -29,6 +29,7 @@
     </tr>
     </tfoot>
 </table>
+    {!! $centers->render() !!}
 @section('styles')
 
     <link href="/admin_assets/admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
@@ -52,6 +53,7 @@
                 container: "body"
             });
             $("[data-toggle=popover]").popover();
+            $('#dataTable_paginate').css('display', 'none');
         });
     </script>
     <script type="text/javascript">
