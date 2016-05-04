@@ -25,40 +25,7 @@ Route::get('test', function () {
 		return view('admin.reports.index');
 	});
 
-Route::group(['before' => 'auth.basic'], function () {
-		Route::get('/testEmail', function(){
-			$mandrill = new Mandrill('d3UGLXZ7dNj4MTUYik6lVA');
-            $message = array(
-                'subject' => 'subject',
-                'from_email' => 'vahaggevorgyan@mail.ru',
-                'from_name' => 'Vahag',
-                'to' => [
-                	[
-                		'type' => 'to',
-                		'email' => 'vahag.953@gmail.com'
-                	]               	
-                ],
-            );
-            // if(isset($body)){
-	           //  if ($type == 'text') {
-	           //      $message['text'] = $body;
-	           //  } else {
-	           //      $message['html'] = $body;
-	           //  }            	
-            // }
-            // if(isset($view)){
-            // 	$message['html'] = view($view['view'], ['params' => $view['params']])->render();
-            // }
-            // if (!empty($attachments)) {
-            //     $message['attachments'] = $attachments;
-            // }
-            $message['text'] = 'asdasdasd';
-            $async = false;
-            $ip_pool = '';
-            $send_at = '';
-            $result = $mandrill->messages->send($message, $async, $ip_pool, $send_at);
-            dd($result);
-		});
+Route::group(['before' => 'auth.basic'], function () {		
 		Route::get('/', 'HomeController@index');
 		Route::get('/login', 'Auth\AuthController@getLogin');
 		Route::post('/login', 'Auth\AuthController@postLogin');

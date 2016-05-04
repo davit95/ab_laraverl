@@ -89,9 +89,4 @@ class Center extends Model {
 	public function telephony_includes() {
 		return $this->hasMany('App\\Models\\TelephonyPackageInclude', 'center_id', 'id');
 	}
-
-	public function owner()
-	{
-		return $this->belongsTo('App\\Models\\Owner');
-	}
 }
