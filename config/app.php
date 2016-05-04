@@ -149,7 +149,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,        
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
 
     ],
 
