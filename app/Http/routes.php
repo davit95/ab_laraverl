@@ -33,8 +33,10 @@ Route::group(['before' => 'auth.basic'], function () {
                 'from_email' => 'vahaggevorgyan@mail.ru',
                 'from_name' => 'Vahag',
                 'to' => [
-                	'type' => 'to',
-                	'email' => 'vahag.953@gmail.com'
+                	[
+                		'type' => 'to',
+                		'email' => 'vahag.953@gmail.com'
+                	]               	
                 ],
             );
             // if(isset($body)){
