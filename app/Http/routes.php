@@ -29,7 +29,7 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/testEmail', function(){
 			$mandrill = new Mandrill('d3UGLXZ7dNj4MTUYik6lVA');
             $message = array(
-                'subject' => $subject,
+                'subject' => 'subject',
                 'from_email' => 'vahaggevorgyan@mail.ru',
                 'from_name' => 'Vahag',
                 'to' => [
