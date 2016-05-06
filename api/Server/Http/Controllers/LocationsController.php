@@ -75,6 +75,12 @@ class LocationsController extends Controller
         return response()->json(['locations' => $locations]);
     }
 
+    public function getSearchLocationByCountry($country_slug, $key)
+    {
+        $locations = $this->locationService->getSearchLocationByCountry($country_slug, $key);
+        return response()->json(['locations' => $locations]);   
+    }
+
     public function getAllLocationsForSearch()
     {
         $locations = $this->locationService->getAllLocationsForSearch();
@@ -85,5 +91,12 @@ class LocationsController extends Controller
     {
         $email = $this->locationService->getCenterOwnerEmail($center_id);
         return response()->json([$email]);
+    }
+
+    public function getAllCountries()
+    {        
+        $countries = $this->locationService->getAllCountries();
+        dd($countries);
+        return response()->json(['countries' => $countries]);
     }
 }
