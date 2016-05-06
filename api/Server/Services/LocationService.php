@@ -8,15 +8,19 @@ use App\Models\Country;
 use App\Models\UsState;
 use DB;
 use Illuminate\Pagination\Paginator;
+use App\Services\CenterCoordinateService;
+use App\Services\CenterService;
 class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center, City $city, Country $country, UsState $usState) {
+	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService) {
 		$this->center = $center;
 		$this->city   = $city;
 		$this->country = $country;
 		$this->usState = $usState;
+		$this->centerCoordinateService = $centerCoordinateService;
+		$this->centerService = $centerService;
 	}
 
 	public function getAllLocations($per_page, $page)
@@ -47,7 +51,7 @@ class LocationService {
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getCountryLocation($country_slug, $per_page, $page)
+	public function getCountryLocations($country_slug, $per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
@@ -88,7 +92,7 @@ class LocationService {
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getStateCenterLocation($state, $city_slug, $center_id, $per_page, $page)
+	public function getStateCenterLocation($state, $city_slug, $center_id, $nearby, $per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
@@ -99,11 +103,14 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$locations = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
-		return $this->getNeccessaryOptions($locations);
+		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
+		if(isset($nearby)){
+			return $this->getNeccessaryOptions($location, true);	
+		}
+		return $this->getNeccessaryOptions($location);
 	}
 
-	public function getCenterLocation($country_slug, $city_slug, $center_id)
+	public function getCenterLocation($country_slug, $city_slug, $center_id, $nearby)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
@@ -114,8 +121,11 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
-		return $this->getNeccessaryOptions($locations);
+		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
+		if(isset($nearby)){
+			return $this->getNeccessaryOptions($location, true);	
+		}
+		return $this->getNeccessaryOptions($location);		
 	}
 
 	public function getSearchLocation($key)
@@ -180,7 +190,7 @@ class LocationService {
 		}
 	}
 
-	private function getNeccessaryOptions($locations)
+	private function getNeccessaryOptions($locations, $nearby = false)
 	{
 		$locationsArray = [];
 		foreach ($locations as $location) {
@@ -229,9 +239,49 @@ class LocationService {
 				$product->price_type = 'hourly';
 				array_push($temp['products'], $product);
 			}
+			if($nearby){
+				$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);				
+			}
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
 		}
 		return $locationsArray;
+	}
+
+	private function getNearByCenters($id, $lat, $lng)
+	{
+		$centers = [];		
+		$nearby_centers_ids = $this->centerCoordinateService->getNearbyCentersByLatLng($lat, $lng);
+		foreach ($nearby_centers_ids['ids'] as $key => $center_id) {
+			if($center_id == $id){
+				unset($nearby_centers_ids['ids'][$key]);
+				unset($nearby_centers_ids['distances'][$id]);
+			}						
+		}		
+		$nearby_centers     = $this->centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);
+		foreach ($nearby_centers as $k => $v) {
+			$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
+		}				
+		$nearby_centers = $nearby_centers->sortBy('distance');
+		foreach ($nearby_centers as $nearby_center) {
+			$center = new \stdClass();
+			$center->id            = $nearby_center->id;
+			$center->building_name = $nearby_center->name;
+			$center->address_1     = $nearby_center->address1;
+			$center->address_2     = $nearby_center->address2;
+			$center->city          = $nearby_center->city_name;
+			$center->city_slug     = $nearby_center->city->slug;
+			$center->state         = $nearby_center->us_state;
+			$center->postal_code   = $nearby_center->postal_code;
+			$center->country       = $nearby_center->country;
+			$center->latitude      = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lat : "";
+			$center->longitude     = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lng : "";
+			$center->tax_name      = $nearby_center->tax_name;
+			$center->tax_percentage= $nearby_center->tax_percentage;
+			$center->distance      = $nearby_center->distance;
+			$center->image         = null !== $nearby_center->vo_photos()->first() ? "https://www.alliancevirtualoffices.com/images/locations/".$nearby_center->vo_photos()->first()->path : "";			
+			array_push($centers, $center);
+		}
+		return $centers;
 	}
 }
