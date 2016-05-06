@@ -95,8 +95,7 @@ class LocationsController extends Controller
 
     public function getAllCountries()
     {        
-        $countries = $this->locationService->getAllCountries();
-        dd($countries);
+        $countries = $this->locationService->getAllCountries();        
         return response()->json(['countries' => $countries]);
     }
 }
