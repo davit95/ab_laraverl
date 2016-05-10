@@ -5,9 +5,8 @@
         "This file is @generated automatically"
     ],
 
-    "hash": "d30dfa0602fd178f6522fd79ca375c72",
-    "content-hash": "90db3f1353aea7fd719657ab5a253dc1",
-
+    "hash": "5619d6e9bac5b3675f83a09d688f681f",
+    "content-hash": "7c0273015930a923b9c52a40736cae8d",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
