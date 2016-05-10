@@ -4,7 +4,7 @@
 	New Center - [ Company / Owner ]
 @stop
 @section('content_top')
-	<div class="ct_icon_oc"></div> 
+	<!-- <div class="ct_icon_oc"></div> 
 	    <div class="ct_wrapp">
 	    <div class="ct_title"><h1>OWNERS &amp; CENTERS</h1></div> 
 	    <div class="ct_tools">
@@ -20,12 +20,17 @@
 	            </a>
 	        </div> 
 	    </div> 
-	<div class="clear"></div>    
+	<div class="clear"></div>     -->
 @stop
 @section('content')	
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12">            
+	        @include('alerts.messages')
             @include('admin.centers.forms._center-form')
     	</div>
     </div>
+@stop
+
+@section('scripts')
+	<script type='text/javascript' src="/admin_assets/admin/js/custom.js"></script>
 @stop

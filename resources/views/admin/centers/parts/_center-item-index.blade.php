@@ -4,6 +4,7 @@
     <td>{{ $center->slug }}</td>
     <td>{{ $center->city_name }}</td>
     <td>{{ $center->country }}</td>
+    <td>{{ $center->building_name }}</td>
     <td class="tooltip-demo">
         {!! Form::open([ 'url' => url('centers/'.$center->id), 'method' => 'DELETE' ]) !!}
             <a class="action-icon" data-toggle="tooltip" data-placement="top" title="View Owner" href="{{ url('centers/'.$center->id) }}"><i class="fa fa-eye"></i></a>

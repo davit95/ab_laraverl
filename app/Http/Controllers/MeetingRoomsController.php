@@ -124,6 +124,7 @@ class MeetingRoomsController extends Controller {
 				$included = [];
 				$paid     = [];
 				$phone_rates = explode('||', $mr->options->phone_rate);
+				//dd($phone_rates);
 				if ($phone_rates[0] < '1' || $phone_rates[0] == '') {
 					$included[] = 'Phone Access';
 				} elseif ($phone_rates[0] != 'NA') {

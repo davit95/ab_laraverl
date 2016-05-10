@@ -18,7 +18,7 @@
                         <div class="CMRAoptionOne">
                             <div id="OnlineNotary" class="aquaBtn confirmationBtns">USE OUR ONLINE NOTARY</div><span class="gray3 smallTxt">it's free with paid setup fee<br/>(webcam needed)</span><br/>
                                 <div class="OurN hide">
-                                    <ul><li><a href='/downloader.php?file=F05WexJqUTuRE3XkhTV9nfWtc.pdf' class='aqua mediumBold'>Download - CMRA Form - Order #1</a></li></ul> <ol>
+                                    <ul><li class = "download"><a target="_blanck" href="{{ url('downloadPdf') }}" class='aqua mediumBold'>Download - CMRA Form - Order #1</a></li></ul> <ol>
                                         <li>Download and fill out the CMRA form (you can do it digitally, or print and do it by hand).</li>
                                         <li>Scan the CMRA if filled out by hand, along with two acceptable forms of identification*. Save these documents on your computer - you'll need them for the next step.</li>
                                         <li><a href="https://www.notarycam.com/alliancevirtualoffices/" class="popup aqua mediumBold">Schedule a session with our online notary</a>.</li>
@@ -33,7 +33,7 @@
                                 <div class="CMRAoptionTwo">
                                     <div id="OwnNotary" class="aquaBtn confirmationBtns">USE YOUR OWN NOTARY</div><br/>
                                         <div class="OwnN hide">
-                                            <ul><li><a href='/downloader.php?file=F05WexJqUTuRE3XkhTV9nfWtc.pdf' class='aqua mediumBold'>Download - CMRA Form - Order #1</a></li></ul> <ol>
+                                            <ul><li><a target="_blanck" href="{{ url('downloadPdf') }}" class='aqua mediumBold'>Download - CMRA Form - Order #1</a></li></ul> <ol>
                                                 <li>Download and fill out the CMRA form (you can do it digitally, or print and do it by hand).</li>
                                                 <li>Get the CMRA Form Notarized. You'll need a copy of two acceptable identifications*.</li>
                                                 <li>Plase scan and send the CMRA form and two acceptable forms of identification to: <a href="/cdn-cgi/l/email-protection#81f2e4f3f7e8e2e4f2c1e0edede8e0efe2e4f7e8f3f5f4e0edeee7e7e8e2e4f2afe2eeec" class="aqua mediumBold"><span class="__cf_email__" data-cfemail="83f0e6f1f5eae0e6f0c3e2efefeae2ede0e6f5eaf1f7f6e2efece5e5eae0e6f0ade0ecee">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
@@ -82,7 +82,11 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
 <script type="text/rocketscript">
         jQuery(document).ready(function($) {
             
-            
+            /*$('.download').on('click', function(){
+              $.get('/downloadPdf', function(){
+
+              });
+            })*/
             
             $('#OnlineNotary').click(function(){
                    $('.OwnN').hide();

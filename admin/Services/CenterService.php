@@ -232,7 +232,6 @@ class CenterService implements CenterInterface {
 			}
 			$number ++;
 		}
-		//dd($photos);
 		return $photos;	
 	}
 
@@ -240,14 +239,12 @@ class CenterService implements CenterInterface {
 	 * Store a newly created resource in storage.
 	 */
 	public function storeCenter($inputs, $files) {
-		//dd($this->getAvoPhotosALtsAndCaptions($inputs));
+
 		$params = $this->getCenterParams($inputs);
 
 		$city = $this->city->where('name', $params['city_name'])->where('active', 1)->first();
 
 		$params['city_id'] = $city->id;
-		//$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
-		//dd('a');
 		
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
@@ -388,9 +385,8 @@ class CenterService implements CenterInterface {
 	{
 		$alt_number = 1;
 		$cap_number = 1;
-		 //dd($inputs);
-		// dd($this->getFilenamesArray($files));
 		$alts_and_caps = [];
+
 		foreach ($inputs as $key => $value) {
 			if($inputs['photo_2_alt'.$alt_number] !== '' || $inputs['photo_2_caption'.$alt_number] !== '') {
 				if(isset($inputs['image'.$alt_number])) {
@@ -409,9 +405,7 @@ class CenterService implements CenterInterface {
 				
 			}
 		}
-		return $alts_and_caps;
-		//$a = $this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $inputs['city_name']));
-		
+		return $alts_and_caps;		
 	}
 
 	/**
@@ -419,26 +413,33 @@ class CenterService implements CenterInterface {
 	 *
 	 * @return Response
 	 */
-	public function updateCenter($center_id, $inputs, $files)
+	public function updateCenter($center_id, $inputs, $files, $params)
 	{
 		$prices_params = $this->getPricesParams($inputs,$center_id);
 		$vo_coord_params = $this->getVoCoordParams($inputs);
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
-		$center_params = $this->getCenterUpdateParams($inputs);
+		$center_params = $this->getCenterUpdateParams($inputs);		
 
 		DB::beginTransaction();
 		try {
-			foreach ($this->getCenterPhotoUpdateParams($center_id, $inputs, $files) as $photo) {
-				if(isset($photo['id'])) {
-					$this->photo->where('id', $photo['id'])->update(['alt' => $photo['alt'], 'caption' => $photo['caption'] ]);
-				} else {
-					//$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $inputs['city_name']));
-
-					//$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
+			foreach ($this->createOrUpdateCenterPhotos($inputs, $params, $files) as $key => $value) {
+				if($key === 'update') {
+					foreach ($value as $update_array) {
+						$this->photo->where('id', $update_array['id'])->update($update_array);
+					}
+				}
+				if($key === 'create') {
+					if(!empty($value)) {
+						foreach ($value as $key => $insert_array) {
+							if(isset($insert_array['path'])) {
+								$this->photo->insert($insert_array);
+								$this->center->find($center_id)->vo_photos()->attach($this->getPhotosIds($files));
+							}
+						}		
+					}
 				}
 			}
-
 			if(isset($inputs['active'])) {
 				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
 			} else {
@@ -537,28 +538,32 @@ class CenterService implements CenterInterface {
 		return $this->center->where('id', $center_id)->first();
 	}
 
-	public function test()
+	public function createOrUpdateCenterPhotos($inputs, $params, $files)
 	{
-		dd($this->center->where('id', 3920)->first()->meeting_rooms()->get());
-
-		
-		$center = $this->center->where('id', $center_id)->first();
-		$photos_ids = $center->vo_photos->lists('id');
-		$ids = [];
-		$numbers = [];
-		$matches = [];
-		foreach ($photos_ids as $key => $value) {
-			$ids[$key + 1] = $value;
-		}
-		foreach ($files as $str => $value) {
-			preg_match_all('!\d+!', $str, $matches[]);
-		}
-		foreach ($matches as $key => $value) {
-			foreach ($value as $k => $v) {
-				array_push($numbers, $v[0]);
+		$update_params = [];
+		$create_params = [];
+		for($i = 1; $i <= 6; $i++) {
+			if(isset($params[$i]->id)) {
+				if(isset($inputs['image'.$i.'_'.$params[$i]->id])) {
+					$update_params[$i]['path'] = $this->uploadFile($inputs['image'.$i.'_'.$params[$i]->id]);
+				}
+				if(isset($inputs['photo_2_alt_'.$i.'_'.$params[$i]->id])) {
+					$update_params[$i]['id'] = $params[$i]->id;
+					$update_params[$i]['alt'] = $inputs['photo_2_alt_'.$i.'_'.$params[$i]->id];
+				}
+				if(isset($inputs['photo_2_caption_'.$i.'_'.$params[$i]->id])) {
+					$update_params[$i]['caption'] = $inputs['photo_2_caption_'.$i.'_'.$params[$i]->id];
+				}
+			} else {
+				if(isset($inputs['image'.$i])) {
+					$create_params[$i]['path'] = $this->uploadFile($inputs['image'.$i]);
+					$create_params[$i]['alt'] = $inputs['photo_2_alt_'.$i];
+					$create_params[$i]['caption'] = $inputs['photo_2_caption_'.$i];
+				}
 			}
 		}
-		dd($ids , $numbers);
+		$final_array = ['update' => $update_params, 'create' => $create_params];
+		return $final_array;
 	}
 
 	public function getAvoPhotosALtsAndCaptions($inputs)
@@ -693,5 +698,10 @@ class CenterService implements CenterInterface {
 		} else {
 			return false;
 		}
+	}
+
+	public function getMeetingRoomsByCenterId($center_id)
+	{
+		return $this->filteredVirtualOffice()->where('id', $center_id)->with('meeting_rooms')->get();
 	}
 }

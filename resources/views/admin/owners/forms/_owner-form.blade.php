@@ -63,7 +63,7 @@
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>State</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::select('state', $states_list, null, ['class' => 'form-control', 'id' => 'us_state', 'placeholder' => 'State']) !!}
+	    			{!! Form::select('us_state', $states_list, null, ['class' => 'form-control', 'id' => 'us_state', 'placeholder' => 'State']) !!}
 	    			<!-- {!! Form::hidden('us_state_id', null, ['id' => 'us_state_id']) !!} -->
 	    		</div>
 	    	</div>
@@ -90,6 +90,8 @@
 				{!! Form::hidden('center_id', $center_id, ['id' => 'center_id']) !!}
 			@endif
 			{!! Form::submit('Submit', [ 'class' => 'btn btn-lg btn-success' ]) !!}
+			<a type="button" href="javascript:history.go(-1)" class="class' => 'btn btn-lg btn btn-info">Cancel</a>
+			<!-- {!! Form::submit('Submit', [ 'class' => 'btn btn-lg btn btn-info' ]) !!} -->
 		</div>
 	</div>
 {!! Form::close() !!}

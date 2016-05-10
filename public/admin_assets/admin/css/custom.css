@@ -367,3 +367,12 @@ select.input-sm{
   -moz-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
 }
+
+.country, .state, .platinum_package{
+  width : 317px;
+  height: 40px;
+}
+.plus_packages,{
+  width : 417px;
+  height: 40px;
+}

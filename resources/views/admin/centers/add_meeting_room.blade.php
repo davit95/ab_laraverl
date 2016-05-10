@@ -75,28 +75,28 @@
 			</h3><br>
 			Whiteboard:&nbsp; 
 				<div class="inpAlign">
-					{!! Form::checkbox('white_board', null, null,[ 'id' => '1']) !!}
+					{!! Form::checkbox('white_board', null, isset($mr_options->whiteboard_rate) &&  $mr_options->whiteboard_rate == 0 ? true : null,[ 'id' => '1']) !!}
 					Rate: $
 					{!! Form::text('white_board_rate', isset($mr_options->whiteboard_rate) ? $mr_options->whiteboard_rate : null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			TV/DVD Player:&nbsp; 
 				<div class="inpAlign">
-					{!! Form::checkbox('tv_dvd', null, null,[ 'id' => '2']) !!}
+					{!! Form::checkbox('tv_dvd', null, isset($mr_options->tvdvdplayer_rate) &&  $mr_options->tvdvdplayer_rate == 0 ? true : null,[ 'id' => '2']) !!}
 					Rate: $ 
 					{!! Form::text('tv_dvd_rate', isset($mr_options->tvdvdplayer_rate) ? $mr_options->tvdvdplayer_rate : null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			Projector:&nbsp; 
 				<div class="inpAlign">
-					{!! Form::checkbox('projector', null, null,[ 'id' => '3']) !!}
+					{!! Form::checkbox('projector', null, isset($mr_options->projector_rate) &&  $mr_options->projector_rate == 0 ? true : null,[ 'id' => '3']) !!}
 					Rate: $ 
 					{!! Form::text('projector_rate', isset($mr_options->projector_rate) ? $mr_options->projector_rate : null,[ 'class' => 'f3']) !!} /per hour
 				</div>
 			<div class="clear"></div>
 			Video Conferencing:&nbsp;
 				<div class="inpAlign">
-					{!! Form::checkbox('video_conf', null, null,[ 'id' => '4', 'value' => 1]) !!}
+					{!! Form::checkbox('video_conf', null, isset($mr_options->videoconferencing_rate) &&  $mr_options->videoconferencing_rate == 0 ? true : null,[ 'id' => '4', 'value' => 1]) !!}
 					Rate: $ 
 					{!! Form::text('video_conf_rate', isset($mr_options->videoconferencing_rate) ? $mr_options->videoconferencing_rate : null,[ 'class' => 'f3']) !!} /per hour
 				</div>
@@ -105,7 +105,7 @@
 			{!! Form::textarea('vc_equipment', null,[ 'class' => 'f1_t']) !!}<br>
 			<div class="adjustTxt">Bridge Connection&nbsp; Available:&nbsp;</div>
 			<div class="inpAlign">
-				{!! Form::checkbox('bridge_connect', 'yes', null,[ 'id' => '5']) !!}
+				{!! Form::checkbox('bridge_connect', null, null,[ 'id' => '5']) !!}
 				Yes
 			</div>
 			<div class="clear"></div>
@@ -129,25 +129,25 @@
 			</h3><br>
 			Network Connection:&nbsp;
 				<div class="inpAlign">
-					{!! Form::checkbox('n_connection', null, null,[ 'id' => '8']) !!}
+					{!! Form::checkbox('n_connection', null, isset($mr_options->network_rate) &&  $mr_options->network_rate == 0 ? true : null,[ 'id' => '8']) !!}
 					Rate: $ 
 					{!! Form::text('n_connection_rate', isset($mr_options->network_rate) ? $mr_options->network_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			Wireless:&nbsp;
 				<div class="inpAlign">
-					{!! Form::checkbox('wireless', null, null,[ 'id' => '9']) !!}
+					{!! Form::checkbox('wireless', null, isset($mr_options->wireless_rate) &&  $mr_options->wireless_rate == 0 ? true : null,[ 'id' => '9']) !!}
 					Rate: $ 
 					{!! Form::text('vireless_rate', isset($mr_options->wireless_rate) ? $mr_options->wireless_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			Phone Access:&nbsp; 
 				<div class="inpAlign">
-					{!! Form::checkbox('phone_access', null, null,[ 'id' => '10']) !!}
+					{!! Form::checkbox('phone_access', null, isset($mr_options->phone_rate) &&  $mr_options->phone_rate == 0 ? true : null,[ 'id' => '10']) !!}
 					Rate: $ 
 					{!! Form::text('phone_access_rate', isset($mr_options->phone_rate) ? $mr_options->phone_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
 			Admin Services:&nbsp;
 			<div class="inpAlign">
-				{!! Form::checkbox('admin_services', null, null,[ 'id' => '11']) !!}
+				{!! Form::checkbox('admin_services', null, isset($mr_options->admin_services_rate) &&  $mr_options->admin_services_rate == 0 ? true : null,[ 'id' => '11']) !!}
 				Rate: $ 
 				{!! Form::text('admin_services_rate', isset($mr_options->admin_services_rate) ? $mr_options->admin_services_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
 			<div class="clear"></div>
@@ -158,7 +158,7 @@
 			</h3><br>
 			Parking Available:&nbsp; 
 				<div class="inpAlign">
-					{!! Form::checkbox('parking', null, null,[ 'id' => '12']) !!}
+					{!! Form::checkbox('parking', null, isset($mr_options->parking_rate) &&  $mr_options->parking_rate == 0 ? true : null,[ 'id' => '12']) !!}
 					Rate: $ 
 					{!! Form::text('parking_rate', isset($mr_options->parking_rate) ? $mr_options->parking_rate : null,[ 'class' => 'f3']) !!} /per hour
 					{!! Form::hidden('center_id', isset($center_id) ? $center_id : null,[ 'class' => 'f3']) !!}</div>

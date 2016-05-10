@@ -186,7 +186,8 @@ class VirtualOfficesController extends Controller {
 	}
 
 	/*get notar page*/
-	public function getNotarPage() {
+	public function getNotarPage(CenterService $centerService) {
+		//dd(session('first_name'));
 		return view('virtual-offices.notar');
 	}
 }

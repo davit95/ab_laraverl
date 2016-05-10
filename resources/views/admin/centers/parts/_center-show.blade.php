@@ -118,11 +118,35 @@
                 {{ isset($center->owner->country) ? $center->owner->country : '' }}
             </div>
          </div>
-        
+         <div class="line">
+            <span class="lh_fi mediumBold">Center Prices:</span>&nbsp;
+            <div class="formOinfo">
+                @if(isset($center))
+                    @foreach($center->prices as $price)
+                        @if( $price->package_id == 103 )
+                            Platinium Package` <a href="{{url('centers/'.$center->id.'/edit')}}" class="gLink">{{$price->price}}$</a><br>
+                        @elseif( $price->package_id == 105 )
+                            Platinium Plus Package` <a href="{{url('centers/'.$center->id.'/edit')}}" class="gLink">{{$price->price}}$</a><br>
+                        @endif
+                    @endforeach
+                @endif
+            </div>
+         </div>
+         <div class="line">
+            <span class="lh_fi mediumBold">Meeting Roooms:</span>&nbsp;
+            <div class="formOinfo">
+                @if(isset($center))
+                    @foreach($center->meeting_rooms as $mr)
+                        <a href="{{url('meeting-rooms/'.$mr->id.'/edit')}}" class="gLink">{{$mr->name}}</a> - {{$mr->hourly_rate}}$<br><br>
+                    @endforeach
+                @endif
+            </div>
+         </div>    
     </div> 
     
     <div class="bBox_btns">
         <div class="add_CBtn bordL"><a href="{{ url('center/'.$center->id.'/meeting-room/create') }}" class="gLink"><div class="sBox_icons add_green"></div>Add Meeting Room</a></div>
+        <div class="add_CBtn bordL"><a href="{{ url('centers/'.$center->id.'/edit') }}" class="gLink"><div class="sBox_icons add_green"></div>Edit Center</a></div>
         @if(!$center->owner)
             <div class="edit_oBtn bordL"><a href="{{ url('center/'.$center->id.'/owner/create') }}" class="gLink"><div class="sBox_icons edit_green"></div>Add Owner</a></div>
         @else

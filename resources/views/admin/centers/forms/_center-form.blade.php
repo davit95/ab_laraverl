@@ -1,5 +1,5 @@
-@include('alerts.messages')
-<div class="w_box">
+
+<div class="w_box" style="width:100%">
     <div class="ga_right">
         <span class="lh_f">Sites:</span>&nbsp;
         <select class="change" multiple>             
@@ -134,7 +134,7 @@
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
         {!! Form::label('package','Package') !!}
-        {!! Form::text('package',null,['class' => 'f1']) !!}
+        {!! Form::select('package',$packages, null,['class' => 'platinum_package']) !!}
         <div class="clear"></div>
     </div> 
     <div class="clear"></div>
@@ -146,13 +146,13 @@
         <h2>CENTER'S PHOTOS</h2>
     </div>
 </div>
-<div class="w_box centerPics hide center_photos">
+<div class="w_box centerPics hide center_photos" style="width:100%">
     @for($i = 1; $i <= 6; $i++)
         <div class="photoLine">
             <div class="photoLineD">
                 {!! Form::label('Photo','Photo '.$i.':',['class' => 'plb lh_f']) !!}
                 <div class="plb2 lh_f">
-                    {!! Form::file('image'.$i.'', null, []) !!}
+                    {!! Form::file(isset($photos[$i]->id) ? 'image'.$i.'_'.$photos[$i]->id :'image'.$i, []) !!}
                     @if(isset($photos[$i]) && $photos[$i] != '')
                         {!! Form::hidden('photo_number'.$i.'', $photos[$i]->id, []) !!}
                         <img src="/mr-photos/{!! $photos[$i]->path !!}" width="70px">
@@ -174,11 +174,11 @@
         </div>
         <div class = "show_custom_seo hide" id = "hide{{$i}}">
             {!! Form::label('Photo 2 AVO Alt: ') !!}
-            {!! Form::text('photo_2_alt'.$i, isset($photos[$i]['alt']) ? $photos[$i]['alt'] : null,['class' => 'f1', 'id' => 'photo_2_avo_alt'.$i])!!}
+            {!! Form::text(isset($photos[$i]->id) ? 'photo_2_alt_'.$i.'_'.$photos[$i]->id :'photo_2_alt_'.$i, isset($photos[$i]['alt']) ? $photos[$i]['alt'] : null,['class' => 'f1', 'id' => 'photo_2_avo_alt'.$i])!!}
             <br>
             <br>
             {!! Form::label('Photo 2 AVO Caption: ') !!}
-            {!! Form::text('photo_2_caption'.$i,  isset($photos[$i]['alt']) ? $photos[$i]['caption'] : null,['class' => 'f1', 'id' => 'photo_2_avo_caption'.$i])!!}
+            {!! Form::text( isset($photos[$i]->id) ? 'photo_2_caption_'.$i.'_'.$photos[$i]->id :'photo_2_caption_'.$i,  isset($photos[$i]['alt']) ? $photos[$i]['caption'] : null,['class' => 'f1', 'id' => 'photo_2_avo_caption'.$i])!!}
             <br>
             <br>
             {!! Form::label('Photo 2 ABCN Alt: ') !!}
@@ -269,7 +269,7 @@
         <h2>CENTER'S MEETING ROOM'S INFORMATION</h2>
     </div>
 </div>
-<div class="w_box centerPics">
+<div class="w_box centerPics" style="width:100%">
     <div class="form_left centers_basic">
         {!! Form::label('mr_sentence1','sentence1') !!}
         {!! Form::text('mr_sentence1', isset($center->meeting_room_seo->sentence1) ? $center->meeting_room_seo->sentence1 : null,['class' => 'f1'])!!}
@@ -330,10 +330,10 @@
         <h2>PLATINUM PLUS PACKAGE INFORMATION</h2>
     </div>
 </div>
-<div class="w_box centerPics pl_plus_form hide">
+<div class="w_box centerPics pl_plus_form hide" style="">
     <div class="centers_basic">
        {!! Form::label('plus_package','Package') !!}
-       {!! Form::text('plus_package',null,['class' => 'f1']) !!}
+       {!! Form::select('plus_package',$plus_packages, 'null',['class' => 'plus_packages']) !!}
        <br>
        {!! Form::label('plus_price','Price') !!} 
        {!! Form::text('plus_price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
@@ -356,80 +356,4 @@
 </div>
 
  {!! Form::close() !!}
-<script type="text/javascript">
-    $(document).on('ready', function(){
-        $('.change').niceselect();
-    })
-</script>
 
-
-<script type="text/javascript">
-function getLatAndLng(){
-    var state = $( "#states option:selected" ).text();
-    var country = $( "#countries option:selected" ).text();
-    var city = $('#city').val();
-    var address = city + ' ' + state + ' ' + country;
-    $.ajax({
-      url: "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
-      type: "POST",
-      success: function(res){
-         $('#lat').val(res.results[0].geometry.location.lat);
-         $('#lng').val(res.results[0].geometry.location.lng);
-      }
-    });
-} 
-
-    $('.show_plp_package').on('click', function(){
-        if($(this).prop('checked')) {
-            $('.pl_plus').removeClass('hide');
-            $('.pl_plus_form').removeClass('hide');
-        } else {
-            $('.pl_plus').addClass('hide');
-            $('.pl_plus_form').addClass('hide');
-        }
-    })
-
-    $.each([1,2,3,4,5,6],function(i, val){
-        $('.txtLink2' + val).css('cursor', 'pointer');
-        $('.txtLink2' + val).on('click', function(){
-            if($('#hide' + val).hasClass('hide')) {
-                $('#hide' + val).removeClass('hide');
-            } else {
-                $('#hide' + val).addClass('hide');
-            }
-        })
-    })
-    $.each([1,2,3,4,5,6],function(i, val){
-        $('.rule_d' + val).change(function(){
-            $.post('/alts-and-captions', {category:$(this).val(), center_city: $('#city').val()}, function(data){
-                var rand_int = Math.floor(3*Math.random());
-                console.log($('.rule_d' + val).attr('name'));
-                var alt = data.alts[0][rand_int];
-                var caption = data.caps[0][rand_int];
-                $('#photo_2_avo_alt' + $('.rule_d' + val).attr('name').substr($('.rule_d' + val).attr('name').length - 1)).val(alt);
-                $('#photo_2_avo_caption' + $('.rule_d' + val).attr('name').substr($('.rule_d' + val).attr('name').length - 1)).val(caption);
-            })
-        })
-    })
-    if($('#city').val() !== '') {
-        $('.center_photos').removeClass('hide');
-        $('.center_photos').addClass('show');
-    }
-
-    $('#city').on('change', function(){
-        var city = $('#city').val();
-        if(city !== '') {
-            $('.center_photos').removeClass('hide');
-            $('.center_photos').addClass('show');
-        } else {
-            $('.center_photos').removeClass('show');
-            $('.center_photos').addClass('hide');
-        }
-    })
-
-    $('.country').css('width', 321)
-    $('.state').css('width', 321)
-    
-    
-
-</script>

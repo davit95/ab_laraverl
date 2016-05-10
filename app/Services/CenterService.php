@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\Center;
+use mikehaertl\pdftk\Pdf;
+use mikehaertl\pdftk\FdfFile;
+use DateTime;
 
 class CenterService {
 	public function __construct(Center $center) {
@@ -150,5 +153,39 @@ class CenterService {
 		//dd($id);
 		//session(['centerid' => $this->center->find($id)]);
 		return $this->center->find($id);
+	}
+
+	public function downloadPdf($params)
+	{
+		$dt = new DateTime();
+		$pdf = new Pdf(public_path().'/pdf/CMRA-form.pdf');
+		$rand_name = str_random(30).".pdf";
+		$pdf->fillForm(array(
+			'untitled1'=> $dt->format('Y-m-d H:i:s'),
+			'untitled2'=> $params['first_name'],
+			'untitled3'=> $params['address1'],
+			'untitled4'=> $params['city'],
+			'untitled4'=> $params['state'],
+			'untitled5'=> $params['postal_code'],
+			'untitled6'=> $params['address1'],
+			'untitled7'=> $params['city'],
+			'untitled8'=> $params['address1'],
+			'untitled8'=> $params['postal_code'],
+			'untitled9'=> $params['first_name'].$params['last_name'],
+			'untitled10'=> $params['city'],
+			'untitled11'=> $params['state'],
+			'untitled12'=> $params['postal_code'],
+			'untitled13'=> $params['phone'],
+			'untitled14'=> $params['city'],
+			'untitled15'=> $params['address1'],
+			'untitled16'=> $params['city'],
+			'untitled17'=> $params['state'],
+			'untitled18'=> $params['postal_code'],
+			'untitled19'=> $params['phone'],
+			))
+   			->needAppearances()
+   			->saveAs(public_path().'/pdf/'.$rand_name);
+   		$result = $pdf->send(public_path().'/pdf/'.$rand_name);
+   		\File::delete(public_path().'/pdf/'.$rand_name);
 	}
 }

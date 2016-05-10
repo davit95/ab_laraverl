@@ -57,4 +57,41 @@ class CenterRequest extends Request
             'mr_subhead' => 'required'
         ];
     }
+
+    /**
+     * Get the validation messages for request.
+     *
+     * @return array
+     */
+    public function messages() {
+        return [
+            'building_name.required'            => '"CENTER INFORMATION" section: Building Name field is required.',
+            'name.required'                     => '"CENTER INFORMATION" section: Center Name field is required.',
+            'address1.required'                 => '"CENTER INFORMATION" section: Address 1  field is required.',
+            'subhead.required'                  => '"CENTER INFORMATION" section: Subhead field is required.',
+            'sentence1.required'                => '"CENTER INFORMATION" section: Sentence 1 field is required.',
+            'meta_title.required'               => '"CENTER INFORMATION" section: Meta Title field is required.',
+            'meta_keywords.required'            => '"CENTER INFORMATION" section: Meta Keywords  field is required.',
+            'h1.required'                       => '"CENTER INFORMATION" section: Headline  field is required.',
+            'h2.required'                       => '"CENTER INFORMATION" section: Sub Headline  field is required.',
+            'h3.required'                       => '"CENTER INFORMATION" section: Headline 2  field is required.',
+            'seo_footer.required'               => '"CENTER INFORMATION" section: Seo Footer field is required.',
+            'meta_description.required'         => '"CENTER INFORMATION" section: Meta Description field is required.',
+            'city_name.required'                => '"CENTER INFORMATION" section: City Name field is required.',
+            'abcn_description.required'         => '"CENTER INFORMATION" section: Abcn Description field is required.',
+            'lat.required'                      => '"CENTER INFORMATION" section: Latitude field is required.',
+            'lng.required'                      => '"CENTER INFORMATION" section: Longitude field is required.',
+            'mr_sentence1.required'             => '"MEETING ROOM INFORMATION" section: Sentnence 1 field is required.',
+            'mr_avo_description.required'       => '"MEETING ROOM INFORMATION" section: Avo Description field is required.',
+            'mr_meta_title.required'            => '"MEETING ROOM INFORMATION" section: Meta Title field is required.',
+            'mr_meta_keywords.required'         => '"MEETING ROOM INFORMATION" section: Meta Keywords field is required.',
+            'mr_meta_description.required'      => '"MEETING ROOM INFORMATION" section: Meta Description field is required.',
+            'mr_h1.required'                    => '"MEETING ROOM INFORMATION" section: Headline field is required.',
+            'mr_h2.required'                    => '"MEETING ROOM INFORMATION" section: Sub Headline field is required.',
+            'mr_h3.required'                    => '"MEETING ROOM INFORMATION" section: Headline 2 field is required.',
+            'mr_seo_footer.required'            => '"MEETING ROOM INFORMATION" section: Seo Footer field is required.',
+            'mr_abcn_description.required'      => '"MEETING ROOM INFORMATION" section: Abcn Description 2 field is required.',
+            'mr_subhead.required'               => '"MEETING ROOM INFORMATION" section: Subhead  field is required.',
+        ];
+    }
 }
