@@ -5,76 +5,192 @@ namespace Api\Server\Services;
 use App\Models\Center;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\UsState;
 use DB;
-
+use Illuminate\Pagination\Paginator;
+use App\Services\CenterCoordinateService;
+use App\Services\CenterService;
 class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center, City $city, Country $country) {
+	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService) {
 		$this->center = $center;
 		$this->city   = $city;
 		$this->country = $country;
-	}			
+		$this->usState = $usState;
+		$this->centerCoordinateService = $centerCoordinateService;
+		$this->centerService = $centerService;
+	}
 
-	public function getAllLocations()
+	public function getAllLocations($per_page, $page)
 	{
-		$locations = $this->center->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+		$locations = $this->center->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getStateLocations($country_slug, $state)
+	public function getAllCountries()
+	{				
+		$countries = $this->country->whereHas('active_cities', function($query){})->get(['name', 'code']);
+		return $countries;   
+	}
+
+	public function getStateLocations($country_slug, $state, $per_page, $page)
 	{
-		$locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+		$locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'active_flag' => 'Y'])->with(['prices', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms'])->paginate($per_page);
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getCountryLocation($country_slug)
+	public function getCountryLocations($country_slug, $per_page, $page)
 	{
-		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
 		return $this->getNeccessaryOptions($locations);	
 	}
 
-	public function getStateCityLocations($state, $city)
+	public function getStateCityLocations($state, $city_slug, $per_page, $page)
 	{
-		$locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+	    $city = $this->city->where('slug', $city_slug)->first();
+	    if(null!= $city){
+	    	$city_name = $city->name;
+	    }
+		$locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getCityLocations($country_slug, $city)
+	public function getCityLocations($country_slug, $city_slug, $per_page, $page)
 	{
-		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
-		return $this->getNeccessaryOptions($locations);	
-	}
-
-	public function getStateCenterLocation($state, $city, $center_id)
-	{
-		$locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+	    $city = $this->city->where('slug', $city_slug)->first();
+	    if(null!= $city){
+	    	$city_name = $city->name;
+	    }
+		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getCenterLocation($country_slug, $city, $center_id)
+	public function getStateCenterLocation($state, $city_slug, $center_id, $nearby, $per_page, $page)
 	{
-		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
-		return $this->getNeccessaryOptions($locations);
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+	    $city = $this->city->where('slug', $city_slug)->first();
+	    if(null!= $city){
+	    	$city_name = $city->name;
+	    }
+		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
+		if(isset($nearby)){
+			return $this->getNeccessaryOptions($location, true);	
+		}
+		return $this->getNeccessaryOptions($location);
+	}
+
+	public function getCenterLocation($country_slug, $city_slug, $center_id, $nearby)
+	{
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });	    
+	    $city = $this->city->where('slug', $city_slug)->first();
+	    if(null!= $city){
+	    	$city_name = $city->name;
+	    }
+		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
+		if(isset($nearby)){
+			return $this->getNeccessaryOptions($location, true);	
+		}
+		return $this->getNeccessaryOptions($location);		
 	}
 
 	public function getSearchLocation($key)
 	{
 		$searchResult = [];
-		$usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', 'US')->distinct('name')->get(['name', 'us_state_code'])->toArray();		
+		$usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', 'US')->distinct('name')->whereHas('centers', function($query){
+				$query->where('active_flag', 'Y');
+			})->get(['name', 'id', 'us_state_code', 'slug'])->toArray();		
 		$searchResult = array_merge($searchResult, $usCities);
-		$cities = $this->city->where('name', 'LIKE', '%'.$key.'%')->whereNull('us_state_code')->distinct('name')->get(['name'])->toArray();
+		$cities = $this->city->where('name', 'LIKE', '%'.$key.'%')->whereNull('us_state_code')->distinct('name')->whereHas('centers', function($query){
+				$query->where('active_flag', 'Y');
+			})->get(['name', 'id', 'country_code', 'slug'])->toArray();
 		$searchResult = array_merge($searchResult, $cities);
-		$countries = $this->country->where('name', 'LIKE', '%'.$key.'%')->distinct('name')->get(['name'])->toArray();
+		$countries = $this->country->where('name', 'LIKE', '%'.$key.'%')->distinct('name')->get(['name', 'id', 'code'])->toArray();
 		$searchResult = array_merge($searchResult, $countries);
-		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->get(['name'])->toArray();		
-		$searchResult = array_merge($searchResult, $locations);
-		dd($searchResult);
-		return $locations;
+		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y')->get(['name', 'id', 'country', 'city_name', 'us_state']);
+		foreach ($locations as $location) {
+			$location->type = 'vo';
+		}
+		$searchResult = array_merge($searchResult, $locations->toArray());
+		$us_states = $this->usState->where('name', 'LIKE', '%'.$key.'%')->get(['name', 'id', 'code']);
+		foreach ($us_states as $state) {
+			$state->type = 'state';
+		}
+		$searchResult = array_merge($searchResult, $us_states->toArray());	
+		return $searchResult;
 	}	
+	
+	public function getSearchLocationByCountry($country_slug, $key)
+	{
+		$searchResult = [];
+		if($country_slug == 'US'){
+			$usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', 'US')->distinct('name')->whereHas('centers', function($query){
+					$query->where('active_flag', 'Y');
+				})->get(['name', 'id', 'us_state_code', 'slug'])->toArray();		
+			$searchResult = array_merge($searchResult, $usCities);
+			$us_states = $this->usState->where('name', 'LIKE', '%'.$key.'%')->get(['name', 'id', 'code']);
+			foreach ($us_states as $state) {
+				$state->type = 'state';
+			}
+			$searchResult = array_merge($searchResult, $us_states->toArray());
+		}else{
+			$cities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', $country_slug)->whereNull('us_state_code')->distinct('name')->whereHas('centers', function($query){
+					$query->where('active_flag', 'Y');
+				})->get(['name', 'id', 'country_code', 'slug'])->toArray();
+			$searchResult = array_merge($searchResult, $cities);
+		}
+		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y')->where('country', $country_slug)->get(['name', 'id', 'country', 'city_name', 'us_state']);
+		foreach ($locations as $location) {
+			$location->type = 'vo';
+		}
+		$searchResult = array_merge($searchResult, $locations->toArray());
+		return $searchResult;
+	}
 
-	private function getNeccessaryOptions($locations)
+	public function getCenterOwnerEmail($center_id)
+	{
+		$center = $this->center->find($center_id);
+		$owner = $center->owner;		
+		if(null!== $owner){
+			return $owner->email;
+		}
+	}
+
+	private function getNeccessaryOptions($locations, $nearby = false)
 	{
 		$locationsArray = [];
 		foreach ($locations as $location) {
@@ -84,6 +200,7 @@ class LocationService {
 				'address_1'     => $location->address1,
 				'address_2'     => $location->address2,
 				'city'          => $location->city_name,
+				'city_slug'     => $location->city->slug,
 				'state'         => $location->us_state,
 				'postal_code'   => $location->postal_code,
 				'country'       => $location->country,
@@ -122,9 +239,49 @@ class LocationService {
 				$product->price_type = 'hourly';
 				array_push($temp['products'], $product);
 			}
+			if($nearby){
+				$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);				
+			}
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
 		}
 		return $locationsArray;
+	}
+
+	private function getNearByCenters($id, $lat, $lng)
+	{
+		$centers = [];		
+		$nearby_centers_ids = $this->centerCoordinateService->getNearbyCentersByLatLng($lat, $lng);
+		foreach ($nearby_centers_ids['ids'] as $key => $center_id) {
+			if($center_id == $id){
+				unset($nearby_centers_ids['ids'][$key]);
+				unset($nearby_centers_ids['distances'][$id]);
+			}						
+		}		
+		$nearby_centers     = $this->centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);
+		foreach ($nearby_centers as $k => $v) {
+			$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
+		}				
+		$nearby_centers = $nearby_centers->sortBy('distance');
+		foreach ($nearby_centers as $nearby_center) {
+			$center = new \stdClass();
+			$center->id            = $nearby_center->id;
+			$center->building_name = $nearby_center->name;
+			$center->address_1     = $nearby_center->address1;
+			$center->address_2     = $nearby_center->address2;
+			$center->city          = $nearby_center->city_name;
+			$center->city_slug     = $nearby_center->city->slug;
+			$center->state         = $nearby_center->us_state;
+			$center->postal_code   = $nearby_center->postal_code;
+			$center->country       = $nearby_center->country;
+			$center->latitude      = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lat : "";
+			$center->longitude     = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lng : "";
+			$center->tax_name      = $nearby_center->tax_name;
+			$center->tax_percentage= $nearby_center->tax_percentage;
+			$center->distance      = $nearby_center->distance;
+			$center->image         = null !== $nearby_center->vo_photos()->first() ? "https://www.alliancevirtualoffices.com/images/locations/".$nearby_center->vo_photos()->first()->path : "";			
+			array_push($centers, $center);
+		}
+		return $centers;
 	}
 }
