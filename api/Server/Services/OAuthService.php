@@ -14,7 +14,7 @@ class OAuthService {
 
 	public function authorize($request)
 	{		
-		$inputs = $request->all();		
+		$inputs = $request->all();			
 		if(!isset($inputs['api_key'])){
 			return 'API key is required';
 		}else if(!isset($inputs['api_secret'])){
@@ -121,8 +121,8 @@ class OAuthService {
 	}
 
 	private function checkApiKeyAndSecret($api_key, $api_secret, $ip)
-	{
-		$creds = $this->apiCredential->where(['api_key' => $api_key, 'api_secret' => $api_secret, 'origin' => $ip])->first();
+	{		
+		$creds = $this->apiCredential->where(['api_key' => $api_key, 'api_secret' => $api_secret])->first();		
 		return null != $creds ? $creds : false;
 	}
 

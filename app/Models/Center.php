@@ -89,4 +89,14 @@ class Center extends Model {
 	public function telephony_includes() {
 		return $this->hasMany('App\\Models\\TelephonyPackageInclude', 'center_id', 'id');
 	}
+
+	public function options()
+	{
+		return $this->hasMany('App\\Models\\VirtualOfficeOption', 'center_id', 'id');
+	}
+
+	public function description()
+	{
+		return $this->hasOne('App\\Models\\VirtualOfficeSeo', 'center_id', 'id');
+	}
 }
