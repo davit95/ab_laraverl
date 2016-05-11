@@ -122,7 +122,7 @@ class OAuthService {
 
 	private function checkApiKeyAndSecret($api_key, $api_secret, $ip)
 	{
-		dd($api_key, $api_secret);
+		dd($this->apiCredential->get(), $api_key, $api_secret);
 		$creds = $this->apiCredential->where(['api_key' => $api_key, 'api_secret' => $api_secret])->first();
 		return null != $creds ? $creds : false;
 	}
