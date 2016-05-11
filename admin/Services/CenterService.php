@@ -34,7 +34,7 @@ class CenterService implements CenterInterface {
 		CenterFilter $centerFilter,
 		CenterPrice $centerPrice,
 		VirtualOfficeSeo $virtualOfficeSeo,
-		MeetingRoomSeo $meetingRoomSeo,
+		MeetingRoomSeo $meetingRoomSeo
 		) {
 		$this->center = $center;
 		$this->photo  = $photo;
