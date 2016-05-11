@@ -23,7 +23,6 @@ class OAuthService {
 			$api_key    = $inputs['api_key'];
 			$api_secret = $inputs['api_secret'];
 			if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){
-				dd($creds);			
 				return 'Invalid API key or secret';
 			}else{
 				$access_token = str_random(25);
