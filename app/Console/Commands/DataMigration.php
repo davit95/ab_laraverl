@@ -42,31 +42,32 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
-		$this->centers();
-		$this->centers_coordinates();
-		$this->centers_local_numbers();
-		$this->centers_emails();
-		$this->centers_prices();
-		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
+		// $this->centers();
+		// $this->centers_coordinates();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
+		// $this->centers_prices();
+		// $this->centers_filters();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		// $this->virtual_offices_seos();
+		$this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -361,6 +362,29 @@ class DataMigration extends Command {
 		}
 		//DB::table('virtual_offices_seos')->truncate();
 		DB::table('virtual_offices_seos')->insert($new_collection);
+		$bar->finish();
+		$this->info(' ✔');
+	}
+
+	private function virtual_offices_options(){
+		$this->info("\n migrating virtual_offices_options table");
+		$this->make_new_connection();
+		$collection = DB::table('Center_Features')->get();		
+		$bar        = $this->output->createProgressBar(count($collection));
+		DB::setDefaultConnection('mysql');
+		$center_ids = DB::table('centers')->lists('id');
+		foreach ($collection as $key => $value) {			
+			if (in_array($value->CenterID, $center_ids)) {
+				$new_collection[] =
+				[
+					'center_id'        => $value->CenterID,
+					'option'           => $value->Name,
+					'value'            => $value->Value
+				];
+			}
+			$bar->advance();
+		}
+		DB::table('virtual_offices_options')->insert($new_collection);
 		$bar->finish();
 		$this->info(' ✔');
 	}

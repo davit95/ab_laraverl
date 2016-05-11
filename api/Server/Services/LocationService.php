@@ -40,29 +40,43 @@ class LocationService {
 		return $countries;   
 	}
 
-	public function getStateLocations($country_slug, $state, $per_page, $page)
+	public function getStateLocations($country_slug, $state, $nearby, $options, $per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
 	    });
-		$locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'active_flag' => 'Y'])->with(['prices', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms'])->paginate($per_page);
+		$locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'active_flag' => 'Y'])->with(['prices', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms'])->paginate($per_page);		
+		if(isset($nearby) && isset($options)){
+			return $this->getNeccessaryOptions($locations, true, true);
+		}else if(isset($nearby)){
+			return $this->getNeccessaryOptions($locations, true);
+		}else{
+			return $this->getNeccessaryOptions($locations, false, true);
+		}
 		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getCountryLocations($country_slug, $per_page, $page)
+	public function getCountryLocations($country_slug, $nearby, $options, $per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
 	    });
-		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
+		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
+		if(isset($nearby) && isset($options)){
+			return $this->getNeccessaryOptions($locations, true, true);
+		}else if(isset($nearby)){
+			return $this->getNeccessaryOptions($locations, true);
+		}else if(isset($options)){		
+			return $this->getNeccessaryOptions($locations, false, true);
+		}
 		return $this->getNeccessaryOptions($locations);	
 	}
 
-	public function getStateCityLocations($state, $city_slug, $per_page, $page)
+	public function getStateCityLocations($state, $city_slug, $nearby, $options, $per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
@@ -70,47 +84,62 @@ class LocationService {
 		    return $page;
 	    });
 	    $city = $this->city->where('slug', $city_slug)->first();
+	    dd($city_slug);
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
-		return $this->getNeccessaryOptions($locations);
-	}
-
-	public function getCityLocations($country_slug, $city_slug, $per_page, $page)
-	{
-		$page = isset($page) ? $page : 1;
-		$per_page = isset($per_page) ? $per_page : 10;
-		Paginator::currentPageResolver(function () use ($page) {
-		    return $page;
-	    });
-	    $city = $this->city->where('slug', $city_slug)->first();
-	    if(null!= $city){
-	    	$city_name = $city->name;
-	    }
-		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->get();
-		return $this->getNeccessaryOptions($locations);
-	}
-
-	public function getStateCenterLocation($state, $city_slug, $center_id, $nearby, $per_page, $page)
-	{
-		$page = isset($page) ? $page : 1;
-		$per_page = isset($per_page) ? $per_page : 10;
-		Paginator::currentPageResolver(function () use ($page) {
-		    return $page;
-	    });
-	    $city = $this->city->where('slug', $city_slug)->first();
-	    if(null!= $city){
-	    	$city_name = $city->name;
-	    }
-		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
-		if(isset($nearby)){
-			return $this->getNeccessaryOptions($location, true);	
+		$locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
+		if(isset($nearby) && isset($options)){
+			return $this->getNeccessaryOptions($locations, true, true);	
+		}else if(isset($nearby)){
+			return $this->getNeccessaryOptions($locations, true);
+		}else{
+			return $this->getNeccessaryOptions($locations, false, true);
 		}
-		return $this->getNeccessaryOptions($location);
+		return $this->getNeccessaryOptions($locations);
 	}
 
-	public function getCenterLocation($country_slug, $city_slug, $center_id, $nearby)
+	public function getCityLocations($country_slug, $city_slug, $nearby, $options, $per_page, $page)
+	{
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+	    $city = $this->city->where('slug', $city_slug)->first();
+	    if(null!= $city){
+	    	$city_name = $city->name;
+	    }	    
+		$locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
+		if(isset($nearby) && isset($options)){
+			return $this->getNeccessaryOptions($locations, true, true);	
+		}else if(isset($nearby)){
+			return $this->getNeccessaryOptions($locations, true);
+		}else{
+			return $this->getNeccessaryOptions($locations, false, true);
+		}
+		return $this->getNeccessaryOptions($locations);
+	}
+
+	public function getStateCenterLocation($state, $city_slug, $center_id, $nearby, $options, $description)
+	{
+		$page = isset($page) ? $page : 1;
+		$per_page = isset($per_page) ? $per_page : 10;
+		Paginator::currentPageResolver(function () use ($page) {
+		    return $page;
+	    });
+	    $city = $this->city->where('slug', $city_slug)->first();
+	    if(null!= $city){
+	    	$city_name = $city->name;
+	    }
+		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
+		$nearby = isset($nearby);
+		$options = isset($options);
+		$description = isset($description); 		
+		return $this->getNeccessaryOptions($location, $nearby, $options, $description);
+	}
+
+	public function getCenterLocation($country_slug, $city_slug, $center_id, $nearby, $options, $description)
 	{
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : 10;
@@ -121,11 +150,11 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms'])->paginate($per_page);
-		if(isset($nearby)){
-			return $this->getNeccessaryOptions($location, true);	
-		}
-		return $this->getNeccessaryOptions($location);		
+		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description'])->paginate($per_page);
+		$nearby = isset($nearby);
+		$options = isset($options);
+		$description = isset($description); 		
+		return $this->getNeccessaryOptions($location, $nearby, $options, $description);		
 	}
 
 	public function getSearchLocation($key)
@@ -190,7 +219,7 @@ class LocationService {
 		}
 	}
 
-	private function getNeccessaryOptions($locations, $nearby = false)
+	private function getNeccessaryOptions($locations, $nearby = false, $options = false, $description = false)
 	{
 		$locationsArray = [];
 		foreach ($locations as $location) {
@@ -239,9 +268,16 @@ class LocationService {
 				$product->price_type = 'hourly';
 				array_push($temp['products'], $product);
 			}
+
+			if($options){
+				$temp['center_options'] = $location->options;	
+			}
+			if($description){
+				$temp['description'] = isset($location->description) ? $location->description->avo_description : '';
+			}
 			if($nearby){
 				$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);				
-			}
+			}			
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
 		}
