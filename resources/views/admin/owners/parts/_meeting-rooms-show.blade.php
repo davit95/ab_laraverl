@@ -34,9 +34,9 @@
 
 <div class="ct_wrapp">
 	<div class="ct_title"><h1>MEETING ROOMS</h1></div> 
-		<div class="ct_tools">
+		<!-- <div class="ct_tools">
 			<p class="h1Desc">Bala Plaza Business Center, 101 Lindenwood Drive, Suite 225, Malvern, PA</p>
-		</div> 
+		</div>  -->
 	</div>
 	<div class="clear"></div>
 </div>

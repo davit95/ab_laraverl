@@ -34,7 +34,7 @@ class OwnerRequest extends Request
             'address1' => 'required',
             'city' => 'required',
             'region' => 'required',
-            'state' => 'required',
+            'us_state' => 'required',
             'country' => 'required'
         ];
     }

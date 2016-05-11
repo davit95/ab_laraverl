@@ -72,7 +72,6 @@ class MeetingRoomService implements MeetingRoomInterface {
 	public function addMeetingRoom($inputs, $files)
 	{
 		$data = new $this->meetingRoomOption($this->getMrOptionParams($inputs));
-
 		$mr_data = $this->getMeetingRoomsParams($inputs);
 
 		DB::beginTransaction();
@@ -80,8 +79,11 @@ class MeetingRoomService implements MeetingRoomInterface {
 			$mr = $this->meetingRoom->create($mr_data);
 			$mr->options()->save($data);
 			$this->centerFilter->where('center_id', $inputs['center_id'])->update(['meeting_room' => 1]);
-			$this->photo->insert($this->uploadFile($files));
-			$this->center->find($inputs['center_id'])->mr_photos()->attach($this->getPhotosIds($files)[0] , ['mr_id' => $mr->id]);	
+			if($files) {
+				$this->photo->insert($this->uploadFile($files));
+				$this->center->find($inputs['center_id'])->mr_photos()->attach($this->getPhotosIds($files)[0] , ['mr_id' => $mr->id]);
+			}
+				
 		}
 		catch(\Exception $e)
 		{
@@ -159,19 +161,82 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return true;
 	}
 
-	public function getMrOptionParams($input)
+	public function getMrOptionParams($inputs)
 	{
-		$mr_option_params = [];
-		$mr_option_params['room_description'] = $input['room_description'];
-		$mr_option_params['parking_rate'] = $input['parking_rate'];
-		$mr_option_params['parking_description'] = $input['park_desc'];
-		$mr_option_params['network_rate'] = $input['n_connection_rate'];
-		$mr_option_params['wireless_rate'] = $input['vireless_rate'];
-		$mr_option_params['phone_rate'] = $input['phone_access_rate'];
-		$mr_option_params['admin_services_rate'] = $input['admin_services_rate'];
-		$mr_option_params['whiteboard_rate'] = $input['white_board_rate'];
-		$mr_option_params['tvdvdplayer_rate'] = $input['tv_dvd_rate'];
-		$mr_option_params['projector_rate'] = $input['projector_rate'];
+		if(isset($inputs['n_connection'])) {
+			$mr_option_params['network_rate'] = 0;
+		} else {
+			if($inputs['n_connection_rate'] === 0) {
+				$mr_option_params['network_rate'] = '';
+			} else {
+				$mr_option_params['network_rate'] = $inputs['n_connection_rate'];
+			}
+		}
+		if(isset($inputs['wireless'])) {
+			$mr_option_params['wireless_rate'] = 0;
+		} else {
+			if($inputs['vireless_rate'] === 0) {
+				$mr_option_params['wireless_rate'] = '';
+			} else {
+				$mr_option_params['wireless_rate'] = $inputs['vireless_rate'];
+			}
+		}
+		if(isset($inputs['phone_access'])) {
+			$mr_option_params['phone_rate'] = 0;
+		} else {
+			if($inputs['phone_access_rate'] === 0) {
+				$mr_option_params['phone_rate'] = '';
+			} else {
+				$mr_option_params['phone_rate'] = $inputs['phone_access_rate'];
+			}
+			
+		}
+		if(isset($inputs['admin_services'])) {
+			$mr_option_params['admin_services_rate'] = 0;
+		} else {
+			if($inputs['admin_services_rate'] === 0) {
+				$mr_option_params['admin_services_rate'] = '';
+			} else {
+				$mr_option_params['admin_services_rate'] = $inputs['admin_services_rate'];
+			}
+		}
+		if(isset($inputs['white_board'])) {
+			$mr_option_params['whiteboard_rate'] = 0;
+		} else {
+			if($inputs['white_board_rate'] === 0) {
+				$mr_option_params['whiteboard_rate'] = '';
+			} else {
+				$mr_option_params['whiteboard_rate'] = $inputs['white_board_rate'];
+			}
+		}
+		if(isset($inputs['tv_dvd'])) {
+			$mr_option_params['tvdvdplayer_rate'] = 0;
+		} else {
+			if($inputs['tv_dvd_rate'] === 0) {
+				$mr_option_params['tvdvdplayer_rate'] = '';
+			} else {
+				$mr_option_params['tvdvdplayer_rate'] = $inputs['tv_dvd_rate'];
+			}
+		}
+		if(isset($inputs['projector'])) {
+			$mr_option_params['projector_rate'] = 0;
+		} else {
+			if($inputs['projector_rate'] === 0) {
+				$mr_option_params['projector_rate'] = '';
+			} else {
+				$mr_option_params['projector_rate'] = $inputs['projector_rate'];
+			}
+		}
+		if(isset($inputs['video_conf'])) {
+			$mr_option_params['videoconferencing_rate'] = 0;
+		} else {
+			if($inputs['video_conf_rate'] === 0) {
+				$mr_option_params['videoconferencing_rate'] = '';
+			} else {
+				$mr_option_params['videoconferencing_rate'] = $inputs['video_conf_rate'];
+			}
+		}
+
 		return $mr_option_params;
 	}
 

@@ -24,7 +24,7 @@ class MeetingRoomRequest extends Request
     public function rules()
     {
         return [
-            'mr_photo'  => 'required',
+            //'mr_photo'  => 'required',
             'mr_name' => 'required',
             // 'capacity' => 'required',
             'rate' => 'required',
@@ -54,6 +54,21 @@ class MeetingRoomRequest extends Request
             // 'parking' => 'required',
             // 'parking_rate' => 'required',
             // 'park_desc' => 'required'
+        ];
+    }
+
+    /**
+     * Get the validation messages for request.
+     *
+     * @return array
+     */
+    public function messages() {
+        return [
+            'mr_name.required'       => '"MEETING ROOM INFORMATION" section: Meeting Room Name field is required.',
+            'rate.required'          => '"MEETING ROOM INFORMATION" section: Hourly Rate field is required.',
+            'half_day.required'      => '"MEETING ROOM INFORMATION" section: Half Day Rate field is required.',
+            'full_day.required'      => '"MEETING ROOM INFORMATION" section: Full Day Rate field is required.',
+            'min_hours.required'     => '"MEETING ROOM INFORMATION" section: Minimum Hour Rate field is required.',
         ];
     }
 }

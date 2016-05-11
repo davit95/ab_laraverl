@@ -57,7 +57,7 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, UserInterface $userService)
+    public function store(UserRequest $request, UserInterface $userService)
     {
         //dd($request->all());
         if(null != $userService->createUser($request->all())) {

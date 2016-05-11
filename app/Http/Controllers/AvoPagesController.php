@@ -91,7 +91,6 @@ class AvoPagesController extends Controller {
 	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService) {
 		$country_codes = $telCountryService->getAllCountriesWithList();	
 		$center = $centerService->getCenterById(session()->get('centerid'));	
-		//dd($center,session()->get('centerid'));
 		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;		
 		return view('avo-pages.customer-information', ['countries' => $country_codes, 'email_flag' => $email_flag, 'center' => $center]);
 	}
@@ -319,5 +318,15 @@ class AvoPagesController extends Controller {
 	 */
 	public function faq() {
 		return view('avo-pages.faq');
+	}
+
+	public function getNotarPage(CenterService $centerService)
+	{
+		return view('virtual-offices.notar', ['customer_info' => session('customer_information')]);
+	}
+
+	public function downloadPdf(CenterService $centerService)
+	{
+		$centerService->downloadPdf(session('customer_information'));
 	}
 }

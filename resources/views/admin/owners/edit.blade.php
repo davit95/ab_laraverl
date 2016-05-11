@@ -6,7 +6,7 @@
 
 @section('content')
 	<div class="row form-group">
-		@include('admin.owners.parts._filter')
+		<!-- @include('admin.owners.parts._filter') -->
 	</div>
     @include('admin.owners.forms._owner-form')
 @stop

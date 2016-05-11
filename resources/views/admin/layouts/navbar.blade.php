@@ -16,7 +16,7 @@
     </li>
 </ul> --}}
 
-<div class="logo"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></div>
+<div class="logo"><a href="{{ url('reports') }}"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></a></div>
 <div class="mobileMenu"></div>
 <div class="menu">
     <div class="dropD_header">
@@ -55,10 +55,12 @@
 </div> 
 <script type="text/javascript">
    $( "#BPSelectDD" ).change(function() {
-        var hostname;
-        hostname = window.location.hostname;
+        //var hostname;
+        //hostname = window.location.hostname;
+        //console.log(hostname);
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
-        var url = hostname  + '/' + page;
-        window.location.replace(page);
+        var url = 'http://admin.abcn.dev'  + '/' + page;
+        //alert(url)
+        window.location.replace(url);
     });
 </script>

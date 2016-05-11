@@ -31,7 +31,7 @@ class OwnersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, OwnerInterface $ownerService)
+    public function index(OwnerRequest $request, OwnerInterface $ownerService)
     {
         $ownerService->setFilterParams( $request->all() );        
         return view('admin.owners.index', [ 'owners' => $ownerService->getAllOwners() ]);
@@ -84,7 +84,16 @@ class OwnersController extends Controller
      */
     public function show($id, OwnerInterface $ownerService)
     {
-        $owner = $ownerService->getOwnerByID($id);
+        if(\Auth::user()->role_id == 1) {
+            $owner = $ownerService->getOwnerByID($id);
+        } elseif(\Auth::user()->role_id == 5) {
+            if($id != \Auth::user()->owner_id) {
+                dd(404);
+            } else {
+                $owner = $ownerService->getOwnerByID(\Auth::user()->owner_id);    
+            }
+        }
+        
         return view('admin.owners.show', [ 'owner' => $owner ]);
     }
 
@@ -101,15 +110,32 @@ class OwnersController extends Controller
         UsStateInterface $usStateService,
         CountryInterface $countryService)
     {
+        
+        $regions_list = ['' => 'no region'] + $ownerService->getAllRegionsLists();
+        $states_list = ['' => 'no state'] + $ownerService->getAllStatesLists();
+        $countries_list = ['' => 'no country'] + $ownerService->getAllCountriesLists();
+        $cities = json_encode($cityService->getAllCitiesSelectList());
+        $regions = json_encode($regionService->getAllRegionsSelectList());
+        $us_states = json_encode($usStateService->getAllUsStatesSelectList());
+        $countries = json_encode($countryService->getAllCountriesSelectList());
+        if(\Auth::user()->role_id == 1) {
+            $owner = $ownerService->getOwnerByID($id);
+        } else {
+            if($id != \Auth::user()->owner_id) {
+                dd(404);
+            } else {
+                $owner = $ownerService->getOwnerByID(\Auth::user()->owner_id);//
+            }
+        }
         return view('admin.owners.edit', [ 
-            'owner' => $ownerService->getOwnerByID($id),
-            'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
-            'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-            'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
-            'cities' => json_encode($cityService->getAllCitiesSelectList()),
-            'regions' => json_encode($regionService->getAllRegionsSelectList()),
-            'us_states' => json_encode($usStateService->getAllUsStatesSelectList()),
-            'countries' => json_encode($countryService->getAllCountriesSelectList()),
+            'owner' => $owner,
+            'regions_list' => $regions_list,
+            'states_list' => $states_list,
+            'countries_list' => $countries_list,
+            'cities' => $cities,
+            'regions' => $regions,
+            'us_states' => $us_states,
+            'countries' => $countries,
         ]);
     }
 
@@ -122,11 +148,23 @@ class OwnersController extends Controller
      */
     public function update($id, OwnerRequest $request, OwnerInterface $ownerService)
     {
-        //dd($request->all());
-        if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
-            return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
+        if(\Auth::user()->role_id == 1) {
+            if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
+                        return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
+                    }
+                    return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        } else {
+            if($id != \Auth::user()->owner_id) {
+                dd(404);
+            } else {
+                if ( null != $owner = $ownerService->updateOwner(\Auth::user()->owner_id, $request->all() ) ) {
+                    return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
+                }
+                return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+            }
         }
-        return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+
+        
     }
 
     /**

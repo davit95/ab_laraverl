@@ -61,14 +61,20 @@ class CentersController extends Controller
             'MeetingRoom' => 'Meeting Room',
             'unknown' => 'Unknown'
         ];
-        $packages = [];
-        $packages['platinum Package']      = 'platinum Package';
-        $packages['Platinum Plus Package'] = 'Platinum Plus Package';
+        $packages = [
+            '' => 'no package',
+            'platinum package' => 'Platinum Package'
+        ];
+        $plus_packages = [
+            '' => 'no package',
+            'plus_package' => 'Platinum Plus'
+        ];
         return view('admin.centers.create', [
                                             'selectArray' => $selectArray,
                                             'states' =>  [''=>'select state'] + $usStateService->getAllStates()->lists('name', 'name')->toArray(),
                                             'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
                                             'packages' => $packages,
+                                            'plus_packages' => $plus_packages,
                                             'photos' => []]);
     }
 
@@ -78,7 +84,7 @@ class CentersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CenterRequest $request, CenterService $centerService)
+    public function store(Request $request, CenterService $centerService)
     {
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
@@ -114,39 +120,49 @@ class CentersController extends Controller
             'unknown' => 'Unknown'
         ];
         $packages = [
-            'platinum package' => 'Platinum Package',
-            'platinum plus package' => 'Platinum Plus Package'
+            '' => 'no package',
+            'platinum package' => 'Platinum Package'
+        ];
+        $plus_packages = [
+            '' => 'no package',
+            'plus_package' => 'Platinum Plus'
         ];
         
         if(\Auth::user()->role_id == 1) {
-            return view('admin.centers.create', 
-            [
-                'selectArray' => $selectArray,
-                'states' => $usStateService->getAllStates()->lists('name', 'name')->toArray(),
-                'countries' => $countryService->getAllCountries()->lists('name', 'name')->toArray(),
-                'packages' => $packages,
-                'center' => $centerService->getVirtualOfficeById($id),
-                'center_coordinates' => $centerService->getCentersCoordinatesByCenterId($id),
-                'prices' => $centerService->getCenterPrices($id)[0],
-                'photos' => $centerService->getPhotosByCenterId($id)
-            ]);   
+            $selectArray = $selectArray;
+            $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
+            $countries = $countryService->getAllCountries()->lists('name', 'name')->toArray();
+            $packages = $packages;
+            $center = $centerService->getVirtualOfficeById($id);
+            $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
+            $prices = $centerService->getCenterPrices($id)[0];
+            $photos = $centerService->getPhotosByCenterId($id);
         } elseif(\Auth::user()->role_id == 5) {
             if($center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id)) {
-                return view('admin.centers.create', 
-                [
-                    'selectArray' => $selectArray,
-                    'states' => $usStateService->getAllStates()->lists('name', 'name')->toArray(),
-                    'countries' => $countryService->getAllCountries()->lists('name', 'name')->toArray(),
-                    'packages' => $packages,
-                    'center' => $centerService->getVirtualOfficeById($id),
-                    'center_coordinates' => $centerService->getCentersCoordinatesByCenterId($id),
-                    'prices' => $centerService->getCenterPrices($id)[0],
-                    'photos' => $centerService->getPhotosByCenterId($id)
-                ]);
+                $selectArray = $selectArray;
+                $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
+                $countries = $countryService->getAllCountries()->lists('name', 'name')->toArray();
+                $packages = $packages;
+                $center = $centerService->getVirtualOfficeById($id);
+                $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
+                $prices = $centerService->getCenterPrices($id)[0];
+                $photos = $centerService->getPhotosByCenterId($id);
             } else {
                 dd(404);
             }
         }
+        return view('admin.centers.create', 
+        [
+            'selectArray' => $selectArray,
+            'states' => $states,
+            'countries' => $countries,
+            'packages' => $packages,
+            'plus_packages' => $plus_packages,
+            'center' => $center,
+            'center_coordinates' => $center_coordinates,
+            'prices' => $prices,
+            'photos' => $photos
+        ]);
     }
 
     /**
@@ -158,10 +174,9 @@ class CentersController extends Controller
      */
     public function update($id, CenterRequest $request, CenterService $centerService)
     {
-        //dd($request->all());
         if(\Auth::user()->role_id == 1) {
             try {
-                if ($center = $centerService->updateCenter($id, $request->all(), $request->file()) ) {
+                if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {
                     return redirect('centers')->withSuccess('Center has been successfully updated.');
                 }
             }

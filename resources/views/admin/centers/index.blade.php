@@ -18,6 +18,6 @@
 		        @include('alerts.messages')
 	            @include('admin.centers.parts._center-list-index')
 		    </div>
-		</div>   
+		</div>
 	</div>
 @stop

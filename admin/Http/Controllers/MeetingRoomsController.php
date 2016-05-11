@@ -68,7 +68,7 @@ class MeetingRoomsController extends Controller
      */
     public function store(MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
-        //dd()
+        //dd($meetingRoomService->test($request->all()));
         if(\Auth::user()->role_id == 1) {
             try {
                 if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
@@ -154,7 +154,7 @@ class MeetingRoomsController extends Controller
         if(\Auth::user()->role_id == 1) {
             try {
                 if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all(), $request->file()) ) {
-                    return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
+                    return redirect('meeting-rooms')->withSuccess('Center has been successfully updated.');
                 }
             }
             catch(FailedTransactionException $e)
@@ -167,7 +167,7 @@ class MeetingRoomsController extends Controller
             if($meetingRoomService->getOwnerMeetingRoomById($id, \Auth::user()->owner_id)) {
                 try {
                     if ($mr = $meetingRoomService->updateMeetingRoom($id, $request->all(), $request->file()) ) {
-                        return redirect('meeting-rooms/create')->withSuccess('Center has been successfully updated.');
+                        return redirect('meeting-rooms')->withSuccess('Center has been successfully updated.');
                     }
                 }
                 catch(FailedTransactionException $e)
@@ -194,3 +194,7 @@ class MeetingRoomsController extends Controller
         //
     }
 }
+
+
+
+

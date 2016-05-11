@@ -9,6 +9,7 @@
         <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="City: activate to sort column ascending" style="width: 64px;">City Name</th>
         <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Country</th>        
         <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Building Name</th>        
+        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Actions</th>        
     </tr>
 </thead>
     <tbody>
@@ -26,6 +27,7 @@
         <th rowspan="1" colspan="1">City Name</th>
         <th rowspan="1" colspan="1">Country</th>
         <th rowspan="1" colspan="1">Building Name</th> 
+        <th rowspan="1" colspan="1">Actions</th> 
     </tr>
     </tfoot>
 </table>

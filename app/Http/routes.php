@@ -37,10 +37,11 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{city_id}', 'VirtualOfficesController@getCityVirtualOffices');
 		//here new
 		Route::get('/virtual-offices/{country_code}/{city_slug}', 'VirtualOfficesController@getCityVirtualOfficesWithoutId');
-		Route::post('/virtual-offices-confirmation','VirtualOfficesController@getNotarPage');
+		
 		//here
 		Route::get('/virtual-offices/{country_code}/{city_slug}/{center_slug}/{center_id}', 'VirtualOfficesController@getVirtualOfficeShowPage');
 		Route::get('/pricing-grids/{center_id}', 'VirtualOfficesController@getCenterPricengGrid');
+
 
 		Route::get('/meeting-rooms', 'MeetingRoomsController@index');
 		Route::get('/meeting-rooms/{country_slug}', 'MeetingRoomsController@getCountryMeetingRooms');
@@ -58,6 +59,8 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('/live-receptionist-add-to-cart', 'LiveReceptionistsController@addToCart');
 
 		// Avo pages
+		Route::post('/virtual-offices-confirmation','AvoPagesController@getNotarPage');
+		Route::get('/downloadPdf', 'AvoPagesController@downloadPdf');
 		Route::get('/all-features', 'AvoPagesController@allFeatures');
 		Route::get('/customize-phone', 'AvoPagesController@customizePhone');
 		Route::post('/save-phone-settings', 'AvoPagesController@storePhoneSettings');
