@@ -22,7 +22,8 @@ class OAuthService {
 		}else{
 			$api_key    = $inputs['api_key'];
 			$api_secret = $inputs['api_secret'];
-			if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){				
+			if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){
+				dd($creds);			
 				return 'Invalid API key or secret';
 			}else{
 				$access_token = str_random(25);
@@ -122,8 +123,7 @@ class OAuthService {
 
 	private function checkApiKeyAndSecret($api_key, $api_secret, $ip)
 	{		
-		$creds = $this->apiCredential->where(['api_key' => $api_key, 'api_secret' => $api_secret])->first();
-		dd($creds);
+		$creds = $this->apiCredential->where(['api_key' => $api_key, 'api_secret' => $api_secret])->first();		
 		return null != $creds ? $creds : false;
 	}
 
