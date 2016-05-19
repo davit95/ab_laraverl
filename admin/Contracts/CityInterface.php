@@ -4,18 +4,36 @@ namespace Admin\Contracts;
 
 interface CityInterface
 {
-	/*
-	 * Get a listing of the resource.
+	
+	/**
+	 *
+	 * 
+	 * @param 
+	 * @return All cities
 	 */
 	public function getAllCities();
 
-	/*
-	 * Get the specified resource.
+	/**
+	 *
+	 * 
+	 * @param $id (int)
+	 * @return one city
 	 */
 	public function getCityByID($id);
 
-	/*
-	 * Get a listing of the resource for html select.
+	/**
+	 *
+	 * 
+	 * @param 
+	 * @return cities list
 	 */
 	public function getAllCitiesSelectList();
+
+	/**
+	 * Get city by key.
+	 * 
+	 * @param 
+	 * @return Response
+	 */
+	public function searchCityByKey($key);
 }

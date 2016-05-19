@@ -13,7 +13,7 @@
                 <div style="float: right;"><img src="https://www.alliancevirtualoffices.com/csr/images/visa-icon.jpg" border="0" style="margin: 10px;"></div>
                 <div style="color: white; background-color: red; padding: 3px; font-weight: bold;">CUSTOMER TERMINATED</div>
                 <p>PROCESSING DEPARTMENT</p>
-                STEPHEN NGUYEN
+               {{$customer->first_name}}
                 <br>
                 6856 CITRADORA CT
                 <br>

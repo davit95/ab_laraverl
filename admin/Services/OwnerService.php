@@ -35,16 +35,22 @@ class OwnerService implements OwnerInterface
 		$this->per_page = config('abcn.owners.pagination.per_page');
 	}
 
-	/*
+	/**
 	 * Set get params for filtering query result.
+	 *
+	 * @param $params (array)
+	 * @return Response
 	 */
 	public function setFilterParams($params)
 	{
 		$this->filter_params = $params;
 	}
 
-	/*
+	/**
 	 * Get a listing of the resource.
+	 *
+	 * @param
+	 * @return Response
 	 */
 	public function getAllOwners()
 	{
@@ -57,8 +63,11 @@ class OwnerService implements OwnerInterface
 		return $this->owner->orderBy('id', 'DESC')->paginate($this->per_page);
 	}
 
-	/*
+	/**
 	 * Get the specified resource.
+	 *
+	 * @param $id (int)
+	 * @return Response
 	 */
 	public function getOwnerByID($id)
 	{
@@ -69,8 +78,11 @@ class OwnerService implements OwnerInterface
 		throw new NotFoundHttpException('Invalid URL.');
 	}
 
-	/*
-	 * return params for owner create
+	/**
+	 * Get params for owner create
+	 *
+	 * @param $params (array)
+	 * @return return array
 	 */
 	public function getOwnerParams($params)
 	{
@@ -89,8 +101,11 @@ class OwnerService implements OwnerInterface
 		return $params;
 	}
 
-	/*
-	 * Store a newly created resource in storage.
+	/**
+	 * Create new Owner
+	 *
+	 * @param $owner_params (array)
+	 * @return return new owner
 	 */
 	public function createOwner($owner_params)
 	{
@@ -101,19 +116,24 @@ class OwnerService implements OwnerInterface
 		return $owner;
 	}
 
-	/*
+	/**
 	 * Update the specified resource in storage.
+	 *
+	 * @param $id, $params (int,array)
+	 * @return return new owner
 	 */
 	public function updateOwner($id, $params)
 	{
-		//dd($params);
 		$owner = $this->getOwnerByID($id);
 		$owner->update($params);
 		return $owner;
 	}
 
-	/*
+	/**
 	 * Remove the specified resource from storage.
+	 *
+	 * @param $id (int)
+	 * @return true
 	 */
 	public function destroyOwner($id)
 	{
@@ -121,26 +141,56 @@ class OwnerService implements OwnerInterface
 		return $owner->delete();
 	}
 
+	/**
+	 * Get Regions list
+	 *
+	 * @param 
+	 * @return regions lists array
+	 */
 	public function getAllRegionsLists()
 	{
 		return $this->region->lists('name', 'name')->toArray();
 	}
 
+	/**
+	 * Get States list
+	 *
+	 * @param 
+	 * @return states lists array
+	 */
 	public function getAllStatesLists()
 	{
 		return $this->state->lists('name', 'name')->toArray();
 	}
 
+	/**
+	 * Get Countries list
+	 *
+	 * @param 
+	 * @return countries lists array
+	 */
 	public function getAllCountriesLists()
 	{
 		return $this->country->lists('name', 'name')->toArray();
 	}
 
+	/**
+	 * Get Owners
+	 *
+	 * @param 
+	 * @return all owners
+	 */
 	public function getOwners()
 	{
 		return $this->owner->get();
 	}
 
+	/**
+	 * Get Owners list
+	 *
+	 * @param 
+	 * @return all owners list
+	 */
 	public function getOwnersLists()
 	{
 		return $this->owner->lists('name', 'name')->toArray();

@@ -35,6 +35,9 @@ class MeetingRoomService implements MeetingRoomInterface {
 
 	/**
 	 * get all meeting Rooms.
+	 *
+	 * @param 
+	 * @return Last 20 meeting rooms
 	 */
 	public function getMeetingRooms()
 	{
@@ -43,6 +46,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return $this->meetingRoom->orderBy('id', 'desc')->take(20)->get();
 	}
 
+	/**
+	 * upload files
+	 *
+	 * @param $files (file)
+	 * @return filenames
+	 */
 	public function uploadFile($files)
 	{
 		$file_names = [];
@@ -57,6 +66,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return '';
 	}
 
+	/**
+	 * get photos ids
+	 *
+	 * @param $files (file)
+	 * @return ids
+	 */
 	public function getPhotosIds($files)
 	{
 		$photo_ids = [];
@@ -66,8 +81,10 @@ class MeetingRoomService implements MeetingRoomInterface {
 	}
 
 	/**
-	 * add new meeting room
-	 * @params inputs
+	 * addd new meeting room
+	 *
+	 * @param $inputs, $files (array,file)
+	 * @return meeting room
 	 */
 	public function addMeetingRoom($inputs, $files)
 	{
@@ -95,8 +112,10 @@ class MeetingRoomService implements MeetingRoomInterface {
 	}
 
 	/**
-	 * return meeting rooms params
-	 * @params inputs
+	 * get meeting room's create params
+	 *
+	 * @param $inputs (array)
+	 * @return meeting room params
 	 */
 	public function getMeetingRoomsParams($inputs)
 	{
@@ -113,8 +132,10 @@ class MeetingRoomService implements MeetingRoomInterface {
 	}
 
 	/**
-	 * return meeting rooms by id
-	 * @params mr_id
+	 * get meeting room by id
+	 *
+	 * @param $mr_id (int)
+	 * @return meeting room
 	 */
 	public function getMeetingRoomById($mr_id)
 	{
@@ -122,8 +143,10 @@ class MeetingRoomService implements MeetingRoomInterface {
 	}
 
 	/**
-	 * return meeting room option by id
-	 * @params mr_id
+	 * get meeting room option by id
+	 *
+	 * @param $mr_id (int)
+	 * @return options
 	 */
 	public function getMeetingRoomOptionsById($mr_id)
 	{
@@ -131,9 +154,10 @@ class MeetingRoomService implements MeetingRoomInterface {
 	}
 
 	/**
-	 * update meeting room 
+	 * update meeting room
 	 *
-	 * @return Response
+	 * @param $mr_id, $inputs, $file (int,array,file)
+	 * @return true
 	 */
 	public function updateMeetingRoom($mr_id, $inputs, $file)
 	{
@@ -161,6 +185,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return true;
 	}
 
+	/**
+	 * get meeting room's params
+	 *
+	 * @param $inputs (array)
+	 * @return array
+	 */
 	public function getMrOptionParams($inputs)
 	{
 		if(isset($inputs['n_connection'])) {
@@ -240,7 +270,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return $mr_option_params;
 	}
 
-
+	/**
+	 * delete file
+	 *
+	 * @param $filename (string)
+	 * @return true
+	 */
 	public function deleteFile($filename)
 	{
 		if(File::exists(public_path().'/mr-photos/all/'.$filename))
@@ -250,6 +285,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return true;
 	}
 
+	/**
+	 * get Photo by id
+	 *
+	 * @param $id (int)
+	 * @return photo
+	 */
 	public function getPhotoById($id)
 	{
 		$mr = $this->meetingRoom->where('id', $id)->first();
@@ -258,6 +299,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		return $photo;
 	}
 
+	/**
+	 * get Meeting room by owner id
+	 *
+	 * @param $owner_id (int)
+	 * @return meeting room
+	 */
 	public function getMeetingRoomsByOwnerId($owner_id)
 	{
 		$center_ids = $this->filteredVirtualOffice()->where('owner_id', $owner_id)->lists('id');
@@ -309,6 +356,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 			});
 	}
 
+	/**
+	 * get owner's meeting room by id
+	 *
+	 * @param $mr_id, $owner_id (int,int)
+	 * @return meeting room
+	 */
 	public function getOwnerMeetingRoomById($mr_id, $owner_id)
 	{
 		$mr = $this->meetingRoom->find($mr_id);
@@ -325,6 +378,12 @@ class MeetingRoomService implements MeetingRoomInterface {
 		}
 	}
 
+	/**
+	 * get owner's center  by id
+	 *
+	 * @param $owner_id, $inputs (int,array)
+	 * @return true
+	 */
 	public function getOwnerCenterByOwnerId($owner_id, $inputs)
 	{
 		$center = $this->center->where('id',$inputs['center_id'])->first();

@@ -59,7 +59,7 @@
         //hostname = window.location.hostname;
         //console.log(hostname);
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
-        var url = 'http://admin.abcn.com'  + '/' + page;
+        var url = 'http://admin.abcn.dev'  + '/' + page;
         //alert(url)
         window.location.replace(url);
     });

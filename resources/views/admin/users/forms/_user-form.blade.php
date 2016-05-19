@@ -14,7 +14,7 @@
 	    	</div> 
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Create A User Name</label></div>
-	    		<div class="col-md-8">{!! Form::text('user_name', null, [ 'class' => 'form-control', 'placeholder' => 'user name' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::text('username', null, [ 'class' => 'form-control', 'placeholder' => 'user name' ]) !!}</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Create A First Name</label></div>

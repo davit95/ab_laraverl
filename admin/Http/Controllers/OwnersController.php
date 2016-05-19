@@ -69,7 +69,7 @@ class OwnersController extends Controller
      */
     public function store(OwnerRequest $request, OwnerInterface $ownerService)
     {
-
+        dd($request->all());
         if ( null != $owner = $ownerService->createOwner( $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully created.');
         }
@@ -127,6 +127,7 @@ class OwnersController extends Controller
                 $owner = $ownerService->getOwnerByID(\Auth::user()->owner_id);//
             }
         }
+        //dd($regions_list);
         return view('admin.owners.edit', [ 
             'owner' => $owner,
             'regions_list' => $regions_list,
@@ -162,9 +163,7 @@ class OwnersController extends Controller
                 }
                 return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
             }
-        }
-
-        
+        }     
     }
 
     /**

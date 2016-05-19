@@ -17,16 +17,22 @@ class CityService implements CityInterface
 		$this->city = $city;
 	}
 
-	/*
+	/**
 	 * Get a listing of the resource.
+	 * 
+	 * @param 
+	 * @return Response
 	 */
 	public function getAllCities()
 	{
 		return $this->city->all();
 	}
 
-	/*
+	/**
 	 * Get the specified resource.
+	 * 
+	 * @param $key (int)
+	 * @return Response
 	 */
 	public function getCityByID($id)
 	{
@@ -37,8 +43,11 @@ class CityService implements CityInterface
 		throw new NotFoundHttpException('Invalid URL.');
 	}
 
-	/*
+	/**
 	 * Get a listing of the resource for html select.
+	 * 
+	 * @param $key (int)
+	 * @return Response
 	 */
 	public function getAllCitiesSelectList()
 	{
@@ -46,10 +55,11 @@ class CityService implements CityInterface
 	}
 
 	/**
-     * Get city by key.
-     *
-     * @return Response
-     */
+	 * Get city by key.
+	 * 
+	 * @param $key (int)
+	 * @return Response
+	 */
 	public function searchCityByKey($key)
 	{
 		$cities = $this->city->where('name', 'LIKE', "{$key}%")->where('active', 1)->get();

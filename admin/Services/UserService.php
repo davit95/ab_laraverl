@@ -23,6 +23,7 @@ class UserService implements UserInterface
 	 * Create a new user service instance.
 	 */
 	public function createUser($input) {
+		//dd('ass');
 		$input['password'] = bcrypt($input['password']);
 		$input['role_id'] = 5;
 		$owner = $this->getOwnerByName($input['name']);

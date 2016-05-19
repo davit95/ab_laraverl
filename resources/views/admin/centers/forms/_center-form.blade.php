@@ -56,7 +56,7 @@
         {!! Form::label('address1','*Address 1:') !!}
         {!! Form::text('address1', isset($center->address1) ? $center->address : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('subhead','Subhead') !!}
+        {!! Form::label('subhead','Subheader') !!}
         {!! Form::text('subhead',isset($center->virtual_office_seo->subhead) ? $center->virtual_office_seo->subhead : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('sentence1','sentence1') !!}
@@ -88,19 +88,11 @@
         <br>
         {!! Form::label('meta_description','Meta Description') !!}
         {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
-        <br>
-        @if(isset($center))
-        {!! Form::label('Make this center active or inactive') !!}
-        {!! Form::checkbox('active',null,['class' => 'f2']) !!}
-        @endif
     </div>              
     <div class="form_right centers_basic">
         <br>
         {!! Form::label('avo_description','Avo Description') !!}
         {!! Form::text('avo_description',isset($center->virtual_office_seo->avo_description) ? $center->virtual_office_seo->avo_description : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('floor','*Floor / Suite #:') !!}
-        {!! Form::text('floor', null,['class' => 'f1'])!!}
         <br>
         {!! Form::label('abcn_title','Abcn Title') !!}
         {!! Form::text('abcn_title',isset($center->virtual_office_seo->abcn_title) ? $center->virtual_office_seo->abcn_title : null,['class' => 'f1']) !!}
@@ -109,16 +101,16 @@
         {!! Form::text('abcn_description',isset($center->virtual_office_seo->abcn_description) ? $center->virtual_office_seo->abcn_description : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('price','price') !!} 
-        {!! Form::text('price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
+        {!! Form::text('price', isset($center_package['platinum']) ? $center_package['platinum']->price : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('with_live_receptionist_full_price','Live Receptionist Full Price') !!}
-        {!! Form::text('with_live_receptionist_full_price',isset($prices->with_live_receptionist_full_price) ? $prices->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
+        {!! Form::text('with_live_receptionist_full_price', isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('with_live_receptionist_pak_price','Live Receptionist  Price') !!}
-        {!! Form::text('with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
+        {!! Form::text('with_live_receptionist_pak_price',  isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('city_name','*City:') !!}
-        {!! Form::text('city_name', isset($center->city_name) ? $center->city_name : null,['class' => 'f1', 'id' => 'city'])!!}
+        {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
         {!! Form::label('countries','*Country:&nbsp;') !!}
         {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
@@ -134,7 +126,12 @@
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
         {!! Form::label('package','Package') !!}
-        {!! Form::select('package',$packages, null,['class' => 'platinum_package']) !!}
+        {!! Form::select('package',$packages ,null,['class' => 'platinum_package']) !!}
+        <br>
+        @if(isset($center))
+        {!! Form::label('Make this center active or inactive') !!}
+        {!! Form::checkbox('active',$center->center_filter->virtual_office,$center->center_filter->virtual_office ==1 ? true : null,['id' => 'center_active_checkbox']) !!}
+        @endif
         <div class="clear"></div>
     </div> 
     <div class="clear"></div>
@@ -291,6 +288,9 @@
         <br>
         {!! Form::label('mr_meta_description','Meta Description') !!}
         {!! Form::text('mr_meta_description',isset($center->meeting_room_seo->meta_description) ? $center->meeting_room_seo->meta_description : null,['class' => 'f1']) !!}
+       <!--  <br>
+        {!! Form::label('floor','*Floor / Suite #:') !!}
+        {!! Form::text('floor', null,['class' => 'f1'])!!}    -->
     </div>          
     <div class="form_right centers_basic">
         {!! Form::label('mr_h1','Headline') !!}
@@ -311,7 +311,7 @@
         {!! Form::label('mr_abcn_description','Abcn Description') !!}
         {!! Form::text('mr_abcn_description',isset($center->meeting_room_seo->abcn_description) ? $center->meeting_room_seo->abcn_description : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('mr_subhead','Subhead') !!}
+        {!! Form::label('mr_subhead','Subheader') !!}
         {!! Form::text('mr_subhead',isset($center->meeting_room_seo->subhead) ? $center->meeting_room_seo->subhead : null,['class' => 'f1']) !!}
         <br>
         <div class="clear"></div>
@@ -332,17 +332,17 @@
 </div>
 <div class="w_box centerPics pl_plus_form hide" style="">
     <div class="centers_basic">
-       {!! Form::label('plus_package','Package') !!}
+       {!! Form::label('Package') !!}
        {!! Form::select('plus_package',$plus_packages, 'null',['class' => 'plus_packages']) !!}
        <br>
        {!! Form::label('plus_price','Price') !!} 
-       {!! Form::text('plus_price',isset($prices->price) ? $prices->price : null,['class' => 'f1']) !!}
+       {!! Form::text('plus_price',isset($center_package['platinum_plus']) ? $center_package['platinum_plus']->price : null,['class' => 'f1']) !!}
        <br>
        {!! Form::label('plus_with_live_receptionist_full_price','Live Receptionist Full Price') !!}
-       {!! Form::text('plus_with_live_receptionist_full_price',isset($prices->with_live_receptionist_full_price) ? $prices->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
+       {!! Form::text('plus_with_live_receptionist_full_price',isset($center_package['platinum_plus'] )  ? $center_package['platinum_plus']->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
        <br>
        {!! Form::label('plus_with_live_receptionist_pak_price','Live Receptionist Price') !!}
-       {!! Form::text('plus_with_live_receptionist_pak_price',isset($prices->with_live_receptionist_pack_price) ? $prices->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
+       {!! Form::text('plus_with_live_receptionist_pak_price',isset($center_package['platinum_plus']) ? $center_package['platinum_plus']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
        <br>
     </div>          
     

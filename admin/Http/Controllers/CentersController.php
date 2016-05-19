@@ -69,13 +69,15 @@ class CentersController extends Controller
             '' => 'no package',
             'plus_package' => 'Platinum Plus'
         ];
-        return view('admin.centers.create', [
-                                            'selectArray' => $selectArray,
-                                            'states' =>  [''=>'select state'] + $usStateService->getAllStates()->lists('name', 'name')->toArray(),
-                                            'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
-                                            'packages' => $packages,
-                                            'plus_packages' => $plus_packages,
-                                            'photos' => []]);
+        return view('admin.centers.create',
+        [
+            'selectArray' => $selectArray,
+            'states' =>  [''=>'select state'] + $usStateService->getAllStates()->lists('name', 'name')->toArray(),
+            'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+            'packages' => $packages,
+            'plus_packages' => $plus_packages,
+            'photos' => []
+        ]);
     }
 
     /**
@@ -84,7 +86,7 @@ class CentersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, CenterService $centerService)
+    public function store(CenterRequest $request, CenterService $centerService)
     {
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
@@ -135,7 +137,7 @@ class CentersController extends Controller
             $packages = $packages;
             $center = $centerService->getVirtualOfficeById($id);
             $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
-            $prices = $centerService->getCenterPrices($id)[0];
+            $prices = $centerService->getCenterPrices($id);
             $photos = $centerService->getPhotosByCenterId($id);
         } elseif(\Auth::user()->role_id == 5) {
             if($center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id)) {
@@ -145,12 +147,16 @@ class CentersController extends Controller
                 $packages = $packages;
                 $center = $centerService->getVirtualOfficeById($id);
                 $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
-                $prices = $centerService->getCenterPrices($id)[0];
+                $prices = $centerService->getCenterPrices($id);
                 $photos = $centerService->getPhotosByCenterId($id);
             } else {
                 dd(404);
             }
         }
+        
+        $arr = $centerService->getCenterPackages($prices);
+        $packages = $centerService->getPackagesList();
+        // dd($center->prices[0]->package);
         return view('admin.centers.create', 
         [
             'selectArray' => $selectArray,
@@ -161,7 +167,10 @@ class CentersController extends Controller
             'center' => $center,
             'center_coordinates' => $center_coordinates,
             'prices' => $prices,
-            'photos' => $photos
+            'photos' => $photos,
+            'center_package' => $arr,
+            'package' => $center->prices[0]->package
+
         ]);
     }
 
@@ -174,6 +183,7 @@ class CentersController extends Controller
      */
     public function update($id, CenterRequest $request, CenterService $centerService)
     {
+        //dd($request->all());
         if(\Auth::user()->role_id == 1) {
             try {
                 if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {

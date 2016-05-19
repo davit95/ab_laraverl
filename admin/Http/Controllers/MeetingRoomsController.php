@@ -68,7 +68,6 @@ class MeetingRoomsController extends Controller
      */
     public function store(MeetingRoomRequest $request, MeetingRoomInterface $meetingRoomService)
     {
-        //dd($meetingRoomService->test($request->all()));
         if(\Auth::user()->role_id == 1) {
             try {
                 if (null != $mr = $meetingRoomService->addMeetingRoom($request->all(), $request->file()) ) {
@@ -98,8 +97,6 @@ class MeetingRoomsController extends Controller
                 dd(404);
             }
         }
-        
-        //dd($meetingRoomService->addMeetingRoom($request->all()));
     }
 
     /**
