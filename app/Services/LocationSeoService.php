@@ -18,7 +18,7 @@ class LocationSeoService
 	* get city location seo in city,state
 	*/
 	public function getCityLocationSeo($city,$state,$country_code)
-	{
+	{ 
 		if(null != $this->location_seo->where(['City'=>$city,'State'=>$state,'Type'=>'city_category'])->first()) {
 			return $this->location_seo->where(['City'=>$city,'State'=>$state,'Type'=>'city_category'])->first();
 		}
