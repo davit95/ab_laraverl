@@ -165,6 +165,7 @@ class CenterService implements CenterInterface {
 	 */
 	public function getPricesParamsForUpdate($inputs,$center_id)
 	{
+		//dd($inputs);
 		$platinum = [];
 		$platinum_plus = [];
 		$platinum['price'] = $inputs['price'];
@@ -172,7 +173,7 @@ class CenterService implements CenterInterface {
 		$platinum['with_live_receptionist_pack_price'] = $inputs['with_live_receptionist_pak_price'];
 		$platinum['with_live_receptionist_full_price'] = $inputs['with_live_receptionist_full_price'];
 		$platinum['center_id'] = $center_id;
-		if(isset($inputs['plus_package']) && $inputs['plus_package']=== 'Platinum Plus') {
+		if(isset($inputs['plus_package']) && $inputs['plus_package']=== 'plus_package') {
 			$platinum_plus['price'] = $inputs['plus_price'];
 			$platinum_plus['package_id'] = 105;
 			$platinum_plus['with_live_receptionist_pack_price'] = $inputs['plus_with_live_receptionist_full_price'];
@@ -476,6 +477,7 @@ class CenterService implements CenterInterface {
 	public function updateCenter($center_id, $inputs, $files, $params)
 	{
 		$prices_params = $this->getPricesParamsForUpdate($inputs,$center_id);
+		//dd($prices_params);
 		$vo_coord_params = $this->getVoCoordParams($inputs);
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
@@ -821,6 +823,7 @@ class CenterService implements CenterInterface {
 		$platinum = [];
         $platinum_plus = [];
         $arr = [];
+        //dd($prices);
         foreach ($prices as $price) {
             if(isset($price->package_id) &&  $price->package_id == 103) {
                 $arr['platinum'] = $price;

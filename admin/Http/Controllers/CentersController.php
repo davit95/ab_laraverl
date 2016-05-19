@@ -156,7 +156,7 @@ class CentersController extends Controller
         
         $arr = $centerService->getCenterPackages($prices);
         $packages = $centerService->getPackagesList();
-        // dd($center->prices[0]->package);
+         //dd($arr);
         return view('admin.centers.create', 
         [
             'selectArray' => $selectArray,
