@@ -37,14 +37,14 @@ class UserRequest extends Request
      *
      * @return array
      */
-    // public function messages() {
-    //     return [
-    //         'first_name.required'          => '"OWNER-USER INFORMATION" section: First Name  field is required.',
-    //         'company_name.required'        => '"OWNER-USER INFORMATION" section: Company Name  field is required.',
-    //         'last_name.required'           => '"OWNER-USER INFORMATION" section: Last Name  field is required.',
-    //         'email.required'               => '"OWNER-USER INFORMATION" section: We need to know your e-mail address!.',
-    //         'password.required'            => '"OWNER-USER INFORMATION" section: Password  field is required and must be contain min 6 symvols.',
-    //         'username.required'            => '"OWNER-USER INFORMATION" section: User Name  field is required.',
-    //     ];
-    // }
+    public function messages() {
+        return [
+            'first_name.required'          => '"OWNER-USER INFORMATION" section: First Name  field is required.',
+            'name.required'                => '"OWNER-USER INFORMATION" section: Company Name  field is required.',
+            'last_name.required'           => '"OWNER-USER INFORMATION" section: Last Name  field is required.',
+            'email.required'               => '"OWNER-USER INFORMATION" section: We need to know your e-mail address!.',
+            'password.required'            => '"OWNER-USER INFORMATION" section: Password  field is required and must be contain min 6 symvols.',
+            'username.required'            => '"OWNER-USER INFORMATION" section: User Name  field is required.',
+        ];
+    }
 }
