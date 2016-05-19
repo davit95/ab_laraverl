@@ -83,11 +83,10 @@ class LocationService {
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
 	    });
-	    $city = $this->city->where('slug', $city_slug)->first();
-	    dd($city_slug);
+	    $city = $this->city->where('slug', $city_slug)->first();	    
 	    if(null!= $city){
 	    	$city_name = $city->name;
-	    }
+	    }	    	    
 		$locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
 		if(isset($nearby) && isset($options)){
 			return $this->getNeccessaryOptions($locations, true, true);	

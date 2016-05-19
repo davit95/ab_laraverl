@@ -46,7 +46,7 @@ class LocationsController extends Controller
 
     public function getStateCityLocations($state, $city, Request $request)
     {
-        $locations = $this->locationService->getStateCityLocations($state, $city, $request->nearby, $request->options, $this->per_page, $this->page);
+        $locations = $this->locationService->getStateCityLocations($state, $city, $request->nearby, $request->options, $this->per_page, $this->page);        
         return response()->json(['locations' => $locations]);
     }
 
@@ -94,7 +94,7 @@ class LocationsController extends Controller
 
     public function getAllCountries()
     {        
-        $countries = $this->locationService->getAllCountries();        
+        $countries = $this->locationService->getAllCountries();
         return response()->json(['countries' => $countries]);
     }
 }
