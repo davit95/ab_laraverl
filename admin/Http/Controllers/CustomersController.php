@@ -60,6 +60,7 @@ class CustomersController extends Controller
         $role_id = \Auth::user()->role_id;
         if($id == $customer->id) {
             $center = $userService->getCustomerCenterById($customer->center_id);
+            $not_date = strtotime("+5 months", strtotime($customer->created_at));
             $end_date = strtotime("+".$customer->duration."months", strtotime($customer->created_at));
             if($customer->duration == 6) {
                 $not_date = strtotime("+5 months", strtotime($customer->created_at));
