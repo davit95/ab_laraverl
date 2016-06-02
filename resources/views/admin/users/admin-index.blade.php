@@ -1,5 +1,4 @@
-@extends('admin.layouts.layout')
-
+@extends('admin.csr.layouts.layout')
 @section('page-header')
 	Add Owner User
 @stop
