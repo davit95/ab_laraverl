@@ -33,8 +33,9 @@ class OwnersController extends Controller
      */
     public function index(OwnerRequest $request, OwnerInterface $ownerService)
     {
+        $role_id = \Auth::user()->role_id;
         $ownerService->setFilterParams( $request->all() );        
-        return view('admin.owners.index', [ 'owners' => $ownerService->getAllOwners() ]);
+        return view('admin.owners.index', [ 'owners' => $ownerService->getAllOwners(), 'role_id' => $role_id ]);
     }
 
     /**
@@ -49,6 +50,7 @@ class OwnersController extends Controller
         CountryInterface $countryService,
         OwnerInterface $ownerService)
     {
+        $role_id = \Auth::user()->role_id;
         return view('admin.owners.create', [
             'cities' => json_encode($cityService->getAllCitiesSelectList()),
             'regions' => json_encode($regionService->getAllRegionsSelectList()),
@@ -57,7 +59,8 @@ class OwnersController extends Controller
             'select_countries' => ['' => 'no country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
             'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
             'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-            'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists()
+            'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
+            'role_id' => $role_id
         ]);
     }
 
@@ -69,7 +72,7 @@ class OwnersController extends Controller
      */
     public function store(OwnerRequest $request, OwnerInterface $ownerService)
     {
-        dd($request->all());
+        //dd($request->all());
         if ( null != $owner = $ownerService->createOwner( $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully created.');
         }
@@ -84,6 +87,7 @@ class OwnersController extends Controller
      */
     public function show($id, OwnerInterface $ownerService)
     {
+        $role_id = \Auth::user()->role_id;
         if(\Auth::user()->role_id == 1) {
             $owner = $ownerService->getOwnerByID($id);
         } elseif(\Auth::user()->role_id == 5) {
@@ -94,7 +98,7 @@ class OwnersController extends Controller
             }
         }
         
-        return view('admin.owners.show', [ 'owner' => $owner ]);
+        return view('admin.owners.show', [ 'owner' => $owner, 'role_id' => $role_id ]);
     }
 
     /**
@@ -110,7 +114,8 @@ class OwnersController extends Controller
         UsStateInterface $usStateService,
         CountryInterface $countryService)
     {
-        
+
+        $role_id = \Auth::user()->role_id;
         $regions_list = ['' => 'no region'] + $ownerService->getAllRegionsLists();
         $states_list = ['' => 'no state'] + $ownerService->getAllStatesLists();
         $countries_list = ['' => 'no country'] + $ownerService->getAllCountriesLists();
@@ -137,6 +142,7 @@ class OwnersController extends Controller
             'regions' => $regions,
             'us_states' => $us_states,
             'countries' => $countries,
+            'role_id' => $role_id,
         ]);
     }
 
@@ -187,6 +193,7 @@ class OwnersController extends Controller
                                         CountryInterface $countryService,
                                         OwnerInterface $ownerService)
     {
+        $role_id = \Auth::user()->role_id;
         return view('admin.owners.create', [
                     'cities' => json_encode($cityService->getAllCitiesSelectList()),
                     'regions' => json_encode($regionService->getAllRegionsSelectList()),
@@ -195,7 +202,8 @@ class OwnersController extends Controller
                     'countries_list' => ['' => 'no country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
                     'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
                     'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-                    'center_id' => $center_id
+                    'center_id' => $center_id,
+                    'role_id' => $role_id
                 ]);
     }
 

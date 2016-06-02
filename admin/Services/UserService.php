@@ -31,9 +31,12 @@ class UserService implements UserInterface
 	public function createUser($input) {
 		//dd('ass');
 		$input['password'] = bcrypt($input['password']);
-		$input['role_id'] = 5;
+		//dd($this->role->where('name', 'owner_user')->first()->id);
+		$input['role_id'] = $this->role->where('name', 'owner_user')->first()->id;
+		//dd($input);
 		$owner = $this->getOwnerByName($input['name']);
 		$input['owner_id'] = $owner->id;
+		//dd($input);
 		return $this->user->create($input);
 	}
 
@@ -112,8 +115,9 @@ class UserService implements UserInterface
 
 	public function createAllianceUser($inputs, $role_id)
 	{
-		$inputs['role_id'] = $role_id;
+		$inputs['role_id'] = $this->role->where('name', 'admin')->first()->id;
 		$inputs['password'] = bcrypt($inputs['password']);
+		dd($inputs);
 		return $this->user->create($inputs);
 	}
 }

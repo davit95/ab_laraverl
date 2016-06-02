@@ -112,8 +112,8 @@ class UsersController extends Controller
 
     public function addAllianceUser(Request $request, UserInterface $userService)
     {
-        
-        return view('admin.users.admin-index');
+        $role_id = \Auth::user()->role_id;
+        return view('admin.users.admin-index', ['role_id' => $role_id]);
         
     }
 
