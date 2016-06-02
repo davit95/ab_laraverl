@@ -82,7 +82,7 @@
         //var hostname;
         //hostname = window.location.hostname;
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
-        var url = 'http://admin.abcn.dev'  + '/' + page;
+        var url = 'http://admin.abcn.com'  + '/' + page;
         //alert(page);
         window.location.replace(url);
     });
