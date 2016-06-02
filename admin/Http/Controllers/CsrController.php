@@ -33,6 +33,7 @@ class CsrController extends Controller
      */
     public function index(UserInterface $userService)
     {
+        //dd(\Auth::user()->role_id);
         if(\Auth::user()->role_id == 1) {
             $customers = $userService->getALlCustomers(\Auth::user()->role_id);
             //$role_id = \Auth::user()->role_id;

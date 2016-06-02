@@ -19,18 +19,20 @@
 <div class="logo"><a href="{{ url('reports') }}"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></a></div>
 <div class="mobileMenu"></div>
 <div class="menu">
+                @if($role_id == 1)
     <div class="dropD_header">
         <div class="sSelectWrap1">
             <div class="sSelectWrap2">
-                <select id="BPSelectDD">
-                    <option selected="" value="reports">CONTROL PANEL</option>
-                    <option class="csr" value="csr">CSR</option>
-                    <option>OWNER CP</option>
-                    <option>CLIENT CP</option>
-                </select>
+                    <select id="BPSelectDD">
+                        <option selected="" value="reports">CONTROL PANEL</option>
+                        <option class="csr" value="csr">CSR</option>
+                        <option>OWNER CP</option>
+                        <option>CLIENT CP</option>
+                    </select>
             </div> 
         </div> 
     </div> 
+                @endif
     <a href="{{ url('reports') }}" class="nd">
         <div class="menu_btn @if(Request::is('reports*')) menu_active @endif">
             <div class="@if(Request::is('reports*')) menu_btnL1_a @else menu_btnL1 @endif"></div>

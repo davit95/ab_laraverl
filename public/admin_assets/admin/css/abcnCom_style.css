@@ -168,7 +168,7 @@ select.f2_s {
 
 .menu {
     float: right;
-    max-width: 750px;
+    max-width: 1000px;
     height: 62px;
     font-size: 13px;
     display: block;

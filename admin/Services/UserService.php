@@ -117,7 +117,6 @@ class UserService implements UserInterface
 	{
 		$inputs['role_id'] = $this->role->where('name', 'admin')->first()->id;
 		$inputs['password'] = bcrypt($inputs['password']);
-		dd($inputs);
 		return $this->user->create($inputs);
 	}
 }
