@@ -35,6 +35,7 @@ class UserService implements UserInterface
 		$input['role_id'] = $this->role->where('name', 'owner_user')->first()->id;
 		//dd($input);
 		$owner = $this->getOwnerByName($input['name']);
+		//dd($owner);
 		$input['owner_id'] = $owner->id;
 		//dd($input);
 		return $this->user->create($input);
