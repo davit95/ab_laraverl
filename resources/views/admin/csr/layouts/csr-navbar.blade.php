@@ -47,7 +47,7 @@
         </a>
 
     @endif -->
-    @if($role_id == 1)
+    @if(($role_id == 1 && $role_id !=3) || $role_id == 2 )
         <div class="dropD_header">
             <div class="sSelectWrap1">
                 <div class="sSelectWrap2">
@@ -87,18 +87,20 @@
             <div class="menu_btnR lh_menu">CUSTOMER-LOGIN</div>
         </div>
     </a>
-    <a target="_blank" href="{{ url('/admin-users') }}" class="nd">
-            <div class="menu_btn @if(Request::is('customer-login*')) menu_active @endif">
-                <div class="@if(Request::is('customer-login*')) menu_btnL1_a  @endif"></div>
-                <div class="menu_btnR lh_menu">ADD ALLIANCE CSR</div>
-            </div>
+    @if($role_id != 3)
+        <a target="_blank" href="{{ url('/admin-users') }}" class="nd">
+                <div class="menu_btn @if(Request::is('customer-login*')) menu_active @endif">
+                    <div class="@if(Request::is('customer-login*')) menu_btnL1_a  @endif"></div>
+                    <div class="menu_btnR lh_menu">ADD ALLIANCE CSR</div>
+                </div>
+            </a>
+        <a href="{{ url('/csr-exit-interview') }}" class="nd">
+            <div class="menu_btn @if(Request::is('exit-interview*')) menu_active @endif">
+                <div class="@if(Request::is('exit-interview*')) menu_btnL1_a  @endif"></div>
+                <div class="menu_btnR lh_menu">EXIT INTERVIEW</div>
+            </div> 
         </a>
-    <a href="{{ url('/csr-exit-interview') }}" class="nd">
-        <div class="menu_btn @if(Request::is('exit-interview*')) menu_active @endif">
-            <div class="@if(Request::is('exit-interview*')) menu_btnL1_a  @endif"></div>
-            <div class="menu_btnR lh_menu">EXIT INTERVIEW</div>
-        </div> 
-    </a>
+    @endif
     <a href="{{ url('logout') }}" class="nd">
         <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
     </a>
