@@ -38,27 +38,31 @@ Route::resource('/meeting-rooms', 'MeetingRoomsController');
 Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
 Route::get('/center/{id}/meeting-room/create', 'MeetingRoomsController@addMeetingRoom');
 Route::get('/center/{id}/owner/create', 'OwnersController@createOrUpdateOwner');
-
-
-
+/*new*/
+Route::get('/csr' , 'CsrController@index');
+Route::get('/csr-accounting' , 'CsrController@getAccounts');
+Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
+Route::get('/csr-declined' , 'CsrController@declined');
+Route::get('/csr-pending-mrs' , 'CsrController@pending');
+Route::get('/orders/{id}' , 'CustomersController@show');
+Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
+Route::get('/charge' , 'CsrController@charge');
+Route::resource('/customers' , 'CustomersController');
+Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
+Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
+Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
+Route::get('/customers/{name}/{id}' , 'CsrController@test');
+Route::get('/reports', 'ReportsController@index');
+Route::resource('/users', 'UsersController');
+Route::get('/admin-users', 'UsersController@addAllianceUser');
+Route::post('/admin-users', 'UsersController@createAdminUser');
 
 /*ajax*/
 Route::post('/alts-and-captions', 'CentersController@getAvoPhotosAltsAndCaptions');
 
 
 Route::group(['middleware' => 'superAdmin'], function () {
-	Route::get('/reports', 'ReportsController@index');
-	Route::resource('/users', 'UsersController');
 	
-	Route::get('/csr' , 'CsrController@index');
-	Route::get('/csr-accounting' , 'CsrController@getAccounts');
-	Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
-	Route::get('/csr-declined' , 'CsrController@declined');
-	Route::get('/csr-pending-mrs' , 'CsrController@pending');
-	Route::get('/charge' , 'CsrController@charge');
-	Route::resource('/customers' , 'CustomersController');
-	Route::get('/customers/{name}/{id}' , 'CsrController@test');
-
 });
 
    

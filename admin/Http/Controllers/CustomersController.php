@@ -8,7 +8,7 @@ use App\Services\CountryService;
 use App\Services\CustomerService;
 use App\Http\Requests;
 use Admin\Http\Requests\CenterRequest;
-
+use Admin\Contracts\UserInterface;
 use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
 
@@ -29,33 +29,99 @@ class CustomersController extends Controller
     public function index(CustomerService $customerService)
     {
         $customers = $customerService->getAllCustomers();
-        return view('admin.csr.customers.customers', ['customers' => $customers]);
+        return view('admin.csr.customers.customers', ['customers' => $customers, 'role_id' => $customer = \Auth::user()->role_id]);
     }
 
-    public function show($id, CustomerService $customerService)
+    public function getOrders(CustomerService $customerService)
     {
-        $customer = $customerService->getCustomerById($id);
-        return view('admin.csr.customers.customer-show', ['customer' => $customer]);
+        $customers = $customerService->getAllCustomers();
+        return view('admin.csr.customers.customers', ['customers' => $customers, 'role_id' => $customer = \Auth::user()->role_id]);
+    }
+
+    public function show($id, CustomerService $customerService, UserInterface $userService)
+    {
+        $months['01'] = 'January (01)';
+        $months['02'] = 'February (02)';
+        $months['03'] = 'March (03)';
+        $months['04'] = 'April (04)';
+        $months['05'] = 'May (05)';
+        $months['06'] = 'June (06)';
+        $months['07'] = 'July (07)';
+        $months['08'] = 'August (08)';
+        $months['09'] = 'September (09)';
+        $months['10'] = 'October (10)';
+        $months['11'] = 'November (11)';
+        $months['12'] = 'December (12)';
+        
+
+
+        $customer = \Auth::user();
+        //dd($customer->city->name);
+        $role_id = \Auth::user()->role_id;
+        if($id == $customer->id) {
+            $center = $userService->getCustomerCenterById($customer->center_id);
+            $end_date = strtotime("+".$customer->duration."months", strtotime($customer->created_at));
+            if($customer->duration == 6) {
+                $not_date = strtotime("+5 months", strtotime($customer->created_at));
+            } elseif($customer->duration == 12) {
+                $not_date = strtotime("+11 months", strtotime($customer->created_at));
+            }
+        } else {
+            dd(404);
+        }
+        //dd($center);
+        return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id]);
     }
 
     public function store(Request $request, CustomerService $customerService) 
     {
-        //
+        dd($request->all());
     }
 
-    public function edit($id, CustomerService $customerService)
+    public function edit($id, CustomerService $customerService, UserInterface $userService)
+    {
+        
+        $customer = \Auth::user();
+        if($id == $customer->id) {
+            return view('admin.csr.customers.customer-edit',['customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id]);
+        } else {
+            dd(404);
+        }
+        
+    }
+
+    public function update($id, Request $request, CustomerService $customerService, UserInterface $userService)
+    {
+        if($id == \Auth::user()->id) {
+            if ($userService->updateCustomer($id, $request->all())) {
+                return redirect('customers/'.$id)->withSuccess('Center has been successfully updated.');
+            }
+            else {
+                return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+            }
+        } else {
+            dd(404);
+        }
+    }
+
+    public function uploadFile($id, CustomerService $customerService, Request $request)
+    {
+        dd($customerService->uploadFile($id,$request->all(),$request->file()));
+    }
+
+    public function getBalance($id, CustomerService $customerService)
     {
         $customer = $customerService->getCustomerById($id);
-        return view('admin.csr.customers.customer-edit',['customer' => $customer]);
+        return view('admin.csr.customers.customer-balance',['customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id]);
     }
 
-    public function update($id, Request $request, CustomerService $customerService)
+    public function getInvoice($id, UserInterface $userService)
     {
-        if ($customerService->updateCustomer($id, $request->all())) {
-            return redirect('customers/'.$id)->withSuccess('Center has been successfully updated.');
-        }
-        else {
-            return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+        $customer = $userService->getCustomerById($id, \Auth::user()->role_id);
+        if($customer) {
+             return view('admin.csr.customers.invoice',['customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id]);
+        } else {
+            dd(404);
         }
     }
 }

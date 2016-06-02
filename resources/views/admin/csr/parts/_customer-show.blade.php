@@ -7,7 +7,7 @@
             <div class="formOinfo">
                 <p>
                     <strong>
-                        <a href="" target="V">
+                        <a href="{{ url('invoice/'.$customer->id) }}" target="V">
                             {{$customer->id}}
                         </a>
                     </strong> &nbsp;
@@ -25,9 +25,10 @@
                 {{$customer->first_name}} {{$customer->last_name}}<br>
                 {{$customer->address1}}<br>
                 <br>
-                {{$customer->city}}, {{$customer->country}} {{$customer->postal_code}} <br>
+                {{ (null != $customer->city ) ? $customer->city->name : ''}}, {{ (null != $customer->country) ? $customer->country->name : ''}} {{$customer->postal_code}} <br>
                 {{$customer->email}} <br>
                 Customer Type: AVO Direct <br>
+
             </p>
             </div>
         </div>
@@ -56,11 +57,41 @@
         <div class="line">
             <span class="lh_fi mediumBold"></span>&nbsp;
             <div class="formOinfo">
-                <p>
-                    <a href="">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Upload File</button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          
+                        </div>
+                        <div class="modal-body">
+                            {!! Form::open( [ 'url' => url('/customers/'.$customer->id.'/upload'), 'method' => 'POST', 'files' => true ]) !!}
+                                {!! Form::label('Type of file :') !!}
+                                {!! Form::select('region', ['Identification', 'Post Office Form', 'Misc.'], null, ['class' => 'form-control', 'data-multi' => true]) !!}
+                                <br>
+                                {!! Form::label('Please choose a file :') !!}
+                                {!! Form::file('file', null,[ 'class' => 'gray_btn']) !!} 
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Upload', array('class'=>'btn btn-primary')) !!}
+                            <button type="button" class="btn btn-default icon" data-dismiss="modal">Close</button>
+                        </div>
+                            {!! Form::close() !!}
+                            @include('alerts.messages')
+                      </div>
+                      
+                    </div>
+                  </div>
+                <!-- <p>
+                    <a href="{{ url('customers/'.$customer->id.'/file') }}">
                         <img class="icon" src="https://www.alliancevirtualoffices.com/csr/images/upload.png"> Upload file for this customer
                     </a>
-                </p>
+                </p> -->
             </div>
         </div>
     </div>
@@ -85,6 +116,7 @@
                 </p>
             </div>
         </div>
+        {!! Form::open(  [ 'url' => url('/customers'), 'method' => 'POST', 'files' => true ]) !!}
         <div class="line">
             <span class="lh_fi mediumBold">
                 <strong>Comments:</strong> 
@@ -95,21 +127,13 @@
                 </p>
             </div>
         </div>
-        <form action="" name="form1" method="post">
+
             <div class="line">
                 <span class="lh_fi mediumBold">
                     <strong>Change Status:</strong>
                 </span>&nbsp;
                 <div class="formOinfo"> 
-                    <select name="status" onchange="mul_alert()">
-                        <option value="">Please Select</option>
-                        <option value="step1">Step 1: Contact Customer</option>
-                        <option value="step2">Step 2: Received Documentation Back</option>
-                        <option value="step3">Step 3: Received Confirmation from Center</option>
-                        <option value="charge">Step 4: Charge Card</option>
-                        <option value="">-------------------------------------</option>
-                        <option value="close" selected="selected">Cancel Order</option>
-                    </select>
+                     <input type="button" class = "btn btn-primary" value="Cancel Order">
                 </div>
             </div>
             <div class="line">
@@ -133,8 +157,18 @@
                     <strong>Start Date:</strong>
                 </span>&nbsp;
                 <div class="formOinfo">
-                   <select name="start_date_month">
-                       <option value=""></option>
+                    <select name="start_date_month">
+
+                        @foreach($months as $key => $month)
+                            @if($key == date('m', strtotime($customer->created_at)))
+                                <option value="{{$key}}" selected="selected">{{$month}}</option>
+                            @endif
+                                <option value="{{$key}}">{{$month}}</option>
+                        @endforeach
+                    </select>
+                   <!-- <select name="start_date_month">
+                       <option value="">{{ date('M', strtotime($customer->created_at)) }} ({{ date('m', strtotime($customer->created_at)) }})</option>
+
                        <option value="01">January (01)
                        </option><option value="02">February (02)
                        </option><option value="03">March (03)
@@ -148,26 +182,26 @@
                        </option><option value="11">November (11)
                        </option><option value="12">December (12)
                        </option>
-                    </select> 
+                    </select>  -->
                     /
                     <select name="start_date_day">
-                        <option value=""></option>
-                    @for($i = 1; $i <=31; $i++)
-                        @if($i == 19)
-                            <option value="{{$i}}" selected="selected">{{$i}}</option>
-                        @endif
-                        <option value="{{$i}}">{{$i}}</option>
-                    @endfor
+                        <option value=""><!-- {{ date('d', strtotime($customer->created_at)) }} --></option>
+                        @for($i = 1; $i <=31; $i++)
+                            @if($i == date('d', strtotime($customer->created_at)))
+                                <option value="{{$i}}" selected="selected">{{$i}}</option>
+                            @endif
+                            <option value="{{$i}}">{{$i}}</option>
+                        @endfor
                     
                     </select>
                     /
                     <select name="start_date_year">
                         <option value=""></option>
-                        @for($i = 13; $i <=20; $i++)
-                            @if($i == 16)
-                                <option value="{{$i}}" selected="selected">20{{$i}}</option>
+                        @for($i = 2013; $i <=2020; $i++)
+                            @if($i ==  date('Y', strtotime($customer->created_at)))
+                                <option value="{{$i}}" selected="selected">{{ date('Y', strtotime($customer->created_at)) }}</option>
                             @endif
-                            <option value="{{$i}}">20{{$i}}</option>
+                            <option value="{{$i}}">{{$i}}</option>
                         @endfor
                     </select>
                 </div>
@@ -177,8 +211,16 @@
                     <strong>End Date:</strong>
                 </span>&nbsp;
                 <div class="formOinfo">
-                   <select name="start_date_month">
-                       <option value=""></option>
+                    <select name="end_date_month">
+                        @foreach($months as $key => $month)
+                            @if($key == date('m', $end_date))
+                                <option value="{{$key}}" selected="selected">{{$month}}</option>
+                            @endif
+                                <option value="{{$key}}">{{$month}}</option>
+                        @endforeach
+                    </select>
+                   <!-- <select name="start_date_month">
+                       <option value="">{{ date('M',$end_date) }} ({{ date('m', $end_date) }})</option>
                        <option value="01">January (01)
                        </option><option value="02">February (02)
                        </option><option value="03">March (03)
@@ -192,26 +234,25 @@
                        </option><option value="11">November (11)
                        </option><option value="12">December (12)
                        </option>
-                    </select> 
+                    </select>  -->
                     /
-                    <select name="start_date_day">
-                        <option value=""></option>
-                    @for($i = 1; $i <=31; $i++)
-                        @if($i == 19)
-                            <option value="{{$i}}" selected="selected">{{$i}}</option>
-                        @endif
-                        <option value="{{$i}}">{{$i}}</option>
-                    @endfor
+                    <select name="end_date_day">
+                        @for($i = 1; $i <=31; $i++)
+                            @if($i == date('d', $end_date ))
+                                <option value="{{$i}}" selected="selected">{{$i}}</option>
+                            @endif
+                            <option value="{{$i}}">{{$i}}</option>
+                        @endfor
                     
                     </select>
                     /
-                    <select name="start_date_year">
-                        <option value=""></option>
-                        @for($i = 13; $i <=20; $i++)
-                            @if($i == 16)
-                                <option value="{{$i}}" selected="selected">20{{$i}}</option>
+                    <select name="end_date_year">
+                       
+                        @for($i = 2013; $i <=2020; $i++)
+                            @if($i == date('Y',$end_date ))
+                                <option value="{{$i}}" selected="selected">{{date('Y',$end_date )}}</option>
                             @endif
-                            <option value="{{$i}}">20{{$i}}</option>
+                            <option value="{{$i}}">{{$i}}</option>
                         @endfor
                     </select>
                 </div>
@@ -221,8 +262,16 @@
                     <strong>Notification Date:</strong>
                 </span>&nbsp;
                 <div class="formOinfo">
-                   <select name="start_date_month">
-                       <option value=""></option>
+                    <select name="not_date_month">
+                        @foreach($months as $key => $month)
+                            @if($key == date('m', $not_date))
+                                <option value="{{$key}}" selected="selected">{{$month}}</option>
+                            @endif
+                                <option value="{{$key}}">{{$month}}</option>
+                        @endforeach
+                    </select>
+                   <!-- <select name="start_date_month">
+                       <option value="">{{ date('M',$not_date) }} ({{ date('m', $not_date) }})</option>
                        <option value="01">January (01)
                        </option><option value="02">February (02)
                        </option><option value="03">March (03)
@@ -236,26 +285,25 @@
                        </option><option value="11">November (11)
                        </option><option value="12">December (12)
                        </option>
-                    </select> 
+                    </select>  -->
                     /
-                    <select name="start_date_day">
-                        <option value=""></option>
+                    <select name="not_date_day">
+                        <option value="">{{ date('d', $not_date ) }}</option>
                     @for($i = 1; $i <=31; $i++)
-                        @if($i == 19)
-                            <option value="{{$i}}" selected="selected">{{$i}}</option>
+                        @if($i == date('d', $not_date ))
+                            <option value="{{$i}}" selected="selected">{{date('d', $not_date )}}</option>
                         @endif
                         <option value="{{$i}}">{{$i}}</option>
                     @endfor
                     
                     </select>
                     /
-                    <select name="start_date_year">
-                        <option value=""></option>
-                        @for($i = 13; $i <=20; $i++)
-                            @if($i == 16)
-                                <option value="{{$i}}" selected="selected">20{{$i}}</option>
+                    <select name="not_date_year">
+                        @for($i = 2013; $i <=2020; $i++)
+                            @if($i == date('Y',$not_date ))
+                                <option value="{{$i}}" selected="selected">{{date('Y',$not_date )}}</option>
                             @endif
-                            <option value="{{$i}}">20{{$i}}</option>
+                            <option value="{{$i}}">{{date('Y',$not_date )}}</option>
                         @endfor
                     </select>
                 </div>
@@ -266,12 +314,12 @@
                 </span>&nbsp;
                 <div class="formOinfo">
                     <p>
-                        <input type="submit" name="Submit" value="Submit">&nbsp; &nbsp; &nbsp; 
-                        <input type="button" value="Back" onclick="history.go(-1)">
+                        <input type="submit" class = "btn btn-primary" name="Submit" value="Charge">&nbsp; &nbsp; &nbsp; 
+                        <a href = "{{ url('/csr') }}" type="button" class = "btn btn-info btn-lg" value="Cancel">Cancel</a>
                     </p>
                 </div>
             </div>
-        </form>
+        {{Form::close()}}
         <div class="line">
             <span class="lh_fi mediumBold">
                 <hr>
@@ -294,6 +342,7 @@
                 
             </div>
         </div>
+        
         <!-- <div class="line">
             <span class="lh_fi mediumBold"></span>&nbsp;
             <div class="formOinfo"><a href="">Add extra charges to invoice {{ $customer->id }}</a></div>
@@ -343,6 +392,7 @@
     <div class="bBox_btns">
        
         <div class="edit_oBtn bordL"><a href="{{ url('customers/'.$customer->id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>edit customer's info</a></div>
+        <div class="edit_oBtn bordL"><a href="{{ url('centers/'.$center->id) }}" class="gLink"><div class="sBox_icons edit_green"></div>show center</a></div>
     </div> 
     <div class="clear"></div>
 </div>

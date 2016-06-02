@@ -28,7 +28,35 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'company_name',
+        'role_id',
+        'phone',
+        'address1',
+        'address2',
+        'country_is',
+        'city_id',
+        'us_state_id',
+        'postal_code',
+        'password',
+        'card_name',
+        'card_number',
+        'card_month',
+        'card_year',
+        'cvv2_number',
+        'status',
+        'fax',
+        'hint_answer',
+        'dv_user_key',
+        'dv_phone_number',
+        'duration',
+        'center_id',
+        'live_receptionist',
+        'package_option'
+   ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -45,6 +73,11 @@ class User extends Model implements AuthenticatableContract,
     public function city()
     {
         return $this->belongsTo('App\\Models\\City');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo('App\\Models\\UsState');
     }
 
     public function role()

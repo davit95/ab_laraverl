@@ -25,6 +25,7 @@ class CenterRequest extends Request
     {
         return [
             'building_name' => 'required',
+            'sites' => 'required',
             'name' => 'required',
             'address1' => 'required',
             'subhead' => 'required',
@@ -66,6 +67,7 @@ class CenterRequest extends Request
     public function messages() {
         return [
             'building_name.required'            => '"CENTER INFORMATION" section: Building Name field is required.',
+            'sites.required'                    => '"CENTER INFORMATION" section: Sites field is required.',
             'name.required'                     => '"CENTER INFORMATION" section: Center Name field is required.',
             'address1.required'                 => '"CENTER INFORMATION" section: Address 1  field is required.',
             'subhead.required'                  => '"CENTER INFORMATION" section: Subhead field is required.',

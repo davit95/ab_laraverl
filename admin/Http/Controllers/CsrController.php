@@ -11,7 +11,7 @@ use Admin\Http\Requests\CenterRequest;
 
 use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
-
+use Admin\Contracts\UserInterface;
 use Admin\Services\CenterService;
 
 class CsrController extends Controller
@@ -31,10 +31,25 @@ class CsrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CustomerService $customerService)
+    public function index(UserInterface $userService)
     {
-        $customers = $customerService->getALlCustomers();
-        return view('admin.csr.index', ['customers' => $customers]);
+        if(\Auth::user()->role_id == 1) {
+            $customers = $userService->getALlCustomers(\Auth::user()->role_id);
+            //$role_id = \Auth::user()->role_id;
+        } elseif(\Auth::user()->role_id == 3) {
+            $customers[] = \Auth::user();
+            //$role_id = \Auth::user()->role_id;
+        } elseif(\Auth::user()->role_id == 5) {
+             $customers = $userService->getALlCustomersByOwnerId(\Auth::user()->owner_id);
+             //$role_id = \Auth::user()->role_id;
+        }
+        elseif(\Auth::user()->role_id == 2) {
+            //$role_id = \Auth::user()->role_id;
+            dd('in progress');
+        }
+        $role_id = \Auth::user()->role_id;
+        
+        return view('admin.csr.index', ['customers' => $customers, 'role_id' => $role_id]);
     }
 
     /**
@@ -44,7 +59,8 @@ class CsrController extends Controller
      */
     public function getAccounts()
     {
-        return view('admin.csr.accounting', ['accounts' => []]);
+        $role_id = \Auth::user()->role_id;
+        return view('admin.csr.accounting', ['accounts' => [], 'role_id' => $role_id]);
     }
 
     /**
@@ -54,7 +70,8 @@ class CsrController extends Controller
      */
     public function exitInterview()
     {
-        return view('admin.csr.exit-interview');
+        $role_id = \Auth::user()->role_id;
+        return view('admin.csr.exit-interview', ['role_id' => $role_id]);
     }
 
     /**
@@ -64,7 +81,8 @@ class CsrController extends Controller
      */
     public function declined()
     {
-        return view('admin.csr.declined');
+        $role_id = \Auth::user()->role_id;
+        return view('admin.csr.declined', ['role_id' => $role_id]);
     }
 
     /**
@@ -74,8 +92,9 @@ class CsrController extends Controller
      */
     public function pending(CustomerService $customerService)
     {
+        $role_id = \Auth::user()->role_id;
         $customers = $customerService->getALlCustomers();
-        return view('admin.csr.customers.csr-pending-mrs', ['customers' => $customers]);
+        return view('admin.csr.customers.csr-pending-mrs', ['customers' => $customers, 'role_id' => $role_id]);
     }
 
     /**
@@ -85,13 +104,15 @@ class CsrController extends Controller
      */
     public function charge(CustomerService $customerService)
     {
-        return view('admin.csr.charge', ['customer' => []]);
+        $role_id = \Auth::user()->role_id;
+        return view('admin.csr.charge', ['customer' => [], 'role_id' => $role_id]);
     }
 
     public function test($name, $id,CustomerService $customerService)
     {
         /*need more information*/
+        $role_id = \Auth::user()->role_id;
         $customer = $customerService->getCustomerById($id);
-        return view('admin.csr.test', ['customer' => $customer]);
+        return view('admin.csr.test', ['customer' => $customer, 'role_id' => $role_id]);
     }
 }

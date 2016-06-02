@@ -37,8 +37,9 @@ class UsersController extends Controller
      */
     public function index(Request $request, OwnerInterface $ownerService, UserInterface $userService)
     {
+        $role_id = \Auth::user()->role_id;
         $owners = $ownerService->getOwnersLists();
-        return view('admin.users.index', ['owners' => ['' => 'Select Company / Owner Name'] + $owners]);
+        return view('admin.users.index', ['owners' => ['' => 'Select Company / Owner Name'] + $owners, 'role_id' => $role_id]);
     }
 
     /**
@@ -72,7 +73,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -107,5 +108,20 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function addAllianceUser(Request $request, UserInterface $userService)
+    {
+        
+        return view('admin.users.admin-index');
+        
+    }
+
+    public function createAdminUser(Request $request, UserInterface $userService)
+    {
+        $role_id = 2;
+        if(null != $userService->createAllianceUser($request->all(), $role_id)) {
+            return redirect()->back()->withSuccess('user successfully created');
+        }
     }
 }

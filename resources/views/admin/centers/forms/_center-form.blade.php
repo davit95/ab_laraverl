@@ -1,15 +1,20 @@
-
+@if(isset($center))
+    {!! Form::model($center,array('url' => '/centers/'.$center->id, 'method' => 'PUT', 'role' => 'form','files' => true)) !!}
+@else
+{!! Form::open(['method' => 'post' , 'url' => '/centers','files' => true]) !!}
+@endif
 <div class="w_box" style="width:100%">
     <div class="ga_right">
         <span class="lh_f">Sites:</span>&nbsp;
-        <select class="change" multiple>             
+        {!! Form::select('sites',$sites, null, [ 'class' => 'change', 'multiple' => true]) !!}
+        <!-- <select class="change" multiple>             
             <option value="1">AVO</option>
             <option value="2">ABCN</option>
             <option value="3">ALL WORK</option>
             <option value="3">YOUR CITY OFFICE</option>
             <option value="3">SAME DAY VIRTUAL</option>
             <option value="4">FLEXADO</option>
-        </select>
+        </select> -->
     </div>
     <div class="ga_right lh_f">
     Services:
@@ -30,11 +35,7 @@
     </div> 
     <div class="clear"></div>
 </div>
-@if(isset($center))
-    {!! Form::model($center,array('url' => '/centers/'.$center->id, 'method' => 'PUT', 'role' => 'form','files' => true)) !!}
-@else
-{!! Form::open(['method' => 'post' , 'url' => '/centers','files' => true]) !!}
-@endif
+
     <!-- @foreach($photos as $photo_id => $photo)
         
     @endforeach -->

@@ -37,18 +37,20 @@
             <div class="menu_btnR lh_menu">REPORTS</div>
         </div>
     </a>
-    <a href="{{ url('centers') }}" class="nd">
-        <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
-            <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
-            <div class="menu_btnR m_menu">OWNERS<br>&amp; CENTERS</div>
-        </div>
-    </a>
-    <a href="{{ url('users') }}" class="nd">
-        <div <div class="menu_btn @if(Request::is('users*')) menu_active @endif">
-            <div class="@if(Request::is('users*')) menu_btnL3_a @else menu_btnL3 @endif"></div>
-            <div class="menu_btnR m_menu">ACCOUNTS<br>&amp; USERS</div>
-        </div> 
-    </a>
+    @if($role_id != 5)
+        <a href="{{ url('centers') }}" class="nd">
+            <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
+                <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
+                <div class="menu_btnR m_menu">OWNERS<br>&amp; CENTERS</div>
+            </div>
+        </a>
+        <a href="{{ url('users') }}" class="nd">
+            <div <div class="menu_btn @if(Request::is('users*')) menu_active @endif">
+                <div class="@if(Request::is('users*')) menu_btnL3_a @else menu_btnL3 @endif"></div>
+                <div class="menu_btnR m_menu">ACCOUNTS<br>&amp; USERS</div>
+            </div> 
+        </a>
+    @endif
     <a href="{{ url('logout') }}" class="nd">
         <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
     </a>
@@ -59,7 +61,7 @@
         //hostname = window.location.hostname;
         //console.log(hostname);
         var page =  $("#BPSelectDD option:selected").val().toLowerCase();
-        var url = 'http://admin.abcn.com'  + '/' + page;
+        var url = 'http://admin.abcn.dev'  + '/' + page;
         //alert(url)
         window.location.replace(url);
     });

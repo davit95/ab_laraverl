@@ -29,6 +29,10 @@ class Customer extends Model
    	'fax',
    	'hint_answer',
    	'dv_user_key',
-   	'dv_phone_number'
+   	'dv_phone_number',
+      'duration',
+      'center_id',
+      'live_receptionist',
+      'package_option'
    ];
 }

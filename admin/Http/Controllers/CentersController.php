@@ -34,10 +34,15 @@ class CentersController extends Controller
      */
     public function index(CenterService $centerService)
     {
+        $role_id = \Auth::user()->role_id;
         if(\Auth::user()->role_id == 1) {
-            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters()]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role_id' => $role_id]);   
         } elseif(\Auth::user()->role_id == 5) {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id)]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role_id' => $role_id]);   
+        } elseif(\Auth::user()->role_id == 3) {
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role_id' => $role_id]);   
+        } elseif(\Auth::user()->role_id == 2) {
+            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role_id' => $role_id]);
         }
         
     }
@@ -51,6 +56,9 @@ class CentersController extends Controller
                            CountryService $countryService,
                            CenterService $centerService)
     {   
+
+        $role_id = \Auth::user()->role_id;
+        $sites = $centerService->getSites();
         $selectArray = [
             '' => 'select',
             'IndividualOffice' => 'Individual Office',
@@ -76,7 +84,9 @@ class CentersController extends Controller
             'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
             'packages' => $packages,
             'plus_packages' => $plus_packages,
-            'photos' => []
+            'photos' => [],
+            'sites' => $sites,
+            'role_id' => $role_id
         ]);
     }
 
@@ -110,7 +120,8 @@ class CentersController extends Controller
     public function edit($id, CenterService $centerService,CountryService $countryService,
                            UsStateService $usStateService)
     {
-        //dd($centerService->getPhotosByCenterId($id)[1]->toArray());
+        $role_id = \Auth::user()->role_id;
+        $sites = $centerService->getSites();
         $selectArray = [
             'select' => 'select',
             'building exterior' => 'building exterior',
@@ -139,7 +150,7 @@ class CentersController extends Controller
             $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
             $prices = $centerService->getCenterPrices($id);
             $photos = $centerService->getPhotosByCenterId($id);
-        } elseif(\Auth::user()->role_id == 5) {
+        } elseif(\Auth::user()->role_id == 5 ) {
             if($center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id)) {
                 $selectArray = $selectArray;
                 $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
@@ -169,7 +180,9 @@ class CentersController extends Controller
             'prices' => $prices,
             'photos' => $photos,
             'center_package' => $arr,
-            'package' => $center->prices[0]->package
+            'package' => $center->prices[0]->package,
+            'sites' => $sites,
+            'role_id' => $role_id
 
         ]);
     }
@@ -222,6 +235,7 @@ class CentersController extends Controller
 
     public function show($id, CenterService $centerService, OwnerService $ownerService)
     {
+        $role_id = \Auth::user()->role_id;
         if(\Auth::user()->role_id == 1) {
             $center = $centerService->getVirtualOfficeById($id);
             return view('admin.centers.show',[
@@ -229,20 +243,36 @@ class CentersController extends Controller
                     'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
                     'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
                     'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
+                    'role_id' => \Auth::user()->role_id,
                 ]); 
-        } elseif(\Auth::user()->role_id == 5) {
+        } elseif(\Auth::user()->role_id == 5 ) {
             $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);
+            //dd($center->prices);
             if($center) {
                 return view('admin.centers.show',[
                     'center' => $center,
                     'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
                     'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
                     'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
+                    'role_id' => $role_id,
                 ]);
             } else {
                 dd(404);
             }       
-        }    
+        }  elseif(\Auth::user()->role_id == 3)  {
+            $center = $centerService->getCenterById($id, \Auth::user()->center_id);
+            if($center) {
+                return view('admin.centers.show',[
+                    'center' => $center,
+                    'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
+                    'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
+                    'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
+                    'role_id' => $role_id,
+                ]);
+            } else {
+                dd(404);
+            }
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Models\Photo;
 use App\Models\UsState;
 use App\Models\Country;
 use App\Models\City;
+use App\Models\Site;
 use App\Models\Package;
 use App\Models\CenterFilter;
 use App\Models\CenterPrice;
@@ -30,6 +31,7 @@ class CenterService implements CenterInterface {
 		UsState $usState, 
 		Country $country, 
 		City $city,
+		Site $site,
 		Package $package,
 		CenterFilter $centerFilter,
 		CenterPrice $centerPrice,
@@ -41,6 +43,7 @@ class CenterService implements CenterInterface {
 		$this->usState = $usState;
 		$this->country = $country;
 		$this->city = $city;
+		$this->site = $site;
 		$this->centerCoordinate = $centerCoordinate;
 		$this->package = $package;
 		$this->centerFilter = $centerFilter;
@@ -310,6 +313,8 @@ class CenterService implements CenterInterface {
 			$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
 
 			$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
+
+			$this->center->find($center->id)->sites()->attach($this->getSitesIds($inputs['sites']));
 
 			$prices_data = $this->getPricesParams($inputs,$center->id);
 
@@ -808,6 +813,22 @@ class CenterService implements CenterInterface {
 	}
 
 	/**
+	 * Get center by  center_id.
+	 *
+	 * @param $center_id, $owner_id (int)
+	 * @return Response
+	 */
+	public function getCenterById($center_id) 
+	{
+		$center =  $this->center->where('id', $center_id)->first();
+		if(null != $center) {
+			return $center;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Get meeting rooms by center id
 	 *
 	 * @param $center_id(int)
@@ -846,5 +867,15 @@ class CenterService implements CenterInterface {
 	public function getPackagesList()
 	{
 		return $this->package->lists('name', 'name')->toArray();
+	}
+
+	public function getSites()
+	{
+		return $this->site->lists('name', 'name')->toArray();
+	}
+
+	public function getSitesIds($inputs)
+	{
+		return $this->site->whereIn('name', $inputs)->get()->lists('id')->toArray();
 	}
 }
