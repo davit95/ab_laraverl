@@ -25,7 +25,7 @@ class CenterRequest extends Request
     {
         return [
             'building_name' => 'required',
-            'sites' => 'required',
+            //'sites' => 'required',
             'name' => 'required',
             'address1' => 'required',
             'subhead' => 'required',

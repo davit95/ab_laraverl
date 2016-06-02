@@ -36,12 +36,13 @@ class MeetingRoomsController extends Controller
      */
     public function index(MeetingRoomInterface $meetingRoomService)
     {
+        $role_id = \Auth::user()->role_id;
         if(\Auth::user()->role_id == 1) {
             return view('admin.owners.parts._meeting-rooms-show', 
-                ['meetingRooms' => $meetingRoomService->getMeetingRooms()]);   
+                ['meetingRooms' => $meetingRoomService->getMeetingRooms(), 'role_id' => $role_id]);   
         } elseif(\Auth::user()->role_id == 5) {
             return view('admin.owners.parts._meeting-rooms-show', 
-                ['meetingRooms' => $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::user()->owner_id)]);
+                ['meetingRooms' => $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::user()->owner_id), 'role_id' => $role_id]);
         }
     }
 
@@ -52,12 +53,14 @@ class MeetingRoomsController extends Controller
      */
     public function create()
     {
-        return view('admin.centers.add_meeting_room');
+        $role_id = \Auth::user()->role_id;
+        return view('admin.centers.add_meeting_room', ['role_id' => $role_id]);
     }
 
     public function addMeetingRoom($center_id)
     {
-        return view('admin.centers.add_meeting_room',['center_id' => $center_id]);
+        $role_id = \Auth::user()->role_id;
+        return view('admin.centers.add_meeting_room',['center_id' => $center_id, 'role_id' => $role_id]);
     }
 
     /**
@@ -118,18 +121,21 @@ class MeetingRoomsController extends Controller
      */
     public function edit($id, MeetingRoomInterface $meetingRoomService)
     {
+        $role_id = \Auth::user()->role_id;
         if(\Auth::user()->role_id == 1) {
             return view('admin.centers.add_meeting_room', [
                 'mr' => $meetingRoomService->getMeetingRoomById($id),
                 'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id),
-                'photo' => $meetingRoomService->getPhotoById($id)           
+                'photo' => $meetingRoomService->getPhotoById($id),
+                'role_id' => $role_id           
             ]); 
         } elseif(\Auth::user()->role_id == 5) {
              if($meetingRoomService->getOwnerMeetingRoomById($id, \Auth::user()->owner_id)) {
                 return view('admin.centers.add_meeting_room', [
                     'mr' => $meetingRoomService->getMeetingRoomById($id),
                     'mr_options' => $meetingRoomService->getMeetingRoomOptionsById($id),
-                    'photo' => $meetingRoomService->getPhotoById($id)           
+                    'photo' => $meetingRoomService->getPhotoById($id)     ,
+                    'role_id' => $role_id      
                 ]);
              } else {
                 dd(404);
