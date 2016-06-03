@@ -37,7 +37,7 @@
             </div>
         </a>
     @endif
-    <a href="{{ '//'.env('DOMAIN', 'http://admin.abcn.com/').'/virtual-offices' }}" class="nd">
+    <a href="{{ '//'.env('DOMAIN', 'admin.abcn.com').'/virtual-offices' }}" class="nd">
         <div class="menu_btn @if(Request::is('locations*')) menu_active @endif">
             <div class="@if(Request::is('locations*')) menu_btnL1_a  @endif"></div>
             <div class="menu_btnR lh_menu">LOCATIONS</div>
