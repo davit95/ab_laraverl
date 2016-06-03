@@ -35,7 +35,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin()) {
+        if(auth()->user()->isAdmin()) {
             return $next($request);
         }
         return redirect('/centers');

@@ -27,7 +27,7 @@ class CentersController extends Controller
     {
         $this->middleware('auth');
         //$this->middleware('admin', ['only' => ['create']]);
-        //$this->middleware('superAdmin');
+        $this->middleware('superAdmin', ['only' => ['create']]);
     }
 
     /**
