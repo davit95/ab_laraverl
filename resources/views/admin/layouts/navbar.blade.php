@@ -26,8 +26,6 @@
                     <select id="BPSelectDD">
                         <option selected="" value="reports">CONTROL PANEL</option>
                         <option class="csr" value="csr">CSR</option>
-                        <option>OWNER CP</option>
-                        <option>CLIENT CP</option>
                     </select>
                 </div> 
             </div> 

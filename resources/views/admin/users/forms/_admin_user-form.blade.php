@@ -30,7 +30,7 @@
 	    <div class="panel-body col-md-6">
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Users Email Address:</label></div>
-	    		<div class="col-md-8">{!! Form::text('email', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::text('email', null, [ 'class' => 'form-control', 'placeholder' => 'Csr\'s Email' ]) !!}</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Phone Number:</label></div>

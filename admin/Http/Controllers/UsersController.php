@@ -13,6 +13,7 @@ use Admin\Contracts\RegionInterface;
 use Admin\Contracts\UsStateInterface;
 use Admin\Contracts\CountryInterface;
 use Admin\Http\Requests\OwnerRequest;
+use Admin\Http\Requests\CsrRequest;
 use Admin\Http\Requests\UserRequest;
 use Admin\Contracts\UserInterface;
 
@@ -117,7 +118,7 @@ class UsersController extends Controller
         
     }
 
-    public function createAdminUser(Request $request, UserInterface $userService)
+    public function createAdminUser(CsrRequest $request, UserInterface $userService)
     {
         $role_id = 2;
         if(null != $userService->createAllianceUser($request->all(), $role_id)) {
