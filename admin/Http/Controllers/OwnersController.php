@@ -87,7 +87,7 @@ class OwnersController extends Controller
      */
     public function show($id, OwnerInterface $ownerService)
     {
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         if(\Auth::user()->role_id == 1) {
             $owner = $ownerService->getOwnerByID($id);
         } elseif(\Auth::user()->role_id == 5) {
@@ -98,7 +98,7 @@ class OwnersController extends Controller
             }
         }
         
-        return view('admin.owners.show', [ 'owner' => $owner, 'role_id' => $role_id ]);
+        return view('admin.owners.show', [ 'owner' => $owner, 'role' => $role ]);
     }
 
     /**
@@ -115,7 +115,7 @@ class OwnersController extends Controller
         CountryInterface $countryService)
     {
 
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         $regions_list = ['' => 'no region'] + $ownerService->getAllRegionsLists();
         $states_list = ['' => 'no state'] + $ownerService->getAllStatesLists();
         $countries_list = ['' => 'no country'] + $ownerService->getAllCountriesLists();
@@ -142,7 +142,7 @@ class OwnersController extends Controller
             'regions' => $regions,
             'us_states' => $us_states,
             'countries' => $countries,
-            'role_id' => $role_id,
+            'role' => $role,
         ]);
     }
 
@@ -193,7 +193,7 @@ class OwnersController extends Controller
                                         CountryInterface $countryService,
                                         OwnerInterface $ownerService)
     {
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         return view('admin.owners.create', [
                     'cities' => json_encode($cityService->getAllCitiesSelectList()),
                     'regions' => json_encode($regionService->getAllRegionsSelectList()),
@@ -203,7 +203,7 @@ class OwnersController extends Controller
                     'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
                     'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
                     'center_id' => $center_id,
-                    'role_id' => $role_id
+                    'role' => $role
                 ]);
     }
 

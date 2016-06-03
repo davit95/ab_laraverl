@@ -42,6 +42,7 @@ class User extends Model implements AuthenticatableContract,
         'us_state_id',
         'postal_code',
         'password',
+        'owner_id',
         'card_name',
         'card_number',
         'card_month',
@@ -88,15 +89,67 @@ class User extends Model implements AuthenticatableContract,
     public function isSuperAdmin()
     {
         $role = $this->role;
-        if( !$role )
-        {
+        if(!$role) {
             throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
             
         }
-        if( $role->name == 'super_admin' )
-        {
+        if($role->name == 'super_admin') {
             return true;
+        } 
+        return false;
+        // $role = $this->role;
+        // if(!$role) {
+        //     throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        // }
+        // if($role->name == 'super_admin') {
+        //     return 'super_admin';
+        // } elseif($role->name == 'client_user') {
+        //     return 'client_user';
+        // } elseif($role->name == 'admin') {
+        //     return 'admin';
+        // } elseif($role->name == 'owner_user') {
+        //     return 'owner_user';
+        // }
+        // return false;
+    }
+
+    public function isAdmin()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
         }
+        if($role->name == 'admin') {
+            return true;
+        } 
+        return false;
+    }
+
+    public function isOwner()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'owner_user') {
+            return true;
+        } 
+        return false;
+    }
+
+    public function isClientUser()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'client_user') {
+            return true;
+        } 
         return false;
     }
 

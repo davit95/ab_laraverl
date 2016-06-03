@@ -33,24 +33,21 @@ class CsrController extends Controller
      */
     public function index(UserInterface $userService)
     {
-        //dd(\Auth::user()->role_id);
-        if(\Auth::user()->role_id == 1) {
-            $customers = $userService->getALlCustomers(\Auth::user()->role_id);
-            //$role_id = \Auth::user()->role_id;
-        } elseif(\Auth::user()->role_id == 3) {
+        if(\Auth::user()->role->name === 'super_admin') {
+            $customers = $userService->getALlCustomers();
+        } elseif(\Auth::user()->role->name === 'client_user') {
             $customers[] = \Auth::user();
             //$role_id = \Auth::user()->role_id;
-        } elseif(\Auth::user()->role_id == 5) {
+        } elseif(\Auth::user()->role->name === 'owner_user') {
              $customers = $userService->getALlCustomersByOwnerId(\Auth::user()->owner_id);
              //$role_id = \Auth::user()->role_id;
         }
-        elseif(\Auth::user()->role_id == 2) {
+        elseif(\Auth::user()->role->name === 'admin') {
             //$role_id = \Auth::user()->role_id;
-            dd('in progress');
+            $customers = $userService->getALlCustomers();
         }
-        $role_id = \Auth::user()->role_id;
-        
-        return view('admin.csr.index', ['customers' => $customers, 'role_id' => $role_id]);
+        $role = \Auth::user()->role->name;  
+        return view('admin.csr.index', ['customers' => $customers, 'role' => $role]);
     }
 
     /**
@@ -60,8 +57,9 @@ class CsrController extends Controller
      */
     public function getAccounts()
     {
-        $role_id = \Auth::user()->role_id;
-        return view('admin.csr.accounting', ['accounts' => [], 'role_id' => $role_id]);
+        $role = \Auth::user()->role->name;
+
+        return view('admin.csr.accounting', ['accounts' => [], 'role' => $role]);
     }
 
     /**
@@ -71,8 +69,8 @@ class CsrController extends Controller
      */
     public function exitInterview()
     {
-        $role_id = \Auth::user()->role_id;
-        return view('admin.csr.exit-interview', ['role_id' => $role_id]);
+        $role = \Auth::user()->role->name;
+        return view('admin.csr.exit-interview', ['role' => $role]);
     }
 
     /**
@@ -82,8 +80,8 @@ class CsrController extends Controller
      */
     public function declined()
     {
-        $role_id = \Auth::user()->role_id;
-        return view('admin.csr.declined', ['role_id' => $role_id]);
+        $role = \Auth::user()->role->name;
+        return view('admin.csr.declined', ['role' => $role]);
     }
 
     /**
@@ -93,9 +91,9 @@ class CsrController extends Controller
      */
     public function pending(CustomerService $customerService)
     {
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         $customers = $customerService->getALlCustomers();
-        return view('admin.csr.customers.csr-pending-mrs', ['customers' => $customers, 'role_id' => $role_id]);
+        return view('admin.csr.customers.csr-pending-mrs', ['customers' => $customers, 'role' => $role]);
     }
 
     /**
@@ -105,15 +103,15 @@ class CsrController extends Controller
      */
     public function charge(CustomerService $customerService)
     {
-        $role_id = \Auth::user()->role_id;
-        return view('admin.csr.charge', ['customer' => [], 'role_id' => $role_id]);
+        $role = \Auth::user()->role->name;
+        return view('admin.csr.charge', ['customer' => [], 'role_id' => $role]);
     }
 
-    public function test($name, $id,CustomerService $customerService)
+    public function test($name, $id,CustomerService $customerService, UserInterface $userService)
     {
         /*need more information*/
-        $role_id = \Auth::user()->role_id;
-        $customer = $customerService->getCustomerById($id);
-        return view('admin.csr.test', ['customer' => $customer, 'role_id' => $role_id]);
+        $role = \Auth::user()->role->name;
+        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
+        return view('admin.csr.test', ['customer' => $customer, 'role' => $role]);
     }
 }

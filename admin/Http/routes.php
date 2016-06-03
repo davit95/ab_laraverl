@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\SuperAdmin;
+use App\Http\Middleware\Admin;
+// use App\Http\Middleware\Owner;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -31,7 +33,7 @@ Route::resource('/owners', 'OwnersController');
 //Route::get('/user', 'UsersController@index');
 
 Route::get('/centers/add-meeting-room', 'CentersController@getAddMeetingRoom');
-Route::resource('/centers', 'CentersController');
+
 Route::resource('/staffs', 'StaffsController');
 /*Route::get('/meeting-rooms', 'MeetingRoomsController@index');*/
 Route::resource('/meeting-rooms', 'MeetingRoomsController');
@@ -52,10 +54,11 @@ Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
 Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
 Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
 Route::get('/customers/{name}/{id}' , 'CsrController@test');
-Route::get('/reports', 'ReportsController@index');
+
 Route::resource('/users', 'UsersController');
 Route::get('/admin-users', 'UsersController@addAllianceUser');
 Route::post('/admin-users', 'UsersController@createAdminUser');
+Route::resource('/centers', 'CentersController');
 
 /*ajax*/
 Route::post('/alts-and-captions', 'CentersController@getAvoPhotosAltsAndCaptions');
@@ -63,6 +66,10 @@ Route::post('/alts-and-captions', 'CentersController@getAvoPhotosAltsAndCaptions
 
 Route::group(['middleware' => 'superAdmin'], function () {
 	
+});
+
+Route::group(['middleware' => 'admin'], function () {
+	Route::get('/reports', 'ReportsController@index');
 });
 
    

@@ -28,7 +28,7 @@ class CustomersController extends Controller
 
     public function index(CustomerService $customerService)
     {
-        $customers = $customerService->getAllCustomers();
+        $customers = $userService->getALlCustomers();
         return view('admin.csr.customers.customers', ['customers' => $customers, 'role_id' => $customer = \Auth::user()->role_id]);
     }
 
@@ -52,25 +52,24 @@ class CustomersController extends Controller
         $months['10'] = 'October (10)';
         $months['11'] = 'November (11)';
         $months['12'] = 'December (12)';
-        
 
-
-        $customer = \Auth::user();
-        //dd($customer->city->name);
-        $role_id = \Auth::user()->role_id;
-        if($id == $customer->id) {
-            $center = $userService->getCustomerCenterById($customer->center_id);
-            $not_date = strtotime("+5 months", strtotime($customer->created_at));
-            $end_date = strtotime("+".$customer->duration."months", strtotime($customer->created_at));
-            if($customer->duration == 6) {
-                $not_date = strtotime("+5 months", strtotime($customer->created_at));
-            } elseif($customer->duration == 12) {
-                $not_date = strtotime("+11 months", strtotime($customer->created_at));
+        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
+        if($customer) {
+            $role_id = \Auth::user()->role_id;
+            if($id == $customer->id) {
+                $center = $userService->getCustomerCenterById($customer->center_id);
+                $end_date = strtotime("+".$customer->duration."months", strtotime($customer->created_at));
+                if($customer->duration == 6) {
+                    $not_date = strtotime("+5 months", strtotime($customer->created_at));
+                } elseif($customer->duration == 12) {
+                    $not_date = strtotime("+11 months", strtotime($customer->created_at));
+                }
+            } else {
+                dd(404);
             }
         } else {
             dd(404);
         }
-        //dd($center);
         return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id]);
     }
 
@@ -81,28 +80,22 @@ class CustomersController extends Controller
 
     public function edit($id, CustomerService $customerService, UserInterface $userService)
     {
-        
-        $customer = \Auth::user();
-        if($id == $customer->id) {
+        $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
+        if($customer) {
             return view('admin.csr.customers.customer-edit',['customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id]);
         } else {
             dd(404);
         }
-        
     }
 
     public function update($id, Request $request, CustomerService $customerService, UserInterface $userService)
     {
-        if($id == \Auth::user()->id) {
-            if ($userService->updateCustomer($id, $request->all())) {
-                return redirect('customers/'.$id)->withSuccess('Center has been successfully updated.');
-            }
-            else {
-                return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
-            }
-        } else {
-            dd(404);
+        if ($userService->updateCustomer($id, $request->all())) {
+            return redirect('customers/'.$id)->withSuccess('Center has been successfully updated.');
         }
+        else {
+            return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+        }    
     }
 
     public function uploadFile($id, CustomerService $customerService, Request $request)
@@ -118,9 +111,9 @@ class CustomersController extends Controller
 
     public function getInvoice($id, UserInterface $userService)
     {
-        $customer = $userService->getCustomerById($id, \Auth::user()->role_id);
+        $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
         if($customer) {
-             return view('admin.csr.customers.invoice',['customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id]);
+             return view('admin.csr.customers.invoice',['customer' => $customer, 'role' => $customer = \Auth::user()->role->name]);
         } else {
             dd(404);
         }

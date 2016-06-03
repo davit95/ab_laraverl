@@ -7,6 +7,7 @@ use App\Services\UsStateService;
 use App\Services\CountryService;
 use App\Http\Services\CityService;
 use Admin\Services\OwnerService;
+use Admin\Contracts\UserInterface;
 use App\Http\Requests;
 use Admin\Http\Requests\CenterRequest;
 
@@ -25,6 +26,8 @@ class CentersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->middleware('admin', ['only' => ['create']]);
+        //$this->middleware('superAdmin');
     }
 
     /**
@@ -34,15 +37,15 @@ class CentersController extends Controller
      */
     public function index(CenterService $centerService)
     {
-        $role_id = \Auth::user()->role_id;
-        if(\Auth::user()->role_id == 1) {
-            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role_id' => $role_id]);   
-        } elseif(\Auth::user()->role_id == 5) {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role_id' => $role_id]);   
-        } elseif(\Auth::user()->role_id == 3) {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role_id' => $role_id]);   
-        } elseif(\Auth::user()->role_id == 2) {
-            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role_id' => $role_id]);
+        $role = \Auth::user()->role->name;
+        if($role === 'super_admin') {
+            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role]);   
+        } elseif($role === 'owner_user') {
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role]);   
+        } elseif($role === 'client_user') {
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role]);   
+        } elseif($role === 'admin') {
+            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role]);
         }
         
     }
@@ -57,7 +60,7 @@ class CentersController extends Controller
                            CenterService $centerService)
     {   
 
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
         $selectArray = [
             '' => 'select',
@@ -86,7 +89,7 @@ class CentersController extends Controller
             'plus_packages' => $plus_packages,
             'photos' => [],
             'sites' => $sites,
-            'role_id' => $role_id
+            'role' => $role
         ]);
     }
 
@@ -120,7 +123,7 @@ class CentersController extends Controller
     public function edit($id, CenterService $centerService,CountryService $countryService,
                            UsStateService $usStateService)
     {
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
         $selectArray = [
             'select' => 'select',
@@ -140,51 +143,44 @@ class CentersController extends Controller
             '' => 'no package',
             'plus_package' => 'Platinum Plus'
         ];
+        $selectArray = $selectArray;
+        $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
+        $countries = $countryService->getAllCountries()->lists('name', 'name')->toArray();
+        $packages = $packages;
+        $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
+        $prices = $centerService->getCenterPrices($id);
+        $photos = $centerService->getPhotosByCenterId($id);
         
-        if(\Auth::user()->role_id == 1) {
-            $selectArray = $selectArray;
-            $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
-            $countries = $countryService->getAllCountries()->lists('name', 'name')->toArray();
-            $packages = $packages;
+        if($role === 'super_admin') {    
+            $center = $centerService->getVirtualOfficeById($id);    
+        } elseif($role === 'owner_user') {
+            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);
+        } elseif($role === 'admin') {
             $center = $centerService->getVirtualOfficeById($id);
-            $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
-            $prices = $centerService->getCenterPrices($id);
-            $photos = $centerService->getPhotosByCenterId($id);
-        } elseif(\Auth::user()->role_id == 5 ) {
-            if($center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id)) {
-                $selectArray = $selectArray;
-                $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
-                $countries = $countryService->getAllCountries()->lists('name', 'name')->toArray();
-                $packages = $packages;
-                $center = $centerService->getVirtualOfficeById($id);
-                $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
-                $prices = $centerService->getCenterPrices($id);
-                $photos = $centerService->getPhotosByCenterId($id);
-            } else {
-                dd(404);
-            }
         }
         
         $arr = $centerService->getCenterPackages($prices);
         $packages = $centerService->getPackagesList();
-         //dd($arr);
-        return view('admin.centers.create', 
-        [
-            'selectArray' => $selectArray,
-            'states' => $states,
-            'countries' => $countries,
-            'packages' => $packages,
-            'plus_packages' => $plus_packages,
-            'center' => $center,
-            'center_coordinates' => $center_coordinates,
-            'prices' => $prices,
-            'photos' => $photos,
-            'center_package' => $arr,
-            'package' => $center->prices[0]->package,
-            'sites' => $sites,
-            'role_id' => $role_id
-
-        ]);
+        if($center) {
+            return view('admin.centers.create', 
+            [
+                'selectArray' => $selectArray,
+                'states' => $states,
+                'countries' => $countries,
+                'packages' => $packages,
+                'plus_packages' => $plus_packages,
+                'center' => $center,
+                'center_coordinates' => $center_coordinates,
+                'prices' => $prices,
+                'photos' => $photos,
+                'center_package' => $arr,
+                'package' => $center->prices[0]->package,
+                'sites' => $sites,
+                'role' => $role
+            ]);
+        } else {
+            dd(404);
+        }
     }
 
     /**
@@ -196,8 +192,9 @@ class CentersController extends Controller
      */
     public function update($id, CenterRequest $request, CenterService $centerService)
     {
-        //dd($request->all());
-        if(\Auth::user()->role_id == 1) {
+        $role = \Auth::user()->role->name;
+
+        if($role === 'super_admin') {
             try {
                 if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {
                     return redirect('centers')->withSuccess('Center has been successfully updated.');
@@ -209,7 +206,7 @@ class CentersController extends Controller
                     return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
                 }
             }
-        } elseif(\Auth::user()->role_id == 5) {
+        } elseif($role === 'owner_user') {
             if($center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id)) {
                 try {
                     if ($center = $centerService->updateCenter($id, $request->all(), $request->file()) ) {
@@ -225,6 +222,18 @@ class CentersController extends Controller
             } else {
                 dd(404);
             }
+        } elseif($role === 'admin') {
+            try {
+                if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {
+                    return redirect('centers')->withSuccess('Center has been successfully updated.');
+                }
+            }
+            catch(FailedTransactionException $e)
+            {
+                if($e->getCode() === -1) {
+                    return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+                }
+            }
         }
         //dd($centerService->updateCenter($id, $request->all()));
         /*if ($center = $centerService->updateCenter($id, $request->all()) ) {
@@ -233,45 +242,29 @@ class CentersController extends Controller
         return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');*/
     }
 
-    public function show($id, CenterService $centerService, OwnerService $ownerService)
+    public function show($id, CenterService $centerService, OwnerService $ownerService, UserInterface $userService)
     {
-        $role_id = \Auth::user()->role_id;
-        if(\Auth::user()->role_id == 1) {
+        $role = \Auth::user()->role->name;
+        if($role === 'super_admin') {
             $center = $centerService->getVirtualOfficeById($id);
-            return view('admin.centers.show',[
-                    'center' => $center,
-                    'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
-                    'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-                    'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
-                    'role_id' => \Auth::user()->role_id,
-                ]); 
-        } elseif(\Auth::user()->role_id == 5 ) {
-            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);
-            //dd($center->prices);
-            if($center) {
-                return view('admin.centers.show',[
-                    'center' => $center,
-                    'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
-                    'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-                    'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
-                    'role_id' => $role_id,
-                ]);
-            } else {
-                dd(404);
-            }       
-        }  elseif(\Auth::user()->role_id == 3)  {
+        } elseif($role === 'owner_user' ) {
+            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);        
+        } elseif($role === 'client_user')  {
             $center = $centerService->getCenterById($id, \Auth::user()->center_id);
-            if($center) {
-                return view('admin.centers.show',[
-                    'center' => $center,
-                    'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
-                    'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-                    'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
-                    'role_id' => $role_id,
-                ]);
-            } else {
-                dd(404);
-            }
+        } elseif($role === 'admin')  {
+            $center = $centerService->getVirtualOfficeById($id);
+        }
+
+        if($center) {
+            return view('admin.centers.show',[
+                'center' => $center,
+                'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
+                'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
+                'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
+                'role' => $role,
+            ]);
+        } else {
+            dd(404);
         }
     }
 

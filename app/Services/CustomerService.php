@@ -7,6 +7,7 @@ use App\Models\UsState;
 use App\Models\Center;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Role;
 use App\User;
 
 class CustomerService {
@@ -15,6 +16,7 @@ class CustomerService {
 		Center $center,
 		City $city,
 		Country $country,
+		Role $role,
 		UsState $usState
 		) {
 		$this->customer = $customer;
@@ -22,6 +24,7 @@ class CustomerService {
 		$this->center = $center;
 		$this->city = $city;
 		$this->country = $country;
+		$this->role = $role;
 		$this->usState = $usState;
 	}
 
@@ -39,7 +42,8 @@ class CustomerService {
 		$data['city_id'] = $city_id;
 		$data['us_state_id'] = $state_id;
 		$data['password'] = bcrypt($data['password']);
-		$data['role_id'] = 3;
+		$role_id = $this->role->where('name', 'client_user')->first()->id;
+		$data['role_id'] = $role_id;
 		unset($data['city']);
 		unset($data['state']);
 		unset($data['country']);

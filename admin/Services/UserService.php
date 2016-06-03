@@ -3,7 +3,7 @@
 namespace Admin\Services;
 
 use Admin\Contracts\UserInterface;
-use App\Models\User;
+use App\User;
 use App\Models\Role;
 use App\Models\Owner;
 use App\Models\City;
@@ -69,17 +69,24 @@ class UserService implements UserInterface
 		return $this->owner->orderBy('id', 'DESC')->paginate($this->per_page);*/
 	}
 
-	public function getAllCustomers($role_id)
+	public function getAllCustomers()
 	{
-		return $this->user->where('role_id', $role_id)->get();
+		$client_user_role_id = $this->role->where('name', 'client_user')->first()->id;
+		return $this->user->where('role_id', $client_user_role_id)->get();
 	}
 
-	public function getCustomerById($id,$role_id)
+	public function getCustomerByIdAndRole($id,$role_name)
 	{
-		if($role_id == 1) {
-			return $this->user->where('id', $id)->first();
-		} elseif($role_id == 3) {
+		$role_id = $this->getUserRoleIdByRoleName($role_name);
+		$client_id = $this->getUserRoleIdByRoleName('client_user');
+		$admin_id = $this->getUserRoleIdByRoleName('admin');
+		//dd($admin_id);
+		if($role_name === 'super_admin') {
+			return $this->user->where('id', $id)->where('role_id', $client_id)->first();
+		} elseif($role_name === 'client_user') {
 			return $this->user->where('id', $id)->where('role_id', $role_id)->first();
+		} elseif($role_name === 'admin') {
+			return $this->user->where('id', $id)->where('role_id', $client_id)->first();
 		}
 		
 	}
@@ -95,6 +102,7 @@ class UserService implements UserInterface
 		// return $this->user->where('id', $id)->update($params);
 		$inputs = \Input::except('_method', '_token');
 		$city_id = $this->city->where('name', $inputs['city'])->first()->id;
+		//dd($city_id);
 		$state_id = $this->usState->where('name', $inputs['state'])->first()->id;
 		$inputs['city_id'] = $city_id;
 		$inputs['us_state_id'] = $state_id;
@@ -119,5 +127,10 @@ class UserService implements UserInterface
 		$inputs['role_id'] = $this->role->where('name', 'admin')->first()->id;
 		$inputs['password'] = bcrypt($inputs['password']);
 		return $this->user->create($inputs);
+	}
+
+	public function getUserRoleIdByRoleName($role_name)
+	{
+		return $this->role->where('name', $role_name)->first()->id;
 	}
 }

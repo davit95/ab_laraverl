@@ -19,7 +19,7 @@
 <div class="logo"><a href="{{ url('csr') }}"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></a></div>
 <div class="mobileMenu"></div>
 <div class="menu">
-   <!--  @if($role_id = 1)
+    @if(isset($role) && $role !== 'client_user')
         <div class="dropD_header">
             <div class="sSelectWrap1">
                 <div class="sSelectWrap2">
@@ -32,48 +32,12 @@
                 </div> 
             </div>
         </div>
-    
-    <a href="{{ url('/csr') }}" class="nd">
-        <div class="menu_btn @if(Request::is('csr-home*')) menu_active @endif">
-            <div class="@if(Request::is('csr-home*')) menu_btnL1_a  @endif"></div>
-            <div class="menu_btnR lh_menu">CSR HOME</div>
-        </div> 
-    </a>
         <a href="{{ url('/csr-accounting') }}" class="nd">
             <div class="menu_btn @if(Request::is('csr-accounting*')) || Request::is('csr-accounting*')) menu_active @endif">
                 <div class="@if(Request::is('csr-accounting*')) || Request::is('csr-accounting*')) menu_btnL2_a @endif"></div>
                 <div class="menu_btnR lh_menu">ACCOUNTING</div>
             </div>
         </a>
-
-    @endif -->
-    @if(($role_id == 1 && $role_id !=3) || $role_id == 2 )
-        <div class="dropD_header">
-            <div class="sSelectWrap1">
-                <div class="sSelectWrap2">
-                    <select id="BPSelectDD">
-                        <option selected="" value="csr" class="csr">CSR</option>
-                        <option value="reports">CONTROL PANEL</option>
-                        <option>OWNER CP</option>
-                        <option>CLIENT CP</option>
-                    </select>
-                </div> 
-            </div>
-        </div>
-    
-    <!-- <a href="{{ url('/csr') }}" class="nd">
-        <div class="menu_btn @if(Request::is('csr-home*')) menu_active @endif">
-            <div class="@if(Request::is('csr-home*')) menu_btnL1_a  @endif"></div>
-            <div class="menu_btnR lh_menu">CSR HOME</div>
-        </div> 
-    </a> -->
-        <a href="{{ url('/csr-accounting') }}" class="nd">
-            <div class="menu_btn @if(Request::is('csr-accounting*')) || Request::is('csr-accounting*')) menu_active @endif">
-                <div class="@if(Request::is('csr-accounting*')) || Request::is('csr-accounting*')) menu_btnL2_a @endif"></div>
-                <div class="menu_btnR lh_menu">ACCOUNTING</div>
-            </div>
-        </a>
-
     @endif
     <a href="{{ '//'.env('DOMAIN', 'http://admin.abcn.com/').'/virtual-offices' }}" class="nd">
         <div class="menu_btn @if(Request::is('locations*')) menu_active @endif">
@@ -87,13 +51,13 @@
             <div class="menu_btnR lh_menu">CUSTOMER-LOGIN</div>
         </div>
     </a>
-    @if($role_id != 3)
+    @if(isset($role) && $role !== 'client_user')
         <a target="_blank" href="{{ url('/admin-users') }}" class="nd">
-                <div class="menu_btn @if(Request::is('customer-login*')) menu_active @endif">
-                    <div class="@if(Request::is('customer-login*')) menu_btnL1_a  @endif"></div>
-                    <div class="menu_btnR lh_menu">ADD ALLIANCE CSR</div>
-                </div>
-            </a>
+            <div class="menu_btn @if(Request::is('customer-login*')) menu_active @endif">
+                <div class="@if(Request::is('customer-login*')) menu_btnL1_a  @endif"></div>
+                <div class="menu_btnR lh_menu">ADD ALLIANCE CSR</div>
+            </div>
+        </a>
         <a href="{{ url('/csr-exit-interview') }}" class="nd">
             <div class="menu_btn @if(Request::is('exit-interview*')) menu_active @endif">
                 <div class="@if(Request::is('exit-interview*')) menu_btnL1_a  @endif"></div>

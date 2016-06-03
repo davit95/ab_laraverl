@@ -123,13 +123,13 @@
             <div class="formOinfo">
                 @if(isset($center))
                     @foreach($center->prices as $price)
-                        @if($role_id != 3)
+                        @if($role !== 'client_user')
                             @if( $price->package_id == 103 )
                                     Platinium Package` <a href="{{url('centers/'.$center->id.'/edit')}}" class="gLink">{{$price->price}}$</a><br>
                             @elseif( $price->package_id == 105 )
                                 Platinium Plus Package` <a href="{{url('centers/'.$center->id.'/edit')}}" class="gLink">{{$price->price}}$</a><br>
                             @endif
-                        @elseif($role_id == 3)
+                        @elseif($role == 'client_user')
                             @if( $price->package_id == 103 )
                                 Platinium Package` {{$price->price}}$<br>
                             @elseif( $price->package_id == 105 )
@@ -151,7 +151,7 @@
             </div>
          </div>    
     </div> 
-    @if($role_id != 3)
+    @if($role !== 'client_user')
         <div class="bBox_btns">
             <div class="add_CBtn bordL"><a href="{{ url('center/'.$center->id.'/meeting-room/create') }}" class="gLink"><div class="sBox_icons add_green"></div>Add Meeting Room</a></div>
             <div class="add_CBtn bordL"><a href="{{ url('centers/'.$center->id.'/edit') }}" class="gLink"><div class="sBox_icons add_green"></div>Edit Center</a></div>
