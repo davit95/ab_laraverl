@@ -43,7 +43,7 @@
             <div class="menu_btnR lh_menu">LOCATIONS</div>
         </div>
     </a>
-    <a target="_blank" href="{{ '//'.env('DOMAIN', 'http://admin.abcn.com/').'/login' }}" class="nd">
+    <a target="_blank" href="{{ '//'.env('DOMAIN', 'admin.abcn.com').'/login' }}" class="nd">
         <div class="menu_btn @if(Request::is('customer-login*')) menu_active @endif">
             <div class="@if(Request::is('customer-login*')) menu_btnL1_a  @endif"></div>
             <div class="menu_btnR lh_menu">CUSTOMER-LOGIN</div>
