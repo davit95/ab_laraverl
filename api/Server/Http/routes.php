@@ -24,4 +24,5 @@ Route::get('/location/{country_slug}', 'LocationsController@getCountryLocations'
 Route::resource('/location', 'LocationsController');
 Route::post('/authorization', 'OAuthController@postAuthorization');
 Route::post('/refresh-token', 'OAuthController@postRefreshToken');
+Route::post('/add-user-from-allwork', 'UsersController@postAddUserFromAllwork');
 Route::post('/check-access-token', 'OAuthController@postCheckAccessToken');

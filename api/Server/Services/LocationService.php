@@ -35,7 +35,7 @@ class LocationService {
 	}
 
 	public function getAllCountries()
-	{				
+	{		
 		$countries = $this->country->whereHas('active_cities', function($query){})->get(['name', 'code']);
 		return $countries;   
 	}
