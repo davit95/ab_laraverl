@@ -88,10 +88,11 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService) {
+	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService, Request $request) {
 		$country_codes = $telCountryService->getAllCountriesWithList();	
 		$center = $centerService->getCenterById(session()->get('centerid'));	
-		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;		
+		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;
+		//dd(session()->get('center_id'));
 		return view('avo-pages.customer-information', ['countries' => $country_codes, 'email_flag' => $email_flag, 'center' => $center]);
 	}
 
@@ -101,13 +102,14 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService ) {
-		//dd($request->all());
 		$inputs = $request->all();
 		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 		}
+		$inputs['duration'] = session('term');
 		session(['customer_information' => $inputs]);
-		if(null !== $customerService->createCustomer($inputs)) {
+		$center = session('center');
+		if(null !== $customerService->createCustomer($inputs, $center)) {
 			return redirect('order-review')->withSuccess('Customer has been saccessfully created');
 		}
 		//dd(session('customer_information'));
@@ -136,6 +138,7 @@ class AvoPagesController extends Controller {
 			'live_receptionist' => $live_receptionist,
 			'package_option'    => $package_option
 		];
+		session(['center' => $response]);
 		return view('avo-pages.customize-mail', $response);
 	}
 
@@ -215,7 +218,9 @@ class AvoPagesController extends Controller {
 			}*/
 		} else {
 			$items = [];
-		}				
+		}
+		$customer['term'] = session('term');
+		
 		return view('avo-pages.order-review', ['customer' => (object) $customer, 'has_vo' => $has_vo, 'items' => $items, 'price_total' => round($price_total, 2)]);
 	}
 
@@ -244,6 +249,7 @@ class AvoPagesController extends Controller {
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
 		$inputs = $request->all();	
+		session(['term' => $inputs['term']]) ;
 		if (!isset($inputs['package_option'])) {
 			return redirect('thank-you');
 		}
@@ -281,7 +287,6 @@ class AvoPagesController extends Controller {
 				}
 			}
 		}
-
 		return redirect()->back()->withSuccess('Successfully send!');
 	}
 

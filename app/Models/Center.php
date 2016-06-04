@@ -99,4 +99,8 @@ class Center extends Model {
 	{
 		return $this->hasOne('App\\Models\\VirtualOfficeSeo', 'center_id', 'id');
 	}
+
+	public function sites() {
+		return $this->belongsToMany('App\\Models\\Site', 'center_sites', 'center_id', 'site_id');
+	}
 }

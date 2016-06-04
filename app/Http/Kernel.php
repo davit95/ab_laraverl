@@ -32,6 +32,8 @@ class Kernel extends HttpKernel
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
         'view' => \App\Http\Middleware\View::class,
         'superAdmin' => \App\Http\Middleware\SuperAdmin::class,
-        'oauth' => \Api\Server\Http\Middleware\OAuthMiddleware::class
+        'oauth' => \Api\Server\Http\Middleware\OAuthMiddleware::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'owner' => \App\Http\Middleware\Owner::class
     ];
 }

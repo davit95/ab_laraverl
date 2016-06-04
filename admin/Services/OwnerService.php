@@ -86,8 +86,9 @@ class OwnerService implements OwnerInterface
 	 */
 	public function getOwnerParams($params)
 	{
+		//dd($params);
 		$country_id = $this->country->where('name', $params['country'])->first()->id;
-		$state_id = $this->state->where('name', $params['state'])->first()->id;
+		$state_id = $this->state->where('name', $params['us_state'])->first()->id;
 		$region_id = $this->region->where('name', $params['region'])->first()->id;
 		$city_id = $this->city->where('country_id', $country_id)->
 								where('us_state_id', $state_id)->

@@ -28,7 +28,36 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'role_id'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'company_name',
+        'role_id',
+        'phone',
+        'address1',
+        'address2',
+        'country_is',
+        'city_id',
+        'us_state_id',
+        'postal_code',
+        'password',
+        'owner_id',
+        'card_name',
+        'card_number',
+        'card_month',
+        'card_year',
+        'cvv2_number',
+        'status',
+        'fax',
+        'hint_answer',
+        'dv_user_key',
+        'dv_phone_number',
+        'duration',
+        'center_id',
+        'live_receptionist',
+        'package_option'
+   ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -47,6 +76,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsTo('App\\Models\\City');
     }
 
+    public function state()
+    {
+        return $this->belongsTo('App\\Models\\UsState');
+    }
+
     public function role()
     {
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
@@ -55,15 +89,67 @@ class User extends Model implements AuthenticatableContract,
     public function isSuperAdmin()
     {
         $role = $this->role;
-        if( !$role )
-        {
+        if(!$role) {
             throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
             
         }
-        if( $role->name == 'super_admin' )
-        {
+        if($role->name == 'super_admin') {
             return true;
+        } 
+        return false;
+        // $role = $this->role;
+        // if(!$role) {
+        //     throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        // }
+        // if($role->name == 'super_admin') {
+        //     return 'super_admin';
+        // } elseif($role->name == 'client_user') {
+        //     return 'client_user';
+        // } elseif($role->name == 'admin') {
+        //     return 'admin';
+        // } elseif($role->name == 'owner_user') {
+        //     return 'owner_user';
+        // }
+        // return false;
+    }
+
+    public function isAdmin()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
         }
+        if($role->name == 'admin') {
+            return true;
+        } 
+        return false;
+    }
+
+    public function isOwner()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'owner_user') {
+            return true;
+        } 
+        return false;
+    }
+
+    public function isClientUser()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'client_user') {
+            return true;
+        } 
         return false;
     }
 

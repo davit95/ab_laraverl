@@ -46,12 +46,17 @@ class AuthController extends Controller
      */
     public function postLogin(LoginRequest $request, Guard $auth)
     {
-        //dd()
         if ($auth->attempt($request->params(1))) {
             return redirect('/reports')->withSuccess('You has been successfully logged in.');
         }
         elseif ($auth->attempt($request->params(5))) {
             return redirect('/centers')->withSuccess('You has been successfully logged in.');
+        }
+        elseif ($auth->attempt($request->params(3))) {
+            return redirect('/csr')->withSuccess('You has been successfully logged in.');
+        }
+        elseif ($auth->attempt($request->params(2))) {
+            return redirect('/csr')->withSuccess('You has been successfully logged in.');
         }
         //return redirect()->back()->withInput()->withError(trans('auth.failed'));
     }

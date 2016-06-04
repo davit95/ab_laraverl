@@ -3,9 +3,12 @@
 namespace Admin\Services;
 
 use Admin\Contracts\UserInterface;
-use App\Models\User;
+use App\User;
 use App\Models\Role;
 use App\Models\Owner;
+use App\Models\City;
+use App\Models\UsState;
+use App\Models\Center;
 use Auth;
 
 class UserService implements UserInterface
@@ -13,10 +16,13 @@ class UserService implements UserInterface
 	/**
 	 * Create a new user service instance.
 	 */
-	public function __construct(User $user, Role $role, Owner $owner) {
+	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city, UsState $usState) {
 		$this->user = $user;
 		$this->role = $role;
 		$this->owner = $owner;
+		$this->center = $center;
+		$this->city = $city;
+		$this->usState = $usState;
 	}
 
 	/**
@@ -25,9 +31,13 @@ class UserService implements UserInterface
 	public function createUser($input) {
 		//dd('ass');
 		$input['password'] = bcrypt($input['password']);
-		$input['role_id'] = 5;
+		//dd($this->role->where('name', 'owner_user')->first()->id);
+		$input['role_id'] = $this->role->where('name', 'owner_user')->first()->id;
+		//dd($input);
 		$owner = $this->getOwnerByName($input['name']);
+		//dd($owner);
 		$input['owner_id'] = $owner->id;
+		//dd($input);
 		return $this->user->create($input);
 	}
 
@@ -59,10 +69,68 @@ class UserService implements UserInterface
 		return $this->owner->orderBy('id', 'DESC')->paginate($this->per_page);*/
 	}
 
-	public function getUsersRole()
+	public function getAllCustomers()
 	{
-		// //dd(Auth::user()->role);
-		// $user_role = 
-		// dd($user_role);
+		$client_user_role_id = $this->role->where('name', 'client_user')->first()->id;
+		return $this->user->where('role_id', $client_user_role_id)->get();
+	}
+
+	public function getCustomerByIdAndRole($id,$role_name)
+	{
+		$role_id = $this->getUserRoleIdByRoleName($role_name);
+		$client_id = $this->getUserRoleIdByRoleName('client_user');
+		$admin_id = $this->getUserRoleIdByRoleName('admin');
+		//dd($admin_id);
+		if($role_name === 'super_admin') {
+			return $this->user->where('id', $id)->where('role_id', $client_id)->first();
+		} elseif($role_name === 'client_user') {
+			return $this->user->where('id', $id)->where('role_id', $role_id)->first();
+		} elseif($role_name === 'admin') {
+			return $this->user->where('id', $id)->where('role_id', $client_id)->first();
+		}
+		
+	}
+
+	public function getCustomerCenterById($center_id)
+	{
+		return $this->center->find($center_id);
+	}
+
+	public function updateCustomer($id, $inputs)
+	{
+		// dd($params);
+		// return $this->user->where('id', $id)->update($params);
+		$inputs = \Input::except('_method', '_token');
+		$city_id = $this->city->where('name', $inputs['city'])->first()->id;
+		//dd($city_id);
+		$state_id = $this->usState->where('name', $inputs['state'])->first()->id;
+		$inputs['city_id'] = $city_id;
+		$inputs['us_state_id'] = $state_id;
+		unset($inputs['city']);
+		unset($inputs['state']);
+		unset($inputs['country']);
+		return $this->user->where('id', $id)->update($inputs);
+	}
+
+	public function getUser($id)
+	{
+		return $this->user->find($id);
+	}
+
+	public function getALlCustomersByOwnerId($id) 
+	{
+		return $this->user->where('owner_id', $id)->get();
+	}
+
+	public function createAllianceUser($inputs, $role_id)
+	{
+		$inputs['role_id'] = $this->role->where('name', 'admin')->first()->id;
+		$inputs['password'] = bcrypt($inputs['password']);
+		return $this->user->create($inputs);
+	}
+
+	public function getUserRoleIdByRoleName($role_name)
+	{
+		return $this->role->where('name', $role_name)->first()->id;
 	}
 }

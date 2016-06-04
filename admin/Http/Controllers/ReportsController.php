@@ -35,13 +35,14 @@ class ReportsController extends Controller
         $countries = $countryService->getAllCountries()->toArray();
         $centers = array_merge($usCenters,$countries);*/
         //dd($centers);
+        $role = \Auth::user()->role->name;
         $centers = [];
         $packages = [];
         foreach ($centers as $center) {
             $packages[] = $this->packages($center);
         }
         //dd($packages[100]['Platinum Plus']->current_currency_price->price);
-        return view('admin.reports.index', [ 'reports' => [], 'centers' => $centers,'packages' => $packages ]);
+        return view('admin.reports.index', [ 'reports' => [], 'centers' => $centers,'packages' => $packages, 'role' => $role ]);
     }
 
     public function downloadCsv()

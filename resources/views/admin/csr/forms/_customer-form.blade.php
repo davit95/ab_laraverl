@@ -31,10 +31,10 @@
         {!! Form::text('company_name',null,['class' => 'f1']) !!}
         <br> 
         {!! Form::label('City: ') !!}
-        {!! Form::text('city',null,['class' => 'f1']) !!}
+        {!! Form::text('city',isset($customer->city->name) ? $customer->city->name : null,['class' => 'f1']) !!}
         <br> 
         {!! Form::label('State: ') !!}
-        {!! Form::text('state',null,['class' => 'f1']) !!}
+        {!! Form::text('state',isset($customer->city->usState->name) ? $customer->city->usState->name : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('Postal Code: ') !!}
         {!! Form::text('postal_code',null,['class' => 'f1']) !!}
@@ -57,13 +57,13 @@
 <div class="w_box centerPics">
     <div class="form_left centers_basic">
         {!! Form::label('CC Name: ') !!}
-        {!! Form::text('card_name',null,['class' => 'f1']) !!}
+        {!! Form::text('cc_name',null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('CC Number: ') !!}
-        {!! Form::text('card_number', null ,['class' => 'f1']) !!}
+        {!! Form::text('cc_number', null ,['class' => 'f1']) !!}
         <br>
         {!! Form::label('Expiration Date: ') !!}
-        {!! Form::text('card_number', null ,['class' => 'f1']) !!}
+        {!! Form::text('cc_year', null ,['class' => 'f1']) !!}
     </div>          
     <div class="clear"></div>
 </div>
