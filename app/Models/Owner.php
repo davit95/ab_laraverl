@@ -95,4 +95,11 @@ class Owner extends Model
         $country = $this->belongsTo('App\\Models\\Country', 'country_id')->first();
         return $country?$country->name:'';
     }
+
+    /**
+     * Get the staff for owner.
+     */
+    public function staffs() {
+        return $this->belongsToMany('App\\Models\\Staff', 'owner_staffs', 'owner_id', 'staff_id');
+    }
 }

@@ -158,7 +158,7 @@
             @if(!$center->owner)
                 <div class="edit_oBtn bordL"><a href="{{ url('center/'.$center->id.'/owner/create') }}" class="gLink"><div class="sBox_icons edit_green"></div>Add Owner</a></div>
             @else
-               <div class="edit_oBtn bordL"><a href="{{ url('owners/'.$center->owner->id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>Edit Owner</a></div>
+               <div class="edit_oBtn bordL"><a href="{{ url('owners/'.$id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>Edit Owner</a></div>
             @endif
         </div> 
     @endif

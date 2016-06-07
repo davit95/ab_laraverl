@@ -12,6 +12,8 @@ use App\Models\Country;
 use App\Models\City;
 use App\Models\Site;
 use App\Models\Package;
+use App\User;
+use App\Models\Owner;
 use App\Models\CenterFilter;
 use App\Models\CenterPrice;
 use App\Models\VirtualOfficeSeo;
@@ -32,6 +34,8 @@ class CenterService implements CenterInterface {
 		Country $country, 
 		City $city,
 		Site $site,
+		User $user,
+		Owner $owner,
 		Package $package,
 		CenterFilter $centerFilter,
 		CenterPrice $centerPrice,
@@ -44,6 +48,8 @@ class CenterService implements CenterInterface {
 		$this->country = $country;
 		$this->city = $city;
 		$this->site = $site;
+		$this->user = $user;
+		$this->owner = $owner;
 		$this->centerCoordinate = $centerCoordinate;
 		$this->package = $package;
 		$this->centerFilter = $centerFilter;
@@ -115,6 +121,8 @@ class CenterService implements CenterInterface {
 	 */
 	public function getCenterParams($inputs)
 	{
+		$owner_id = $this->owner->where('name', $inputs['owners'])->first()->id;
+		$inputs['owner_id'] = $owner_id;
 		$state = $this->usState->where('name', $inputs['states'])->first();
 		if($state) {
 			$inputs['us_state_id'] = $state->id;
@@ -299,8 +307,13 @@ class CenterService implements CenterInterface {
 		
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
-		$center_filter_data = new $this->centerFilter(['virtual_office' => 0]);
-
+		if(isset($inputs['active'])) {
+			//dd('ass');
+			$center_filter_data = new $this->centerFilter(['virtual_office' => 1]);
+		} else {
+			$center_filter_data = new $this->centerFilter(['virtual_office' => 0]);
+		}
+		
 		$meeting_room_seos_data = new $this->meetingRoomSeo($this->getMrSeosParams($inputs));
 
 		$virtual_office_seos_data = new $this->virtualOfficeSeo($this->getVoSeosParams($inputs));

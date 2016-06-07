@@ -24,7 +24,7 @@ Route::get('/logout', 'Auth\AuthController@logout');
 
 
 Route::get('/reports/download', 'ReportsController@downloadCsv');
-
+Route::get('/owners-centers', 'OwnersController@getOwnersCenters');
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
 Route::get('/owners/documents', 'OwnersController@getDocuments');
 Route::get('/owners/add-staff', 'OwnersController@getAddStaff' );
@@ -59,6 +59,7 @@ Route::resource('/users', 'UsersController');
 Route::get('/admin-users', 'UsersController@addAllianceUser');
 Route::post('/admin-users', 'UsersController@createAdminUser');
 Route::resource('/centers', 'CentersController');
+Route::get('/client', 'UsersController@getClientPage');
 
 /*ajax*/
 Route::post('/alts-and-captions', 'CentersController@getAvoPhotosAltsAndCaptions');

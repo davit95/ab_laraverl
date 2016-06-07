@@ -38,12 +38,11 @@ class MeetingRoomsController extends Controller
     {
         $role = \Auth::user()->role->name;
         if(\Auth::user()->role_id == 1) {
-            return view('admin.owners.parts._meeting-rooms-show', 
-                ['meetingRooms' => $meetingRoomService->getMeetingRooms(), 'role' => $role]);   
+            $meeting_rooms = $meetingRoomService->getMeetingRooms();  
         } elseif(\Auth::user()->role_id == 5) {
-            return view('admin.owners.parts._meeting-rooms-show', 
-                ['meetingRooms' => $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::user()->owner_id), 'role' => $role]);
+            $meeting_rooms = $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::user()->owner_id)
         }
+        return view('admin.owners.parts._meeting-rooms-show', ['meetingRooms' => $meeting_rooms, 'role' => $role]);
     }
 
     /**

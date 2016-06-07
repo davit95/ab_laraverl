@@ -5,8 +5,11 @@
 @endif
 <div class="w_box" style="width:100%">
     <div class="ga_right">
-        <span class="lh_f">Sites:</span>&nbsp;
+        <span class="lh_f">Sites :</span>&nbsp;
         {!! Form::select('sites',$sites, null, [ 'class' => 'change', 'multiple' => true]) !!}
+        <br>
+        <!-- <span class="lh_f">Owners:</span>&nbsp; -->
+        <!-- {!! Form::select('owners',$owners, null, [ 'class' => '', 'multiple' => true]) !!} -->
         <!-- <select class="change" multiple>             
             <option value="1">AVO</option>
             <option value="2">ABCN</option>
@@ -48,6 +51,7 @@
 </div>
 <div class="w_box" style="width:100%">
     <div class="form_left centers_basic">
+
         {!! Form::label('building_name','Building Name:') !!}
         {!! Form::text('building_name', isset($center->building_name) ? $center->building_name : null,['class' => 'f1'])!!}       
         <br>
@@ -89,7 +93,7 @@
         <br>
         {!! Form::label('meta_description','Meta Description') !!}
         {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
-    </div>              
+    </div>        
     <div class="form_right centers_basic">
         <br>
         {!! Form::label('avo_description','Avo Description') !!}
@@ -129,10 +133,8 @@
         {!! Form::label('package','Package') !!}
         {!! Form::select('package',$packages ,null,['class' => 'platinum_package']) !!}
         <br>
-        @if(isset($center))
         {!! Form::label('Make this center active or inactive') !!}
-        {!! Form::checkbox('active',$center->center_filter->virtual_office,$center->center_filter->virtual_office ==1 ? true : null,['id' => 'center_active_checkbox']) !!}
-        @endif
+        {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!}
         <div class="clear"></div>
     </div> 
     <div class="clear"></div>
@@ -319,6 +321,19 @@
     </div>
     <div class="clear"></div>
 </div>
+<div class="h2wrapp mtop1 pl_plus ">
+    <div class="h2Icon add"></div>
+    <div class="h2txt">
+        <h2>OWNERS</h2>
+    </div>
+</div>
+<div class="w_box centerPics " style="">
+    <div class="form_left centers_basic">
+       {!! Form::label('owners') !!}
+       {!! Form::select('owners',$owners, 'null',['class' => 'owners']) !!}
+    </div>          
+    <div class="clear"></div>
+</div>
 <div class="h2wrapp mtop1">
     <div class="h2txt">
         <input type="checkbox" class="show_plp_package"> PLATINUM PLUS PACKAGE
@@ -349,6 +364,7 @@
     
     <div class="clear"></div>
 </div>
+
 
 
    

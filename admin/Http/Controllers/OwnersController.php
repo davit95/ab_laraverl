@@ -13,6 +13,8 @@ use Admin\Contracts\RegionInterface;
 use Admin\Contracts\UsStateInterface;
 use Admin\Contracts\CountryInterface;
 use Admin\Http\Requests\OwnerRequest;
+use Admin\Contracts\UserInterface;
+
 
 class OwnersController extends Controller
 {
@@ -31,11 +33,33 @@ class OwnersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(OwnerRequest $request, OwnerInterface $ownerService)
+    public function index(Request $request, OwnerInterface $ownerService)
     {
-        $role_id = \Auth::user()->role_id;
-        $ownerService->setFilterParams( $request->all() );        
-        return view('admin.owners.index', [ 'owners' => $ownerService->getAllOwners(), 'role_id' => $role_id ]);
+        $role = \Auth::user()->role->name;
+        //$ownerService->setFilterParams( $request->all() );        
+        return view('admin.owners.index', [ 'owners' => $ownerService->getOwners($role), 'role' => $role ]);
+    }
+
+    public function getOwnersCenters(OwnerInterface $ownerService)
+    {
+        $user = \Auth::user();
+        $role = $user->role->name;
+        $owners = $ownerService->getOwnersByRole(\Auth::user());
+        if($owners) {
+            if($role === 'super_admin') {
+                return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
+            } elseif($role === 'owner_user') {
+                //dd('as');
+                return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
+            } elseif($role === 'client_user') {
+                return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
+            } elseif($role === 'admin') {
+                return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);
+            }
+        } else {
+            dd(404);
+        }
+        
     }
 
     /**
@@ -50,7 +74,7 @@ class OwnersController extends Controller
         CountryInterface $countryService,
         OwnerInterface $ownerService)
     {
-        $role_id = \Auth::user()->role_id;
+        $role = \Auth::user()->role->name;
         return view('admin.owners.create', [
             'cities' => json_encode($cityService->getAllCitiesSelectList()),
             'regions' => json_encode($regionService->getAllRegionsSelectList()),
@@ -60,7 +84,7 @@ class OwnersController extends Controller
             'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
             'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
             'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
-            'role_id' => $role_id
+            'role' => $role
         ]);
     }
 
@@ -70,9 +94,9 @@ class OwnersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OwnerRequest $request, OwnerInterface $ownerService)
+    public function store(OwnerRequest $request, OwnerInterface $ownerService, UserInterface $userService)
     {
-        //dd($request->all());
+        //dd($ownerService->test($request->all()));
         if ( null != $owner = $ownerService->createOwner( $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully created.');
         }
@@ -85,18 +109,24 @@ class OwnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, OwnerInterface $ownerService)
+    public function show($id, OwnerInterface $ownerService, UserInterface $userService)
     {
+        //dd('as');
+        //dd($id);
         $role = \Auth::user()->role->name;
-        if(\Auth::user()->role_id == 1) {
-            $owner = $ownerService->getOwnerByID($id);
-        } elseif(\Auth::user()->role_id == 5) {
-            if($id != \Auth::user()->owner_id) {
-                dd(404);
-            } else {
-                $owner = $ownerService->getOwnerByID(\Auth::user()->owner_id);    
-            }
-        }
+        $owner = $ownerService->getOwnerById($id);
+        //dd($owner);
+        //dd($owner->country);
+        //dd($owner);
+        // if(\Auth::user()->role_id == 1) {
+        //     $owner = $ownerService->getOwnerByID($id);
+        // } elseif(\Auth::user()->role_id == 5) {
+        //     if($id != \Auth::user()->owner_id) {
+        //         dd(404);
+        //     } else {
+        //         $owner = $ownerService->getOwnerByID(\Auth::user()->owner_id);    
+        //     }
+        // }
         
         return view('admin.owners.show', [ 'owner' => $owner, 'role' => $role ]);
     }
@@ -116,6 +146,7 @@ class OwnersController extends Controller
     {
 
         $role = \Auth::user()->role->name;
+        //dd(\Auth::user()->id, $role);
         $regions_list = ['' => 'no region'] + $ownerService->getAllRegionsLists();
         $states_list = ['' => 'no state'] + $ownerService->getAllStatesLists();
         $countries_list = ['' => 'no country'] + $ownerService->getAllCountriesLists();
@@ -123,15 +154,13 @@ class OwnersController extends Controller
         $regions = json_encode($regionService->getAllRegionsSelectList());
         $us_states = json_encode($usStateService->getAllUsStatesSelectList());
         $countries = json_encode($countryService->getAllCountriesSelectList());
-        if(\Auth::user()->role_id == 1) {
+        if($role === 'super_admin') {
             $owner = $ownerService->getOwnerByID($id);
-        } else {
-            if($id != \Auth::user()->owner_id) {
-                dd(404);
-            } else {
-                $owner = $ownerService->getOwnerByID(\Auth::user()->owner_id);//
-            }
+        } elseif($role === 'owner_user') {
+            $owner = $ownerService->getOwnersByRole(\Auth::user());//
         }
+        //dd($owner->us_state_id);
+
         //dd($regions_list);
         return view('admin.owners.edit', [ 
             'owner' => $owner,
@@ -155,21 +184,26 @@ class OwnersController extends Controller
      */
     public function update($id, OwnerRequest $request, OwnerInterface $ownerService)
     {
-        if(\Auth::user()->role_id == 1) {
-            if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
-                        return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
-                    }
-                    return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
-        } else {
-            if($id != \Auth::user()->owner_id) {
-                dd(404);
-            } else {
-                if ( null != $owner = $ownerService->updateOwner(\Auth::user()->owner_id, $request->all() ) ) {
-                    return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
-                }
-                return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
-            }
-        }     
+        //dd($id);
+        if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
+            return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
+        }
+        return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        // if(\Auth::user()->role_id == 1) {
+        //     if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
+        //                 return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
+        //             }
+        //             return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        // } else {
+        //     if($id != \Auth::user()->owner_id) {
+        //         dd(404);
+        //     } else {
+        //         if ( null != $owner = $ownerService->updateOwner(\Auth::user()->owner_id, $request->all() ) ) {
+        //             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
+        //         }
+        //         return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        //     }
+        // }     
     }
 
     /**
@@ -186,12 +220,13 @@ class OwnersController extends Controller
         return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
     }
 
-    public function createOrUpdateOwner($center_id, 
-                                        CityInterface $cityService,
-                                        RegionInterface $regionService,
-                                        UsStateInterface $usStateService,
-                                        CountryInterface $countryService,
-                                        OwnerInterface $ownerService)
+    public function createOrUpdateOwner(
+        $center_id, 
+        CityInterface $cityService,
+        RegionInterface $regionService,
+        UsStateInterface $usStateService,
+        CountryInterface $countryService,
+        OwnerInterface $ownerService)
     {
         $role = \Auth::user()->role->name;
         return view('admin.owners.create', [

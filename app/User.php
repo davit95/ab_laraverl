@@ -37,7 +37,7 @@ class User extends Model implements AuthenticatableContract,
         'phone',
         'address1',
         'address2',
-        'country_is',
+        'country_id',
         'city_id',
         'us_state_id',
         'postal_code',
@@ -84,6 +84,30 @@ class User extends Model implements AuthenticatableContract,
     public function role()
     {
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
+    }
+
+    public function us_state()
+    {
+        return $this->belongsTo('App\\Models\\UsState', 'us_state_id');
+    }
+
+    public function region()
+    {
+        return $this->belongsTo('App\\Models\\Region', 'region_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo('App\\Models\\Country', 'country_id');
+    }
+
+    public function staffs() {
+        return $this->belongsToMany('App\\Models\\Staff', 'owner_staffs', 'user_id', 'staff_id');
+    }
+
+    public function centers()
+    {
+        return $this->hasMany('App\\Models\\Center', 'id', 'center_id');
     }
 
     public function isSuperAdmin()

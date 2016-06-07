@@ -34,8 +34,14 @@
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Postal Code</label></div>
-	    		<div class="col-md-8">{!! Form::text('postal_code', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::text('postal_code', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Postal code' ]) !!}</div>
 	    	</div>
+	    	@if(!isset($owner))
+		    	<div class="row form-group">
+		    		<div class="col-md-4 text-right"><label>Password</label></div>
+		    		<div class="col-md-8">{!! Form::text('password', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Password' ]) !!}</div>
+		    	</div>
+	    	@endif
 	    </div>
 	    <div class="panel-body col-md-6">
 	    	<div class="row form-group">
@@ -82,7 +88,53 @@
 	    		</div>
 	    	</div>
 	    </div>
+	    <!-- new here -->
+	    @for($i = 1; $i <= 4; $i++)
+		    <div class="panel-body col-md-12">
+			    <div class="panel-body col-md-6">
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Contact Name</label></div>
+			    		<div class="col-md-8">{!! Form::text('contact_name_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Contact Name' ]) !!}</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Title</label></div>
+			    		<div class="col-md-8">{!! Form::text('title_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Title' ]) !!}</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Phone</label></div>
+			    		<div class="col-md-8">{!! Form::text('phone_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Phone</label></div>
+			    		<div class="col-md-8">{!! Form::text('phone_1_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
+			    	</div>
+			    </div>
+			    <div class="panel-body col-md-6">
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Ext</label></div>
+			    		<div class="col-md-8">
+			    			{!! Form::text('ext_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    		</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Ext</label></div>
+			    		<div class="col-md-8">
+			    			{!! Form::text('ext_1_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    		</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Email</label></div>
+			    		<div class="col-md-8">
+			    			{!! Form::text('contact_email_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    		</div>
+			    	</div>
+			    </div>
+			</div> 
+		@endfor
+		<!--  -->
+
 	    <div class="clearfix"></div>
+
 	</div>
 	<div class="row">
 		<div class="col-md-12">

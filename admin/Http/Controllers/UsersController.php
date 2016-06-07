@@ -125,4 +125,10 @@ class UsersController extends Controller
             return redirect()->back()->withSuccess('user successfully created');
         }
     }
+
+    public function getClientPage()
+    {
+        //dd(\Auth::user());
+        return view('admin.client.index', ['role' => 'super_admin','client' => \Auth::user()]);
+    }
 }
