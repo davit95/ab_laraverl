@@ -25,7 +25,7 @@ class OwnerRequest extends Request
     {
         return [
             'company_name' => 'required',
-            'name' => 'required|unique:owners,name,'.$this->id,
+            //'name' => 'required|unique:owners,name,'.$this->id,
             'phone' => 'required|numeric',
             'fax' => 'required|numeric',
             //'url' => 'required',
