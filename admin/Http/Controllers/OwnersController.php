@@ -146,7 +146,7 @@ class OwnersController extends Controller
     {
 
         $role = \Auth::user()->role->name;
-        //dd(\Auth::user()->id, $role);
+        //dd(\Auth::user());
         $regions_list = ['' => 'no region'] + $ownerService->getAllRegionsLists();
         $states_list = ['' => 'no state'] + $ownerService->getAllStatesLists();
         $countries_list = ['' => 'no country'] + $ownerService->getAllCountriesLists();
@@ -156,10 +156,12 @@ class OwnersController extends Controller
         $countries = json_encode($countryService->getAllCountriesSelectList());
         if($role === 'super_admin') {
             $owner = $ownerService->getOwnerByID($id);
+            $owner_client = $ownerService->getOwnerById($id);
         } elseif($role === 'owner_user') {
             $owner = $ownerService->getOwnersByRole(\Auth::user());//
+            $owner_client = $ownerService->getOwnerById(\Auth::user()->id);//
         }
-        //dd($owner->us_state_id);
+        //dd($owner_client);
 
         //dd($regions_list);
         return view('admin.owners.edit', [ 
@@ -172,6 +174,8 @@ class OwnersController extends Controller
             'us_states' => $us_states,
             'countries' => $countries,
             'role' => $role,
+            'owner_id' => \Auth::user()->id,
+            'owner_client' => $owner_client
         ]);
     }
 

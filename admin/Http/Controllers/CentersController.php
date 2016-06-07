@@ -159,6 +159,7 @@ class CentersController extends Controller
         
         if($role === 'super_admin') {    
             $center = $centerService->getVirtualOfficeById($id);    
+            //dd($center);
         } elseif($role === 'owner_user') {
             $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);
         } elseif($role === 'admin') {
@@ -167,7 +168,7 @@ class CentersController extends Controller
         
         $arr = $centerService->getCenterPackages($prices);
         $packages = $centerService->getPackagesList();
-        //dd($center->center_filter->virtual_office);
+        //dd($center->prices);
         if($center) {
             return view('admin.centers.create', 
             [

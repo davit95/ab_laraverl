@@ -1,11 +1,10 @@
-@if(isset($owner))
-	{!! Form::model($owner, [ 'url' => url('owners/'.$owner->id), 'method' => 'PUT' ]) !!}
+@if(isset($owner_client))
+	{!! Form::model($owner_client, [ 'url' => url('owners/'.$owner_client->id), 'method' => 'PUT' ]) !!}
 	{!! Form::hidden('id', null) !!}
 @else
 	{!! Form::open([ 'url' => url('owners') ]) !!}
 @endif
 	@include('alerts.messages')
-
 	<div class="panel panel-default">
 		<div class="panel-body col-md-6">
 	    	<div class="row form-group">
