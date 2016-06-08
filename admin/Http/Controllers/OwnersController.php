@@ -26,6 +26,8 @@ class OwnersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('superAdmin',['only' => 'create']);
+        $this->middleware('superAdminOrOwnerOrCsr');
     }
 
     /**
@@ -49,7 +51,6 @@ class OwnersController extends Controller
             if($role === 'super_admin') {
                 return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
             } elseif($role === 'owner_user') {
-                //dd('as');
                 return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
             } elseif($role === 'client_user') {
                 return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
@@ -276,6 +277,7 @@ class OwnersController extends Controller
     */
     public function getAddStaff()
     {
+        dd('as');
         return view('admin.owners.forms.add_staff');
     }   
 }

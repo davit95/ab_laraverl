@@ -2,6 +2,10 @@
 
 use App\Http\Middleware\SuperAdmin;
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\SuperAdminOrOwner;
+use App\Http\Middleware\SuperAdminOrCsr;
+use App\Http\Middleware\Client;
+use App\Http\Middleware\SuperAdminOrOwnerOrCsr;
 // use App\Http\Middleware\Owner;
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +26,7 @@ Route::post('/login', 'Auth\AuthController@postLogin');
 
 Route::get('/logout', 'Auth\AuthController@logout');
 
-
+Route::get('/reports', 'ReportsController@index');
 Route::get('/reports/download', 'ReportsController@downloadCsv');
 Route::get('/owners-centers', 'OwnersController@getOwnersCenters');
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
@@ -41,36 +45,41 @@ Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
 Route::get('/center/{id}/meeting-room/create', 'MeetingRoomsController@addMeetingRoom');
 Route::get('/center/{id}/owner/create', 'OwnersController@createOrUpdateOwner');
 /*new*/
-Route::get('/csr' , 'CsrController@index');
-Route::get('/csr-accounting' , 'CsrController@getAccounts');
-Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
-Route::get('/csr-declined' , 'CsrController@declined');
-Route::get('/csr-pending-mrs' , 'CsrController@pending');
-Route::get('/orders/{id}' , 'CustomersController@show');
-Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
-Route::get('/charge' , 'CsrController@charge');
-Route::resource('/customers' , 'CustomersController');
-Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
-Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
-Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
-Route::get('/customers/{name}/{id}' , 'CsrController@test');
+
 
 Route::resource('/users', 'UsersController');
-Route::get('/admin-users', 'UsersController@addAllianceUser');
-Route::post('/admin-users', 'UsersController@createAdminUser');
-Route::resource('/centers', 'CentersController');
-Route::get('/client', 'UsersController@getClientPage');
+
+
 
 /*ajax*/
 Route::post('/alts-and-captions', 'CentersController@getAvoPhotosAltsAndCaptions');
 
 
+Route::group(['middleware' => 'superAdminOrCsr'], function () {
+	Route::get('/csr' , 'CsrController@index');
+	Route::get('/csr-accounting' , 'CsrController@getAccounts');
+	Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
+	Route::get('/csr-declined' , 'CsrController@declined');
+	Route::get('/csr-pending-mrs' , 'CsrController@pending');
+	Route::get('/orders/{id}' , 'CustomersController@show');
+	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
+	Route::get('/charge' , 'CsrController@charge');
+	Route::resource('/customers' , 'CustomersController');
+	Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
+	Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
+	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
+	Route::get('/customers/{name}/{id}' , 'CsrController@test');
+});
+
+Route::group(['middleware' => 'client_user'], function () {
+	Route::get('/client', 'UsersController@getClientPage');
+});
+
+Route::group(['middleware' => 'superAdminOrOwnerOrCsr'], function () {
+	Route::resource('/centers', 'CentersController');
+});
+
 Route::group(['middleware' => 'superAdmin'], function () {
-	
+	Route::get('/admin-users', 'UsersController@addAllianceUser');
+	Route::post('/admin-users', 'UsersController@createAdminUser');
 });
-
-Route::group(['middleware' => 'admin'], function () {
-	Route::get('/reports', 'ReportsController@index');
-});
-
-   

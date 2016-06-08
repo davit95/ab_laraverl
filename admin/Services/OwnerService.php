@@ -258,9 +258,8 @@ class OwnerService implements OwnerInterface
 	public function getOwnersByRole($user)
 	{
 		//dd($user->id);
-		$role_id = $this->getUserIdByRoleName($user->role->name);
-		$owner_role_id = $this->getUserIdByRoleName('owner_user');
 		if($user->role->name === 'super_admin') {
+			$owner_role_id = $this->getUserIdByRoleName('owner_user');
 			return $this->user->where('role_id', $owner_role_id)->paginate(10);
 		} elseif($user->role->name === 'owner_user') {
 			return $this->user->where('id', $user->id)->paginate(10);

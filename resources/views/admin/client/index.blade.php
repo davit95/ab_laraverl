@@ -46,7 +46,7 @@
 		 		<hr>
 		 		<a href	="#">Admin Home Page</a><br><br>
 		 		<a href	="#">Update Account</a><br><br>
-		 		<a href	="#">Logout</a><br><br>
+		 		<a href	="{{ url('logout') }}">Logout</a><br><br>
 		 	</div>
 		 	<div>
 		 		<p style="margin-top:30px">Account Information</p>
