@@ -42,7 +42,6 @@
     <!-- @foreach($photos as $photo_id => $photo)
         
     @endforeach -->
-
 <div class="h2wrapp mtop1">
     <div class="h2Icon add"></div>
     <div class="h2txt">
@@ -51,7 +50,9 @@
 </div>
 <div class="w_box" style="width:100%">
     <div class="form_left centers_basic">
-
+        {!! Form::label('owners') !!}
+        {!! Form::select('owners',$owners, 'null',['class' => 'owners']) !!}
+        <br>
         {!! Form::label('building_name','Building Name:') !!}
         {!! Form::text('building_name', isset($center->building_name) ? $center->building_name : null,['class' => 'f1'])!!}       
         <br>
@@ -61,16 +62,33 @@
         {!! Form::label('address1','*Address 1:') !!}
         {!! Form::text('address1', isset($center->address1) ? $center->address : null,['class' => 'f1'])!!}
         <br>
+        {!! Form::label('address2','*Address 2:') !!}
+        {!! Form::text('address2', isset($center->address2) ? $center->address : null,['class' => 'f1'])!!}
+        <br>
         {!! Form::label('subhead','Subheader') !!}
         {!! Form::text('subhead',isset($center->virtual_office_seo->subhead) ? $center->virtual_office_seo->subhead : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('sentence1','sentence1') !!}
-        {!! Form::text('sentence1',isset($center->virtual_office_seo->sentence1) ? $center->virtual_office_seo->sentence1 : null,['class' => 'f1']) !!}
-        <br> 
-        {!! Form::label('sentence2','sentence2  ' ) !!}
-        {!! Form::text('sentence2',isset($center->virtual_office_seo->sentence2) ? $center->virtual_office_seo->sentence2 : null,['class' => 'f1']) !!}
+        
+        {!! Form::label('city_name','*City:') !!}
+        {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
-        {!! Form::label('sentence3','sentence3') !!}
+        {!! Form::label('states','State:&nbsp;') !!}
+        {!! Form::select('states',$states,null,['class' => 'state']) !!}
+        <br>
+        {!! Form::label('countries','*Country:&nbsp;') !!}
+        {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
+        <br>
+        {!! Form::label('postal_code','Postal Code:&nbsp;') !!}
+        {!! Form::text('postal_code', null, [ 'class' => 'country']) !!}
+        <br>
+        {!! Form::label('lat','*Address Latitude: ') !!}
+        {!! Form::text('lat', isset($center_coordinates->lat) ? $center_coordinates->lat : null,['class' => 'f1b'])!!}
+        <a  class="getBtn" onclick="getLatAndLng()">GET</a>
+        <div class="clear"></div>
+        {!! Form::label('lng','*Address Longitude: ') !!}
+        {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
+        <br>
+        <!-- {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
         <br> 
         {!! Form::label('meta_title','Meta Title') !!}
@@ -92,11 +110,11 @@
         {!! Form::text('seo_footer',isset($center->virtual_office_seo->seo_footer) ? $center->virtual_office_seo->seo_footer : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('meta_description','Meta Description') !!}
-        {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
+        {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!} -->
     </div>        
     <div class="form_right centers_basic">
         <br>
-        {!! Form::label('avo_description','Avo Description') !!}
+        <!-- {!! Form::label('avo_description','Avo Description') !!}
         {!! Form::text('avo_description',isset($center->virtual_office_seo->avo_description) ? $center->virtual_office_seo->avo_description : null,['class' => 'f1']) !!}
         <br>
         {!! Form::label('abcn_title','Abcn Title') !!}
@@ -114,15 +132,6 @@
         {!! Form::label('with_live_receptionist_pak_price','Live Receptionist  Price') !!}
         {!! Form::text('with_live_receptionist_pak_price',  isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
         <br>
-        {!! Form::label('city_name','*City:') !!}
-        {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
-        <br>
-        {!! Form::label('countries','*Country:&nbsp;') !!}
-        {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
-        <br>
-        {!! Form::label('states','State:&nbsp;') !!}
-        {!! Form::select('states',$states,null,['class' => 'state']) !!}
-        <br>
         {!! Form::label('lat','*Address Latitude: ') !!}
         {!! Form::text('lat', isset($center_coordinates->lat) ? $center_coordinates->lat : null,['class' => 'f1b'])!!}
         <a  class="getBtn" onclick="getLatAndLng()">GET</a>
@@ -134,9 +143,113 @@
         {!! Form::select('package',$packages ,null,['class' => 'platinum_package']) !!}
         <br>
         {!! Form::label('Make this center active or inactive') !!}
-        {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!}
+        {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!} -->
         <div class="clear"></div>
     </div> 
+    <div class="clear"></div>
+</div>
+<div class="h2wrapp mtop1">
+    <div class="h2Icon add"></div>
+    <div class="h2txt">
+        <h2>VIRTUAL OFFICE PRICING</h2>
+    </div>
+</div>
+<div class="w_box" style="width:100%">
+    <div class="centers_basic">
+        <div class="form_left centers_basic">
+            {!! Form::label('price','Platinum Price') !!} 
+            {!! Form::text('price', isset($center_package['platinum']) ? $center_package['platinum']->price : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('with_live_receptionist_pak_price','Live Receptionist Price') !!}
+            {!! Form::text('with_live_receptionist_pak_price',  isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('plus_price','Platinum Plus Price') !!} 
+            {!! Form::text('plus_price',isset($center_package['platinum_plus']) ? $center_package['platinum_plus']->price : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('plus_with_live_receptionist_pak_price','Plus Live Receptionist Price') !!}
+            {!! Form::text('plus_with_live_receptionist_pak_price',isset($center_package['platinum_plus']) ? $center_package['platinum_plus']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
+        </div>
+        <div class="form_right centers_basic">
+        </div>         
+    </div>          
+    
+    <div class="clear"></div>
+</div>
+<div class="h2wrapp mtop1">
+    <div class="h2Icon add"></div>
+    <div class="h2txt">
+        <h2>PHONE PLAN PRICING</h2>
+    </div>
+</div>
+<div class="w_box" style="width:100%">
+    <div class="centers_basic">
+        <div class="form_left centers_basic">
+            {!! Form::label('with_live_receptionist_full_price','Plan 1 Price') !!}
+            {!! Form::text('with_live_receptionist_full_price', isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('plus_with_live_receptionist_full_price','Plan 2 Price') !!}
+            {!! Form::text('plus_with_live_receptionist_full_price',isset($center_package['platinum_plus'] )  ? $center_package['platinum_plus']->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
+        </div>
+        <div class="form_right centers_basic">
+        </div>         
+    </div>          
+    
+    <div class="clear"></div>
+</div>
+
+<div class="h2wrapp mtop1">
+    <div class="h2Icon add"></div>
+    <div class="h2txt">
+        <h2>SEO INFORMATION</h2>
+    </div>
+</div>
+<div class="w_box" style="width:100%">
+    <div class="centers_basic">
+        <div class="form_left centers_basic">
+            {!! Form::label('sentence1','sentence1') !!}
+            {!! Form::text('sentence1',isset($center->virtual_office_seo->sentence1) ? $center->virtual_office_seo->sentence1 : null,['class' => 'f1']) !!}
+            <br> 
+            {!! Form::label('sentence2','sentence2  ' ) !!}
+            {!! Form::text('sentence2',isset($center->virtual_office_seo->sentence2) ? $center->virtual_office_seo->sentence2 : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('sentence3','sentence3') !!}
+            {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('meta_title','Meta Title') !!}
+            {!! Form::text('meta_title',isset($center->virtual_office_seo->meta_title) ? $center->virtual_office_seo->meta_title : null,['class' => 'f1']) !!}
+            <br> 
+            {!! Form::label('avo_description','Avo Description') !!}
+            {!! Form::text('avo_description',isset($center->virtual_office_seo->avo_description) ? $center->virtual_office_seo->avo_description : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('abcn_description','Abcn Description') !!}
+            {!! Form::text('abcn_description',isset($center->virtual_office_seo->abcn_description) ? $center->virtual_office_seo->abcn_description : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('h1','Headline') !!}
+            {!! Form::text('h1', isset($center->virtual_office_seo->h1) ? $center->virtual_office_seo->h1 : null ,['class' => 'f1']) !!}
+            <br> 
+            {!! Form::label('h2','Sub Headline') !!}
+            {!! Form::text('h2',isset($center->virtual_office_seo->h2) ? $center->virtual_office_seo->h2 : null,['class' => 'f1']) !!} 
+            <br>
+            {!! Form::label('h3','Headline 2') !!} 
+            {!! Form::text('h3',isset($center->virtual_office_seo->h3) ? $center->virtual_office_seo->h3 : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('seo_footer','Seo Footer') !!}
+            {!! Form::text('seo_footer',isset($center->virtual_office_seo->seo_footer) ? $center->virtual_office_seo->seo_footer : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('abcn_title','Abcn Title') !!}
+            {!! Form::text('abcn_title',isset($center->virtual_office_seo->abcn_title) ? $center->virtual_office_seo->abcn_title : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('meta_description','Meta Description') !!}
+            {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
+            <br> 
+            {!! Form::label('meta_keywords','Meta Keywords') !!}
+            {!! Form::text('meta_keywords',isset($center->virtual_office_seo->meta_keywords) ? $center->virtual_office_seo->meta_keywords : null,['class' => 'f1']) !!}
+            <br>
+        </div>
+        <div class="form_right centers_basic">
+        </div>         
+    </div>          
+    
     <div class="clear"></div>
 </div>
 
@@ -195,74 +308,6 @@
     <!--   -->
     <div class="clear"></div>
 </div>
-<!-- <div class="h2wrapp mtop1">
-    <div class="h2Icon add"></div>
-    <div class="h2txt">
-        <h2>LOCATION AND AMENITIES</h2>
-    </div>
-</div>  
-<div class="w_box centers_basic">
-    <div class="adjustTxta">Location&nbsp; Description:&nbsp;</div>
-    <textarea class="f1_ta"></textarea><br>
-    <div class="form_left">
-        <div class="adjustTxt">Amenities&nbsp; Description: <br>
-            <span class="mediumBold">ABCN</span>:&nbsp;
-        </div>
-        <textarea class="f1_t"></textarea>
-    </div> 
-    <div class="form_right">
-        <div class="adjustTxt">Amenities&nbsp; Description <br>
-            <span class="mediumBold">AVO</span>:&nbsp;
-        </div> 
-        <textarea class="f1_t"></textarea>
-    </div> 
-    <div class="clear"></div>
-</div>
-<div class="h2wrapp mtop1">
-    <div class="h2Icon add"></div>
-    <div class="h2txt">
-        <h2>FEATURES</h2>
-    </div>
-</div> -->
-<!-- <div class="w_box oneMoreF">
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-    <div class="featuresBox">
-        <input type="text" class="f1c">
-    </div>
-
-    <div class="clear"></div>
-</div>
-<div class="add_box">
-    <a id="oneMoreFeature" class="gLink">
-        <div class="txtLink">ADD ANOTHER FEATURE</div>
-        <div class="gIcon gAdd"></div>
-    </a>
-    <div class="clear"></div>
-</div> -->
 <div class="h2wrapp mtop1">
     <div class="h2Icon add"></div>
     <div class="h2txt">
@@ -291,11 +336,7 @@
         <br>
         {!! Form::label('mr_meta_description','Meta Description') !!}
         {!! Form::text('mr_meta_description',isset($center->meeting_room_seo->meta_description) ? $center->meeting_room_seo->meta_description : null,['class' => 'f1']) !!}
-       <!--  <br>
-        {!! Form::label('floor','*Floor / Suite #:') !!}
-        {!! Form::text('floor', null,['class' => 'f1'])!!}    -->
-    </div>          
-    <div class="form_right centers_basic">
+        <br>
         {!! Form::label('mr_h1','Headline') !!}
         {!! Form::text('mr_h1', isset($center->meeting_room_seo->h1) ? $center->meeting_room_seo->h1 : null ,['class' => 'f1']) !!}
         <br> 
@@ -317,57 +358,13 @@
         {!! Form::label('mr_subhead','Subheader') !!}
         {!! Form::text('mr_subhead',isset($center->meeting_room_seo->subhead) ? $center->meeting_room_seo->subhead : null,['class' => 'f1']) !!}
         <br>
+    </div>          
+    <div class="form_right centers_basic">
+        
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
-</div>
-<div class="h2wrapp mtop1 pl_plus ">
-    <div class="h2Icon add"></div>
-    <div class="h2txt">
-        <h2>OWNERS</h2>
-    </div>
-</div>
-<div class="w_box centerPics " style="">
-    <div class="form_left centers_basic">
-       {!! Form::label('owners') !!}
-       {!! Form::select('owners',$owners, 'null',['class' => 'owners']) !!}
-    </div>          
-    <div class="clear"></div>
-</div>
-<div class="h2wrapp mtop1">
-    <div class="h2txt">
-        <input type="checkbox" class="show_plp_package"> PLATINUM PLUS PACKAGE
-    </div>
-    <div class="clear"></div>
-</div>
-<div class="h2wrapp mtop1 pl_plus hide">
-    <div class="h2Icon add"></div>
-    <div class="h2txt">
-        <h2>PLATINUM PLUS PACKAGE INFORMATION</h2>
-    </div>
-</div>
-<div class="w_box centerPics pl_plus_form hide" style="">
-    <div class="centers_basic">
-       {!! Form::label('Package') !!}
-       {!! Form::select('plus_package',$plus_packages, 'null',['class' => 'plus_packages']) !!}
-       <br>
-       {!! Form::label('plus_price','Price') !!} 
-       {!! Form::text('plus_price',isset($center_package['platinum_plus']) ? $center_package['platinum_plus']->price : null,['class' => 'f1']) !!}
-       <br>
-       {!! Form::label('plus_with_live_receptionist_full_price','Live Receptionist Full Price') !!}
-       {!! Form::text('plus_with_live_receptionist_full_price',isset($center_package['platinum_plus'] )  ? $center_package['platinum_plus']->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
-       <br>
-       {!! Form::label('plus_with_live_receptionist_pak_price','Live Receptionist Price') !!}
-       {!! Form::text('plus_with_live_receptionist_pak_price',isset($center_package['platinum_plus']) ? $center_package['platinum_plus']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
-       <br>
-    </div>          
-    
-    <div class="clear"></div>
-</div>
-
-
-
-   
+</div>  
 <div class="submit_w">
     {!! Form::submit('Submit', array('class'=>'submit_btn')) !!}
 </div>
