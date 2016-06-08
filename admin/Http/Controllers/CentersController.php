@@ -26,7 +26,7 @@ class CentersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('superAdminOrOwner', ['only' => ['create']]);
+        //$this->middleware('superAdminOrOwner', ['only' => ['create']]);
     }
 
     /**
@@ -42,7 +42,7 @@ class CentersController extends Controller
         if($role === 'super_admin') {
             return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'owner_user') {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role, 'owners' => $owners]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->id), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'client_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'admin') {

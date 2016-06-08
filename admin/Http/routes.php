@@ -75,7 +75,7 @@ Route::group(['middleware' => 'client_user'], function () {
 	Route::get('/client', 'UsersController@getClientPage');
 });
 
-Route::group(['middleware' => 'superAdminOrOwnerOrCsr'], function () {
+Route::group(['middleware' => 'superAdminOrOwner'], function () {
 	Route::resource('/centers', 'CentersController');
 });
 

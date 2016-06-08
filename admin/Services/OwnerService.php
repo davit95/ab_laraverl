@@ -181,9 +181,28 @@ class OwnerService implements OwnerInterface
 	public function updateOwner($id, $params)
 	{
 		$owner = $this->getOwnerById($id);
-		//dd($owner, $params);
+		if($this->getOwnerUpdateParams($params)) {
+			$params = $this->getOwnerUpdateParams($params);
+		} else {
+			return null;
+		}
 		$owner->update($params);
 		return $owner;
+	}
+
+	public function getOwnerUpdateParams($params)
+	{
+		$country_id = $this->country->where('name', $params['country'])->first()->id;
+		$state_id = $this->state->where('name', $params['us_state'])->first()->id;
+		$city = $this->city->where('country_id', $country_id)->where('us_state_id', $state_id)->where('name', $params['city'])->first();
+		if(null == $city) {
+			return false;
+		}
+		$city_id = $city->id;
+		$params['us_state_id'] = $state_id;
+		$params['city_id'] = $city_id;
+		$params['country_id'] = $country_id;
+		return $params;
 	}
 
 	/**

@@ -73,7 +73,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function city()
     {
-        return $this->belongsTo('App\\Models\\City');
+        return $this->belongsTo('App\\Models\\City', 'city_id');
     }
 
     public function state()

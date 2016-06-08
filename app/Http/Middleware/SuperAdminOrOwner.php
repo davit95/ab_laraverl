@@ -35,6 +35,9 @@ class SuperAdminOrOwner
      */
     public function handle($request, Closure $next)
     {
+        if(auth()->user()->role->name == "client_user") {
+            return redirect('/client');
+        }
         if(auth()->user()->isSuperAdminOrOwner()) {
             return $next($request);
         } 

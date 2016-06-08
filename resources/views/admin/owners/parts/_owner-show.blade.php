@@ -48,19 +48,19 @@
         </div> 
         <div class="line">
             <span class="lh_fi mediumBold">City:</span>&nbsp;
-            <div class="formOinfo">{{ isset($owner->city) ? $owner->city->name : null }}</div>
-        </div> 
+            <div class="formOinfo">{{ null != $owner->city ? $owner->city->name : null }}</div>
+        </div>
         <div class="line">
             <span class="lh_fi mediumBold">County / Region:</span>&nbsp;
             <div class="formOinfo">{{ $owner->region }}</div>
         </div> 
         <div class="line">
             <span class="lh_fi mediumBold">State:</span>&nbsp;
-            <div class="formOinfo">{{ isset($owner->us_state) ? $owner->us_state->name : null }}</div>
+            <div class="formOinfo">{{ null != $owner->us_state ? $owner->us_state->name : null }}</div>
         </div> 
         <div class="line">
             <span class="lh_fi mediumBold">Country:</span>&nbsp;
-            <div class="formOinfo">{{ isset($owner->country) ? $owner->country->name : null }}</div>
+            <div class="formOinfo">{{ null != $owner->country ? $owner->country->name : null }}</div>
         </div> 
         <div class="line">
             <span class="lh_fi mediumBold">Active Rules:</span>&nbsp;

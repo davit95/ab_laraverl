@@ -112,11 +112,17 @@ class OwnersController extends Controller
      */
     public function show($id, OwnerInterface $ownerService, UserInterface $userService)
     {
-        //dd('as');
-        //dd($id);
+        //dd($owner = $ownerService->getOwnerById($id));
         $role = \Auth::user()->role->name;
         $owner = $ownerService->getOwnerById($id);
-        //dd($owner);
+        if($role === 'owner_user') {
+            if($id == \Auth::user()->id) {
+                $owner = $ownerService->getOwnerById($id);
+            } else {
+                return redirect('owners/'.\Auth::user()->id);
+            }
+        }
+        //dd($owner->city);
         //dd($owner->country);
         //dd($owner);
         // if(\Auth::user()->role_id == 1) {
@@ -162,9 +168,7 @@ class OwnersController extends Controller
             $owner = $ownerService->getOwnersByRole(\Auth::user());//
             $owner_client = $ownerService->getOwnerById(\Auth::user()->id);//
         }
-        //dd($owner_client);
-
-        //dd($regions_list);
+        //dd($us_states);
         return view('admin.owners.edit', [ 
             'owner' => $owner,
             'regions_list' => $regions_list,
@@ -189,11 +193,11 @@ class OwnersController extends Controller
      */
     public function update($id, OwnerRequest $request, OwnerInterface $ownerService)
     {
-        //dd($id);
+        //dd($id, $request->all());
         if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
         }
-        return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        return redirect('/owners-centers')->withWarning('Whoops, looks like something went wrong, please try later.');
         // if(\Auth::user()->role_id == 1) {
         //     if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
         //                 return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
