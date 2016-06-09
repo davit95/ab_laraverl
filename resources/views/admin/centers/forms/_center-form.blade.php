@@ -3,11 +3,33 @@
 @else
 {!! Form::open(['method' => 'post' , 'url' => '/centers','files' => true]) !!}
 @endif
+<div class="h2wrapp mtop1">
+    <div class="h2Icon add"></div>
+    <div class="h2txt">
+        <h2>Viewable On</h2>
+    </div>
+</div>
 <div class="w_box" style="width:100%">
-    <div class="ga_right">
-        <span class="lh_f">Sites :</span>&nbsp;
-        {!! Form::select('sites',$sites, null, [ 'class' => 'change', 'multiple' => true]) !!}
-        <br>
+    <div class="form_left centers_basic">
+        <!-- <span class="lh_f">Viewable On :</span>&nbsp;
+        <br> -->
+        <div class="services_wrapp">
+            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <label for="1"></label>
+            AVO -Alliancevirtualoffices.com &nbsp; &nbsp;
+        </div>
+        <br><br>
+        <div class="services_wrapp">
+            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <label for="1"></label> 
+            SDV -Samedayvirtual.com
+        </div>
+        <br><br>
+        <div class="services_wrapp">
+            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <label for="1"></label>
+            AWS - Allwork.space
+        </div>
         <!-- <span class="lh_f">Owners:</span>&nbsp; -->
         <!-- {!! Form::select('owners',$owners, null, [ 'class' => '', 'multiple' => true]) !!} -->
         <!-- <select class="change" multiple>             
@@ -19,8 +41,37 @@
             <option value="4">FLEXADO</option>
         </select> -->
     </div>
-    <div class="ga_right lh_f">
-    Services:
+    <div class="form_right centers_basic">
+        <div class="services_wrapp">
+            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <label for="1">         
+            </label> 
+            VO &nbsp; &nbsp;
+                <input type="checkbox" name="services" value="MR" id="2" checked="">
+                <label for="2">
+                    
+                </label> 
+            MR &nbsp; &nbsp;
+                <input type="checkbox" name="services" value="LR" id="3" checked="">
+                <label for="3"></label> 
+            LR
+        </div>
+        <br><br>
+        <div class="services_wrapp">
+            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <label for="1">         
+            </label> 
+            VO &nbsp; &nbsp;
+                <input type="checkbox" name="services" value="MR" id="2" checked="">
+                <label for="2">
+                    
+                </label> 
+            MR &nbsp; &nbsp;
+                <input type="checkbox" name="services" value="LR" id="3" checked="">
+                <label for="3"></label> 
+            LR
+        </div>
+        <br><br>
         <div class="services_wrapp">
             <input type="checkbox" name="services" value="VO" id="1" checked="">
             <label for="1">         

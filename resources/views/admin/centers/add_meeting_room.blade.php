@@ -45,11 +45,6 @@
 				{!! Form::text('full_day', isset($mr->full_day_rate) ? $mr->full_day_rate : null,[ 'class' => 'f3']) !!} / full day
 			</div>
 			<div class="clear"></div>
-			Floor:&nbsp;
-			<div class="inpAlign">
-					{!! Form::text('floor', isset($mr->floor) ? $mr->floor : null,[ 'class' => 'f3']) !!} 
-				</div>
-				<div class="clear"></div>
 			Min. Hours Required:&nbsp; 
 				<div class="inpAlign">
 					{!! Form::text('min_hours', isset($mr->min_hours_req) ? $mr->min_hours_req : null,[ 'class' => 'f3']) !!}
@@ -68,7 +63,54 @@
 				<div class="clear"></div>
 			<div class="inpAlign">Image 1 - Image 2</div>
 			<div class="clear"></div>
+		</div>
+		<div class="w_box2 lh_f">
+			<h3 class="left mediumBold">
+				<span class="left">PARKING INFORMATION</span>
+			</h3><br>
+			Parking Available:&nbsp; 
+				<div class="inpAlign">
+					{!! Form::checkbox('parking', null, isset($mr_options->parking_rate) &&  $mr_options->parking_rate == 0 ? true : null,[ 'id' => '12']) !!}
+					Rate: $ 
+					{!! Form::text('parking_rate', isset($mr_options->parking_rate) ? $mr_options->parking_rate : null,[ 'class' => 'f3']) !!} /per hour
+					{!! Form::hidden('center_id', isset($center_id) ? $center_id : null,[ 'class' => 'f3']) !!}</div>
+			<div class="clear"></div>
+			<div class="adjustTxt">Parking Description:&nbsp;</div>
+			{!! Form::textarea('park_desc', isset($mr_options->parking_description) ? $mr_options->parking_description : null,[ 'class' => 'f1_t']) !!}<br>
 		</div> 
+
+
+		
+		<div class="w_box2 lh_f">
+			<h3 class="left mediumBold">
+				<span class="left">NETWORK / PHONE/ ADMIN INFORMATION</span>
+			</h3><br>
+			Network Connection:&nbsp;
+				<div class="inpAlign">
+					{!! Form::checkbox('n_connection', null, isset($mr_options->network_rate) &&  $mr_options->network_rate == 0 ? true : null,[ 'id' => '8']) !!}
+					Rate: $ 
+					{!! Form::text('n_connection_rate', isset($mr_options->network_rate) ? $mr_options->network_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
+			<div class="clear"></div>
+			Wireless:&nbsp;
+				<div class="inpAlign">
+					{!! Form::checkbox('wireless', null, isset($mr_options->wireless_rate) &&  $mr_options->wireless_rate == 0 ? true : null,[ 'id' => '9']) !!}
+					Rate: $ 
+					{!! Form::text('vireless_rate', isset($mr_options->wireless_rate) ? $mr_options->wireless_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
+			<div class="clear"></div>
+			Phone Access:&nbsp; 
+				<div class="inpAlign">
+					{!! Form::checkbox('phone_access', null, isset($mr_options->phone_rate) &&  $mr_options->phone_rate == 0 ? true : null,[ 'id' => '10']) !!}
+					Rate: $ 
+					{!! Form::text('phone_access_rate', isset($mr_options->phone_rate) ? $mr_options->phone_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
+			<div class="clear"></div>
+			Admin Services:&nbsp;
+			<div class="inpAlign">
+				{!! Form::checkbox('admin_services', null, isset($mr_options->admin_services_rate) &&  $mr_options->admin_services_rate == 0 ? true : null,[ 'id' => '11']) !!}
+				Rate: $ 
+				{!! Form::text('admin_services_rate', isset($mr_options->admin_services_rate) ? $mr_options->admin_services_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
+			<div class="clear"></div>
+		</div> 
+
 		<div class="w_box2 lh_f">
 			<h3 class="left mediumBold">
 			<span class="left">AMENITIES AVAILABLE</span>
@@ -123,49 +165,7 @@
 			<div class="clear"></div>
 		</div> 
 		<div class="clear"></div>
-		<div class="w_box2 lh_f">
-			<h3 class="left mediumBold">
-				<span class="left">NETWORK / PHONE/ ADMIN INFORMATION</span>
-			</h3><br>
-			Network Connection:&nbsp;
-				<div class="inpAlign">
-					{!! Form::checkbox('n_connection', null, isset($mr_options->network_rate) &&  $mr_options->network_rate == 0 ? true : null,[ 'id' => '8']) !!}
-					Rate: $ 
-					{!! Form::text('n_connection_rate', isset($mr_options->network_rate) ? $mr_options->network_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
-			<div class="clear"></div>
-			Wireless:&nbsp;
-				<div class="inpAlign">
-					{!! Form::checkbox('wireless', null, isset($mr_options->wireless_rate) &&  $mr_options->wireless_rate == 0 ? true : null,[ 'id' => '9']) !!}
-					Rate: $ 
-					{!! Form::text('vireless_rate', isset($mr_options->wireless_rate) ? $mr_options->wireless_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
-			<div class="clear"></div>
-			Phone Access:&nbsp; 
-				<div class="inpAlign">
-					{!! Form::checkbox('phone_access', null, isset($mr_options->phone_rate) &&  $mr_options->phone_rate == 0 ? true : null,[ 'id' => '10']) !!}
-					Rate: $ 
-					{!! Form::text('phone_access_rate', isset($mr_options->phone_rate) ? $mr_options->phone_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
-			<div class="clear"></div>
-			Admin Services:&nbsp;
-			<div class="inpAlign">
-				{!! Form::checkbox('admin_services', null, isset($mr_options->admin_services_rate) &&  $mr_options->admin_services_rate == 0 ? true : null,[ 'id' => '11']) !!}
-				Rate: $ 
-				{!! Form::text('admin_services_rate', isset($mr_options->admin_services_rate) ? $mr_options->admin_services_rate : null,[ 'class' => 'f3']) !!} /per hour</div>
-			<div class="clear"></div>
-		</div> 
-		<div class="w_box2 lh_f">
-			<h3 class="left mediumBold">
-				<span class="left">PARKING INFORMATION</span>
-			</h3><br>
-			Parking Available:&nbsp; 
-				<div class="inpAlign">
-					{!! Form::checkbox('parking', null, isset($mr_options->parking_rate) &&  $mr_options->parking_rate == 0 ? true : null,[ 'id' => '12']) !!}
-					Rate: $ 
-					{!! Form::text('parking_rate', isset($mr_options->parking_rate) ? $mr_options->parking_rate : null,[ 'class' => 'f3']) !!} /per hour
-					{!! Form::hidden('center_id', isset($center_id) ? $center_id : null,[ 'class' => 'f3']) !!}</div>
-			<div class="clear"></div>
-			<div class="adjustTxt">Parking Description:&nbsp;</div>
-			{!! Form::textarea('park_desc', isset($mr_options->parking_description) ? $mr_options->parking_description : null,[ 'class' => 'f1_t']) !!}<br>
-		</div> 
+		
 		<div class="clear"></div>
 		<div class="submit_w"><button type="submit" class="submit_btn">SUBMIT</button></div>
 		<div class="txtLine">All rates set to empty will be displayed as "Included" to the customer.<br>

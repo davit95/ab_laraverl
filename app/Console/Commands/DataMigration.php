@@ -75,7 +75,7 @@ class DataMigration extends Command {
 		$this->make_new_connection();
 		$collection     = DB::table('Center')->get();
 		$center_contacts = DB::table('Center_Contact')->lists('EmailFlag', 'CenterID');				
-		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');		
+		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');				
 		// dd($taxes);
 		DB::setDefaultConnection('mysql');
 		$unknown_cities_count    = 0;
@@ -117,6 +117,10 @@ class DataMigration extends Command {
 			if (!in_array($owner_id, $owner_ids)) {
 				$owner_id = null;
 			}
+			$owner_user_id = $value->OwnerID;
+			if (!in_array($owner_user_id, $owner_ids)) {
+				$owner_user_id = null;
+			}
 			$name = '';
 			if (isset($seo_collection[$value->CenterID])) {
 				$title = $seo_collection[$value->CenterID];
@@ -138,6 +142,7 @@ class DataMigration extends Command {
 				'name'        => preg_match('/[^a-zA-Z1-9( ,-]/', $name) ? utf8_decode($name) : $name,
 				'slug'        => str_slug(preg_replace('/^[^a-zA-Z]*/', '', $value->Address1)),
 				'owner_id'    => $owner_id,
+				'owner_user_id'    => $owner_user_id,
 				'city_name'   => $value->City,
 				'city_id'     => $city_id,
 				'country'     => $value->Country,
@@ -654,28 +659,29 @@ class DataMigration extends Command {
 		$collection = DB::table('Center_Owner')->get();
 		$bar        = $this->output->createProgressBar(count($collection));
 		foreach ($collection as $key => $value) {
+			//dd($collection);
 			$new_collection[] =
 			[
-				'id'       => $value->OwnerID,
-				'name'     => $value->OwnerName,
+				'id'           => $value->OwnerID,
+				'company_name' => $value->OwnerName,
 				'phone'    => $value->Phone,
 				'fax'      => $value->Fax,
-				'url'      => $value->URL,
+				// 'url'      => $value->URL,
 				'email'    => $value->Email,
 				'address1' => $value->Address1,
 				'address2' => $value->Address2,
+				'role_id'  => 5,
 				//'city_id'      => '------------',
 				//'region_id'    => '------------',
 				//'us_state_id'  => '------------',
 				//'country_id'   => '------------',
-				'postal_code'  => $value->PostalCode,
-				'notes'        => $value->Notes,
-				'company_name' => $value->CompanyName,
+				'postal_code'  => $value->PostalCode,				
 			];
 			$bar->advance();
 		}
 		DB::setDefaultConnection('mysql');
 		//DB::table('owners')->truncate();
+		DB::table('users')->insert($new_collection);
 		DB::table('owners')->insert($new_collection);
 		$bar->finish();
 		$this->info(' ✔');

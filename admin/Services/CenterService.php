@@ -121,7 +121,8 @@ class CenterService implements CenterInterface {
 	 */
 	public function getCenterParams($inputs)
 	{
-		$owner_id = $this->owner->where('name', $inputs['owners'])->first()->id;
+		//dd($inputs);
+		$owner_id = $this->user->where('company_name', $inputs['owners'])->first()->id;
 		$inputs['owner_id'] = $owner_id;
 		$state = $this->usState->where('name', $inputs['states'])->first();
 		if($state) {
@@ -149,6 +150,23 @@ class CenterService implements CenterInterface {
 	 */
 	public function getPricesParams($inputs,$center_id)
 	{
+		// $platinum = [];
+		// $platinum_plus = [];
+		// $platinum['price'] = $inputs['price'];
+		// $platinum['package_id'] = 103;
+		// $platinum['with_live_receptionist_pack_price'] = $inputs['with_live_receptionist_pak_price'];
+		// $platinum['with_live_receptionist_full_price'] = $inputs['with_live_receptionist_full_price'];
+		// $platinum['center_id'] = $center_id;
+		// if(isset($inputs['plus_package']) && $inputs['plus_package']=== 'Platinum Plus') {
+		// 	$platinum_plus['price'] = $inputs['plus_price'];
+		// 	$platinum_plus['package_id'] = 105;
+		// 	$platinum_plus['with_live_receptionist_pack_price'] = $inputs['plus_with_live_receptionist_full_price'];
+		// 	$platinum_plus['with_live_receptionist_full_price'] = $inputs['plus_with_live_receptionist_pak_price'];
+		// 	$platinum_plus['center_id'] = $center_id;
+		// 	$package_arr = [$platinum,$platinum_plus];
+		// 	return $package_arr;
+		// }
+
 		$platinum = [];
 		$platinum_plus = [];
 		$platinum['price'] = $inputs['price'];
@@ -156,16 +174,13 @@ class CenterService implements CenterInterface {
 		$platinum['with_live_receptionist_pack_price'] = $inputs['with_live_receptionist_pak_price'];
 		$platinum['with_live_receptionist_full_price'] = $inputs['with_live_receptionist_full_price'];
 		$platinum['center_id'] = $center_id;
-		if(isset($inputs['plus_package']) && $inputs['plus_package']=== 'Platinum Plus') {
-			$platinum_plus['price'] = $inputs['plus_price'];
-			$platinum_plus['package_id'] = 105;
-			$platinum_plus['with_live_receptionist_pack_price'] = $inputs['plus_with_live_receptionist_full_price'];
-			$platinum_plus['with_live_receptionist_full_price'] = $inputs['plus_with_live_receptionist_pak_price'];
-			$platinum_plus['center_id'] = $center_id;
-			$package_arr = [$platinum,$platinum_plus];
-			return $package_arr;
-		}
-		return $platinum;
+		$platinum_plus['price'] = $inputs['plus_price'];
+		$platinum_plus['package_id'] = 105;
+		$platinum_plus['with_live_receptionist_pack_price'] = $inputs['plus_with_live_receptionist_full_price'];
+		$platinum_plus['with_live_receptionist_full_price'] = $inputs['plus_with_live_receptionist_pak_price'];
+		$platinum_plus['center_id'] = $center_id;
+		$package_arr = [$platinum,$platinum_plus];
+		return $package_arr;
 	}
 
 	/**
@@ -308,7 +323,6 @@ class CenterService implements CenterInterface {
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
 		if(isset($inputs['active'])) {
-			//dd('ass');
 			$center_filter_data = new $this->centerFilter(['virtual_office' => 1]);
 		} else {
 			$center_filter_data = new $this->centerFilter(['virtual_office' => 0]);

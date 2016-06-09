@@ -152,7 +152,6 @@ class OwnerService implements OwnerInterface
 		// 	$this->center->find($owner_params['center_id'])->update(['owner_id' => $owner_user->id]);
 
 		// }
-
 		$staffs_params = $this->getOwnerStaffsParams($owner_params);
 		if(!empty($staffs_params)) {
 			$staffs = $this->staff->insert($staffs_params);
@@ -271,7 +270,9 @@ class OwnerService implements OwnerInterface
 	 */
 	public function getOwnersLists()
 	{
-		return $this->owner->lists('name', 'name')->toArray();
+		$role_id = $this->getUserIdByRoleName('owner_user');
+		//dd($role_id);
+		return $this->user->where('role_id', $role_id)->lists('company_name','company_name')->toArray();
 	}
 
 	public function getOwnersByRole($user)
