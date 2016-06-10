@@ -150,6 +150,8 @@ class OwnerService implements OwnerInterface
 			$staffs = $this->staff->insert($staffs_params);
 			if($staffs) {
 				$this->user->find($owner_user->id)->staffs()->attach($this->getStaffsIds($staffs_params));
+			} else {
+				$this->user->delete($owner_user->id);
 			}
 		}
 		
@@ -173,6 +175,7 @@ class OwnerService implements OwnerInterface
 	 */
 	public function updateOwner($id, $params)
 	{
+		//dd($staffs_params = $this->getOwnerStaffsUpdateParams($params));
 		$owner = $this->getOwnerById($id);
 		if($this->getOwnerUpdateParams($params)) {
 			$params = $this->getOwnerUpdateParams($params);
@@ -180,6 +183,18 @@ class OwnerService implements OwnerInterface
 			return null;
 		}
 		$owner->update($params);
+		$staffs_params = $this->getOwnerStaffsUpdateParams($params);
+		//dd($staffs_params);
+		foreach ($staffs_params as $param) {
+			//dd($param);
+			if(isset($param['staff_id'])) {
+				$staff_id = $param['staff_id'];
+				//dd($staff_id);
+				unset($param['staff_id']);
+				$this->staff->where('id', $staff_id)->first()->update($param);
+			}
+			
+		}
 		return $owner;
 	}
 
@@ -287,6 +302,7 @@ class OwnerService implements OwnerInterface
 
 	public function getOwnerStaffsParams($params)
 	{
+
 		$inputs = [];
 		for($i = 1; $i <= 4; $i++) {
 			if(isset($params['contact_name_'.$i]) && $params['contact_name_'.$i] !== '') {
@@ -295,27 +311,84 @@ class OwnerService implements OwnerInterface
 			if(isset($params['title_'.$i]) && $params['title_'.$i] !== '') {
 				$inputs[$i]['title'] = $params['title_'.$i];
 			}
-			if(isset($params['phone_1_'.$i]) && $params['phone_1_'.$i] !== '') {
+			if(isset($params['phone_'.$i]) && $params['phone_'.$i] !== '') {
 				$inputs[$i]['phone_1'] = $params['phone_1_'.$i];
 			}
-			if(isset($params['phone_2_'.$i]) && $params['phone_2_'.$i] !== '') {
-				$inputs[$i]['phone_2'] = $params['phone_2_'.$i];
+			if(isset($params['phone_1_'.$i]) && $params['phone_1_'.$i] !== '') {
+				$inputs[$i]['phone_2'] = $params['phone_1_'.$i];
+			}
+			if(isset($params['ext_'.$i]) && $params['ext_'.$i] !== '') {
+				$inputs[$i]['ext_1'] = $params['ext_'.$i];
+
 			}
 			if(isset($params['ext_1_'.$i]) && $params['ext_1_'.$i] !== '') {
-				$inputs[$i]['ext_1'] = $params['ext_1_'.$i];
-			}
-			if(isset($params['ext_2_'.$i]) && $params['ext_2_'.$i] !== '') {
-				$inputs[$i]['ext_2'] = $params['ext_2_'.$i];
+				$inputs[$i]['ext_2'] = $params['ext_1_'.$i];
 			}
 			if(isset($params['contact_email_'.$i]) && $params['contact_email_'.$i] !== '') {
 				$inputs[$i]['email'] = $params['contact_email_'.$i];
 			}
+			/*if(isset($params['id_'.$i]) && $params['id_'.$i] !== '') {
+				$inputs[$i]['id'] = $params['id_'.$i];
+			}*/
 		}
-		foreach ($inputs as $key => $input) {
-			if(count($input) != 5) {
-				unset($inputs[$key]);
+		if(count($input) != 7) {
+			unset($inputs[$key]);
+		}
+		/*foreach ($inputs as $key => $input) {
+			if(isset($input['id'])) {
+				if(count($input) != 8) {
+					unset($inputs[$key]);
+				}
+			} else {
+				if(count($input) != 7) {
+					unset($inputs[$key]);
+				}
+			}	
+		}*/
+		return $inputs;
+	}
+
+	public function getOwnerStaffsUpdateParams($params)
+	{
+		$inputs = [];
+		for($i = 1; $i <= 4; $i++) {
+			if(isset($params['contact_name_'.$i]) && $params['contact_name_'.$i] !== '') {
+				$inputs[$i]['name'] = $params['contact_name_'.$i];
+			}
+			if(isset($params['title_'.$i]) && $params['title_'.$i] !== '') {
+				$inputs[$i]['title'] = $params['title_'.$i];
+			}
+			if(isset($params['phone_'.$i]) && $params['phone_'.$i] !== '') {
+				$inputs[$i]['phone_1'] = $params['phone_'.$i];
+			}
+			if(isset($params['phone_1_'.$i]) && $params['phone_1_'.$i] !== '') {
+				$inputs[$i]['phone_2'] = $params['phone_1_'.$i];
+			}
+			if(isset($params['ext_'.$i]) && $params['ext_'.$i] !== '') {
+				$inputs[$i]['ext_1'] = $params['ext_'.$i];
+			}
+			if(isset($params['ext_1_'.$i]) && $params['ext_1_'.$i] !== '') {
+				$inputs[$i]['ext_2'] = $params['ext_1_'.$i];
+			}
+			if(isset($params['contact_email_'.$i]) && $params['contact_email_'.$i] !== '') {
+				$inputs[$i]['email'] = $params['contact_email_'.$i];
+			}
+			if(isset($params['staff_id_'.$i]) && $params['staff_id_'.$i] !== '') {
+				$inputs[$i]['staff_id'] = $params['staff_id_'.$i];
 			}
 		}
+		foreach ($inputs as $key => $input) {
+			if(isset($input['staff_id'])) {
+				if(count($input) != 8) {
+					unset($inputs[$key]);
+				}
+			} else {
+				if(count($input) != 7) {
+					unset($inputs[$key]);
+				}
+			}	
+		}
+		//dd($inputs);
 		return $inputs;
 	}
 

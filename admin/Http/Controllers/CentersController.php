@@ -115,6 +115,7 @@ class CentersController extends Controller
      */
     public function store(Request $request, CenterService $centerService)
     {
+        //dd($request->all());
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
                 return redirect('centers')->withSuccess('Center has been successfully added.');

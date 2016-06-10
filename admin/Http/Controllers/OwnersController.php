@@ -97,7 +97,7 @@ class OwnersController extends Controller
      */
     public function store(OwnerRequest $request, OwnerInterface $ownerService, UserInterface $userService)
     {
-        //dd($ownerService->test($request->all()));
+        //dd($request->all());
         if ( null != $owner = $ownerService->createOwner( $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully created.');
         }
@@ -115,6 +115,7 @@ class OwnersController extends Controller
         //dd($owner = $ownerService->getOwnerById($id));
         $role = \Auth::user()->role->name;
         $owner = $ownerService->getOwnerById($id);
+        //dd($owner->id, $id);
         if($role === 'owner_user') {
             if($id == \Auth::user()->id) {
                 $owner = $ownerService->getOwnerById($id);

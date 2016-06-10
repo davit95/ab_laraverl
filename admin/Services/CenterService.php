@@ -319,6 +319,27 @@ class CenterService implements CenterInterface {
 		return $owner_id;
 	}
 
+	public function getSiteNames($params)
+	{
+		$sites = [];
+		if(isset($params['avo_site'])) {
+			$sites[] = 'avo';
+		} else {
+			$sites[] = '';
+		}
+		if(isset($params['abcn_site'])) {
+			$sites[] = 'abcn';
+		} else {
+			$sites[] = '';
+		}
+		if(isset($params['allwork_site'])) {
+			$sites[] = 'allwork';
+		} else {
+			$sites[] = '';
+		}
+		return $sites;
+	}
+
 	/**
 	 * create new center
 	 *
@@ -327,7 +348,7 @@ class CenterService implements CenterInterface {
 	 */
 	public function storeCenter($inputs, $files) {
 
-		//dd($inputs);
+		//dd($this->getSitesIds($this->getSiteNames($inputs)));
 		if(\Auth::user()->role->name == 'owner_user') {
 		    $inputs['owner_user_id'] = \Auth::id();
 		}
@@ -367,7 +388,7 @@ class CenterService implements CenterInterface {
 				$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
 			}
 			
-			//$this->center->find($center->id)->sites()->attach($this->getSitesIds($inputs['sites']));
+			$this->center->find($center->id)->sites()->attach($this->getSitesIds($this->getSiteNames($inputs)));
 
 			$prices_data = $this->getPricesParams($inputs,$center->id);
 
@@ -929,7 +950,8 @@ class CenterService implements CenterInterface {
 
 	public function getSitesIds($inputs)
 	{
-		return $this->site->whereIn('name', $inputs)->get()->lists('id')->toArray();
+		//dd($inputs,'assasas');
+		return $this->site->where('name', $inputs[0])->orWhere('name', $inputs[1])->orWhere('name', $inputs[2])->get()->lists('id')->toArray();
 	}
 
 	public function getOwnerCenterById($owner_id)

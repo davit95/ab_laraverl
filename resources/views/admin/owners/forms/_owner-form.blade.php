@@ -114,38 +114,39 @@
 			    <div class="panel-body col-md-6">
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Contact Name</label></div>
-			    		<div class="col-md-8">{!! Form::text('contact_name_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Contact Name' ]) !!}</div>
+			    		<div class="col-md-8">{!! Form::text('contact_name_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->name :null, [ 'class' => 'form-control', 'placeholder' => 'Contact Name' ]) !!}</div>
 			    	</div>
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Title</label></div>
-			    		<div class="col-md-8">{!! Form::text('title_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Title' ]) !!}</div>
+			    		<div class="col-md-8">{!! Form::text('title_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->title : null, [ 'class' => 'form-control', 'placeholder' => 'Title' ]) !!}</div>
 			    	</div>
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Phone</label></div>
-			    		<div class="col-md-8">{!! Form::text('phone_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
+			    		<div class="col-md-8">{!! Form::text('phone_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->phone_1 : null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
 			    	</div>
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Phone</label></div>
-			    		<div class="col-md-8">{!! Form::text('phone_1_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
+			    		<div class="col-md-8">{!! Form::text('phone_1_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->phone_2 : null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
 			    	</div>
 			    </div>
 			    <div class="panel-body col-md-6">
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Ext</label></div>
 			    		<div class="col-md-8">
-			    			{!! Form::text('ext_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    			{!! Form::text('ext_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->ext_1 : null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
 			    		</div>
 			    	</div>
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Ext</label></div>
 			    		<div class="col-md-8">
-			    			{!! Form::text('ext_1_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    			{!! Form::text('ext_1_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->ext_2 : null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
 			    		</div>
 			    	</div>
 			    	<div class="row form-group">
 			    		<div class="col-md-4 text-right"><label>Email</label></div>
 			    		<div class="col-md-8">
-			    			{!! Form::text('contact_email_'.$i, null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    			{!! Form::text('contact_email_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->email : null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    			{!! Form::hidden('staff_id_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->id : null, [ ]) !!}
 			    		</div>
 			    	</div>
 			    </div>
