@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\Guard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 
+use App\Services\CustomerAuthService;
+
 class AuthController extends Controller
 {
     /*
@@ -46,6 +48,11 @@ class AuthController extends Controller
      */
     public function postLogin(LoginRequest $request, Guard $auth)
     {
+        /*if ($request->is('admin*'))
+{
+    
+}*/
+        //dd($request->is('admin'));
         if ($auth->attempt($request->params(1))) {
             return redirect('/reports')->withSuccess('You has been successfully logged in.');
         }

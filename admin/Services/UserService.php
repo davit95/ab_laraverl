@@ -9,6 +9,7 @@ use App\Models\Owner;
 use App\Models\City;
 use App\Models\UsState;
 use App\Models\Center;
+use App\Models\AdminClients;
 use Auth;
 
 class UserService implements UserInterface
@@ -16,13 +17,32 @@ class UserService implements UserInterface
 	/**
 	 * Create a new user service instance.
 	 */
-	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city, UsState $usState) {
+	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city, UsState $usState,AdminClients $adminClients) {
 		$this->user = $user;
 		$this->role = $role;
 		$this->owner = $owner;
 		$this->center = $center;
 		$this->city = $city;
 		$this->usState = $usState;
+		$this->adminClients = $adminClients;
+	}
+
+	public function test($id,$admin_id)
+	{
+		return $this->adminClients->create(['client_id' => $id,'admin_id' => $admin_id]);
+	}
+
+	public function getYourCustomers($id)
+	{
+		$ids = $this->adminClients->where('admin_id', $id)->lists('client_id');
+		$customers = $this->user->whereIn('id', $ids)->get();
+		return $customers;
+	}
+	public function getNewCustomers($id)
+	{
+		$ids = $this->adminClients->where('admin_id', $id)->lists('client_id');
+		$customers = $this->user->whereNotIn('id', $ids)->get();
+		return $customers;
 	}
 
 	/**

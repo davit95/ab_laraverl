@@ -31,22 +31,26 @@ class CsrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserInterface $userService)
+    public function index(UserInterface $userService, CustomerService $customerService)
     {
+        $role = \Auth::user()->role->name;  
         if(\Auth::user()->role->name === 'super_admin') {
-            $customers = $userService->getALlCustomers();
+            $customers = $customerService->getALlCustomers();
         } elseif(\Auth::user()->role->name === 'client_user') {
             $customers[] = \Auth::user();
             //$role_id = \Auth::user()->role_id;
         } elseif(\Auth::user()->role->name === 'owner_user') {
              $customers = $userService->getALlCustomersByOwnerId(\Auth::user()->owner_id);
-             //$role_id = \Auth::user()->role_id;
         }
         elseif(\Auth::user()->role->name === 'admin') {
-            //$role_id = \Auth::user()->role_id;
-            $customers = $userService->getALlCustomers();
+            $role_id = \Auth::user()->role_id;
+            $your_customers = $userService->getYourCustomers(\Auth::id());
+            $customers = $userService->getALlCustomers(); 
+            $new_customers = $customers->diff($your_customers);
+            //dd($new_customers);
+            return view('admin.csr.index', ['customers' => $customers, 'role' => $role, 'your_customers' => $your_customers, 'new_customers' => $new_customers]);  
         }
-        $role = \Auth::user()->role->name;  
+        
         return view('admin.csr.index', ['customers' => $customers, 'role' => $role]);
     }
 
