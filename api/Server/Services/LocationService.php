@@ -6,6 +6,7 @@ use App\Models\Center;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\UsState;
+use App\Models\Site;
 use DB;
 use Illuminate\Pagination\Paginator;
 use App\Services\CenterCoordinateService;
@@ -14,18 +15,22 @@ class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService) {
+	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site) {
 		$this->center = $center;
 		$this->city   = $city;
 		$this->country = $country;
 		$this->usState = $usState;
 		$this->centerCoordinateService = $centerCoordinateService;
 		$this->centerService = $centerService;
+		$this->site = $site;
 	}
 
 	public function addLocation($inputs)
 	{
-		
+		$site = $this->site->where('name', 'allwork')->first();
+		$site_id = isset($site) ? $site->id : null;
+		$center = $this->center->create($inputs);
+		$center->sites()->attach($site_id);
 	}
 
 	public function getAllLocations($per_page, $page)

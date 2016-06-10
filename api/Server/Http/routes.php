@@ -11,6 +11,7 @@
 |
 */
 Route::post('/add-location', 'LocationsController@addLocation');
+Route::post('/request-detail', 'RequestDetailsController@addRequestDetail');
 Route::get('/location/us/{state}', 'LocationsController@getStateLocations');
 Route::get('/location/search/{key}', 'LocationsController@getSearchLocation');
 Route::get('/location/search/{country_slug}/{key}', 'LocationsController@getSearchLocationByCountry');
