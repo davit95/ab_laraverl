@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class SuperAdmin
+class SuperAdminOrOwnerOrCsr
 {
 
     /**
@@ -35,15 +35,12 @@ class SuperAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->isSuperAdmin()) {
+        if(auth()->user()->isSuperAdminOrOwnerOrCsr()) {
             return $next($request);
-        }
-        if(auth()->user()->role->name == 'admin') {
-            return redirect('/csr');
-        }
-        if(auth()->user()->role->name == 'client_user') {
+        } 
+        if(auth()->user()->role->name == 'cleint') {
             return redirect('/client');
         }
-        return redirect('/centers');
+        return redirect('/csr');
     }
 }

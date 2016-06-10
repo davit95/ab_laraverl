@@ -37,7 +37,7 @@ class User extends Model implements AuthenticatableContract,
         'phone',
         'address1',
         'address2',
-        'country_is',
+        'country_id',
         'city_id',
         'us_state_id',
         'postal_code',
@@ -73,7 +73,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function city()
     {
-        return $this->belongsTo('App\\Models\\City');
+        return $this->belongsTo('App\\Models\\City', 'city_id');
     }
 
     public function state()
@@ -86,6 +86,30 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
     }
 
+    public function us_state()
+    {
+        return $this->belongsTo('App\\Models\\UsState', 'us_state_id');
+    }
+
+    public function region()
+    {
+        return $this->belongsTo('App\\Models\\Region', 'region_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo('App\\Models\\Country', 'country_id');
+    }
+
+    public function staffs() {
+        return $this->belongsToMany('App\\Models\\Staff', 'owner_staffs', 'user_id', 'staff_id');
+    }
+
+    public function centers()
+    {
+        return $this->hasMany('App\\Models\\Center', 'id', 'center_id');
+    }
+
     public function isSuperAdmin()
     {
         $role = $this->role;
@@ -95,7 +119,7 @@ class User extends Model implements AuthenticatableContract,
         }
         if($role->name == 'super_admin') {
             return true;
-        } 
+        }
         return false;
         // $role = $this->role;
         // if(!$role) {
@@ -140,6 +164,32 @@ class User extends Model implements AuthenticatableContract,
         return false;
     }
 
+    public function isSuperAdminOrOwner()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'owner_user' || $role->name == 'super_admin') {
+            return true;
+        } 
+        return false;
+    }
+
+    public function isSuperAdminOrCsr()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'admin' || $role->name == 'super_admin') {
+            return true;
+        } 
+        return false;
+    }
+
     public function isClientUser()
     {
         $role = $this->role;
@@ -148,6 +198,19 @@ class User extends Model implements AuthenticatableContract,
             
         }
         if($role->name == 'client_user') {
+            return true;
+        } 
+        return false;
+    }
+
+    public function isSuperAdminOrOwnerOrCsr()
+    {
+        $role = $this->role;
+        if(!$role) {
+            throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
+            
+        }
+        if($role->name == 'super_admin' || $role->name == 'owner_user') {
             return true;
         } 
         return false;

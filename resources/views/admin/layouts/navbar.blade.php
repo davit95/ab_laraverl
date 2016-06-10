@@ -53,6 +53,14 @@
             </a>
         @endif
     @endif
+    @if($role == 'owner_user')
+        <a href="{{ url('owners/'.\Auth::id()) }}" class="nd">
+            <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
+                <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
+                <div class="menu_btnR m_menu">MY ACCOUNT</div>
+            </div>
+        </a>
+    @endif
     <a href="{{ url('logout') }}" class="nd">
         <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
     </a>

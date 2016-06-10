@@ -19,7 +19,7 @@
 <div class="logo"><a href="{{ url('csr') }}"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></a></div>
 <div class="mobileMenu"></div>
 <div class="menu">
-    @if(isset($role) && $role !== 'client_user')
+    @if(isset($role) && $role !== 'client_user' && $role !== 'admin')
         <div class="dropD_header">
             <div class="sSelectWrap1">
                 <div class="sSelectWrap2">

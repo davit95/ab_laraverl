@@ -26,8 +26,7 @@ class CentersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        //$this->middleware('admin', ['only' => ['create']]);
-        $this->middleware('superAdmin', ['only' => ['create']]);
+        //$this->middleware('superAdminOrOwner', ['only' => ['create']]);
     }
 
     /**
@@ -35,31 +34,45 @@ class CentersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CenterService $centerService)
+    public function index(CenterService $centerService, OwnerService $ownerService)
     {
+        $owners = $ownerService->getOwners();
+        //dd($owners);
         $role = \Auth::user()->role->name;
         if($role === 'super_admin') {
-            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'owner_user') {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->id), 'role' => $role, 'owners' => $owners, 'id' => \Auth::user()->id]);   
         } elseif($role === 'client_user') {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'admin') {
-            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role]);
+            return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);
         }
         
     }
+
+    // public function createOwnerCenter($id,
+    //     UsStateService $usStateService,
+    //     CountryService $countryService,
+    //     CenterService $centerService,
+    //     OwnerService $ownerService)
+    // {
+
+    // }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(UsStateService $usStateService,
-                           CountryService $countryService,
-                           CenterService $centerService)
+    public function create(
+        UsStateService $usStateService,
+        CountryService $countryService,
+        CenterService $centerService,
+        OwnerService $ownerService)
     {   
-
+        $owners = ['' => 'no owner'] + $ownerService->getOwnersLists();
+        //dd($owners);
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
         $selectArray = [
@@ -89,7 +102,8 @@ class CentersController extends Controller
             'plus_packages' => $plus_packages,
             'photos' => [],
             'sites' => $sites,
-            'role' => $role
+            'role' => $role,
+            'owners' => $owners
         ]);
     }
 
@@ -99,8 +113,9 @@ class CentersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CenterRequest $request, CenterService $centerService)
+    public function store(Request $request, CenterService $centerService)
     {
+        //dd($request->all());
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
                 return redirect('centers')->withSuccess('Center has been successfully added.');
@@ -121,7 +136,7 @@ class CentersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id, CenterService $centerService,CountryService $countryService,
-                           UsStateService $usStateService)
+                           UsStateService $usStateService, OwnerService $ownerService)
     {
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
@@ -143,6 +158,7 @@ class CentersController extends Controller
             '' => 'no package',
             'plus_package' => 'Platinum Plus'
         ];
+        $owners = $ownerService->getOwnersLists();
         $selectArray = $selectArray;
         $states = $usStateService->getAllStates()->lists('name', 'name')->toArray();
         $countries = $countryService->getAllCountries()->lists('name', 'name')->toArray();
@@ -153,6 +169,7 @@ class CentersController extends Controller
         
         if($role === 'super_admin') {    
             $center = $centerService->getVirtualOfficeById($id);    
+            //dd($center);
         } elseif($role === 'owner_user') {
             $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);
         } elseif($role === 'admin') {
@@ -161,6 +178,7 @@ class CentersController extends Controller
         
         $arr = $centerService->getCenterPackages($prices);
         $packages = $centerService->getPackagesList();
+        //dd($center->prices);
         if($center) {
             return view('admin.centers.create', 
             [
@@ -176,7 +194,8 @@ class CentersController extends Controller
                 'center_package' => $arr,
                 'package' => $center->prices[0]->package,
                 'sites' => $sites,
-                'role' => $role
+                'role' => $role,
+                'owners' => $owners
             ]);
         } else {
             dd(404);
@@ -245,16 +264,17 @@ class CentersController extends Controller
     public function show($id, CenterService $centerService, OwnerService $ownerService, UserInterface $userService)
     {
         $role = \Auth::user()->role->name;
+        $owners = $ownerService->getOwnersLists();
         if($role === 'super_admin') {
             $center = $centerService->getVirtualOfficeById($id);
         } elseif($role === 'owner_user' ) {
-            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);        
+            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->id);        
         } elseif($role === 'client_user')  {
             $center = $centerService->getCenterById($id, \Auth::user()->center_id);
         } elseif($role === 'admin')  {
             $center = $centerService->getVirtualOfficeById($id);
         }
-
+        //dd($center->sites);
         if($center) {
             return view('admin.centers.show',[
                 'center' => $center,
@@ -262,6 +282,9 @@ class CentersController extends Controller
                 'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
                 'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
                 'role' => $role,
+                'owners' => $owners,
+                'id' => \Auth::user()->id,
+                'sites' => $center->sites
             ]);
         } else {
             dd(404);

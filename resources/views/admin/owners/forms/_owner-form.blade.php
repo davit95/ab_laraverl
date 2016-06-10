@@ -1,11 +1,10 @@
-@if(isset($owner))
-	{!! Form::model($owner, [ 'url' => url('owners/'.$owner->id), 'method' => 'PUT' ]) !!}
+@if(isset($owner_client))
+	{!! Form::model($owner_client, [ 'url' => url('owners/'.$owner_client->id), 'method' => 'PUT' ]) !!}
 	{!! Form::hidden('id', null) !!}
 @else
 	{!! Form::open([ 'url' => url('owners') ]) !!}
 @endif
 	@include('alerts.messages')
-
 	<div class="panel panel-default">
 		<div class="panel-body col-md-6">
 	    	<div class="row form-group">
@@ -14,7 +13,7 @@
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Owner's Name</label></div>
-	    		<div class="col-md-8">{!! Form::text('name', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Name' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::text('first_name', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Name' ]) !!}</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Owner's Phone</label></div>
@@ -24,18 +23,24 @@
 	    		<div class="col-md-4 text-right"><label>Fax</label></div>
 	    		<div class="col-md-8">{!! Form::text('fax', null, [ 'class' => 'form-control', 'placeholder' => 'Fax' ]) !!}</div>
 	    	</div>
-	    	<div class="row form-group">
+	    	<!-- <div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Website</label></div>
 	    		<div class="col-md-8">{!! Form::text('url', null, [ 'class' => 'form-control', 'placeholder' => 'Website' ]) !!}</div>
-	    	</div>
+	    	</div> -->
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Owner's Email</label></div>
 	    		<div class="col-md-8">{!! Form::email('email', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Postal Code</label></div>
-	    		<div class="col-md-8">{!! Form::text('postal_code', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::text('postal_code', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Postal code' ]) !!}</div>
 	    	</div>
+	    	@if(!isset($owner))
+		    	<div class="row form-group">
+		    		<div class="col-md-4 text-right"><label>Password</label></div>
+		    		<div class="col-md-8">{!! Form::text('password', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Password' ]) !!}</div>
+		    	</div>
+	    	@endif
 	    </div>
 	    <div class="panel-body col-md-6">
 	    	<div class="row form-group">
@@ -49,29 +54,50 @@
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>City</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::text('city', null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'City']) !!}
+	    			{!! Form::text('city', isset($owner_client) && null != $owner_client->city ? $owner_client->city->name : null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'City']) !!}
 	    			<!-- {!! Form::hidden('city_id', null, ['id' => 'city_id']) !!} -->
 	    		</div>
 	    	</div>
-	    	<div class="row form-group">
+	    	<!-- <div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>County / Region</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::select('region', $regions_list, null, ['class' => 'form-control', 'id' => 'region', 'placeholder' => 'County / Region']) !!}
-	    			<!-- {!! Form::hidden('region_id', null, ['id' => 'region_id']) !!} -->
+	    			<select name="region" class="form-control" id="region">
+	    				@foreach($regions_list as $region)
+	    					@if( isset($owner_client) && null != $owner_client->region && $region == $owner_client->region->name)
+	    						<option value="{{$region}}"  selected = "{{$region}}">{{$region}}</option>
+	    					@else 
+	    						<option value="{{$region}}">{{$region}}</option>
+	    					@endif
+	    				@endforeach
+	    			</select>
 	    		</div>
-	    	</div>
+	    	</div> -->
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>State</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::select('us_state', $states_list, null, ['class' => 'form-control', 'id' => 'us_state', 'placeholder' => 'State']) !!}
-	    			<!-- {!! Form::hidden('us_state_id', null, ['id' => 'us_state_id']) !!} -->
+	    			<select name="us_state" class="form-control" id="us_state">
+	    				@foreach($states_list as $state)
+	    					@if(isset($owner_client) && null != $owner_client->us_state && $state == $owner_client->us_state->name)
+	    						<option value="{{$state}}"  selected = "{{$state}}">{{$state}}</option>
+	    					@else 
+	    						<option value="{{$state}}">{{$state}}</option>
+	    					@endif
+	    				@endforeach
+	    			</select>
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Country</label></div>
 	    		<div class="col-md-8">
-	    			{!! Form::select('country', $countries_list, null, ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'Country']) !!}
-	    			<!-- {!! Form::hidden('country_id', null, ['id' => 'country_id']) !!} -->
+	    			<select name="country" class="form-control" id="country">
+	    				@foreach($countries_list as $country)
+	    					@if(isset($owner_client) && null != $owner_client->country && $country == $owner_client->country->name)
+	    						<option value="{{$country}}"  selected = "{{$country}}">{{$country}}</option>
+	    					@else 
+	    						<option value="{{$country}}">{{$country}}</option>
+	    					@endif
+	    				@endforeach
+	    			</select>
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
@@ -82,7 +108,54 @@
 	    		</div>
 	    	</div>
 	    </div>
+	    <!-- new here -->
+	    @for($i = 1; $i <= 4; $i++)
+		    <div class="panel-body col-md-12">
+			    <div class="panel-body col-md-6">
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Contact Name</label></div>
+			    		<div class="col-md-8">{!! Form::text('contact_name_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->name :null, [ 'class' => 'form-control', 'placeholder' => 'Contact Name' ]) !!}</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Title</label></div>
+			    		<div class="col-md-8">{!! Form::text('title_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->title : null, [ 'class' => 'form-control', 'placeholder' => 'Title' ]) !!}</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Phone</label></div>
+			    		<div class="col-md-8">{!! Form::text('phone_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->phone_1 : null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Phone</label></div>
+			    		<div class="col-md-8">{!! Form::text('phone_1_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->phone_2 : null, [ 'class' => 'form-control', 'placeholder' => 'Phone' ]) !!}</div>
+			    	</div>
+			    </div>
+			    <div class="panel-body col-md-6">
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Ext</label></div>
+			    		<div class="col-md-8">
+			    			{!! Form::text('ext_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->ext_1 : null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    		</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Ext</label></div>
+			    		<div class="col-md-8">
+			    			{!! Form::text('ext_1_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->ext_2 : null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    		</div>
+			    	</div>
+			    	<div class="row form-group">
+			    		<div class="col-md-4 text-right"><label>Email</label></div>
+			    		<div class="col-md-8">
+			    			{!! Form::text('contact_email_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->email : null, [ 'class' => 'form-control', 'placeholder' => 'ext' ]) !!}
+			    			{!! Form::hidden('staff_id_'.$i, isset($owner_client->staffs[$i-1])  ? $owner_client->staffs[$i-1]->id : null, [ ]) !!}
+			    		</div>
+			    	</div>
+			    </div>
+			</div> 
+		@endfor
+		<!--  -->
+
 	    <div class="clearfix"></div>
+
 	</div>
 	<div class="row">
 		<div class="col-md-12">

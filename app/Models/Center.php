@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Center extends Model {
 
 	protected $fillable = ['city_name',
-							'name',
-	 					   'slug', 'owner_id',
+						   'name',
+	 					   'slug', 
+	 					   'owner_id',
+	 					   'owner_user_id',
 	  					   'city_name',
 	   					   'city_id',
 	    				   'country', 
@@ -52,6 +54,9 @@ class Center extends Model {
 
 	public function owner() {
 		return $this->hasOne('App\\Models\\Owner', 'id', 'owner_id');
+	}
+	public function owner_user() {
+		return $this->hasOne('App\\User', 'id', 'owner_user_id');
 	}
 
 	public function center_filter() {

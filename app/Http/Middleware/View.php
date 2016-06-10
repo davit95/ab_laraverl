@@ -17,7 +17,7 @@ class View
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {                
+    {     
         $currencyModel = new Currency;
         $client = new Client;
         $now = (new DateTime('now'))->format('Y-m-d H:i:s');
@@ -29,7 +29,7 @@ class View
             session()->forget('rate');
             session(['last_refresh_time' => $now]);
         }
-        if (is_null(session('currency'))) {            
+        if (is_null(session('currency'))) {                       
             $currency = $currencyModel->find(1);
             $currency = ['id' => $currency->id, 'name' => $currency->name, 'symbol' => $currency->symbol, 'image' => $currency->image];
             session(['currency' => $currency]);

@@ -53,7 +53,7 @@ class AuthController extends Controller
             return redirect('/centers')->withSuccess('You has been successfully logged in.');
         }
         elseif ($auth->attempt($request->params(3))) {
-            return redirect('/csr')->withSuccess('You has been successfully logged in.');
+            return redirect('/client')->withSuccess('You has been successfully logged in.');
         }
         elseif ($auth->attempt($request->params(2))) {
             return redirect('/csr')->withSuccess('You has been successfully logged in.');
