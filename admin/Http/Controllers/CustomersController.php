@@ -53,7 +53,9 @@ class CustomersController extends Controller
         $months['11'] = 'November (11)';
         $months['12'] = 'December (12)';
 
+        $userService->test($id,\Auth::id());
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
+        //dd($customer);
         if($customer) {
             $role_id = \Auth::user()->role_id;
             if($id == $customer->id) {

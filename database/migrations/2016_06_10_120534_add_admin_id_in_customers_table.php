@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRoleIdFieldInOwnersTable extends Migration
+class AddAdminIdInCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddRoleIdFieldInOwnersTable extends Migration
      */
     public function up()
     {
-        Schema::table('owners', function (Blueprint $table) {
-            $table->integer('role_id')->after('url');
+        Schema::table('customers', function (Blueprint $table) {
+            $table->integer('admin_id')->after('id');
         });
     }
 
@@ -24,9 +24,9 @@ class AddRoleIdFieldInOwnersTable extends Migration
      */
     public function down()
     {
-        Schema::table('owners', function(Blueprint $table)
+        Schema::table('customers', function(Blueprint $table)
         {            
-            $table->dropColumn('role_id');
+            $table->dropColumn('admin_id');
         });
     }
 }

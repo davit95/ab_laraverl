@@ -11,13 +11,26 @@
 				    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Your Orders</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content"> 
-					<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab"> 
-						@include('alerts.messages')
-						@include('admin.csr.orders')
-					</div> 
-					<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
-						@include('alerts.messages')
-					</div>
+					@if($role == 'admin')
+						<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab"> 
+							@include('alerts.messages')
+							@include('admin.csr.new_orders')
+						</div> 
+						<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
+							@include('alerts.messages')
+							@include('admin.csr.your_orders')
+						</div>
+					@else
+						<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab"> 
+							@include('alerts.messages')
+							@include('admin.csr.orders')
+						</div> 
+						<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"> 
+							@include('alerts.messages')
+							@include('admin.csr.orders')
+						</div>
+					@endif
+					
 				</div>
 			</div>
 		    <!-- <div class="dataTable_wrapper">                
