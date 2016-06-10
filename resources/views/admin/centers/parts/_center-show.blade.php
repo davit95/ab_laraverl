@@ -52,9 +52,19 @@
             <span class="lh_fi mediumBold">Notes:</span>&nbsp;
             <div class="formOinfo">{{ $center->notes }}</div>
         </div>
-        <div class="line">
+        <!-- <div class="line">
             <span class="lh_fi mediumBold">Amenities:</span>&nbsp;
             <div class="formOinfo">{{ $center->amenities }}</div>
+        </div> -->
+        <div class="line">
+            <span class="lh_fi mediumBold">Sites:</span>&nbsp;
+            <div class="formOinfo">
+                @if(isset($center))
+                    @foreach($center->sites as $site)
+                       {{$site->name}} <br>
+                    @endforeach
+                @endif
+            </div>
         </div>
     </div>
     <div class="form_right">

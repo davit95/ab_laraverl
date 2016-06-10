@@ -26,7 +26,7 @@ class OwnersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('superAdmin',['only' => 'create']);
+        $this->middleware('superAdmin',['only' => ['index', 'create']]);
         $this->middleware('superAdminOrOwnerOrCsr');
     }
 

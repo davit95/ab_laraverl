@@ -274,7 +274,7 @@ class CentersController extends Controller
         } elseif($role === 'admin')  {
             $center = $centerService->getVirtualOfficeById($id);
         }
-        //dd($center->owner_user->company_name);
+        //dd($center->sites);
         if($center) {
             return view('admin.centers.show',[
                 'center' => $center,
@@ -283,7 +283,8 @@ class CentersController extends Controller
                 'countries_list' => ['' => 'no country'] + $ownerService->getAllCountriesLists(),
                 'role' => $role,
                 'owners' => $owners,
-                'id' => \Auth::user()->id
+                'id' => \Auth::user()->id,
+                'sites' => $center->sites
             ]);
         } else {
             dd(404);

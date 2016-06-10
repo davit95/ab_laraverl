@@ -34,7 +34,6 @@
         @include('admin.owners.parts._owner-show')
 	</div>
 	<div class="content_wrapp2">        
-        @include('admin.owners.parts._centers-show')    
         @include('admin.owners.parts._members-show')
     </div>    
 @stop

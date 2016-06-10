@@ -366,12 +366,12 @@ class CenterService implements CenterInterface {
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
 		if(isset($inputs['active'])) {
-			$center_filter_data = new $this->centerFilter(['virtual_office' => 1]);
+			$center_filter_data = new $this->centerFilter(['virtual_office' => 1, 'meeting_room' => 1]);
 		} else {
-			$center_filter_data = new $this->centerFilter(['virtual_office' => 0]);
+			$center_filter_data = new $this->centerFilter(['virtual_office' => 0, 'meeting_room' => 1]);
 		}
 
-		$center_filter_data = new $this->centerFilter(['meeting_room' => 1]);
+		//$center_filter_data = new $this->centerFilter(['meeting_room' => 1]);
 		
 		$meeting_room_seos_data = new $this->meetingRoomSeo($this->getMrSeosParams($inputs));
 
