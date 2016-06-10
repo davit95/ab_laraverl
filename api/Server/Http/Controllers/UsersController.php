@@ -25,14 +25,17 @@ class UsersController extends Controller
      */
     public function index()
     {
-           
+        
     }
 
     public function postAddUserFromAllwork(Request $request)
     {        
         $inputs = $request->all();
-        $role_id = Role::where('name', 'admin')->first()->id;
+        $role = Role::where('name', 'allwork_user')->first();
+        $role_id = isset($role) ? $role->id : null;        
         $inputs['role_id'] = $role_id;
-        User::create($inputs);
+        $user = User::create($inputs);
+        $user_id = isset($user) ? $user->id : null;
+        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id]);            
     }
 }

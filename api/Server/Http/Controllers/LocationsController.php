@@ -22,6 +22,16 @@ class LocationsController extends Controller
     }
 
     /**
+     * Create a resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addLocation(Request $request, LocationService $locationService)
+    {
+        $locationService->addLocation($request->all());   
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -96,5 +106,11 @@ class LocationsController extends Controller
     {        
         $countries = $this->locationService->getAllCountries();
         return response()->json(['countries' => $countries]);
+    }
+
+    public function getAllStates()
+    {
+        $states = $this->locationService->getAllStates();
+        return response()->json(['states' => $states]);
     }
 }
