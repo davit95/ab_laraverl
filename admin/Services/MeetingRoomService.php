@@ -126,7 +126,7 @@ class MeetingRoomService implements MeetingRoomInterface {
 		$mr['half_day_rate'] = $inputs['half_day'];
 		$mr['full_day_rate'] = $inputs['full_day'];
 		$mr['min_hours_req'] = $inputs['min_hours'];
-		$mr['floor'] = $inputs['floor'];
+		//$mr['floor'] = $inputs['floor'];
 		$mr['center_id'] = $inputs['center_id'];
 		return $mr;
 	}

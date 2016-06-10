@@ -6,11 +6,15 @@
 
 @section('content')
     <div class="row form-group">
-    	@if(!Request::is('owners*'))  		
-			<a href="{{ url('centers/create') }}" class="btn btn-outline btn-default" style="margin-left:15px;"><i class="fa fa-plus"></i> New Center</a>
+    	@if(!Request::is('owners*'))  	
+    		@if(isset($id))	
+				<a href="{{ url('owner/'.$id.'/center/create') }}" class="btn btn-outline btn-default" style="margin-left:15px;"><i class="fa fa-plus"></i> New Center</a>
+			@else
+				<a href="{{ url('centers/create') }}" class="btn btn-outline btn-default" style="margin-left:15px;"><i class="fa fa-plus"></i> New Center</a>
+			@endif
 		@endif
 		@if(Request::is('owners*')) 
-			@if($role === 'super_admin')		
+			@if(isset($id))		
 				<a href="{{ url('owners/create') }}" class="btn btn-outline btn-default" style="margin-left:15px;"><i class="fa fa-plus"></i> New Owner</a>
 			@elseif($role === 'owner_user' && isset($owner))
 				<a href="{{ url('owners/'.$owner->id.'/edit') }}" class="btn btn-outline btn-default" style="margin-left:15px;"><i class="fa fa-plus"></i> Edit Owner</a>

@@ -37,7 +37,7 @@
 		 	 	<p>{{$client->first_name}} {{$client->last_name}}</p>
 		 	 	<p>{{$client->address1}}</p>
 		 	 	<p>{{$client->city->name}}, {{$client->city->country_code}} {{$client->postal_code}}</p>
-		 	 	<p>{{$client->country}}</p>
+		 	 	<p>{{$client->country->name}}</p>
 		 	 	<p>Phone: {{$client->phone}}</p>
 		 	 	<p>Email: {{$client->email}}</p>
 		 	</div>

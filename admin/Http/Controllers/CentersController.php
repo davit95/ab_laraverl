@@ -42,7 +42,7 @@ class CentersController extends Controller
         if($role === 'super_admin') {
             return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'owner_user') {
-            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->id), 'role' => $role, 'owners' => $owners]);   
+            return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->id), 'role' => $role, 'owners' => $owners, 'id' => \Auth::user()->id]);   
         } elseif($role === 'client_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->owner_id), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'admin') {
@@ -50,6 +50,15 @@ class CentersController extends Controller
         }
         
     }
+
+    // public function createOwnerCenter($id,
+    //     UsStateService $usStateService,
+    //     CountryService $countryService,
+    //     CenterService $centerService,
+    //     OwnerService $ownerService)
+    // {
+
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -62,7 +71,7 @@ class CentersController extends Controller
         CenterService $centerService,
         OwnerService $ownerService)
     {   
-        $owners = $ownerService->getOwnersLists();
+        $owners = ['' => 'no owner'] + $ownerService->getOwnersLists();
         //dd($owners);
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
@@ -106,7 +115,6 @@ class CentersController extends Controller
      */
     public function store(Request $request, CenterService $centerService)
     {
-        //dd($request->all());
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
                 return redirect('centers')->withSuccess('Center has been successfully added.');
@@ -259,13 +267,13 @@ class CentersController extends Controller
         if($role === 'super_admin') {
             $center = $centerService->getVirtualOfficeById($id);
         } elseif($role === 'owner_user' ) {
-            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id);        
+            $center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->id);        
         } elseif($role === 'client_user')  {
             $center = $centerService->getCenterById($id, \Auth::user()->center_id);
         } elseif($role === 'admin')  {
             $center = $centerService->getVirtualOfficeById($id);
         }
-
+        //dd($center->owner_user->company_name);
         if($center) {
             return view('admin.centers.show',[
                 'center' => $center,

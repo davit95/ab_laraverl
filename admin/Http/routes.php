@@ -42,8 +42,9 @@ Route::resource('/staffs', 'StaffsController');
 /*Route::get('/meeting-rooms', 'MeetingRoomsController@index');*/
 Route::resource('/meeting-rooms', 'MeetingRoomsController');
 Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
-Route::get('/center/{id}/meeting-room/create', 'MeetingRoomsController@addMeetingRoom');
+
 Route::get('/center/{id}/owner/create', 'OwnersController@createOrUpdateOwner');
+Route::get('owner/{id}/center/create', 'CentersController@create');
 /*new*/
 
 
@@ -77,6 +78,7 @@ Route::group(['middleware' => 'client_user'], function () {
 
 Route::group(['middleware' => 'superAdminOrOwner'], function () {
 	Route::resource('/centers', 'CentersController');
+	Route::get('/center/{id}/meeting-room/create', 'MeetingRoomsController@addMeetingRoom');
 });
 
 Route::group(['middleware' => 'superAdmin'], function () {

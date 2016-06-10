@@ -13,7 +13,7 @@
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Owner's Name</label></div>
-	    		<div class="col-md-8">{!! Form::text('name', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Name' ]) !!}</div>
+	    		<div class="col-md-8">{!! Form::text('first_name', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Name' ]) !!}</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Owner's Phone</label></div>
@@ -23,10 +23,10 @@
 	    		<div class="col-md-4 text-right"><label>Fax</label></div>
 	    		<div class="col-md-8">{!! Form::text('fax', null, [ 'class' => 'form-control', 'placeholder' => 'Fax' ]) !!}</div>
 	    	</div>
-	    	<div class="row form-group">
+	    	<!-- <div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Website</label></div>
 	    		<div class="col-md-8">{!! Form::text('url', null, [ 'class' => 'form-control', 'placeholder' => 'Website' ]) !!}</div>
-	    	</div>
+	    	</div> -->
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Owner's Email</label></div>
 	    		<div class="col-md-8">{!! Form::email('email', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Email' ]) !!}</div>
@@ -58,7 +58,7 @@
 	    			<!-- {!! Form::hidden('city_id', null, ['id' => 'city_id']) !!} -->
 	    		</div>
 	    	</div>
-	    	<div class="row form-group">
+	    	<!-- <div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>County / Region</label></div>
 	    		<div class="col-md-8">
 	    			<select name="region" class="form-control" id="region">
@@ -71,7 +71,7 @@
 	    				@endforeach
 	    			</select>
 	    		</div>
-	    	</div>
+	    	</div> -->
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>State</label></div>
 	    		<div class="col-md-8">

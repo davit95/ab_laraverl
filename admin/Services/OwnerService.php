@@ -122,7 +122,7 @@ class OwnerService implements OwnerInterface
 		$params['password'] = bcrypt($params['password']);
 		$country_id = $this->country->where('name', $params['country'])->first()->id;
 		$state_id = $this->state->where('name', $params['us_state'])->first()->id;
-		$region_id = $this->region->where('name', $params['region'])->first()->id;
+		//$region_id = $this->region->where('name', $params['region'])->first()->id;
 		$city_id = $this->city->where('country_id', $country_id)->
 								where('us_state_id', $state_id)->
 								where('name', $params['city'])->first()->id;
@@ -130,7 +130,7 @@ class OwnerService implements OwnerInterface
 		$params['us_state_id'] = $state_id;
 		$params['city_id'] = $city_id;
 		$params['country_id'] = $country_id;
-		$params['region_id'] = $region_id;
+		//$params['region_id'] = $region_id;
 		//dd($params);
 		return $params;
 		//dd($params, 'params');
@@ -144,21 +144,15 @@ class OwnerService implements OwnerInterface
 	 */
 	public function createOwner($owner_params)
 	{
-		//dd($owner_params);
-		//$owner = $this->owner->create($this->getOwnerParams($owner_params));
-		//dd($owner_params);
 		$owner_user = $this->user->create($this->getOwnerUserParams($owner_params));
-		// if($owner_user) {
-		// 	$this->center->find($owner_params['center_id'])->update(['owner_id' => $owner_user->id]);
-
-		// }
 		$staffs_params = $this->getOwnerStaffsParams($owner_params);
 		if(!empty($staffs_params)) {
 			$staffs = $this->staff->insert($staffs_params);
+			if($staffs) {
+				$this->user->find($owner_user->id)->staffs()->attach($this->getStaffsIds($staffs_params));
+			}
 		}
-		if($staffs) {
-			$this->user->find($owner_user->id)->staffs()->attach($this->getStaffsIds($staffs_params));
-		}
+		
 		
 		return $owner_user;
 	}

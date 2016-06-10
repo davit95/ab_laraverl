@@ -20,10 +20,10 @@
             <span class="lh_fi mediumBold">Fax:</span>&nbsp;
             <div class="formOinfo">{{ $owner->fax }}</div>
         </div> 
-        <div class="line">
+        <!-- <div class="line">
             <span class="lh_fi mediumBold">Web Site:</span>&nbsp;
             <div class="formOinfo"><a href="{{ $owner->url }}">{{ $owner->url }}</a></div>
-        </div> 
+        </div> --> 
         <div class="line">
             <span class="lh_fi mediumBold">Email:</span>&nbsp;
             <div class="formOinfo">{{ $owner->email }}</div>
@@ -50,10 +50,10 @@
             <span class="lh_fi mediumBold">City:</span>&nbsp;
             <div class="formOinfo">{{ null != $owner->city ? $owner->city->name : null }}</div>
         </div>
-        <div class="line">
+        <!-- <div class="line">
             <span class="lh_fi mediumBold">County / Region:</span>&nbsp;
             <div class="formOinfo">{{ $owner->region }}</div>
-        </div> 
+        </div> --> 
         <div class="line">
             <span class="lh_fi mediumBold">State:</span>&nbsp;
             <div class="formOinfo">{{ null != $owner->us_state ? $owner->us_state->name : null }}</div>

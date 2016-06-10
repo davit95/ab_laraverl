@@ -12,6 +12,7 @@ use Admin\Contracts\CityInterface;
 use Admin\Contracts\RegionInterface;
 use Admin\Contracts\UsStateInterface;
 use Admin\Contracts\CountryInterface;
+use Admin\Contracts\CenterInterface;
 use Admin\Http\Requests\OwnerRequest;
 use Admin\Http\Requests\MeetingRoomRequest;
 use Admin\Contracts\MeetingRoomInterface;
@@ -52,14 +53,25 @@ class MeetingRoomsController extends Controller
      */
     public function create()
     {
-        $role = \Auth::user()->role->name;
-        return view('admin.centers.add_meeting_room', ['role' => $role]);
+        return view('errors.404');
+        // $role = \Auth::user()->role->name;
+        // return view('admin.centers.add_meeting_room', ['role' => $role]);
     }
 
-    public function addMeetingRoom($center_id)
+    public function addMeetingRoom($center_id, CenterInterface $centerService)
     {
         $role = \Auth::user()->role->name;
-        return view('admin.centers.add_meeting_room',['center_id' => $center_id, 'role' => $role]);
+        if($role == 'super_admin') {
+            return view('admin.centers.add_meeting_room',['center_id' => $center_id, 'role' => $role]);
+        } elseif($role == 'owner_user') {
+            $center = $centerService->getOwnerCenterById(\Auth::user()->id);
+            if(null!= $center) {
+                return view('admin.centers.add_meeting_room',['center_id' => $center_id, 'role' => $role]);
+            } else {
+                return redirect('/centers');
+            }
+        }
+        
     }
 
     /**

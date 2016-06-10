@@ -38,6 +38,9 @@ class SuperAdminOrOwner
         if(auth()->user()->role->name == "client_user") {
             return redirect('/client');
         }
+        if(auth()->user()->role->name == "admin") {
+            return redirect('/csr');
+        }
         if(auth()->user()->isSuperAdminOrOwner()) {
             return $next($request);
         } 

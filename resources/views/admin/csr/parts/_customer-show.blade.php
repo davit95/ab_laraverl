@@ -156,9 +156,9 @@
                 <span class="lh_fi mediumBold">
                     <strong>Start Date:</strong>
                 </span>&nbsp;
+                
                 <div class="formOinfo">
                     <select name="start_date_month">
-
                         @foreach($months as $key => $month)
                             @if($key == date('m', strtotime($customer->created_at)))
                                 <option value="{{$key}}" selected="selected">{{$month}}</option>
@@ -392,7 +392,6 @@
     <div class="bBox_btns">
        
         <div class="edit_oBtn bordL"><a href="{{ url('customers/'.$customer->id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>edit customer's info</a></div>
-        <div class="edit_oBtn bordL"><a href="{{ url('centers/'.$center->id) }}" class="gLink"><div class="sBox_icons edit_green"></div>show center</a></div>
     </div> 
     <div class="clear"></div>
 </div>

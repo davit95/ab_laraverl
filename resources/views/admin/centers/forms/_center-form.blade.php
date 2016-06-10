@@ -14,19 +14,19 @@
         <!-- <span class="lh_f">Viewable On :</span>&nbsp;
         <br> -->
         <div class="services_wrapp">
-            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <input type="checkbox" name="avo_site" value="avo" id="1" checked="">
             <label for="1"></label>
             AVO -Alliancevirtualoffices.com &nbsp; &nbsp;
         </div>
         <br><br>
         <div class="services_wrapp">
-            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <input type="checkbox" name="abcn_site" value="abcn" id="1" checked="">
             <label for="1"></label> 
-            SDV -Samedayvirtual.com
+            ABCN -Samedayvirtual.com
         </div>
         <br><br>
         <div class="services_wrapp">
-            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <input type="checkbox" name="allwork_site" value="allwork" id="1" checked="">
             <label for="1"></label>
             AWS - Allwork.space
         </div>
@@ -43,48 +43,39 @@
     </div>
     <div class="form_right centers_basic">
         <div class="services_wrapp">
-            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <input type="checkbox" name="avo_vo" value="VO" id="1" checked="">
             <label for="1">         
             </label> 
             VO &nbsp; &nbsp;
-                <input type="checkbox" name="services" value="MR" id="2" checked="">
+                <input type="checkbox" name="avo_mr" value="MR" id="2" checked="">
                 <label for="2">
                     
                 </label> 
             MR &nbsp; &nbsp;
-                <input type="checkbox" name="services" value="LR" id="3" checked="">
-                <label for="3"></label> 
-            LR
         </div>
         <br><br>
         <div class="services_wrapp">
-            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <input type="checkbox" name="abcn_vo" value="VO" id="1" checked="">
             <label for="1">         
             </label> 
             VO &nbsp; &nbsp;
-                <input type="checkbox" name="services" value="MR" id="2" checked="">
+                <input type="checkbox" name="abcn_mr" value="MR" id="2" checked="">
                 <label for="2">
                     
                 </label> 
             MR &nbsp; &nbsp;
-                <input type="checkbox" name="services" value="LR" id="3" checked="">
-                <label for="3"></label> 
-            LR
         </div>
         <br><br>
         <div class="services_wrapp">
-            <input type="checkbox" name="services" value="VO" id="1" checked="">
+            <input type="checkbox" name="allwork_vo" value="VO" id="1" checked="">
             <label for="1">         
             </label> 
             VO &nbsp; &nbsp;
-                <input type="checkbox" name="services" value="MR" id="2" checked="">
+                <input type="checkbox" name="allwork_mr" value="MR" id="2" checked="">
                 <label for="2">
                     
                 </label> 
             MR &nbsp; &nbsp;
-                <input type="checkbox" name="services" value="LR" id="3" checked="">
-                <label for="3"></label> 
-            LR
         </div>
     </div> 
     <div class="clear"></div>
@@ -101,8 +92,10 @@
 </div>
 <div class="w_box" style="width:100%">
     <div class="form_left centers_basic">
-        {!! Form::label('owners') !!}
-        {!! Form::select('owners',$owners, 'null',['class' => 'owners']) !!}
+        @if($role != 'owner_user')
+            {!! Form::label('owners') !!}
+            {!! Form::select('owners',$owners, 'null',['class' => 'owners']) !!}
+        @endif
         <br>
         {!! Form::label('building_name','Building Name:') !!}
         {!! Form::text('building_name', isset($center->building_name) ? $center->building_name : null,['class' => 'f1'])!!}       
@@ -139,6 +132,9 @@
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
+        <br>
+        {!! Form::label('Make this center active or inactive') !!}
+        {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!}
         <!-- {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
         <br> 

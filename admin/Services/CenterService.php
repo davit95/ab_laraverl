@@ -122,8 +122,10 @@ class CenterService implements CenterInterface {
 	public function getCenterParams($inputs)
 	{
 		//dd($inputs);
-		$owner_id = $this->user->where('company_name', $inputs['owners'])->first()->id;
-		$inputs['owner_id'] = $owner_id;
+		if(isset($inputs['owners'])) {
+			$owner_id = $this->user->where('company_name', $inputs['owners'])->first()->id;	
+			$inputs['owner_id'] = $owner_id;
+		}
 		$state = $this->usState->where('name', $inputs['states'])->first();
 		if($state) {
 			$inputs['us_state_id'] = $state->id;
@@ -138,6 +140,7 @@ class CenterService implements CenterInterface {
 		$inputs['country_id'] = $country->id;
 		$inputs['country_code'] = $country->code;
 		$inputs['country'] = $country->code;
+		$inputs['postal_code'] = $inputs['postal_code'];
 		$inputs['active_flag'] = 'Y';
 		return $inputs;
 	}
@@ -306,6 +309,16 @@ class CenterService implements CenterInterface {
 		return $photos;	
 	}
 
+	public function getCenterOwnerIdByName($owner_name)
+	{
+		if($owner_name == '') {
+			$params['owner_user_id'] = null;
+		} else {
+			$owner_id = $this->user->where('company_name', $owner_name)->where('role_id', 5)->first()->id;
+		}
+		return $owner_id;
+	}
+
 	/**
 	 * create new center
 	 *
@@ -314,7 +327,16 @@ class CenterService implements CenterInterface {
 	 */
 	public function storeCenter($inputs, $files) {
 
+		//dd($inputs);
+		if(\Auth::user()->role->name == 'owner_user') {
+		    $inputs['owner_user_id'] = \Auth::id();
+		}
+		
 		$params = $this->getCenterParams($inputs);
+		
+		if(isset($params['owners'])) {
+			$params['owner_user_id'] = $this->getCenterOwnerIdByName($inputs['owners']);
+		}
 
 		$city = $this->city->where('name', $params['city_name'])->where('active', 1)->first();
 
@@ -327,6 +349,8 @@ class CenterService implements CenterInterface {
 		} else {
 			$center_filter_data = new $this->centerFilter(['virtual_office' => 0]);
 		}
+
+		$center_filter_data = new $this->centerFilter(['meeting_room' => 1]);
 		
 		$meeting_room_seos_data = new $this->meetingRoomSeo($this->getMrSeosParams($inputs));
 
@@ -339,9 +363,11 @@ class CenterService implements CenterInterface {
 
 			$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
 
-			$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
-
-			$this->center->find($center->id)->sites()->attach($this->getSitesIds($inputs['sites']));
+			if($files) {
+				$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
+			}
+			
+			//$this->center->find($center->id)->sites()->attach($this->getSitesIds($inputs['sites']));
 
 			$prices_data = $this->getPricesParams($inputs,$center->id);
 
@@ -820,7 +846,7 @@ class CenterService implements CenterInterface {
 	 */
 	public function getCentersByOwnerId($owner_id) 
 	{
-		return $this->center->where('owner_id', $owner_id)->paginate(10);
+		return $this->center->where('owner_user_id', $owner_id)->paginate(10);
 	}
 
 	/**
@@ -829,9 +855,9 @@ class CenterService implements CenterInterface {
 	 * @param $center_id, $owner_id (int,int)
 	 * @return Response
 	 */
-	public function getOwnerVirtualOfficeById($center_id, $owner_id) 
+	public function getOwnerVirtualOfficeById($center_id, $owner_user_id) 
 	{
-		$center =  $this->center->where('owner_id', $owner_id)->where('id', $center_id)->first();
+		$center =  $this->center->where('owner_user_id', $owner_user_id)->where('id', $center_id)->first();
 		if(null != $center) {
 			return $center;
 		} else {
@@ -904,5 +930,10 @@ class CenterService implements CenterInterface {
 	public function getSitesIds($inputs)
 	{
 		return $this->site->whereIn('name', $inputs)->get()->lists('id')->toArray();
+	}
+
+	public function getOwnerCenterById($owner_id)
+	{
+		return $this->center->where('owner_user_id', $owner_id)->first();
 	}
 }

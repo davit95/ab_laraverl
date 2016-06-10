@@ -33,7 +33,7 @@ class OwnerRequest extends Request
             'postal_code' => 'required|numeric',
             'address1' => 'required',
             'city' => 'required',
-            'region' => 'required',
+            //'region' => 'required',
             'us_state' => 'required',
             'country' => 'required'
         ];
