@@ -331,9 +331,18 @@ class OwnerService implements OwnerInterface
 				$inputs[$i]['id'] = $params['id_'.$i];
 			}*/
 		}
-		if(count($input) != 7) {
-			unset($inputs[$key]);
+		foreach ($inputs as $key => $input) {
+			if(isset($input['id'])) {
+				if(count($input) != 8) {
+					unset($inputs[$key]);
+				}
+			} else {
+				if(count($input) != 7) {
+					unset($inputs[$key]);
+				}
+			}	
 		}
+		
 		/*foreach ($inputs as $key => $input) {
 			if(isset($input['id'])) {
 				if(count($input) != 8) {
