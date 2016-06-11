@@ -6,6 +6,7 @@ use Admin\Contracts\CenterInterface;
 
 use App\Models\CenterCoordinate;
 use App\Models\Center;
+use App\Models\CenterSite;
 use App\Models\Photo;
 use App\Models\UsState;
 use App\Models\Country;
@@ -34,6 +35,7 @@ class CenterService implements CenterInterface {
 		Country $country, 
 		City $city,
 		Site $site,
+		CenterSite $centerSite,
 		User $user,
 		Owner $owner,
 		Package $package,
@@ -49,6 +51,7 @@ class CenterService implements CenterInterface {
 		$this->city = $city;
 		$this->site = $site;
 		$this->user = $user;
+		$this->centerSite = $centerSite;
 		$this->owner = $owner;
 		$this->centerCoordinate = $centerCoordinate;
 		$this->package = $package;
@@ -957,5 +960,20 @@ class CenterService implements CenterInterface {
 	public function getOwnerCenterById($owner_id)
 	{
 		return $this->center->where('owner_user_id', $owner_id)->first();
+	}
+
+	public function getCentersBySiteNameAndRole($site, $role)
+	{
+		$site_id = $this->site->where('name', $site)->first()->id;
+		$center_ids = $this->centerSite->where('site_id',$site_id)->get()->lists('center_id')->toArray();
+		if($role == 'super_admin') {
+			$centers = $this->center->whereIn('id', $center_ids)->paginate(10);
+		} else {
+			$centers = $this->center->whereIn('id', $center_ids)->where('owner_user_id', \Auth::id())->paginate(10);
+		}
+		if($centers) {
+			return $centers;
+		}	
+		return false;
 	}
 }

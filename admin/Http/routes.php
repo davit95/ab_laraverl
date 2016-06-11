@@ -29,6 +29,13 @@ Route::get('/logout', 'Auth\AuthController@logout');
 Route::get('/reports', 'ReportsController@index');
 Route::get('/reports/download', 'ReportsController@downloadCsv');
 Route::get('/owners-centers', 'OwnersController@getOwnersCenters');
+
+Route::get('/owners-centers', 'OwnersController@getOwnersCenters');
+Route::get('/avo-centers', 'CentersController@getCentersByName');
+Route::get('/abcn-centers', 'CentersController@getCentersByName');
+Route::get('/allwork-centers', 'CentersController@getCentersByName');
+
+
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
 Route::get('/owners/documents', 'OwnersController@getDocuments');
 Route::get('/owners/add-staff', 'OwnersController@getAddStaff' );

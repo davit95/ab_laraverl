@@ -357,4 +357,23 @@ class CentersController extends Controller
     {
         return $centerService->getAvoPhotosALtsAndCaptions($request->all());
     }
+
+    public function getCentersByName(Request $request, CenterService $centerService, OwnerService $ownerService)
+    {
+        if($request->is('allwork-centers')) {
+            $site = 'allwork';
+        } elseif($request->is('avo-centers')) {
+            $site = 'avo';
+        } elseif($request->is('abcn-centers')) {
+            $site = 'abcn';
+        }
+        $owners = $ownerService->getOwners();
+        $role = \Auth::user()->role->name;
+        $centers = $centerService->getCentersBySiteNameAndRole($site, $role);
+        if($centers) {
+            return view('admin.centers.index', ['centers' => $centers, 'role' => $role, 'owners' => $owners]);   
+        } else {
+            return view('errors.404');
+        }
+    }
 }

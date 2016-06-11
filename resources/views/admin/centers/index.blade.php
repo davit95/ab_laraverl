@@ -27,7 +27,10 @@
 		<div class="col-lg-12 table_box">
 			<div class="tabs-container">
 				<ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" class="@if(!Request::is('owners*')) active @endif"><a href="/centers">Centers</a></li>
+				    <li role="presentation" class="@if(Request::is('centers*')) active @endif"><a href="/centers">All Centers</a></li>
+				    <li role="presentation" class="@if(Request::is('avo-centers*')) active @endif"><a href="/avo-centers">Avo Centers</a></li>
+				    <li role="presentation" class="@if(Request::is('abcn-centers*')) active @endif"><a href="/abcn-centers">Abcn Centers</a></li>
+				    <li role="presentation" class="@if(Request::is('allwork-centers*')) active @endif"><a href="/allwork-centers">Allwork Centers</a></li>
 				    <li role="presentation" class="@if(Request::is('owners*')) active @endif"><a href="{{ url('/owners-centers') }}">Owners</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content"> 

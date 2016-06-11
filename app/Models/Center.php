@@ -108,4 +108,8 @@ class Center extends Model {
 	public function sites() {
 		return $this->belongsToMany('App\\Models\\Site', 'center_sites', 'center_id', 'site_id');
 	}
+
+	public function center_sites() {
+		return $this->hasMany('App\\Models\\CenterSite');
+	}
 }

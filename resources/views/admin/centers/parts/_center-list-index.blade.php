@@ -1,6 +1,6 @@
 <table id="dataTable" class="display dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="reportsT_info" style="width: 100%;">
 {{-- <table class="table table-striped table-bordered table-hover" id="centers-table"> --}}
-    
+
 <thead>
     <tr role="row">
         <th class="sorting_asc" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Center ID: activate to sort column descending" style="width: 45px;">ID</th>
