@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdminClientsTable extends Migration
+class AddAdminClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateAdminClientsTable extends Migration
         {
             $table->bigIncrements('id');
             $table->bigInteger('admin_id')->unsigned()->index();
-            $table->bigInteger('client_id')->unsigned()->index();
+            $table->bigInteger('client_id')->unsigned()->index(); 
         });
     }
 
