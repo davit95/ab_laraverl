@@ -10,9 +10,11 @@
             <a class="action-icon" data-toggle="tooltip" data-placement="top" title="Edit Owner" href="{{ url('owners/'.$owner->id.'/edit') }}"><i class="fa fa-edit"></i></a>
             <!-- <a class="action-icon delete-owner" type="submit" data-toggle="tooltip" data-placement="top" title="Delete Owner" style="cursor: pointer"><i class="fa fa-close"></i></a> -->
             <!-- {!! Form::submit('delete', array('class'=>'action-icon delete-owner')) !!} -->
-            <button type="submit" class="action-icon delete-owner" data-toggle="tooltip" data-placement="top" title="Delete Owner">
-                <i class="fa fa-close"></i>
-            </button>
+            @if(\Auth::user()->role->name == 'super_admin')
+                <button type="submit" class="action-icon delete-owner" data-toggle="tooltip" data-placement="top" title="Delete Owner">
+                    <i class="fa fa-close"></i>
+                </button>
+            @endif
         {!! Form::close() !!}
     </td>
 </tr>

@@ -350,7 +350,7 @@ class CenterService implements CenterInterface {
 	 * @return Response
 	 */
 	public function storeCenter($inputs, $files) {
-
+		dd($inputs);
 		//dd($this->getSitesIds($this->getSiteNames($inputs)));
 		if(\Auth::user()->role->name == 'owner_user') {
 		    $inputs['owner_user_id'] = \Auth::id();
@@ -368,11 +368,7 @@ class CenterService implements CenterInterface {
 		
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
-		if(isset($inputs['active'])) {
-			$center_filter_data = new $this->centerFilter(['virtual_office' => 1, 'meeting_room' => 1]);
-		} else {
-			$center_filter_data = new $this->centerFilter(['virtual_office' => 0, 'meeting_room' => 1]);
-		}
+		$center_filter_data = new $this->centerFilter(['virtual_office' => 0, 'meeting_room' => 0]);
 
 		//$center_filter_data = new $this->centerFilter(['meeting_room' => 1]);
 		

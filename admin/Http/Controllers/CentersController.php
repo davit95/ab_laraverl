@@ -71,8 +71,8 @@ class CentersController extends Controller
         CenterService $centerService,
         OwnerService $ownerService)
     {   
-        $owners = ['' => 'no owner'] + $ownerService->getOwnersLists();
-        //dd($owners);
+        $owners = ['' => 'no selected'] + $ownerService->getOwnersLists();
+        //dd($usStateService->getAllUsStatesList());
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
         $selectArray = [
@@ -96,7 +96,7 @@ class CentersController extends Controller
         return view('admin.centers.create',
         [
             'selectArray' => $selectArray,
-            'states' =>  [''=>'select state'] + $usStateService->getAllStates()->lists('name', 'name')->toArray(),
+            'states' =>  [''=>'select state'] + $usStateService->getAllUsStatesList(),
             'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
             'packages' => $packages,
             'plus_packages' => $plus_packages,
@@ -115,7 +115,6 @@ class CentersController extends Controller
      */
     public function store(Request $request, CenterService $centerService)
     {
-        //dd($request->all());
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
                 return redirect('centers')->withSuccess('Center has been successfully added.');
@@ -212,7 +211,7 @@ class CentersController extends Controller
     public function update($id, CenterRequest $request, CenterService $centerService)
     {
         $role = \Auth::user()->role->name;
-
+        //dd($request->all());
         if($role === 'super_admin') {
             try {
                 if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {

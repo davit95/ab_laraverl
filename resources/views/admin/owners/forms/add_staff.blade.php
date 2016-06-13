@@ -19,18 +19,19 @@
     <div class="addstaffMember">
         <div class="w_box lh_f">
             <div class="form_left">
-                First Name: {!! Form::text('staff_first_name', null,[ 'class' => 'f1']) !!}<br>
-                Last Name: {!! Form::text('staff_last_name', null,[ 'class' => 'f1']) !!}<br>
-                Title: {!! Form::text('staff_title', null,[ 'class' => 'f1']) !!}
+                Name: {!! Form::text('name', null,[ 'class' => 'f1']) !!}<br> 
+                Title: {!! Form::text('title', null,[ 'class' => 'f1']) !!}<br>
+                Email: {!! Form::email('email', null,[ 'class' => 'f1']) !!} <br>
             </div>
             <div class="form_right">
-                Email: {!! Form::email('staff_email', null,[ 'class' => 'f1']) !!} <br>
-                Phone: {!! Form::text('staff_phone', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('staff_ext', null,[ 'class' => 'f2']) !!}<br>
-                Phone: {!! Form::text('staff_phone_2', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('staff_ext_2', null,[ 'class' => 'f2']) !!}
+                
+                Phone: {!! Form::text('phone_1', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('ext_1', null,[ 'class' => 'f2']) !!}<br>
+                Phone: {!! Form::text('phone_2', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('ext_2', null,[ 'class' => 'f2']) !!}
+                {!! Form::hidden('owner_id',\Auth::id()) !!}
             </div>
-            <div class="form_right">
+            <!-- <div class="form_right">
                 password: {!! Form::text('password', null,[ 'class' => 'f1']) !!}
-            </div>
+            </div> -->
             <div class="clear"></div>
         </div>
     </div>

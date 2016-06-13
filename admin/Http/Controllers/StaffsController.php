@@ -7,11 +7,12 @@ use App\Services\UsStateService;
 use App\Services\CountryService;
 use App\Http\Requests;
 use Admin\Http\Requests\StaffRequest;
-
+use Admin\Contracts\OwnerInterface;
 use App\Http\Controllers\Controller;
 
 
 use Admin\Services\CenterService;
+use Admin\Services\OwnerService;
 use Admin\Contracts\StaffInterface;
 
 class StaffsController extends Controller
@@ -52,9 +53,14 @@ class StaffsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, StaffInterface $staffService)
+    public function store(StaffRequest $request, OwnerInterface $ownerService)
     {
-        dd($request->all());
+        //dd($request->all());
+        $owner_id = $request['owner_id'];
+        if ( null != $staff = $ownerService->createStaff( $request->all() ) ) {
+            return redirect('owners/'.$owner_id)->withSuccess('Owner has been successfully created.');
+        }
+        return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
     }
 
     /**

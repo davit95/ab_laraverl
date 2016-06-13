@@ -224,10 +224,13 @@ class OwnersController extends Controller
      */
     public function destroy($id, OwnerInterface $ownerService)
     {
-        if ( null != $owner = $ownerService->destroyOwner($id) ) {
-            return redirect('owners')->withSuccess('Owner has been successfully deleted.');
-        }
-        return redirect('owners')->withWarning('Whoops, looks like something went wrong, please try later.');
+        if(\Auth::user()->role->name == 'super_admin') {
+            if ( null != $owner = $ownerService->destroyOwner($id) ) {
+                return redirect('owners')->withSuccess('Owner has been successfully deleted.');
+            }
+        } else {
+            return redirect('owners-centers')->withWarning('Whoops, looks like something went wrong, please try later.');
+        }    
     }
 
     public function createOrUpdateOwner(
@@ -282,7 +285,11 @@ class OwnersController extends Controller
     */
     public function getAddStaff()
     {
-        dd('as');
-        return view('admin.owners.forms.add_staff');
-    }   
+        return view('admin.owners.forms.add_staff',['role' => \Auth::user()->role->name]);
+    }
+
+    public function CreateStaff()
+    {
+        return view('admin.owners.forms.add_staff',['role' => \Auth::user()->role->name]);
+    } 
 }

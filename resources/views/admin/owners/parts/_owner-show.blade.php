@@ -68,7 +68,7 @@
         </div> 
         <div class="line">
             <span class="lh_fi mediumBold">Notes:</span>&nbsp;
-            <div class="formOinfo">Here the notes...</div>
+            <div class="formOinfo">{{ $owner->notes }}</div>
         </div> 
     </div> 
     <div class="bBox_btns">

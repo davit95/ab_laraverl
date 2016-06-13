@@ -55,4 +55,14 @@ class UsStateService
 		}
 		return $states;
 	}
+
+	/**
+     * Get all states list from us_states table.
+     *
+     * @return Response
+     */
+	public function getAllUsStatesList()
+	{
+		return $this->usState->lists('name', 'name')->toArray();
+	}
 }

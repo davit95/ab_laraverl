@@ -3,83 +3,87 @@
 @else
 {!! Form::open(['method' => 'post' , 'url' => '/centers','files' => true]) !!}
 @endif
-<div class="h2wrapp mtop1">
-    <div class="h2Icon add"></div>
-    <div class="h2txt">
-        <h2>Viewable On</h2>
+
+@if(\Auth::user()->role->name == 'super_admin')
+    <div class="h2wrapp mtop1">
+        <div class="h2Icon add"></div>
+        <div class="h2txt">
+            <h2>Viewable Options</h2>
+        </div>
     </div>
-</div>
-<div class="w_box" style="width:100%">
-    <div class="form_left centers_basic">
-        <!-- <span class="lh_f">Viewable On :</span>&nbsp;
-        <br> -->
-        <div class="services_wrapp">
-            <input type="checkbox" name="avo_site" value="avo" id="1" checked="">
-            <label for="1"></label>
-            AVO -Alliancevirtualoffices.com &nbsp; &nbsp;
+    <div class="w_box" style="width:100%">
+        <div class="form_left centers_basic">
+            <!-- <span class="lh_f">Viewable On :</span>&nbsp;
+            <br> -->
+            <div class="services_wrapp">
+                <input type="checkbox" name="avo_site" value="avo" id="1" checked="">
+                <label for="1"></label>
+                AVO -Alliancevirtualoffices.com &nbsp; &nbsp;
+            </div>
+            <br><br>
+            <div class="services_wrapp">
+                <input type="checkbox" name="abcn_site" value="abcn" id="1" checked="">
+                <label for="1"></label> 
+                ABCN -Samedayvirtual.com
+            </div>
+            <br><br>
+            <div class="services_wrapp">
+                <input type="checkbox" name="allwork_site" value="allwork" id="1" checked="">
+                <label for="1"></label>
+                AWS - Allwork.space
+            </div>
+            <!-- <span class="lh_f">Owners:</span>&nbsp; -->
+            <!-- {!! Form::select('owners',$owners, null, [ 'class' => '', 'multiple' => true]) !!} -->
+            <!-- <select class="change" multiple>             
+                <option value="1">AVO</option>
+                <option value="2">ABCN</option>
+                <option value="3">ALL WORK</option>
+                <option value="3">YOUR CITY OFFICE</option>
+                <option value="3">SAME DAY VIRTUAL</option>
+                <option value="4">FLEXADO</option>
+            </select> -->
         </div>
-        <br><br>
-        <div class="services_wrapp">
-            <input type="checkbox" name="abcn_site" value="abcn" id="1" checked="">
-            <label for="1"></label> 
-            ABCN -Samedayvirtual.com
-        </div>
-        <br><br>
-        <div class="services_wrapp">
-            <input type="checkbox" name="allwork_site" value="allwork" id="1" checked="">
-            <label for="1"></label>
-            AWS - Allwork.space
-        </div>
-        <!-- <span class="lh_f">Owners:</span>&nbsp; -->
-        <!-- {!! Form::select('owners',$owners, null, [ 'class' => '', 'multiple' => true]) !!} -->
-        <!-- <select class="change" multiple>             
-            <option value="1">AVO</option>
-            <option value="2">ABCN</option>
-            <option value="3">ALL WORK</option>
-            <option value="3">YOUR CITY OFFICE</option>
-            <option value="3">SAME DAY VIRTUAL</option>
-            <option value="4">FLEXADO</option>
-        </select> -->
+        <div class="form_right centers_basic">
+            <div class="services_wrapp">
+                <input type="checkbox" name="avo_vo" value="VO" id="1" checked="">
+                <label for="1">         
+                </label> 
+                VO &nbsp; &nbsp;
+                    <input type="checkbox" name="avo_mr" value="MR" id="2" checked="">
+                    <label for="2">
+                        
+                    </label> 
+                MR &nbsp; &nbsp;
+            </div>
+            <br><br>
+            <div class="services_wrapp">
+                <input type="checkbox" name="abcn_vo" value="VO" id="1" checked="">
+                <label for="1">         
+                </label> 
+                VO &nbsp; &nbsp;
+                    <input type="checkbox" name="abcn_mr" value="MR" id="2" checked="">
+                    <label for="2">
+                        
+                    </label> 
+                MR &nbsp; &nbsp;
+            </div>
+            <br><br>
+            <div class="services_wrapp">
+                <input type="checkbox" name="allwork_vo" value="VO" id="1" checked="">
+                <label for="1">         
+                </label> 
+                VO &nbsp; &nbsp;
+                    <input type="checkbox" name="allwork_mr" value="MR" id="2" checked="">
+                    <label for="2">
+                        
+                    </label> 
+                MR &nbsp; &nbsp;
+            </div>
+        </div> 
+        <div class="clear"></div>
     </div>
-    <div class="form_right centers_basic">
-        <div class="services_wrapp">
-            <input type="checkbox" name="avo_vo" value="VO" id="1" checked="">
-            <label for="1">         
-            </label> 
-            VO &nbsp; &nbsp;
-                <input type="checkbox" name="avo_mr" value="MR" id="2" checked="">
-                <label for="2">
-                    
-                </label> 
-            MR &nbsp; &nbsp;
-        </div>
-        <br><br>
-        <div class="services_wrapp">
-            <input type="checkbox" name="abcn_vo" value="VO" id="1" checked="">
-            <label for="1">         
-            </label> 
-            VO &nbsp; &nbsp;
-                <input type="checkbox" name="abcn_mr" value="MR" id="2" checked="">
-                <label for="2">
-                    
-                </label> 
-            MR &nbsp; &nbsp;
-        </div>
-        <br><br>
-        <div class="services_wrapp">
-            <input type="checkbox" name="allwork_vo" value="VO" id="1" checked="">
-            <label for="1">         
-            </label> 
-            VO &nbsp; &nbsp;
-                <input type="checkbox" name="allwork_mr" value="MR" id="2" checked="">
-                <label for="2">
-                    
-                </label> 
-            MR &nbsp; &nbsp;
-        </div>
-    </div> 
-    <div class="clear"></div>
-</div>
+@endif
+
 
     <!-- @foreach($photos as $photo_id => $photo)
         
@@ -93,7 +97,7 @@
 <div class="w_box" style="width:100%">
     <div class="form_left centers_basic">
         @if($role != 'owner_user')
-            {!! Form::label('owners') !!}
+            {!! Form::label('Company Name') !!}
             {!! Form::select('owners',$owners, 'null',['class' => 'owners']) !!}
         @endif
         <br>
@@ -109,10 +113,6 @@
         {!! Form::label('address2','*Address 2:') !!}
         {!! Form::text('address2', isset($center->address2) ? $center->address : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('subhead','Subheader') !!}
-        {!! Form::text('subhead',isset($center->virtual_office_seo->subhead) ? $center->virtual_office_seo->subhead : null,['class' => 'f1']) !!}
-        <br>
-        
         {!! Form::label('city_name','*City:') !!}
         {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
@@ -132,9 +132,10 @@
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
-        <br>
-        {!! Form::label('Make this center active or inactive') !!}
-        {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!}
+        @if(isset($center))
+            {!! Form::label('Make this center active or inactive') !!}
+            {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!}
+        @endif
         <!-- {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
         <br> 
@@ -262,14 +263,20 @@
             {!! Form::label('sentence3','sentence3') !!}
             {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
             <br>
-            {!! Form::label('meta_title','Meta Title') !!}
-            {!! Form::text('meta_title',isset($center->virtual_office_seo->meta_title) ? $center->virtual_office_seo->meta_title : null,['class' => 'f1']) !!}
-            <br> 
             {!! Form::label('avo_description','Avo Description') !!}
             {!! Form::text('avo_description',isset($center->virtual_office_seo->avo_description) ? $center->virtual_office_seo->avo_description : null,['class' => 'f1']) !!}
             <br>
             {!! Form::label('abcn_description','Abcn Description') !!}
             {!! Form::text('abcn_description',isset($center->virtual_office_seo->abcn_description) ? $center->virtual_office_seo->abcn_description : null,['class' => 'f1']) !!}
+            <br> 
+            {!! Form::label('meta_title','Meta Title') !!}
+            {!! Form::text('meta_title',isset($center->virtual_office_seo->meta_title) ? $center->virtual_office_seo->meta_title : null,['class' => 'f1']) !!}
+            <br>
+            {!! Form::label('meta_description','Meta Description') !!}
+            {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
+            <br> 
+            {!! Form::label('meta_keywords','Meta Keywords') !!}
+            {!! Form::text('meta_keywords',isset($center->virtual_office_seo->meta_keywords) ? $center->virtual_office_seo->meta_keywords : null,['class' => 'f1']) !!}
             <br>
             {!! Form::label('h1','Headline') !!}
             {!! Form::text('h1', isset($center->virtual_office_seo->h1) ? $center->virtual_office_seo->h1 : null ,['class' => 'f1']) !!}
@@ -286,11 +293,9 @@
             {!! Form::label('abcn_title','Abcn Title') !!}
             {!! Form::text('abcn_title',isset($center->virtual_office_seo->abcn_title) ? $center->virtual_office_seo->abcn_title : null,['class' => 'f1']) !!}
             <br>
-            {!! Form::label('meta_description','Meta Description') !!}
-            {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!}
-            <br> 
-            {!! Form::label('meta_keywords','Meta Keywords') !!}
-            {!! Form::text('meta_keywords',isset($center->virtual_office_seo->meta_keywords) ? $center->virtual_office_seo->meta_keywords : null,['class' => 'f1']) !!}
+            
+            {!! Form::label('subhead','Subhead') !!}
+            {!! Form::text('subhead',isset($center->virtual_office_seo->subhead) ? $center->virtual_office_seo->subhead : null,['class' => 'f1']) !!}
             <br>
         </div>
         <div class="form_right centers_basic">

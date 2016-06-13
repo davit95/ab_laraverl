@@ -38,7 +38,7 @@
 	    	@if(!isset($owner))
 		    	<div class="row form-group">
 		    		<div class="col-md-4 text-right"><label>Password</label></div>
-		    		<div class="col-md-8">{!! Form::text('password', null, [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Password' ]) !!}</div>
+		    		<div class="col-md-8">{!! Form::password('password', [ 'class' => 'form-control', 'placeholder' => 'Owner\'s Password' ]) !!}</div>
 		    	</div>
 	    	@endif
 	    </div>

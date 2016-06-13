@@ -130,6 +130,7 @@ class OwnerService implements OwnerInterface
 		$params['us_state_id'] = $state_id;
 		$params['city_id'] = $city_id;
 		$params['country_id'] = $country_id;
+		//dd($params);
 		//$params['region_id'] = $region_id;
 		//dd($params);
 		return $params;
@@ -417,4 +418,14 @@ class OwnerService implements OwnerInterface
 		return $this->role->where('name', $role)->first()->id;
 	}
 	
+	public function createStaff($params)
+	{
+		$owner_id = $params['owner_id'];
+		unset($params['owner_id']);
+		$staff = $this->staff->create($params);
+		if($staff) {
+			$result = $this->user->find($owner_id)->staffs()->attach([$staff->id]);
+		}
+		return $staff;
+	}
 }
