@@ -75,6 +75,8 @@ class CentersController extends Controller
         //dd($usStateService->getAllUsStatesList());
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
+        $states = [''=>'select state'] + $usStateService->getAllUsStatesList();
+        $countries = [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray();
         $selectArray = [
             '' => 'select',
             'IndividualOffice' => 'Individual Office',
@@ -96,8 +98,8 @@ class CentersController extends Controller
         return view('admin.centers.create',
         [
             'selectArray' => $selectArray,
-            'states' =>  [''=>'select state'] + $usStateService->getAllUsStatesList(),
-            'countries' => [''=>'select country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+            'states' =>  [],
+            'countries' => $countries,
             'packages' => $packages,
             'plus_packages' => $plus_packages,
             'photos' => [],
@@ -374,5 +376,12 @@ class CentersController extends Controller
         } else {
             return view('errors.404');
         }
+    }
+
+    public function getStatesByCountryName($country, CenterService $centerService)
+    {
+        $states = $centerService->getStatesLists($country)['states'];
+        $country = $centerService->getStatesLists($country)['country'];
+        return ['states' => $states, 'country' => $country];
     }
 }

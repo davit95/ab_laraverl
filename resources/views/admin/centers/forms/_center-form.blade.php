@@ -113,17 +113,17 @@
         {!! Form::label('address2','*Address 2:') !!}
         {!! Form::text('address2', isset($center->address2) ? $center->address : null,['class' => 'f1'])!!}
         <br>
-        {!! Form::label('city_name','*City:') !!}
-        {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
+        {!! Form::label('countries','*Country:&nbsp;') !!}
+        {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
         <br>
         {!! Form::label('states','State:&nbsp;') !!}
         {!! Form::select('states',$states,null,['class' => 'state']) !!}
         <br>
-        {!! Form::label('countries','*Country:&nbsp;') !!}
-        {!! Form::select('countries',$countries, null, [ 'class' => 'country']) !!}
+        {!! Form::label('city_name','*City:') !!}
+        {!! Form::text('city_name', null,['class' => 'f1', 'id' => 'city'])!!}
         <br>
         {!! Form::label('postal_code','Postal Code:&nbsp;') !!}
-        {!! Form::text('postal_code', null, [ 'class' => 'country']) !!}
+        {!! Form::text('postal_code', null, [ 'class' => 'postal_code']) !!}
         <br>
         {!! Form::label('lat','*Address Latitude: ') !!}
         {!! Form::text('lat', isset($center_coordinates->lat) ? $center_coordinates->lat : null,['class' => 'f1b'])!!}
@@ -223,13 +223,13 @@
     
     <div class="clear"></div>
 </div>
-<div class="h2wrapp mtop1">
+<div class="h2wrapp mtop1 phone_plane hide">
     <div class="h2Icon add"></div>
     <div class="h2txt">
         <h2>PHONE PLAN PRICING</h2>
     </div>
 </div>
-<div class="w_box" style="width:100%">
+<div class="w_box phone_plane hide" style="width:100%" >
     <div class="centers_basic">
         <div class="form_left centers_basic">
             {!! Form::label('with_live_receptionist_full_price','Plan 1 Price') !!}

@@ -368,7 +368,7 @@ select.input-sm{
   -o-transition: all 0.4s ease-in-out;
 }
 
-.country, .state, .platinum_package, .owners {
+.country, .state, .platinum_package, .owners, .postal_code {
   width : 317px;
   height: 35px;
   margin-top: 1px;

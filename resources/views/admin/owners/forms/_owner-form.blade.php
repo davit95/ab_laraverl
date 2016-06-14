@@ -51,13 +51,6 @@
 	    		<div class="col-md-4 text-right"><label>Billing Address 2</label></div>
 	    		<div class="col-md-8">{!! Form::text('address2', null, ['class' => 'form-control', 'placeholder' => 'Billing Address 2']) !!}</div>
 	    	</div>
-	    	<div class="row form-group">
-	    		<div class="col-md-4 text-right"><label>City</label></div>
-	    		<div class="col-md-8">
-	    			{!! Form::text('city', isset($owner_client) && null != $owner_client->city ? $owner_client->city->name : null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'City']) !!}
-	    			<!-- {!! Form::hidden('city_id', null, ['id' => 'city_id']) !!} -->
-	    		</div>
-	    	</div>
 	    	<!-- <div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>County / Region</label></div>
 	    		<div class="col-md-8">
@@ -73,6 +66,20 @@
 	    		</div>
 	    	</div> -->
 	    	<div class="row form-group">
+	    		<div class="col-md-4 text-right"><label>Country</label></div>
+	    		<div class="col-md-8">
+	    			<select name="country" class="form-control" id="country">
+	    				@foreach($countries_list as $country)
+	    					@if(isset($owner_client) && null != $owner_client->country && $country == $owner_client->country->name)
+	    						<option value="{{$country}}"  selected = "{{$country}}">{{$country}}</option>
+	    					@else 
+	    						<option value="{{$country}}">{{$country}}</option>
+	    					@endif
+	    				@endforeach
+	    			</select>
+	    		</div>
+	    	</div>
+	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>State</label></div>
 	    		<div class="col-md-8">
 	    			<select name="us_state" class="form-control" id="us_state">
@@ -87,17 +94,10 @@
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">
-	    		<div class="col-md-4 text-right"><label>Country</label></div>
+	    		<div class="col-md-4 text-right"><label>City</label></div>
 	    		<div class="col-md-8">
-	    			<select name="country" class="form-control" id="country">
-	    				@foreach($countries_list as $country)
-	    					@if(isset($owner_client) && null != $owner_client->country && $country == $owner_client->country->name)
-	    						<option value="{{$country}}"  selected = "{{$country}}">{{$country}}</option>
-	    					@else 
-	    						<option value="{{$country}}">{{$country}}</option>
-	    					@endif
-	    				@endforeach
-	    			</select>
+	    			{!! Form::text('city', isset($owner_client) && null != $owner_client->city ? $owner_client->city->name : null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'City']) !!}
+	    			<!-- {!! Form::hidden('city_id', null, ['id' => 'city_id']) !!} -->
 	    		</div>
 	    	</div>
 	    	<div class="row form-group">

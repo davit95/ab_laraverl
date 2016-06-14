@@ -9,6 +9,7 @@ use App\Models\Center;
 use App\Models\CenterSite;
 use App\Models\Photo;
 use App\Models\UsState;
+use App\Models\State;
 use App\Models\Country;
 use App\Models\City;
 use App\Models\Site;
@@ -32,6 +33,7 @@ class CenterService implements CenterInterface {
 		Photo $photo, 
 		CenterCoordinate $centerCoordinate, 
 		UsState $usState, 
+		State $state, 
 		Country $country, 
 		City $city,
 		Site $site,
@@ -47,6 +49,7 @@ class CenterService implements CenterInterface {
 		$this->center = $center;
 		$this->photo  = $photo;
 		$this->usState = $usState;
+		$this->state = $state;
 		$this->country = $country;
 		$this->city = $city;
 		$this->site = $site;
@@ -129,12 +132,23 @@ class CenterService implements CenterInterface {
 			$owner_id = $this->user->where('company_name', $inputs['owners'])->first()->id;	
 			$inputs['owner_id'] = $owner_id;
 		}
-		$state = $this->usState->where('name', $inputs['states'])->first();
-		if($state) {
-			$inputs['us_state_id'] = $state->id;
-			$inputs['us_state_code'] = $state->code;
-			$inputs['us_state'] = $state->code;	
+		if(isset($inputs['states'])) {
+			$us_state = $this->usState->where('name', $inputs['states'])->first();
+			if(null == $us_state) {
+				$state = $this->state->where('name', $inputs['states'])->first();
+				if($state) {
+					$inputs['us_state_id'] = null;
+					$inputs['us_state_code'] = null;
+					$inputs['us_state'] = null;
+				}
+			}
+			if($us_state) {
+				$inputs['us_state_id'] = $us_state->id;
+				$inputs['us_state_code'] = $us_state->code;
+				$inputs['us_state'] = $us_state->code;	
+			}
 		}
+		
 		$country = $this->country->where('name', $inputs['countries'])->first();
 		$inputs['name'] = $inputs['name'];
 		$inputs['city_name'] = $inputs['city_name'];
@@ -350,8 +364,7 @@ class CenterService implements CenterInterface {
 	 * @return Response
 	 */
 	public function storeCenter($inputs, $files) {
-		dd($inputs);
-		//dd($this->getSitesIds($this->getSiteNames($inputs)));
+
 		if(\Auth::user()->role->name == 'owner_user') {
 		    $inputs['owner_user_id'] = \Auth::id();
 		}
@@ -971,5 +984,18 @@ class CenterService implements CenterInterface {
 			return $centers;
 		}	
 		return false;
+	}
+
+	public function getStatesLists($country)
+	{
+		if($country == 'United States') {
+			return ['states' => $this->usState->lists('name','name')->toArray(),'country' => 'US'];
+		}
+		if($country == 'Canada') {
+			return ['states' => $this->state->where('country', 'canada')->lists('name', 'name')->toArray(), 'country' => 'CA'];
+		}
+		if($country == 'Australia') {
+			return ['states' => $this->state->where('country', 'australia')->lists('name', 'name')->toArray(), 'country' => 'AU'];
+		}
 	}
 }

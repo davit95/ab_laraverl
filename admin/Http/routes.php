@@ -29,6 +29,7 @@ Route::get('/logout', 'Auth\AuthController@logout');
 Route::get('/reports', 'ReportsController@index');
 Route::get('/reports/download', 'ReportsController@downloadCsv');
 Route::get('/owners-centers', 'OwnersController@getOwnersCenters');
+Route::post('/states/{country}', 'CentersController@getStatesByCountryName');
 
 Route::get('/owners-centers', 'OwnersController@getOwnersCenters');
 Route::get('/avo-centers', 'CentersController@getCentersByName');

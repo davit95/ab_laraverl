@@ -32,10 +32,10 @@
             <span class="lh_fi mediumBold">Member Type:</span>&nbsp;
             <div class="formOinfo">Preferred Member</div>
         </div> 
-        <div class="line">
+        <!-- <div class="line">
             <span class="lh_fi mediumBold">Active Sites:</span>&nbsp;
             <div class="formOinfo">ABCN, AVO, OT, FLEXADO</div>
-        </div> 
+        </div> --> 
     </div> 
     <div class="form_right">
         <div class="line">

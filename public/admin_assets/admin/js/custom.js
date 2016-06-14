@@ -68,3 +68,27 @@ function getLatAndLng(){
             $('.center_photos').addClass('hide');
         }
     })
+
+
+    $('.country').on('change', function(){
+        var country = $(this).val();
+        $.post('/states/' + country,{country:country}, function(data){
+            if(null != data.states) {
+                $.each(data.states, function(key, val) {
+                    var option = $('<option />');
+                    option.attr('value', key).text(val);
+                    $('.state').append(option);
+                });
+            } else {
+                $(".state").empty();
+                $('.state').val('no state');
+            }
+            if(data.country == 'US') {
+                $('.phone_plane').addClass('show');
+            } else {
+                $('.phone_plane').removeClass('show');
+                $('.phone_plane').addClass('hide');
+            }
+        })
+    })
+
