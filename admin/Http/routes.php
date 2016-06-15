@@ -53,10 +53,12 @@ Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
 
 Route::get('/center/{id}/owner/create', 'OwnersController@createOrUpdateOwner');
 Route::get('owner/{id}/center/create', 'CentersController@create');
+
 /*new*/
 
 
 Route::resource('/users', 'UsersController');
+Route::get('/accounting-admin', 'UsersController@index');
 
 
 

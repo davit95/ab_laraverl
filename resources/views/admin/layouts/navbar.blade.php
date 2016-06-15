@@ -48,7 +48,7 @@
             <a href="{{ url('users') }}" class="nd">
                 <div <div class="menu_btn @if(Request::is('users*')) menu_active @endif">
                     <div class="@if(Request::is('users*')) menu_btnL3_a @else menu_btnL3 @endif"></div>
-                    <div class="menu_btnR m_menu">ACCOUNTS<br>&amp; USERS</div>
+                    <div class="menu_btnR m_menu">CREATE ADMINS</div>
                 </div> 
             </a>
         @endif

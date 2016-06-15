@@ -39,8 +39,9 @@ class UsersController extends Controller
     public function index(Request $request, OwnerInterface $ownerService, UserInterface $userService)
     {
         $role = \Auth::user()->role->name;
-        $owners = $ownerService->getOwnersLists();
-        return view('admin.users.index', ['owners' => ['' => 'Select Company / Owner Name'] + $owners, 'role' => $role]);
+        $users = $userService->getCsrOrAccountingUsers($request);
+        return view('admin.users.index', ['users' => $users, 'role' => $role]);
+        
     }
 
     /**

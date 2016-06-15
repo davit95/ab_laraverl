@@ -153,4 +153,15 @@ class UserService implements UserInterface
 	{
 		return $this->role->where('name', $role_name)->first()->id;
 	}
+
+	public function getCsrOrAccountingUsers($request)
+	{
+		if($request->is('users')) {
+			$role_id = $this->role->where('name', 'admin')->first()->id;
+			//dd($role_id);
+			return $this->user->where('role_id', $role_id)->get();
+		} else {
+
+		}
+	}
 }

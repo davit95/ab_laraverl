@@ -35,7 +35,7 @@ class CsrController extends Controller
     {
         $role = \Auth::user()->role->name;  
         if(\Auth::user()->role->name === 'super_admin') {
-            $customers = $customerService->getALlCustomers();
+            $customers = $userService->getAllCustomers();
         } elseif(\Auth::user()->role->name === 'client_user') {
             $customers[] = \Auth::user();
             //$role_id = \Auth::user()->role_id;
