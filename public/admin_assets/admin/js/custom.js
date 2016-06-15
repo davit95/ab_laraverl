@@ -83,7 +83,7 @@ $('.country').on('change', function(){
             $(".state").empty();
             $('.state').val('no state');
         }
-        if(data.country == 'US') {
+        if(data.country != 'US') {
             $('.phone_plane').addClass('show');
         } else {
             $('.phone_plane').removeClass('show');
