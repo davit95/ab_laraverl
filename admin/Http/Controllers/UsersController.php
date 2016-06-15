@@ -124,7 +124,7 @@ class UsersController extends Controller
         
     }
 
-    public function createAdminUser(Request $request, UserInterface $userService)
+    public function createAdminUser(CsrRequest $request, UserInterface $userService)
     {
         if(null != $userService->createAllianceUser($request->all())) {
             return redirect()->back()->withSuccess('user successfully created');
