@@ -91,6 +91,7 @@ class UserService implements UserInterface
 
 	public function getAllCustomers()
 	{
+		//dd('aaaaaaaa');
 		$client_user_role_id = $this->role->where('name', 'client_user')->first()->id;
 		return $this->user->where('role_id', $client_user_role_id)->get();
 	}
@@ -142,9 +143,11 @@ class UserService implements UserInterface
 		return $this->user->where('owner_id', $id)->get();
 	}
 
-	public function createAllianceUser($inputs, $role_id)
+	public function createAllianceUser($inputs)
 	{
-		$inputs['role_id'] = $this->role->where('name', 'admin')->first()->id;
+		$role_id = $this->role->where('name',$inputs['user_type'])->first()->id;
+		//dd($role_id);
+		$inputs['role_id'] = $role_id;
 		$inputs['password'] = bcrypt($inputs['password']);
 		return $this->user->create($inputs);
 	}
@@ -158,10 +161,9 @@ class UserService implements UserInterface
 	{
 		if($request->is('users')) {
 			$role_id = $this->role->where('name', 'admin')->first()->id;
-			//dd($role_id);
 			return $this->user->where('role_id', $role_id)->get();
 		} else {
-
+			return [];
 		}
 	}
 }

@@ -34,7 +34,7 @@ class CsrController extends Controller
     public function index(UserInterface $userService, CustomerService $customerService)
     {
         $role = \Auth::user()->role->name;  
-        if(\Auth::user()->role->name === 'super_admin') {
+        if($role === 'super_admin' || $role == 'accounting_user') {
             $customers = $userService->getAllCustomers();
         } elseif(\Auth::user()->role->name === 'client_user') {
             $customers[] = \Auth::user();

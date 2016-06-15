@@ -172,7 +172,7 @@ class User extends Model implements AuthenticatableContract,
             throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
             
         }
-        if($role->name == 'owner_user' || $role->name == 'super_admin') {
+        if($role->name == 'owner_user' || $role->name == 'super_admin' || $role->name == 'accounting_user') {
             return true;
         } 
         return false;
@@ -185,7 +185,7 @@ class User extends Model implements AuthenticatableContract,
             throw new \App\Exceptions\Custom\RoleException(" Role for $this->name not defined", 1);
             
         }
-        if($role->name == 'admin' || $role->name == 'super_admin') {
+        if($role->name == 'admin' || $role->name == 'super_admin' || $role->name == 'accounting_user') {
             return true;
         } 
         return false;

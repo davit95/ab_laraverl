@@ -35,7 +35,9 @@ class SuperAdminOrCsr
      */
     public function handle($request, Closure $next)
     {
+        //dd('aaa');
         if(auth()->user()->isSuperAdminOrCsr()) {
+            //dd('asas');
             return $next($request);
         } 
         return redirect('/centers');

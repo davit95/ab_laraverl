@@ -9,6 +9,7 @@
 		<div class="panel-body col-md-6">
 	    	<div class="row form-group">
 	    		{!! Form::hidden('id', null) !!}
+	    		{!!Form::hidden('user_type', $user_type)!!}
 	    	</div> 
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Create A User Name</label></div>
