@@ -26,6 +26,7 @@ class CentersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('AccountingUser', ['only' => ['create']]);
         //$this->middleware('superAdminOrOwner', ['only' => ['create']]);
     }
 

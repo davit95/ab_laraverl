@@ -4,17 +4,17 @@
 <thead>
     <tr role="row">
         <th class="sorting_asc" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Center ID: activate to sort column descending" style="width: 45px;">ID</th>
-        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="Operator Name: activate to sort column ascending" style="width: 183px;">Center's Name</th>
-        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="Street: activate to sort column ascending" style="width: 125px;">Center's Slug</th>
-        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="City: activate to sort column ascending" style="width: 64px;">City Name</th>
-        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Country</th>        
-        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Building Name</th>        
+        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="Operator Name: activate to sort column ascending" style="width: 183px;">User's Name</th>
+        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="Street: activate to sort column ascending" style="width: 125px;">User's Email</th>
+        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="City: activate to sort column ascending" style="width: 64px;">User's Phone</th>
+        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">User's Address</th>        
+        <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Postal Code</th>        
         <th class="sorting" tabindex="0" aria-controls="reportsT" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 35px;">Actions</th>        
     </tr>
 </thead>
     <tbody>
         @forelse( $users as $user )
-            @include('admin.users.parts._user-item-index')
+            @include('admin.users.parts._accounting-user-item-index')
         @empty
             @include('alerts.no-data-table')
         @endforelse
@@ -22,11 +22,11 @@
     <tfoot>
     <tr>
         <th rowspan="1" colspan="1">ID</th>
-        <th rowspan="1" colspan="1">Center's Name</th>
-        <th rowspan="1" colspan="1">Center's Slug</th>
-        <th rowspan="1" colspan="1">City Name</th>
-        <th rowspan="1" colspan="1">Country</th>
-        <th rowspan="1" colspan="1">Building Name</th> 
+        <th rowspan="1" colspan="1">User's Email</th>
+        <th rowspan="1" colspan="1">User's Slug</th>
+        <th rowspan="1" colspan="1">User's Phone</th>
+        <th rowspan="1" colspan="1">User's Address</th>
+        <th rowspan="1" colspan="1">Postal Code</th> 
         <th rowspan="1" colspan="1">Actions</th> 
     </tr>
     </tfoot>

@@ -52,6 +52,16 @@
             <span class="lh_fi mediumBold">Notes:</span>&nbsp;
             <div class="formOinfo">{{ $center->notes }}</div>
         </div>
+        <div class="line">
+            <span class="lh_fi mediumBold">Center Status:</span>&nbsp;
+            <div class="formOinfo">
+                @if($center->center_filter->virtual_office == 0)
+                    pending review
+                @else
+                    done
+                @endif
+            </div>
+        </div>
         <!-- <div class="line">
             <span class="lh_fi mediumBold">Amenities:</span>&nbsp;
             <div class="formOinfo">{{ $center->amenities }}</div>

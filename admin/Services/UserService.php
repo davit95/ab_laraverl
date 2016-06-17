@@ -102,7 +102,7 @@ class UserService implements UserInterface
 		$client_id = $this->getUserRoleIdByRoleName('client_user');
 		$admin_id = $this->getUserRoleIdByRoleName('admin');
 		//dd($admin_id);
-		if($role_name === 'super_admin') {
+		if($role_name === 'super_admin' || 'accounting_user') {
 			return $this->user->where('id', $id)->where('role_id', $client_id)->first();
 		} elseif($role_name === 'client_user') {
 			return $this->user->where('id', $id)->where('role_id', $role_id)->first();
@@ -163,7 +163,8 @@ class UserService implements UserInterface
 			$role_id = $this->role->where('name', 'admin')->first()->id;
 			return $this->user->where('role_id', $role_id)->get();
 		} else {
-			return [];
+			$role_id = $this->role->where('name', 'accounting_user')->first()->id;
+			return $this->user->where('role_id', $role_id)->get();
 		}
 	}
 }
