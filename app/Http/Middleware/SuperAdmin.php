@@ -36,6 +36,7 @@ class SuperAdmin
     public function handle($request, Closure $next)
     {
         if(auth()->user()->isSuperAdmin()) {
+            //dd();
             return $next($request);
         }
         if(auth()->user()->role->name == 'admin') {
