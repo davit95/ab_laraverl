@@ -14,7 +14,7 @@ class OAuthService {
 
 	public function authorize($request)
 	{		
-		$inputs = $request->all();			
+		$inputs = $request->all();
 		if(!isset($inputs['api_key'])){
 			return 'API key is required';
 		}else if(!isset($inputs['api_secret'])){
@@ -81,7 +81,7 @@ class OAuthService {
 
 	public function passOauth($request)
 	{		
-		$inputs = $request->all();		
+		$inputs = $request->all();
 		$response = [];
 		if(!isset($inputs['api_key'])){
 			$response['errors'] = 'api_key is required';
@@ -103,11 +103,11 @@ class OAuthService {
 				if(!$access_tokens = $this->checkAccessToken($creds->id, $access_token)){
 					$response['errors'] = 'Invalid access token';
 					return $response;					
-				}else{					
-					$expire_at = \Carbon\Carbon::parse($access_tokens->expire_at);	
+				}else{
+					$expire_at = \Carbon\Carbon::parse($access_tokens->expire_at);
 					if($expire_at->isPast()){
 						$response['expire'] = 'Your access token has been expired';
-						return $response;	
+						return $response;
 					}
 				}
 			}

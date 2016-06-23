@@ -43,7 +43,7 @@ class LocationsController extends Controller
     }
 
     public function getStateLocations($state, Request $request)
-    {
+    {        
         $locations = $this->locationService->getStateLocations('us', $state, $request->nearby, $request->options, $this->per_page, $this->page);
         return response()->json(['locations' => $locations]);
     }

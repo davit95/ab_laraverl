@@ -110,10 +110,10 @@ class LocationService {
 			return $this->getNeccessaryOptions($locations, true, true);
 		}else if(isset($nearby)){
 			return $this->getNeccessaryOptions($locations, true);
-		}else if(isset($options)){		
+		}else if(isset($options)){
 			return $this->getNeccessaryOptions($locations, false, true);
 		}
-		return $this->getNeccessaryOptions($locations);	
+		return $this->getNeccessaryOptions($locations);
 	}
 
 	public function getStateCityLocations($state, $city_slug, $nearby, $options, $per_page, $page)
@@ -123,7 +123,7 @@ class LocationService {
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
 	    });
-	    $city = $this->city->where('slug', $city_slug)->first();	    
+	    $city = $this->city->where('slug', $city_slug)->first();
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }	    	    
