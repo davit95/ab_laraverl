@@ -66,7 +66,7 @@ class GenerateApiKey extends Command
     protected function getArguments()
     {
         return [
-            ['ip', InputArgument::REQUIRED, 'Ip address'],
+            // ['ip', InputArgument::REQUIRED, 'Ip address'],
         ];
     }
 }

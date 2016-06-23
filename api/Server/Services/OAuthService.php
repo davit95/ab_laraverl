@@ -14,7 +14,7 @@ class OAuthService {
 
 	public function authorize($request)
 	{		
-		$inputs = $request->all();			
+		$inputs = $request->all();
 		if(!isset($inputs['api_key'])){
 			return 'API key is required';
 		}else if(!isset($inputs['api_secret'])){
@@ -22,16 +22,18 @@ class OAuthService {
 		}else{
 			$api_key    = $inputs['api_key'];
 			$api_secret = $inputs['api_secret'];
+			$origin     = $request->ip();
 			if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){
 				return 'Invalid API key or secret';
 			}else{
 				$access_token = str_random(25);
 				$refresh_token = str_random(25);
 				if( null!= $access_tokens  = $this->accessToken->create([
-					'api_key_id'   => $creds->id,
-					'access_token' => $access_token,
+					'api_key_id'    => $creds->id,
+					'access_token'  => $access_token,
 					'refresh_token' => $refresh_token,
-					'expire_at' => \Carbon\Carbon::now()->addDays(10)
+					'expire_at'     => \Carbon\Carbon::now()->addDays(10),
+					'origin'        => $origin
 				])){
 					return $access_tokens;
 				}
@@ -61,11 +63,13 @@ class OAuthService {
 					$access_token = str_random(25);
 					$refresh_token = str_random(25);
 					$expire_at = \Carbon\Carbon::now()->addDays(10);
+					$origin    = $request->ip();
 					$access_tokens = $access_tokens->update([
-						'api_key_id'   => $creds->id,
-						'access_token' => $access_token,
+						'api_key_id'    => $creds->id,
+						'access_token'  => $access_token,
 						'refresh_token' => $refresh_token,
-						'expire_at' => $expire_at
+						'expire_at'     => $expire_at,
+						'origin'        => $origin
 					]);
 					if($access_tokens){
 						return [
@@ -81,42 +85,45 @@ class OAuthService {
 
 	public function passOauth($request)
 	{		
-		$inputs = $request->all();		
+		$inputs = $request->all();
 		$response = [];
-		if(!isset($inputs['api_key'])){
-			$response['errors'] = 'api_key is required';
-			return $response;
-		}else if(!isset($inputs['api_secret'])){
-			$response['errors'] = 'api_secret is required';
-			return $response;			
-		}else if(!isset($inputs['access_token'])){
+		// if(!isset($inputs['api_key'])){
+		// 	$response['errors'] = 'api_key is required';
+		// 	return $response;
+		// }else if(!isset($inputs['api_secret'])){
+		// 	$response['errors'] = 'api_secret is required';
+		// 	return $response;			
+		// }else 
+		if(!isset($inputs['access_token'])){
 			$response['errors'] = 'access_token is required';
 			return $response;
 		}else{
-			$api_key       = $inputs['api_key'];
-			$api_secret    = $inputs['api_secret'];
+			// $api_key       = $inputs['api_key'];
+			// $api_secret    = $inputs['api_secret'];
 			$access_token  = $inputs['access_token'];
-			if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){
-				$response['errors'] = 'Invalid api_key or api_secret';
-				return $response;				
+			// if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){
+			// 	$response['errors'] = 'Invalid api_key or api_secret';
+			// 	return $response;				
+			// }else{
+			if(!$access_tokens = $this->checkAccessToken($request->ip(), $access_token)){
+				$response['errors'] = 'Invalid access token';
+				return $response;					
 			}else{
-				if(!$access_tokens = $this->checkAccessToken($creds->id, $access_token)){
-					$response['errors'] = 'Invalid access token';
-					return $response;					
-				}else{					
-					$expire_at = \Carbon\Carbon::parse($access_tokens->expire_at);	
-					if($expire_at->isPast()){
-						$response['expire'] = 'Your access token has been expired';
-						return $response;	
-					}
+				$expire_at = \Carbon\Carbon::parse($access_tokens->expire_at);
+				if($expire_at->isPast()){
+					$response['expire'] = 'Your access token has been expired please refresh it';
+					return $response;
 				}
 			}
-		}
+		}		
 	}
 	
-	private function checkAccessToken($api_key_id, $access_token)
+	private function checkAccessToken($origin, $access_token)
 	{
-		$access_tokens = $this->accessToken->where(['api_key_id' => $api_key_id, 'access_token' => $access_token])->first();
+		$access_tokens = $this->accessToken
+		->where('access_token' , $access_token)
+		// ->where('origin', $origin)
+		->first();
 		return null!= $access_tokens ? $access_tokens : false;
 	}
 
