@@ -4,7 +4,7 @@
 		<h2>Unassigned Staff Members</h2>
 	</div>
 	<div class="fleft"> &nbsp; &nbsp; 
-		<a href="{{ url('owners/add-staff') }}" class="gLink">
+		<a href="{{ url('owners/'.$owner->id.'/add-staff') }}" class="gLink">
 			<div class="txtLink">Staff</div>
 			<div class="gIcon gAdd"></div>
 		</a>
@@ -24,7 +24,7 @@
 			{{$staff->phone_1}}<br>
 			{{$staff->email}}
 		</div> 
-		<div class="sBox_btns">
+		<!-- <div class="sBox_btns">
 			<div class="s_select">
 				<select class="f2_s">
 					<option value="">Select</option>
@@ -33,6 +33,6 @@
 					<option value="center3">Center 3</option>
 				</select>
 			</div> 
-		</div>
+		</div> -->
 	</div>
 @endforeach

@@ -91,6 +91,7 @@ class UserService implements UserInterface
 
 	public function getAllCustomers()
 	{
+		//dd('aaaaaaaa');
 		$client_user_role_id = $this->role->where('name', 'client_user')->first()->id;
 		return $this->user->where('role_id', $client_user_role_id)->get();
 	}
@@ -101,7 +102,7 @@ class UserService implements UserInterface
 		$client_id = $this->getUserRoleIdByRoleName('client_user');
 		$admin_id = $this->getUserRoleIdByRoleName('admin');
 		//dd($admin_id);
-		if($role_name === 'super_admin') {
+		if($role_name === 'super_admin' || 'accounting_user') {
 			return $this->user->where('id', $id)->where('role_id', $client_id)->first();
 		} elseif($role_name === 'client_user') {
 			return $this->user->where('id', $id)->where('role_id', $role_id)->first();
@@ -142,9 +143,11 @@ class UserService implements UserInterface
 		return $this->user->where('owner_id', $id)->get();
 	}
 
-	public function createAllianceUser($inputs, $role_id)
+	public function createAllianceUser($inputs)
 	{
-		$inputs['role_id'] = $this->role->where('name', 'admin')->first()->id;
+		$role_id = $this->role->where('name',$inputs['user_type'])->first()->id;
+		//dd($role_id);
+		$inputs['role_id'] = $role_id;
 		$inputs['password'] = bcrypt($inputs['password']);
 		return $this->user->create($inputs);
 	}
@@ -152,5 +155,16 @@ class UserService implements UserInterface
 	public function getUserRoleIdByRoleName($role_name)
 	{
 		return $this->role->where('name', $role_name)->first()->id;
+	}
+
+	public function getCsrOrAccountingUsers($request)
+	{
+		if($request->is('users')) {
+			$role_id = $this->role->where('name', 'admin')->first()->id;
+			return $this->user->where('role_id', $role_id)->get();
+		} else {
+			$role_id = $this->role->where('name', 'accounting_user')->first()->id;
+			return $this->user->where('role_id', $role_id)->get();
+		}
 	}
 }

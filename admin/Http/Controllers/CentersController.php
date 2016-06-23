@@ -26,6 +26,7 @@ class CentersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('AccountingUser', ['only' => ['create']]);
         //$this->middleware('superAdminOrOwner', ['only' => ['create']]);
     }
 
@@ -39,7 +40,7 @@ class CentersController extends Controller
         $owners = $ownerService->getOwners();
         //dd($owners);
         $role = \Auth::user()->role->name;
-        if($role === 'super_admin') {
+        if($role === 'super_admin' || $role === 'accounting_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'owner_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getCentersByOwnerId(\Auth::user()->id), 'role' => $role, 'owners' => $owners, 'id' => \Auth::user()->id]);   

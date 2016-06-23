@@ -27,7 +27,7 @@
                 
                 Phone: {!! Form::text('phone_1', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('ext_1', null,[ 'class' => 'f2']) !!}<br>
                 Phone: {!! Form::text('phone_2', null,[ 'class' => 'f1a']) !!} Ext. {!! Form::text('ext_2', null,[ 'class' => 'f2']) !!}
-                {!! Form::hidden('owner_id',\Auth::id()) !!}
+                {!! Form::hidden('owner_id',$owner_id) !!}
             </div>
             <!-- <div class="form_right">
                 password: {!! Form::text('password', null,[ 'class' => 'f1']) !!}

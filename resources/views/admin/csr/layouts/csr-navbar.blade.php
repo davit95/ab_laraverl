@@ -50,12 +50,12 @@
         </div>
     </a>
     @if(isset($role) && $role !== 'client_user')
-        <a target="_blank" href="{{ url('/admin-users') }}" class="nd">
+        <!-- <a target="_blank" href="{{ url('/admin-users') }}" class="nd">
             <div class="menu_btn @if(Request::is('customer-login*')) menu_active @endif">
                 <div class="@if(Request::is('customer-login*')) menu_btnL1_a  @endif"></div>
                 <div class="menu_btnR lh_menu">ADD ALLIANCE CSR</div>
             </div>
-        </a>
+        </a> -->
         <a href="{{ url('/csr-exit-interview') }}" class="nd">
             <div class="menu_btn @if(Request::is('exit-interview*')) menu_active @endif">
                 <div class="@if(Request::is('exit-interview*')) menu_btnL1_a  @endif"></div>

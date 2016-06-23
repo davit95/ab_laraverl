@@ -46,9 +46,10 @@ class OwnersController extends Controller
     {
         $user = \Auth::user();
         $role = $user->role->name;
+        //dd($role);
         $owners = $ownerService->getOwnersByRole(\Auth::user());
         if($owners) {
-            if($role === 'super_admin') {
+            if($role === 'super_admin' || $role == 'accounting_user') {
                 return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
             } elseif($role === 'owner_user') {
                 return view('admin.centers.index', ['role' => $role, 'owners' => $owners]);   
@@ -162,7 +163,7 @@ class OwnersController extends Controller
         $regions = json_encode($regionService->getAllRegionsSelectList());
         $us_states = json_encode($usStateService->getAllUsStatesSelectList());
         $countries = json_encode($countryService->getAllCountriesSelectList());
-        if($role === 'super_admin') {
+        if($role === 'super_admin' || $role === 'accounting_user') {
             $owner = $ownerService->getOwnerByID($id);
             $owner_client = $ownerService->getOwnerById($id);
         } elseif($role === 'owner_user') {
@@ -288,8 +289,8 @@ class OwnersController extends Controller
         return view('admin.owners.forms.add_staff',['role' => \Auth::user()->role->name]);
     }
 
-    public function CreateStaff()
+    public function CreateStaff($id)
     {
-        return view('admin.owners.forms.add_staff',['role' => \Auth::user()->role->name]);
+        return view('admin.owners.forms.add_staff',['role' => \Auth::user()->role->name, 'owner_id' => $id]);
     } 
 }

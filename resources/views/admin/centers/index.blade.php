@@ -14,7 +14,7 @@
 			@endif
 		@endif
 		@if(Request::is('owners*'))
-			@if($role === 'super_admin')	
+			@if($role === 'super_admin' || $role == 'accounting_user')	
 				<a href="{{ url('owners/create') }}" class="btn btn-outline btn-default" style="margin-left:15px;"><i class="fa fa-plus"></i> New Owner</a>
 			@endif
 			@if($role === 'owner_user' && isset($owner))

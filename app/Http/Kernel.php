@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
         'superAdminOrOwner' => \App\Http\Middleware\SuperAdminOrOwner::class,
         'superAdminOrCsr' => \App\Http\Middleware\SuperAdminOrCsr::class,
         'client_user' => \App\Http\Middleware\Client::class,
-        'superAdminOrOwnerOrCsr' => \App\Http\Middleware\SuperAdminOrOwnerOrCsr::class
+        'superAdminOrOwnerOrCsr' => \App\Http\Middleware\SuperAdminOrOwnerOrCsr::class,
+        'AccountingUser' => \App\Http\Middleware\AccountingUser::class
     ];
 }

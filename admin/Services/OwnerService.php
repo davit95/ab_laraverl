@@ -101,9 +101,10 @@ class OwnerService implements OwnerInterface
 		$country_id = $this->country->where('name', $params['country'])->first()->id;
 		$state_id = $this->state->where('name', $params['us_state'])->first()->id;
 		$region_id = $this->region->where('name', $params['region'])->first()->id;
-		$city_id = $this->city->where('country_id', $country_id)->
-								where('us_state_id', $state_id)->
-								where('name', $params['city'])->first()->id;
+		$city_id = $this->city
+		->where('country_id', $country_id)
+		->where('us_state_id', $state_id)
+		->where('name', $params['city'])->first()->id;
 
 		$params['us_state_id'] = $state_id;
 		$params['city_id'] = $city_id;
@@ -123,9 +124,10 @@ class OwnerService implements OwnerInterface
 		$country_id = $this->country->where('name', $params['country'])->first()->id;
 		$state_id = $this->state->where('name', $params['us_state'])->first()->id;
 		//$region_id = $this->region->where('name', $params['region'])->first()->id;
-		$city_id = $this->city->where('country_id', $country_id)->
-								where('us_state_id', $state_id)->
-								where('name', $params['city'])->first()->id;
+		$city_id = $this->city
+		->where('country_id', $country_id)
+		->where('us_state_id', $state_id)
+		->where('name', $params['city'])->first()->id;
 
 		$params['us_state_id'] = $state_id;
 		$params['city_id'] = $city_id;
@@ -288,7 +290,7 @@ class OwnerService implements OwnerInterface
 	public function getOwnersByRole($user)
 	{
 		//dd($user->id);
-		if($user->role->name === 'super_admin') {
+		if($user->role->name === 'super_admin' || $user->role->name === 'accounting_user') {
 			$owner_role_id = $this->getUserIdByRoleName('owner_user');
 			return $this->user->where('role_id', $owner_role_id)->paginate(10);
 		} elseif($user->role->name === 'owner_user') {
@@ -413,9 +415,9 @@ class OwnerService implements OwnerInterface
 		}
 	}
 
-	public function getUserIdByRoleName($role)
+	public function getUserIdByRoleName($role_name)
 	{
-		return $this->role->where('name', $role)->first()->id;
+		return $this->role->where('name', $role_name)->first()->id;
 	}
 	
 	public function createStaff($params)

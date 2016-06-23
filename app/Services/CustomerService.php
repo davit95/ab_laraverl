@@ -42,11 +42,27 @@ class CustomerService {
 
 	public function getCustomerParams($data, $center)
 	{
+		//dd($data);
 		$data = array_merge($data,$center);
-		$city_id = $this->city->where('name', $data['city'])->first()->id;
-		$state_id = $this->usState->where('name', $data['state'])->first()->id;
-		$data['city_id'] = $city_id;
-		$data['us_state_id'] = $state_id;
+		$city = $this->city->where('name', $data['city'])->first();
+		if($city) {
+			$city_id = $city->id;
+			$data['city_id'] = $city_id;
+		} else {
+			$data['city_id'] = null;
+		}
+		$state = $this->usState->where('name', $data['state'])->first();
+		if($state) {
+			$state_id = $state->id;
+			$data['us_state_id'] = $state_id;
+		} else {
+			$data['us_state_id'] = null;
+		}
+		if($data['country_id'] == '') {
+			$data['country_id'] = null;
+		}
+		
+		
 		$data['password'] = bcrypt($data['password']);
 		$role_id = $this->role->where('name', 'client_user')->first()->id;
 		$data['role_id'] = $role_id;

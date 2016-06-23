@@ -6,6 +6,7 @@ use App\Http\Middleware\SuperAdminOrOwner;
 use App\Http\Middleware\SuperAdminOrCsr;
 use App\Http\Middleware\Client;
 use App\Http\Middleware\SuperAdminOrOwnerOrCsr;
+use App\Http\Middleware\AccountingUser;
 // use App\Http\Middleware\Owner;
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::get('/allwork-centers', 'CentersController@getCentersByName');
 
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
 Route::get('/owners/documents', 'OwnersController@getDocuments');
-Route::get('/owners/add-staff', 'OwnersController@CreateStaff' );
+Route::get('/owners/{id}/add-staff', 'OwnersController@CreateStaff' );
 Route::resource('/owners', 'OwnersController');
 
 //Route::get('/user', 'UsersController@index');
@@ -53,10 +54,12 @@ Route::get('/meeting-rooms/staff', 'MeetingRoomsController@getStaff');
 
 Route::get('/center/{id}/owner/create', 'OwnersController@createOrUpdateOwner');
 Route::get('owner/{id}/center/create', 'CentersController@create');
+
 /*new*/
 
 
 Route::resource('/users', 'UsersController');
+Route::get('/accounting-admin', 'UsersController@index');
 
 
 

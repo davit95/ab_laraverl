@@ -39,8 +39,9 @@ class UsersController extends Controller
     public function index(Request $request, OwnerInterface $ownerService, UserInterface $userService)
     {
         $role = \Auth::user()->role->name;
-        $owners = $ownerService->getOwnersLists();
-        return view('admin.users.index', ['owners' => ['' => 'Select Company / Owner Name'] + $owners, 'role' => $role]);
+        $users = $userService->getCsrOrAccountingUsers($request);
+        return view('admin.users.index', ['users' => $users, 'role' => $role]);
+        
     }
 
     /**
@@ -114,14 +115,18 @@ class UsersController extends Controller
     public function addAllianceUser(Request $request, UserInterface $userService)
     {
         $role = \Auth::user()->role->name;
-        return view('admin.users.admin-index', ['role' => $role]);
+        if($request->is('admin-users')) {
+            $user_type = 'accounting_user';
+        } else {
+            $user_type = 'admin';
+        }
+        return view('admin.users.admin-index', ['role' => $role, 'user_type' => $user_type]);
         
     }
 
     public function createAdminUser(CsrRequest $request, UserInterface $userService)
     {
-        $role_id = 2;
-        if(null != $userService->createAllianceUser($request->all(), $role_id)) {
+        if(null != $userService->createAllianceUser($request->all())) {
             return redirect()->back()->withSuccess('user successfully created');
         }
     }

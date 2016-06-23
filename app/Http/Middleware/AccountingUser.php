@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class SuperAdmin
+class AccountingUser
 {
 
     /**
@@ -35,16 +35,9 @@ class SuperAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->isSuperAdmin()) {
-            //dd();
-            return $next($request);
+        if(auth()->user()->isAccountingUser()) {
+            return redirect('/centers');
         }
-        if(auth()->user()->role->name == 'admin') {
-            return redirect('/csr');
-        }
-        if(auth()->user()->role->name == 'client_user') {
-            return redirect('/client');
-        }
-        return redirect('/centers');
+        return $next($request);
     }
 }
