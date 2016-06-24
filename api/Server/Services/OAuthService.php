@@ -86,6 +86,7 @@ class OAuthService {
 	public function passOauth($request)
 	{		
 		$inputs = $request->all();
+		$access_token = $request->header('access-token');		
 		$response = [];
 		// if(!isset($inputs['api_key'])){
 		// 	$response['errors'] = 'api_key is required';
@@ -94,13 +95,13 @@ class OAuthService {
 		// 	$response['errors'] = 'api_secret is required';
 		// 	return $response;			
 		// }else 
-		if(!isset($inputs['access_token'])){
+		if(!isset($access_token)){
 			$response['errors'] = 'access_token is required';
 			return $response;
 		}else{
 			// $api_key       = $inputs['api_key'];
 			// $api_secret    = $inputs['api_secret'];
-			$access_token  = $inputs['access_token'];
+			$access_token  = $access_token;
 			// if(!$creds = $this->checkApiKeyAndSecret($api_key ,$api_secret, $request->ip())){
 			// 	$response['errors'] = 'Invalid api_key or api_secret';
 			// 	return $response;				
