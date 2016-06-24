@@ -114,6 +114,7 @@ class CustomersController extends Controller
     public function getInvoice($id, UserInterface $userService)
     {
         $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
+        dd($userService->getCustomerCenterInfo($customer->center_id));
         if($customer) {
              return view('admin.csr.customers.invoice',['customer' => $customer, 'role' => $customer = \Auth::user()->role->name]);
         } else {

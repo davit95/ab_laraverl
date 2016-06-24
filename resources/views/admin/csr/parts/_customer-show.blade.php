@@ -116,7 +116,7 @@
                 </p>
             </div>
         </div>
-        {!! Form::open(  [ 'url' => url('/customers'), 'method' => 'POST', 'files' => true ]) !!}
+        
         <div class="line">
             <span class="lh_fi mediumBold">
                 <strong>Comments:</strong> 
@@ -132,9 +132,11 @@
                 <span class="lh_fi mediumBold">
                     <strong>Change Status:</strong>
                 </span>&nbsp;
-                <div class="formOinfo"> 
-                     <input type="button" class = "btn btn-primary" value="Cancel Order">
-                </div>
+                {!! Form::open(  [ 'url' => url('/users/'.$customer->id), 'method' => 'DELETE', 'files' => true ]) !!}
+                    <div class="formOinfo"> 
+                         <input type="submit" class = "btn btn-primary" value="Cancel Order">
+                    </div>
+                {!!Form::close()!!}
             </div>
             <div class="line">
                 <span class="lh_fi mediumBold">
@@ -319,7 +321,7 @@
                     </p>
                 </div>
             </div>
-        {{Form::close()}}
+        
         <div class="line">
             <span class="lh_fi mediumBold">
                 <hr>

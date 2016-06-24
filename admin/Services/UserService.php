@@ -181,4 +181,15 @@ class UserService implements UserInterface
 		$user->update($params);
 		return $user;
 	}
+
+	public function getCustomerCenterInfo($center_id)
+	{
+		return $this->center->find($center_id);
+	}
+
+	public function destroyUser($id)
+	{
+		$user = $this->getUserById($id);
+		return $user->delete();
+	}
 }

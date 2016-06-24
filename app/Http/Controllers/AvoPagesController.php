@@ -103,7 +103,7 @@ class AvoPagesController extends Controller {
 	 */
 	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService ) {
 		$inputs = $request->all();
-		dd($inputs, session('item')->last());
+		//dd($inputs, session('item')->first());
 		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 		}
@@ -222,7 +222,7 @@ class AvoPagesController extends Controller {
 		}
 		session(['items' => $items]);
 		$customer['term'] = session('term');
-		
+		//dd($items);
 		return view('avo-pages.order-review', ['customer' => (object) $customer, 'has_vo' => $has_vo, 'items' => $items, 'price_total' => round($price_total, 2)]);
 	}
 

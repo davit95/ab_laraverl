@@ -117,9 +117,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, UserInterface $userService)
     {
-        //
+        //dd($id);
+        if ( null != $user = $userService->destroyUser($id) ) {
+            return redirect('csr')->withSuccess('Customer has been successfully deleted.');
+        }
     }
 
     public function addAllianceUser(Request $request, UserInterface $userService)
