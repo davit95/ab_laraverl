@@ -234,8 +234,19 @@ class LocationService {
 		$searchResult = array_merge($searchResult, $cities);
 		$countries = $this->country->where('name', 'LIKE', '%'.$key.'%')->distinct('name')->get(['name', 'id', 'code'])->toArray();
 		$searchResult = array_merge($searchResult, $countries);
-		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y')->get(['name', 'id', 'country', 'city_name', 'us_state']);
+		$locations = $this->center
+					->where(function($query) use ($key){
+						$query->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
+					})
+					->orWhere(function($query) use ($key){
+						$query->where('postal_code', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
+					})
+					->with('city')
+					->get(['name', 'id', 'city_id', 'country', 'city_name', 'us_state']);
+					// dd($this->center->where('id', 2053)->with('city')->first());
 		foreach ($locations as $location) {
+			$location->city_slug = isset($location->city) ? $location->city->slug : '';
+			unset($location->city);
 			$location->type = 'vo';
 		}
 		$searchResult = array_merge($searchResult, $locations->toArray());
