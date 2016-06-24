@@ -55,7 +55,9 @@ class CustomersController extends Controller
 
         $userService->test($id,\Auth::id());
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        //dd($customer);
+
+        $files = $customerService->getCustomerFiles($id);
+
         if($customer) {
             $role_id = \Auth::user()->role_id;
             if($id == $customer->id) {
@@ -72,7 +74,7 @@ class CustomersController extends Controller
         } else {
             dd(404);
         }
-        return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id]);
+        return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id, 'files' => $files]);
     }
 
     public function store(Request $request, CustomerService $customerService) 
@@ -102,7 +104,13 @@ class CustomersController extends Controller
 
     public function uploadFile($id, CustomerService $customerService, Request $request)
     {
-        dd($customerService->uploadFile($id,$request->all(),$request->file()));
+        if ($customerService->uploadFile($id,$request->all(),$request->file())) {
+            return redirect('orders/'.$id)->withSuccess('File has been successfully created.');
+        }
+        else {
+            return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+        }
+        //dd();
     }
 
     public function getBalance($id, CustomerService $customerService)

@@ -157,6 +157,7 @@ class AvoPagesController extends Controller {
 		$has_vo      = false;
 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
 			$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
+			//dd($items);
 			for($i = count($items) -1; $i >= 0; $i--) {
 				if($i == count($items) -1) {
 					if($items[$i]->type == 'mr'){

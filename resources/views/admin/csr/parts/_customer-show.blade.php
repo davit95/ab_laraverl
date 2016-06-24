@@ -50,7 +50,11 @@
                     <ul> </ul> <div class="files-category">Post Office Form</div>
                     <ul> </ul> <div class="files-category">Misc.</div>
                     <ul> </ul> <div class="files-category">CMRA</div>
-                    <ul> </ul> 
+                    @if($files)
+                       @foreach($files as $file)
+                           <a href="#">{{$file->path}}</a><br><br>
+                       @endforeach
+                   @endif
                 </div>
             </div>
         </div>
@@ -72,7 +76,7 @@
                         <div class="modal-body">
                             {!! Form::open( [ 'url' => url('/customers/'.$customer->id.'/upload'), 'method' => 'POST', 'files' => true ]) !!}
                                 {!! Form::label('Type of file :') !!}
-                                {!! Form::select('region', ['Identification', 'Post Office Form', 'Misc.'], null, ['class' => 'form-control', 'data-multi' => true]) !!}
+                                {!! Form::select('file_category', ['Identification' => 'Identification', 'Post Office Form' => 'Post Office Form', 'Misc.' => 'Misc.'], null, ['class' => 'form-control', 'data-multi' => true]) !!}
                                 <br>
                                 {!! Form::label('Please choose a file :') !!}
                                 {!! Form::file('file', null,[ 'class' => 'gray_btn']) !!} 
