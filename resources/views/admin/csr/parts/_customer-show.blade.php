@@ -133,9 +133,9 @@
         </div>
 
             <div class="line">
-                <span class="lh_fi mediumBold">
+                <!-- <span class="lh_fi mediumBold">
                     <strong>Change Status:</strong>
-                </span>&nbsp;
+                </span>&nbsp; -->
                 {!! Form::open(  [ 'url' => url('/users/'.$customer->id), 'method' => 'DELETE', 'files' => true ]) !!}
                     <div class="formOinfo"> 
                          <input type="submit" class = "btn btn-primary" value="Cancel Order">

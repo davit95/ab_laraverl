@@ -223,7 +223,7 @@ class AvoPagesController extends Controller {
 		}
 		session(['items' => $items]);
 		$customer['term'] = session('term');
-		//dd($items);
+		dd($items);
 		return view('avo-pages.order-review', ['customer' => (object) $customer, 'has_vo' => $has_vo, 'items' => $items, 'price_total' => round($price_total, 2)]);
 	}
 

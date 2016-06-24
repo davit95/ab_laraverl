@@ -11,7 +11,7 @@ use Admin\Http\Requests\CenterRequest;
 use Admin\Contracts\UserInterface;
 use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
-
+use Cookie;
 use Admin\Services\CenterService;
 
 class CustomersController extends Controller
@@ -40,6 +40,8 @@ class CustomersController extends Controller
 
     public function show($id, CustomerService $customerService, UserInterface $userService)
     {
+        $temp_user_id = Cookie::get('temp_user_id');
+        //dd($temp_user_id);
         $months['01'] = 'January (01)';
         $months['02'] = 'February (02)';
         $months['03'] = 'March (03)';

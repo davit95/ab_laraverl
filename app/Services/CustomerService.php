@@ -200,4 +200,10 @@ class CustomerService {
 	// 	return $this->user->where('id', $id)->update($inputs);
 	// }
 
+	public function searchCustomerByKey($key)
+	{
+		$customers = $this->user->where('first_name', 'LIKE', "{$key}%")->get();
+		return $customers;
+	}
+
 }

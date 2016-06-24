@@ -121,7 +121,7 @@ class UsersController extends Controller
     {
         //dd($id);
         if ( null != $user = $userService->destroyUser($id) ) {
-            return redirect('csr')->withSuccess('Customer has been successfully deleted.');
+            return redirect('csr')->withSuccess('Invoice has been successfully deleted.');
         }
     }
 
