@@ -70,7 +70,7 @@ class LocationService {
 	    	->orWhere(['center_prices.package_id' => '105']);	    	
 	    })
 	    ->where(['centers.country' => $country_slug, 'centers.us_state' => $state, 'centers.active_flag' => 'Y'])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])	    
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
 	    ->groupBy('centers.id')
 	    ->select(['centers.*'])
 	    ->orderBy('center_prices.price', 'asc')

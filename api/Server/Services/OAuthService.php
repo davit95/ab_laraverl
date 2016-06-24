@@ -86,7 +86,11 @@ class OAuthService {
 	public function passOauth($request)
 	{		
 		$inputs = $request->all();
-		$access_token = $request->header('access-token');		
+		if($request->isMethod('get')){
+			$access_token = $request->header('access-token');
+		}else{
+			$access_token = isset($inputs['access_token']) ? $inputs['access_token'] : null;
+		}
 		$response = [];
 		// if(!isset($inputs['api_key'])){
 		// 	$response['errors'] = 'api_key is required';
@@ -120,7 +124,7 @@ class OAuthService {
 	}
 	
 	private function checkAccessToken($origin, $access_token)
-	{
+	{		
 		$access_tokens = $this->accessToken
 		->where('access_token' , $access_token)
 		// ->where('origin', $origin)
