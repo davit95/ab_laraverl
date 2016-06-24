@@ -181,6 +181,7 @@ class CentersController extends Controller
         $arr = $centerService->getCenterPackages($prices);
         $packages = $centerService->getPackagesList();
         //dd($center->prices);
+        //dd($sites, );
         if($center) {
             return view('admin.centers.create', 
             [
@@ -197,7 +198,8 @@ class CentersController extends Controller
                 'package' => $center->prices[0]->package,
                 'sites' => $sites,
                 'role' => $role,
-                'owners' => $owners
+                'owners' => $owners,
+                'viewable_sites' => $center->sites->lists('name')->toArray()
             ]);
         } else {
             dd(404);

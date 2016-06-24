@@ -76,7 +76,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/orders/{id}' , 'CustomersController@show');
 	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
 	Route::get('/charge' , 'CsrController@charge');
-	Route::resource('/customers' , 'CustomersController');
+	//Route::resource('/customers' , 'CustomersController');
 	Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
 	Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
 	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');

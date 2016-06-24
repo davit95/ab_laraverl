@@ -150,6 +150,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+        App\Providers\ValidatorServiceProvider::class,
+        //App\Providers\BraintreeServiceProvider::class,
 
     ],
 

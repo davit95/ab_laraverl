@@ -167,4 +167,18 @@ class UserService implements UserInterface
 			return $this->user->where('role_id', $role_id)->get();
 		}
 	}
+
+	public function getUserById($id)
+	{
+		return $this->user->find($id);
+	}
+
+	public function updateUser($id, $params)
+	{
+		$user = $this->getUserById($id);
+		//dd(\Auth::user()->role->name);
+		//if($user->role->name == 'accounting_user');
+		$user->update($params);
+		return $user;
+	}
 }

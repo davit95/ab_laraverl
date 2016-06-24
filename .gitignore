@@ -1,5 +1,6 @@
 vendor
 .env
+composer.lock
 composer.phar
 /.phpintel
 tests/_output/*
