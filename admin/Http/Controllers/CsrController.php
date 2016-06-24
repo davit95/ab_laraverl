@@ -118,4 +118,11 @@ class CsrController extends Controller
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
         return view('admin.csr.test', ['customer' => $customer, 'role' => $role]);
     }
+
+    public function customerSearch(Request $request, CustomerService $customerService)
+    {
+        $customers = $customerService->searchCustomerByKey($request->key);
+        //dd($customers[12]->centers[0]);
+        return view('admin.csr.customers.customers-search', ['customers' => $customers]);
+    }
 }

@@ -1,8 +1,10 @@
 vendor
 .env
+composer.lock
 composer.phar
 /.phpintel
 tests/_output/*
 /public/testImages
 /node_modules
 /public/mr-photos
+/public/files

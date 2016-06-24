@@ -11,7 +11,7 @@ use Admin\Http\Requests\CenterRequest;
 use Admin\Contracts\UserInterface;
 use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
-
+use Cookie;
 use Admin\Services\CenterService;
 
 class CustomersController extends Controller
@@ -40,6 +40,8 @@ class CustomersController extends Controller
 
     public function show($id, CustomerService $customerService, UserInterface $userService)
     {
+        $temp_user_id = Cookie::get('temp_user_id');
+        //dd($temp_user_id);
         $months['01'] = 'January (01)';
         $months['02'] = 'February (02)';
         $months['03'] = 'March (03)';
@@ -55,7 +57,9 @@ class CustomersController extends Controller
 
         $userService->test($id,\Auth::id());
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        //dd($customer);
+
+        $files = $customerService->getCustomerFiles($id);
+
         if($customer) {
             $role_id = \Auth::user()->role_id;
             if($id == $customer->id) {
@@ -72,7 +76,7 @@ class CustomersController extends Controller
         } else {
             dd(404);
         }
-        return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id]);
+        return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id, 'files' => $files]);
     }
 
     public function store(Request $request, CustomerService $customerService) 
@@ -102,7 +106,13 @@ class CustomersController extends Controller
 
     public function uploadFile($id, CustomerService $customerService, Request $request)
     {
-        dd($customerService->uploadFile($id,$request->all(),$request->file()));
+        if ($customerService->uploadFile($id,$request->all(),$request->file())) {
+            return redirect('orders/'.$id)->withSuccess('File has been successfully created.');
+        }
+        else {
+            return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
+        }
+        //dd();
     }
 
     public function getBalance($id, CustomerService $customerService)
@@ -114,6 +124,7 @@ class CustomersController extends Controller
     public function getInvoice($id, UserInterface $userService)
     {
         $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
+        dd($userService->getCustomerCenterInfo($customer->center_id));
         if($customer) {
              return view('admin.csr.customers.invoice',['customer' => $customer, 'role' => $customer = \Auth::user()->role->name]);
         } else {

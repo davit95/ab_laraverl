@@ -16,22 +16,20 @@
             <!-- <span class="lh_f">Viewable On :</span>&nbsp;
             <br> -->
             <div class="services_wrapp">
-                <input type="checkbox" name="avo_site" value="avo" id="1" checked="">
-                <label for="1"></label>
-                AVO -Alliancevirtualoffices.com &nbsp; &nbsp;
+                {!! Form::checkbox('avo_site', 'avo', in_array('avo', $viewable_sites) ? true : null, ['id' => '1']) !!}    
+                {!! Form::label('1','AVO -Alliancevirtualoffices.com &nbsp; &nbsp;') !!}
             </div>
             <br><br>
             <div class="services_wrapp">
-                <input type="checkbox" name="abcn_site" value="abcn" id="1" checked="">
-                <label for="1"></label> 
-                ABCN -Samedayvirtual.com
+                {!! Form::checkbox('abcn_site', 'abcn', in_array('avo', $viewable_sites) ? true : null, ['id' => '1']) !!}    
+                {!! Form::label('1','ABCN -Samedayvirtual.com') !!}    
             </div>
             <br><br>
             <div class="services_wrapp">
-                <input type="checkbox" name="allwork_site" value="allwork" id="1" checked="">
-                <label for="1"></label>
-                AWS - Allwork.space
+                {!! Form::checkbox('allwork_site', 'allwork', in_array('avo', $viewable_sites) ? true : null, ['id' => '1']) !!}    
+                {!! Form::label('1','AWS - Allwork.space') !!}
             </div>
+
             <!-- <span class="lh_f">Owners:</span>&nbsp; -->
             <!-- {!! Form::select('owners',$owners, null, [ 'class' => '', 'multiple' => true]) !!} -->
             <!-- <select class="change" multiple>             
@@ -45,17 +43,15 @@
         </div>
         <div class="form_right centers_basic">
             <div class="services_wrapp">
-                <input type="checkbox" name="avo_vo" value="VO" id="1" checked="">
-                <label for="1">         
-                </label> 
+                {!! Form::checkbox('avo_vo', 'VO' , $center->center_filter->virtual_office == 1 ? true : null, ['id' => '1']) !!}
+                {!! Form::label('') !!}
                 VO &nbsp; &nbsp;
-                    <input type="checkbox" name="avo_mr" value="MR" id="2" checked="">
-                    <label for="2">
-                        
-                    </label> 
+                {!! Form::checkbox('avo_mr', 'MR' ,  $center->center_filter->meeting_room == 1 ? true : null, ['id' => '2']) !!}
+                {!! Form::label('') !!}
                 MR &nbsp; &nbsp;
             </div>
             <br><br>
+
             <div class="services_wrapp">
                 <input type="checkbox" name="abcn_vo" value="VO" id="1" checked="">
                 <label for="1">         
@@ -134,7 +130,7 @@
         <br>
         @if(isset($center))
             {!! Form::label('Make this center active or inactive') !!}
-            {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!}
+            {!! Form::checkbox('active',$center->center_filter->virtual_office, $center->center_filter->virtual_office == 1 ? true : null) !!}
         @endif
         <!-- {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}

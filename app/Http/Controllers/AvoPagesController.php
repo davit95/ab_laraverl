@@ -103,6 +103,7 @@ class AvoPagesController extends Controller {
 	 */
 	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService ) {
 		$inputs = $request->all();
+		//dd($inputs, session('item')->first());
 		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 		}
@@ -156,6 +157,7 @@ class AvoPagesController extends Controller {
 		$has_vo      = false;
 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
 			$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
+			//dd($items);
 			for($i = count($items) -1; $i >= 0; $i--) {
 				if($i == count($items) -1) {
 					if($items[$i]->type == 'mr'){
@@ -219,8 +221,9 @@ class AvoPagesController extends Controller {
 		} else {
 			$items = [];
 		}
+		session(['items' => $items]);
 		$customer['term'] = session('term');
-		
+		dd($items);
 		return view('avo-pages.order-review', ['customer' => (object) $customer, 'has_vo' => $has_vo, 'items' => $items, 'price_total' => round($price_total, 2)]);
 	}
 

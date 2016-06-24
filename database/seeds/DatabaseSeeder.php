@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrencyTableSeeder::class);
         $this->call(SitesTableSeeder::class);
 
-        Model::reguard();
+        Model::reguard(); 
     }
 }

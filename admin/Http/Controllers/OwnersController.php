@@ -14,6 +14,7 @@ use Admin\Contracts\UsStateInterface;
 use Admin\Contracts\CountryInterface;
 use Admin\Http\Requests\OwnerRequest;
 use Admin\Contracts\UserInterface;
+use Illuminate\Validation\Factory;
 
 
 class OwnersController extends Controller
@@ -193,9 +194,9 @@ class OwnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, OwnerRequest $request, OwnerInterface $ownerService)
+    public function update($id, OwnerRequest $request, OwnerInterface $ownerService, Factory $factory)
     {
-        //dd($id, $request->all());
+        // /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/
         if ( null != $owner = $ownerService->updateOwner($id, $request->all() ) ) {
             return redirect('owners/'.$owner->id)->withSuccess('Owner has been successfully updated.');
         }
@@ -244,16 +245,16 @@ class OwnersController extends Controller
     {
         $role = \Auth::user()->role->name;
         return view('admin.owners.create', [
-                    'cities' => json_encode($cityService->getAllCitiesSelectList()),
-                    'regions' => json_encode($regionService->getAllRegionsSelectList()),
-                    'us_states' => json_encode($usStateService->getAllUsStatesSelectList()),
-                    'countries' => json_encode($countryService->getAllCountriesSelectList()),
-                    'countries_list' => ['' => 'no country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
-                    'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
-                    'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
-                    'center_id' => $center_id,
-                    'role' => $role
-                ]);
+            'cities' => json_encode($cityService->getAllCitiesSelectList()),
+            'regions' => json_encode($regionService->getAllRegionsSelectList()),
+            'us_states' => json_encode($usStateService->getAllUsStatesSelectList()),
+            'countries' => json_encode($countryService->getAllCountriesSelectList()),
+            'countries_list' => ['' => 'no country'] + $countryService->getAllCountries()->lists('name', 'name')->toArray(),
+            'regions_list' => ['' => 'no region'] + $ownerService->getAllRegionsLists(),
+            'states_list' => ['' => 'no state'] + $ownerService->getAllStatesLists(),
+            'center_id' => $center_id,
+            'role' => $role
+        ]);
     }
 
     /**

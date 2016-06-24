@@ -20,11 +20,11 @@ class MeetingRoomService implements MeetingRoomInterface {
 	 * Create a new center service instance.
 	 */
 	public function __construct(MeetingRoom $meetingRoom,
-								 MeetingRoomOption $meetingRoomOption,
-								 MeetingRoomSeo $meetingRoomSeo,
-								 Center $center,
-								 Photo $photo,
-								 CenterFilter $centerFilter) {
+		MeetingRoomOption $meetingRoomOption,
+		MeetingRoomSeo $meetingRoomSeo,
+		Center $center,
+		Photo $photo,
+		CenterFilter $centerFilter) {
 		$this->meetingRoom = $meetingRoom;
 		$this->meetingRoomOption = $meetingRoomOption;
 		$this->meetingRoomSeo = $meetingRoomSeo;
@@ -307,14 +307,21 @@ class MeetingRoomService implements MeetingRoomInterface {
 	 */
 	public function getMeetingRoomsByOwnerId($owner_id)
 	{
+		//dd($owner_id);
+		$mr = [];
 		$center_ids = $this->filteredVirtualOffice()->where('owner_id', $owner_id)->lists('id');
 		if($center_ids) {
 			$centers =  $this->filteredMeetingRoom()->whereIn('id', $center_ids)->with('meeting_rooms')->get();
 			foreach ($centers as $center) {
 				$mr[] = collect($center->meeting_rooms);
 			}
+			if(!empty($mr)) {
+				return $mr[0];
+			} else {
+				return [];
+			}
 			
-			return $mr[0];
+			
 		} else {
 			return false;
 		}

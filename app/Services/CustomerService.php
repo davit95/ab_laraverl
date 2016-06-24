@@ -7,6 +7,7 @@ use App\Models\UsState;
 use App\Models\Center;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\File;
 use App\Models\Role;
 use App\User;
 
@@ -17,7 +18,8 @@ class CustomerService {
 		City $city,
 		Country $country,
 		Role $role,
-		UsState $usState
+		UsState $usState,
+		File $file
 		) {
 		$this->customer = $customer;
 		$this->user = $user;
@@ -26,6 +28,7 @@ class CustomerService {
 		$this->country = $country;
 		$this->role = $role;
 		$this->usState = $usState;
+		$this->file = $file;
 	}
 
 	public function test($id,$admin_id)
@@ -115,8 +118,38 @@ class CustomerService {
 
 	public function uploadFile($id, $params, $files)
 	{
-		dd($this->getFilesNames($files));
+		$file_params = $this->getFilesParams($files,$params, $id);
+		$files = $this->file->create($file_params);
+		return $files;
 	}
+
+	public function getCustomerFiles($id)
+	{
+		return $this->file->where('user_id', $id)->get();
+	}
+
+	// public function uploadFile($id, $params, $files)
+	// {
+	// 	$file_params = $this->getFilesNames($files, $params);
+	// 	$files = $this->file->create($file_params);
+	// 	if($files) {	
+	// 		$this->user->find($id)->user_files()->attach($this->getFilesIds($files));
+	// 	}	
+	// }
+
+	// /**
+	//  * return photos ids
+	//  *
+	//  * @param $files (file)
+	//  * @return ids
+	//  */
+	// public function getFilesIds($files)
+	// {
+	// 	$file_ids = [];
+	// 	$max_file_id = $this->file->max('id');
+	// 	$ids = $this->file->where('id', '>', $max_file_id - count($files))->lists('id')->toArray();
+	// 	return $ids;
+	// }
 
 	/**
 	 * upload images for virtual office
@@ -124,13 +157,16 @@ class CustomerService {
 	 * @param $files (file)
 	 * @return filenames
 	 */
-	public function getFilesNames($files)
+	public function getFilesParams($files, $params, $id)
 	{
 		$file_names = [];
 		if ($files) {
 			foreach ($files as $file) {
 	        	$filename = str_random(20).".".$file->getClientOriginalExtension();
-	        	$filenames[]['path'] = $filename;
+	        	$filenames['path'] = $filename;
+	        	$filenames['file_category'] = $params['file_category'];
+	        	$filenames['user_id'] = $id;
+	        	$filenames['file_type'] = $file->getClientOriginalExtension();
 	        	$file->move(public_path().'/files', $filename);
 			}
 	        return $filenames;
@@ -163,5 +199,11 @@ class CustomerService {
 	// 	unset($inputs['country']);
 	// 	return $this->user->where('id', $id)->update($inputs);
 	// }
+
+	public function searchCustomerByKey($key)
+	{
+		$customers = $this->user->where('first_name', 'LIKE', "{$key}%")->get();
+		return $customers;
+	}
 
 }

@@ -37,11 +37,14 @@ class MeetingRoomsController extends Controller
      */
     public function index(MeetingRoomInterface $meetingRoomService)
     {
+        //dd('as');
         $role = \Auth::user()->role->name;
-        if(\Auth::user()->role_id == 1) {
+        //dd($role);
+        if(\Auth::user()->role_id == 1 || \Auth::user()->role_id == 10) {
             $meeting_rooms = $meetingRoomService->getMeetingRooms();  
         } elseif(\Auth::user()->role_id == 5) {
-            $meeting_rooms = $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::user()->owner_id);
+            $meeting_rooms = $meetingRoomService->getMeetingRoomsByOwnerId(\Auth::id());
+            //dd($meeting_rooms);
         }
         return view('admin.owners.parts._meeting-rooms-show', ['meetingRooms' => $meeting_rooms, 'role' => $role]);
     }
@@ -192,9 +195,8 @@ class MeetingRoomsController extends Controller
                 }
              } else {
                 dd(404);
-             }
-        }
-        
+            }
+        }      
     }
 
     /**

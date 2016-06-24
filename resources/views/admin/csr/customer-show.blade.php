@@ -1,5 +1,7 @@
 @extends('admin.csr.layouts.layout')
 
+
+
 @section('content')
     <div class="owner_show">
         @include('alerts.messages')
