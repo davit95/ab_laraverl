@@ -33,6 +33,15 @@ class LocationService {
 		$center->sites()->attach($site_id);
 	}
 
+	public function getLocationById($id)
+	{		
+		$location = $this->center->where('id', $id)->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
+		$nearby = isset($nearby);
+		$options = isset($options);
+		$description = isset($description);		
+		return $this->getNeccessaryOptions($location, $nearby, $options, $description);
+	}
+
 	public function getAllLocations($per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
@@ -295,16 +304,17 @@ class LocationService {
 	}
 
 	private function getNeccessaryOptions($locations, $nearby = false, $options = false, $description = false)
-	{
+	{	
 		$locationsArray = [];
-		foreach ($locations as $location) {
+		foreach ($locations as $location) {			
 			$temp = [
 				'id'            => $location->id,
 				'building_name' => $location->name,
 				'address_1'     => $location->address1,
 				'address_2'     => $location->address2,
 				'city'          => $location->city_name,
-				'city_slug'     => isset($location->city) ? $location->city->slug : '',
+				'company_name'  => $location->company_name,
+				'city_slug'     => null!= $location->city ? $location->city->slug : '',
 				'state'         => $location->us_state,
 				'postal_code'   => $location->postal_code,
 				'country'       => $location->country,
@@ -315,7 +325,7 @@ class LocationService {
 				'images'        => [],	
 				'products'      => [],				
 
-			];
+			];			
 			foreach ($location->vo_photos as $photo) {
 				$tempPhoto = new \stdClass();
 				$tempPhoto->name = $photo->path;
