@@ -32,6 +32,17 @@ class LocationsController extends Controller
     }
 
     /**
+     * Display the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLocation($id)
+    {
+        $locations = $this->locationService->getLocationById($id);
+        return response()->json($locations);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
