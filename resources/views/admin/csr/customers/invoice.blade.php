@@ -72,7 +72,7 @@
                 Triskel Consulting Services<br>
                 {{$customer->first_name}} {{$customer->last_name}}<br>
                 {{$customer->address1}}<br>
-                {{$customer->city->name}}, {{$customer->state}} 11787 {{$customer->country_code}}<br>
+                {{isset($customer->city) ? $customer->city->name : null}}, {{isset($customer->state) ? $customer->state : null}} 11787 {{$customer->country_code}}<br>
                 {{$customer->phone}}<br>
                 {{$customer->email}}<br>
                 <br><br>

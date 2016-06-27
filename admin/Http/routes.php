@@ -82,7 +82,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
 	Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
 	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
-	Route::get('/customers/{name}/{id}' , 'CsrController@test');
+	Route::get('/customers/{id}' , 'CsrController@test');
 });
 
 Route::group(['middleware' => 'client_user'], function () {
