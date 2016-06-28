@@ -15,10 +15,10 @@ class OAuthService {
 	public function authorize($request)
 	{		
 		$inputs = $request->all();
-		if(!isset($inputs['api_key'])){
+		if(!isset($inputs['api_key']) || $inputs['api_key'] == ""){
 			return 'API key is required';
-		}else if(!isset($inputs['api_secret'])){
-			return 'API secret is required';
+		}else if(!isset($inputs['api_secret']) || $inputs['api_key'] == ""){
+			return 'API secret is required';	
 		}else{
 			$api_key    = $inputs['api_key'];
 			$api_secret = $inputs['api_secret'];
@@ -30,7 +30,7 @@ class OAuthService {
 				$refresh_token = str_random(25);
 				if( null!= $access_tokens  = $this->accessToken->create([
 					'api_key_id'    => $creds->id,
-					'access_token'  => $access_token,
+					'accessToken'  => $access_token,
 					'refresh_token' => $refresh_token,
 					'expire_at'     => \Carbon\Carbon::now()->addDays(10),
 					'origin'        => $origin
@@ -44,11 +44,11 @@ class OAuthService {
 	public function refreshToken($request)
 	{				
 		$inputs = $request->all();
-		if(!isset($inputs['api_key'])){
+		if(!isset($inputs['api_key']) || $inputs['api_key'] == ""){
 			return 'API key is required';
-		}else if(!isset($inputs['api_secret'])){
+		}else if(!isset($inputs['api_secret']) || $inputs['api_key'] == ""){
 			return 'API secret is required';
-		}else if(!isset($inputs['refresh_token'])){
+		}else if(!isset($inputs['refresh_token']) || $inputs['refresh_token'] == ""){
 			return 'Refresh token is required';
 		}else{
 			$api_key       = $inputs['api_key'];
@@ -66,7 +66,7 @@ class OAuthService {
 					$origin    = $request->ip();
 					$access_tokens = $access_tokens->update([
 						'api_key_id'    => $creds->id,
-						'access_token'  => $access_token,
+						'accessToken'  => $access_token,
 						'refresh_token' => $refresh_token,
 						'expire_at'     => $expire_at,
 						'origin'        => $origin
@@ -87,7 +87,8 @@ class OAuthService {
 	{		
 		$inputs = $request->all();
 		if($request->isMethod('get')){
-			$access_token = $request->header('access-token');
+			$access_token = $request->header('access_token');
+			dd($request->header());
 		}else{
 			$access_token = isset($inputs['access_token']) ? $inputs['access_token'] : null;
 		}
