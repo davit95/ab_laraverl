@@ -174,7 +174,12 @@ class UserService implements UserInterface
 
 
 	public function getCusomerInvoice($user_id){
-		 return $this->tempCartItem->where('user_id', $user_id)->first();
+		 $result = $this->tempCartItem->where('user_id', $user_id)->first();
+		 if($result != false){
+		 	return $result;
+		 }else{
+		 	return false;
+		 }
 	}
 
 	public function getPackagePrice($plan){

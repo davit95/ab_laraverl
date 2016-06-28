@@ -241,7 +241,7 @@
             </div>
              <div >
                 <strong>Invoice Total:</strong>
-                <span class="boldet_color pull-right">{{$package_price + '4'*$mail_forwarding->price + '100'}}</span>
+                <span class="boldet_color pull-right">{{$package_price + $quality*$mail_forwarding->price + '100' }}</span>
             </div>
         @endif
         @if($invoice->type == 'mr')

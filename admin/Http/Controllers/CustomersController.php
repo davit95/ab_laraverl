@@ -123,12 +123,20 @@ class CustomersController extends Controller
 
     public function getInvoice($id, UserInterface $userService)
     {
+
         $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
         $customer_invoice = $userService->getCusomerInvoice($id);
-        if($customer_invoice->vo_plan != null){
-            $center_package_price = $userService->getPackagePrice($customer_invoice->vo_plan);
+        if($customer_invoice == false){
+            return view('errors.404');
         }
-        else{ $center_package_price = '';}
+        else{
+            if($customer_invoice->vo_plan != null){
+                $center_package_price = $userService->getPackagePrice($customer_invoice->vo_plan);
+            }
+            else { 
+                $center_package_price = '';
+            }
+        }
         $mail_forwarding_description = $userService->getMailForwardingPrice($customer_invoice->vo_mail_forwarding_package);
         $center_address = $userService->getCenterAddress($customer_invoice->center_id);
         if($customer_invoice->mr_id != null){
