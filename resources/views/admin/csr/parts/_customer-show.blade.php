@@ -50,7 +50,11 @@
                     <ul> </ul> <div class="files-category">Post Office Form</div>
                     <ul> </ul> <div class="files-category">Misc.</div>
                     <ul> </ul> <div class="files-category">CMRA</div>
-                    <ul> </ul> 
+                    @if($files)
+                       @foreach($files as $file)
+                           <a href="#">{{$file->path}}</a><br><br>
+                       @endforeach
+                   @endif
                 </div>
             </div>
         </div>
@@ -72,7 +76,7 @@
                         <div class="modal-body">
                             {!! Form::open( [ 'url' => url('/customers/'.$customer->id.'/upload'), 'method' => 'POST', 'files' => true ]) !!}
                                 {!! Form::label('Type of file :') !!}
-                                {!! Form::select('region', ['Identification', 'Post Office Form', 'Misc.'], null, ['class' => 'form-control', 'data-multi' => true]) !!}
+                                {!! Form::select('file_category', ['Identification' => 'Identification', 'Post Office Form' => 'Post Office Form', 'Misc.' => 'Misc.'], null, ['class' => 'form-control', 'data-multi' => true]) !!}
                                 <br>
                                 {!! Form::label('Please choose a file :') !!}
                                 {!! Form::file('file', null,[ 'class' => 'gray_btn']) !!} 
@@ -116,7 +120,7 @@
                 </p>
             </div>
         </div>
-        {!! Form::open(  [ 'url' => url('/customers'), 'method' => 'POST', 'files' => true ]) !!}
+        
         <div class="line">
             <span class="lh_fi mediumBold">
                 <strong>Comments:</strong> 
@@ -129,12 +133,14 @@
         </div>
 
             <div class="line">
-                <span class="lh_fi mediumBold">
+                <!-- <span class="lh_fi mediumBold">
                     <strong>Change Status:</strong>
-                </span>&nbsp;
-                <div class="formOinfo"> 
-                     <input type="button" class = "btn btn-primary" value="Cancel Order">
-                </div>
+                </span>&nbsp; -->
+                {!! Form::open(  [ 'url' => url('/users/'.$customer->id), 'method' => 'DELETE', 'files' => true ]) !!}
+                    <div class="formOinfo"> 
+                         <input type="submit" class = "btn btn-primary" value="Cancel Order">
+                    </div>
+                {!!Form::close()!!}
             </div>
             <div class="line">
                 <span class="lh_fi mediumBold">
@@ -320,6 +326,7 @@
                 </div>
             </div>
         {!!Form::close()!!}
+
         <div class="line">
             <span class="lh_fi mediumBold">
                 <hr>

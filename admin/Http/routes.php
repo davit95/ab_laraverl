@@ -72,15 +72,18 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/csr-accounting' , 'CsrController@getAccounts');
 	Route::get('/csr-exit-interview' , 'CsrController@exitInterview');
 	Route::get('/csr-declined' , 'CsrController@declined');
-	Route::get('/csr-pending-mrs' , 'CsrController@pending');
+	Route::get('/csr-declined' , 'CsrController@declined');
+	//Route::get('/csr/customer-search' , 'CsrController@customerSearch');
+	Route::post('/csr/customer-search' , 'CsrController@customerSearch');
 	Route::get('/orders/{id}' , 'CustomersController@show');
 	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
 	Route::get('/charge' , 'CsrController@charge');
-	Route::resource('/customers' , 'CustomersController');
+	//Route::resource('/customers' , 'CustomersController');
 	Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
 	Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
 	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
-	Route::get('/customers/{name}/{id}' , 'CsrController@getCustomerInfo');
+
+	Route::get('/customers/{id}' , 'CsrController@getCustomerInfo');
 });
 
 Route::group(['middleware' => 'client_user'], function () {

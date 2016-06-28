@@ -24,15 +24,16 @@
 			{{$staff->phone_1}}<br>
 			{{$staff->email}}
 		</div> 
-		<!-- <div class="sBox_btns">
-			<div class="s_select">
+		
+		<div class="sBox_btns">
+			<!-- <div class="s_select">
 				<select class="f2_s">
 					<option value="">Select</option>
 					<option value="center1">Center 1</option>
 					<option value="center2">Center 2</option>
 					<option value="center3">Center 3</option>
 				</select>
-			</div> 
-		</div> -->
+			</div> --> 
+		</div>
 	</div>
 @endforeach

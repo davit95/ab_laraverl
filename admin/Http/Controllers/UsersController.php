@@ -73,9 +73,16 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request, UserInterface $userService)
     {
-        dd($id);
+        $role = \Auth::user()->role->name;
+        if($request->is('admin-users')) {
+            $user_type = 'accounting_user';
+        } else {
+            $user_type = 'admin';
+        }
+        $user = $userService->getUserById($id);
+        return view('admin.users.admin-index', ['role' => $role, 'user_type' => $user_type, 'user' => $user]);
     }
 
     /**
@@ -96,9 +103,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, UserInterface $userService, Request $request)
     {
-        //
+        if ( null != $user = $userService->updateUser($id, $request->all() ) ) {
+            return redirect('users/'.$user->id)->withSuccess('User has been successfully updated.');
+        }
+        return redirect('/users')->withWarning('Whoops, looks like something went wrong, please try later.');
     }
 
     /**
@@ -107,9 +117,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, UserInterface $userService)
     {
-        //
+        //dd($id);
+        if ( null != $user = $userService->destroyUser($id) ) {
+            return redirect('csr')->withSuccess('Invoice has been successfully deleted.');
+        }
     }
 
     public function addAllianceUser(Request $request, UserInterface $userService)

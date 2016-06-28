@@ -172,6 +172,7 @@ class UserService implements UserInterface
 		}
 	}
 
+
 	public function getCusomerInvoice($user_id){
 		 return $this->tempCartItem->where('user_id', $user_id)->first();
 	}
@@ -190,5 +191,30 @@ class UserService implements UserInterface
 
 	public function getMeetingRoomName($mr_id, $center_id){
 		return $this->center->where('id' , $center_id)->first()->meeting_rooms->where('id',$mr_id)->first();
+	}
+	public function getUserById($id)
+	{
+		return $this->user->find($id);
+	}
+
+	public function updateUser($id, $params)
+	{
+		$user = $this->getUserById($id);
+		//dd(\Auth::user()->role->name);
+		//if($user->role->name == 'accounting_user');
+		$user->update($params);
+		return $user;
+	}
+
+	public function getCustomerCenterInfo($center_id)
+	{
+		return $this->center->find($center_id);
+	}
+
+	public function destroyUser($id)
+	{
+		$user = $this->getUserById($id);
+		return $user->delete();
+
 	}
 }

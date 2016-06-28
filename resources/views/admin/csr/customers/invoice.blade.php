@@ -72,7 +72,9 @@
                 Triskel Consulting Services<br>
                 {{$customer->first_name}} {{$customer->last_name}}<br>
                 {{$customer->address1}}<br>
+
                 {{isset($customer->city) ? $customer->city->name : null}}, {{ isset($customer->state) ? $customer->state : null}} 11787 {{isset($customer->country_code) ? $customer->country_code : null}}<br>
+
                 {{$customer->phone}}<br>
                 {{$customer->email}}<br>
                  @if($invoice->lr_id == 402)

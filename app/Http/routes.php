@@ -97,4 +97,7 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('cvv2', 'AvoPagesController@cvv2');
 		Route::get('mr-terms', 'AvoPagesController@mrTerms');
 		Route::get('change-currency', 'AvoPagesController@changeCurrency');
+
+		Route::get('braintree', 'BraintreeController@getForm');
+		Route::get('braintree/callback', 'BraintreeController@callback');
 	});

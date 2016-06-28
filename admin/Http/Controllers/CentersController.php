@@ -38,7 +38,7 @@ class CentersController extends Controller
     public function index(CenterService $centerService, OwnerService $ownerService)
     {
         $owners = $ownerService->getOwners();
-        //dd($owners);
+        //dd($center->sites->lists('name')->toArray());
         $role = \Auth::user()->role->name;
         if($role === 'super_admin' || $role === 'accounting_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
@@ -181,6 +181,8 @@ class CentersController extends Controller
         $arr = $centerService->getCenterPackages($prices);
         $packages = $centerService->getPackagesList();
         //dd($center->prices);
+        //dd($sites, );
+
         if($center) {
             return view('admin.centers.create', 
             [
@@ -197,7 +199,8 @@ class CentersController extends Controller
                 'package' => $center->prices[0]->package,
                 'sites' => $sites,
                 'role' => $role,
-                'owners' => $owners
+                'owners' => $owners,
+                'viewable_sites' => $center->sites->lists('name')->toArray()
             ]);
         } else {
             dd(404);

@@ -1,7 +1,7 @@
-@if(isset($owner))
-	{!! Form::model($admin_user, [ 'url' => url('admin-users/'.$admin_user->id), 'method' => 'PUT' ]) !!}
+@if(isset($user))
+	{!! Form::model($user, [ 'url' => url('users/'.$user->id), 'method' => 'PUT' ]) !!}
 @else
-	{!! Form::open([ 'url' => url('admin-users') ]) !!}
+	{!! Form::open([ 'url' => url('users') ]) !!}
 @endif
 	@include('alerts.messages')
 
@@ -11,9 +11,13 @@
 	    		{!! Form::hidden('id', null) !!}
 	    		{!!Form::hidden('user_type', $user_type)!!}
 	    	</div> 
-	    	<div class="row form-group">
+	    	<!-- <div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Create A User Name</label></div>
 	    		<div class="col-md-8">{!! Form::text('username', null, [ 'class' => 'form-control', 'placeholder' => 'user name' ]) !!}</div>
+	    	</div> -->
+	    	<div class="row form-group">
+	    		<div class="col-md-4 text-right"><label>Users Email Address:</label></div>
+	    		<div class="col-md-8">{!! Form::text('email', null, [ 'class' => 'form-control', 'placeholder' => 'Csr\'s Email' ]) !!}</div>
 	    	</div>
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Create A First Name</label></div>
@@ -23,16 +27,15 @@
 	    		<div class="col-md-4 text-right"><label>Create A Last Name</label></div>
 	    		<div class="col-md-8">{!! Form::text('last_name', null, [ 'class' => 'form-control', 'placeholder' => 'last name' ]) !!}</div>
 	    	</div>
-	    	<div class="row form-group">
-	    		<div class="col-md-4 text-right"><label>Create A Password</label></div>
-	    		<div class="col-md-8">{!! Form::password('password', [ 'class' => 'form-control', 'placeholder' => 'password' ]) !!}</div>
-	    	</div>
+	    	@if(!isset($user))
+		    	<div class="row form-group">
+		    		<div class="col-md-4 text-right"><label>Create A Password</label></div>
+		    		<div class="col-md-8">{!! Form::password('password', [ 'class' => 'form-control', 'placeholder' => 'password' ]) !!}</div>
+		    	</div>
+		    @endif
 	    </div>
 	    <div class="panel-body col-md-6">
-	    	<div class="row form-group">
-	    		<div class="col-md-4 text-right"><label>Users Email Address:</label></div>
-	    		<div class="col-md-8">{!! Form::text('email', null, [ 'class' => 'form-control', 'placeholder' => 'Csr\'s Email' ]) !!}</div>
-	    	</div>
+	    	
 	    	<div class="row form-group">
 	    		<div class="col-md-4 text-right"><label>Phone Number:</label></div>
 	    		<div class="col-md-8">{!! Form::text('phone', null, [ 'class' => 'form-control', 'placeholder' => 'phone' ]) !!}</div>

@@ -33,6 +33,15 @@ class LocationService {
 		$center->sites()->attach($site_id);
 	}
 
+	public function getLocationById($id)
+	{		
+		$location = $this->center->where('id', $id)->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
+		$nearby = isset($nearby);
+		$options = isset($options);
+		$description = isset($description);		
+		return $this->getNeccessaryOptions($location, $nearby, $options, $description);
+	}
+
 	public function getAllLocations($per_page, $page)
 	{
 		$page = isset($page) ? $page : 1;
@@ -70,7 +79,7 @@ class LocationService {
 	    	->orWhere(['center_prices.package_id' => '105']);	    	
 	    })
 	    ->where(['centers.country' => $country_slug, 'centers.us_state' => $state, 'centers.active_flag' => 'Y'])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])	    
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
 	    ->groupBy('centers.id')
 	    ->select(['centers.*'])
 	    ->orderBy('center_prices.price', 'asc')
@@ -234,8 +243,19 @@ class LocationService {
 		$searchResult = array_merge($searchResult, $cities);
 		$countries = $this->country->where('name', 'LIKE', '%'.$key.'%')->distinct('name')->get(['name', 'id', 'code'])->toArray();
 		$searchResult = array_merge($searchResult, $countries);
-		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y')->get(['name', 'id', 'country', 'city_name', 'us_state']);
+		$locations = $this->center
+					->where(function($query) use ($key){
+						$query->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
+					})
+					->orWhere(function($query) use ($key){
+						$query->where('postal_code', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
+					})
+					->with('city')
+					->get(['name', 'id', 'city_id', 'country', 'city_name', 'us_state']);
+					// dd($this->center->where('id', 2053)->with('city')->first());
 		foreach ($locations as $location) {
+			$location->city_slug = isset($location->city) ? $location->city->slug : '';
+			unset($location->city);
 			$location->type = 'vo';
 		}
 		$searchResult = array_merge($searchResult, $locations->toArray());
@@ -284,16 +304,17 @@ class LocationService {
 	}
 
 	private function getNeccessaryOptions($locations, $nearby = false, $options = false, $description = false)
-	{
+	{	
 		$locationsArray = [];
-		foreach ($locations as $location) {
+		foreach ($locations as $location) {			
 			$temp = [
 				'id'            => $location->id,
 				'building_name' => $location->name,
 				'address_1'     => $location->address1,
 				'address_2'     => $location->address2,
 				'city'          => $location->city_name,
-				'city_slug'     => isset($location->city) ? $location->city->slug : '',
+				'company_name'  => $location->company_name,
+				'city_slug'     => null!= $location->city ? $location->city->slug : '',
 				'state'         => $location->us_state,
 				'postal_code'   => $location->postal_code,
 				'country'       => $location->country,
@@ -304,7 +325,7 @@ class LocationService {
 				'images'        => [],	
 				'products'      => [],				
 
-			];
+			];			
 			foreach ($location->vo_photos as $photo) {
 				$tempPhoto = new \stdClass();
 				$tempPhoto->name = $photo->path;
