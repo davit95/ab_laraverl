@@ -16,17 +16,17 @@
             <!-- <span class="lh_f">Viewable On :</span>&nbsp;
             <br> -->
             <div class="services_wrapp">
-                {!! Form::checkbox('avo_site', 'avo', in_array('avo', $viewable_sites) ? true : null, ['id' => '1']) !!}    
+                {!! Form::checkbox('avo_site', 'avo', in_array('avo', isset($viewable_sites)  ? $viewable_sites : []) ? true : null, ['id' => '1']) !!}    
                 {!! Form::label('1','AVO -Alliancevirtualoffices.com &nbsp; &nbsp;') !!}
             </div>
             <br><br>
             <div class="services_wrapp">
-                {!! Form::checkbox('abcn_site', 'abcn', in_array('avo', $viewable_sites) ? true : null, ['id' => '1']) !!}    
+                {!! Form::checkbox('abcn_site', 'abcn', in_array('avo', isset($viewable_sites)  ? $viewable_sites : []) ? true : null, ['id' => '1']) !!}    
                 {!! Form::label('1','ABCN -Samedayvirtual.com') !!}    
             </div>
             <br><br>
             <div class="services_wrapp">
-                {!! Form::checkbox('allwork_site', 'allwork', in_array('avo', $viewable_sites) ? true : null, ['id' => '1']) !!}    
+                {!! Form::checkbox('allwork_site', 'allwork', in_array('avo', isset($viewable_sites)  ? $viewable_sites : []) ? true : null, ['id' => '1']) !!}    
                 {!! Form::label('1','AWS - Allwork.space') !!}
             </div>
 
@@ -43,10 +43,10 @@
         </div>
         <div class="form_right centers_basic">
             <div class="services_wrapp">
-                {!! Form::checkbox('avo_vo', 'VO' , $center->center_filter->virtual_office == 1 ? true : null, ['id' => '1']) !!}
+                {!! Form::checkbox('avo_vo', 'VO' , (isset($center) && $center->center_filter->virtual_office == 1) ? true : null, ['id' => '1']) !!}
                 {!! Form::label('') !!}
                 VO &nbsp; &nbsp;
-                {!! Form::checkbox('avo_mr', 'MR' ,  $center->center_filter->meeting_room == 1 ? true : null, ['id' => '2']) !!}
+                {!! Form::checkbox('avo_mr', 'MR' ,  (isset($center) && $center->center_filter->meeting_room == 1) ? true : null, ['id' => '2']) !!}
                 {!! Form::label('') !!}
                 MR &nbsp; &nbsp;
             </div>
