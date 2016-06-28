@@ -112,7 +112,7 @@ class CsrController extends Controller
     }
 
 
-    public function getCustomerInfo($name, $id,CustomerService $customerService, UserInterface $userService)
+    public function getCustomerInfo($id,CustomerService $customerService, UserInterface $userService)
 
     {
         /*need more information*/

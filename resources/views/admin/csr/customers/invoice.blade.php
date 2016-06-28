@@ -253,11 +253,32 @@
             <span style="font-weight:bold; color:black;">TOTAL:</span>    
         </div>
         <div class="pull-right">
-            
-
+            <span class="boldet_color">
+                ${{$invoice->price}}
+            </span>
+            <br>
+            <span class="boldet_color">
+                $0.00
+            </span>
+             <br>
+            <span class="boldet_color">
+               ${{$invoice->price}}
+            </span>
         </div>
         <div style="clear:both;"></div>
         </div>
+        <div style="clear:both"></div>
+        <a href="http://www.alliancevirtualoffices.com/meeting-room-locations.php" target="_blank">
+            <div id="Marketing"></div>
+        </a>
+        </div>
+        <div id="social">
+            <a href="https://twitter.com/AllianceVirtual" target="_blank">
+                <div id="tweet"></div>
+            </a>
+            <a href="https://www.facebook.com/AllianceVirtual" target="_blank">
+                <div id="face"></div>
+            </a>
         </div>
         <div class="t2 bordered_bottom">ADDRESS DETAILS</div>
         <div  class="inovice_detaeils">
@@ -287,7 +308,8 @@
                     </span>
                     <br>
                     <span class="invoice_boldet_text">
-                        Amount Due:  
+                        Amount Due:
+                          
                         <span class="boldet_color pull-right">$ {{$invoice->price}}</span>
                     </span>
                 </div>
@@ -300,6 +322,7 @@
                     <br>
                      <span class="invoice_boldet_text">
                          Package Total Price:
+                         <span class="boldet_color pull-right">$ {{$invoice->price}}</span>
                      </span>
                 </div>
             </div>
@@ -326,6 +349,7 @@
                     <br>
                 <div >
                     <span class="invoice_boldet_text">Invoice Total:</span>
+                    <span class="boldet_color pull-right">$ {{$invoice->price}}</span>
                 </div>
                 </div>
                 
@@ -338,7 +362,25 @@
             </div><br><br>
         <span style="color: red; font-weight: bold;">
             Original Invoice: {{$customer->id}}
+
+
         </span> 
+         @if($invoice->type == 'mr')
+                <br>
+                <span class="invoice_boldet_text">IMPORTANT DATES:</span>
+                <br>
+                <span>Start Date: {{\Carbon\Carbon::parse($invoice->created_at)->format('M d,Y')}}</span>
+                <br>
+                <span>Term Length:</span>
+                <br>
+                <span>Automatic Term Renewal Date: {{$invoice->mr_end_time}}</span>
+                <br>
+                <span>30 Day Cancellation Deadline NOTIFICATION:</span>
+                <br>
+                <span>
+                    <a href="" style="text-decortation:underline !important; color:#207F9F !important;" >https://www.alliancevirtualoffices.com/vo-terms.html</a>
+                </span>
+            @endif
         <br><br>
             <div id="importantDates"></div>
         </div>
