@@ -73,7 +73,7 @@ class OAuthService {
 					]);
 					if($access_tokens){
 						return [
-							'access_token'  => $access_token,
+							'accessToken'   => $access_token,
 							'refresh_token' => $refresh_token,
 							'expire_at'     => $expire_at
 						];
@@ -87,10 +87,9 @@ class OAuthService {
 	{		
 		$inputs = $request->all();
 		if($request->isMethod('get')){
-			$access_token = $request->header('access_token');
-			dd($request->header());
+			$access_token = $request->header('accessToken');			
 		}else{
-			$access_token = isset($inputs['access_token']) ? $inputs['access_token'] : null;
+			$access_token = isset($inputs['accessToken']) ? $inputs['accessToken'] : null;
 		}
 		$response = [];
 		// if(!isset($inputs['api_key'])){
@@ -101,7 +100,7 @@ class OAuthService {
 		// 	return $response;			
 		// }else 
 		if(!isset($access_token)){
-			$response['errors'] = 'access_token is required';
+			$response['errors'] = 'accessToken is required';
 			return $response;
 		}else{
 			// $api_key       = $inputs['api_key'];
@@ -127,7 +126,7 @@ class OAuthService {
 	private function checkAccessToken($origin, $access_token)
 	{		
 		$access_tokens = $this->accessToken
-		->where('access_token' , $access_token)
+		->where('accessToken' , $access_token)
 		// ->where('origin', $origin)
 		->first();
 		return null!= $access_tokens ? $access_tokens : false;
