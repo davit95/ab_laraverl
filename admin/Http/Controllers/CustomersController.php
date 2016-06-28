@@ -114,8 +114,25 @@ class CustomersController extends Controller
     public function getInvoice($id, UserInterface $userService)
     {
         $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
+        $customer_invoice = $userService->getCusomerInvoice($id);
+        //dd($customer_invoice);
+        if($customer_invoice->vo_plan != null){
+            $center_package_price = $userService->getPackagePrice($customer_invoice->vo_plan);
+        }
+        else{ $center_package_price = '';}
+        $mail_forwarding_description = $userService->getMailForwardingPrice($customer_invoice->vo_mail_forwarding_package);
+        $center_address = $userService->getCenterAddress($customer_invoice->center_id);
+        if($customer_invoice->mr_id != null){
+            $mr_name = $userService->getMeetingRoomName($customer_invoice->mr_id, $customer_invoice->center_id);
+        }else{$mr_name = '';}
         if($customer) {
-             return view('admin.csr.customers.invoice',['customer' => $customer, 'role' => $customer = \Auth::user()->role->name]);
+            return view('admin.csr.customers.invoice',['customer' => $customer,
+               'role' => $customer = \Auth::user()->role->name ,
+               'invoice' => $customer_invoice, 'package_price' => $center_package_price,
+               'mail_forwarding' => $mail_forwarding_description,
+               'center_addres' => $center_address,
+               'mr_name' => $mr_name
+            ]);
         } else {
             dd(404);
         }

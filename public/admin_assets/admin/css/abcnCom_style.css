@@ -779,7 +779,7 @@ input.ct_input {
 .formOinfo {
     width: 58%;
     min-height: 30px;
-    overflow: auto;
+    
     padding-top: 1px;
     padding-left: 10px;
     text-align: left;
@@ -1033,6 +1033,48 @@ div.select_style input[type='checkbox']{
     line-height: 44px;
 }
 
+.boldet_color{
+    color: #E21D37;
+    font-weight: bold;
+}
+
+.green_text{
+    font-size: 18px;
+    font-weight: bold;
+    color: green;
+    padding-top:15px; 
+}
+
+.bordered_bottom{
+    border-bottom: 1px dotted black;
+}
+
+.inovice_detaeils{
+    overflow: hidden;
+    padding:0px 10px 10px 10px;
+}
+
+.invoice_inner_texts{
+    color: black;
+    text-align: center;
+    font-size: 12px !important;
+    text-transform: lowercase;
+    font-weight: normal;
+    padding: 10px;    
+}
+
+.invoice_boldet_text{
+    color: black;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.meeting_room_texts{
+    color: gray;
+    text-align: center;
+    font-size: 12px;
+}
 .g_select2 select:focus,
 .s_select select:focus {
     outline: none;

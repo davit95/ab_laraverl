@@ -72,17 +72,62 @@
                 Triskel Consulting Services<br>
                 {{$customer->first_name}} {{$customer->last_name}}<br>
                 {{$customer->address1}}<br>
-                {{$customer->city->name}}, {{$customer->state}} 11787 {{$customer->country_code}}<br>
+                {{isset($customer->city) ? $customer->city->name : null}}, {{ isset($customer->state) ? $customer->state : null}} 11787 {{isset($customer->country_code) ? $customer->country_code : null}}<br>
                 {{$customer->phone}}<br>
                 {{$customer->email}}<br>
+                 @if($invoice->lr_id == 402)
+                        {{$lr_price = '95'}}
+                    @elseif($invoice->lr_id == 403)
+                        {{$lr_price = '145'}}
+                    @elseif($invoice->lr_id == 404)
+                        {{$lr_price = '225'}}
+                    @elseif($invoice->lr_id == 401)
+                         {{$lr_price = '40'}}
+                    @endif
+                 @if($invoice->vo_mail_forwarding_frequency == 1)
+                        {{$frequency  = 'Monthly'}}
+                        {{$quality = 1}}
+                 @elseif($invoice->vo_mail_forwarding_frequency == 2)
+                        {{$frequency  = 'Bi-Wekly'}}
+                        {{$quality = 2}}
+                 @elseif($invoice->vo_mail_forwarding_frequency == 4)
+                        {{$frequency  = 'Weekly'}}
+                        {{$quality = 4}}
+                 @elseif($invoice->vo_mail_forwarding_frequency == 30) 
+                        {{$frequency  = 'Daily'}}
+                        {{$quality = 30}}
+                 @endif  
                 <br><br>
             </div>
             <div id="InvoiceSumm">
                 <span class="t2">
                     BILLING SUMMARY
                 </span><br><br>
+
+                 @if($invoice->type == 'vo')
+                    <div class="pull-left">
+                          Virtual Ofice Package
+                        <br>
+                        Mail Forwarding:
+                        <br>
+                        {{$invoice->vo_plan}}:
+                        <br>
+                        Setup Fee
+                    </div>
+                    <div class="pull-right" style="text-align:right;">
+                    <br>    
+                     <span class="boldet_color">${{$invoice->vo_mail_forwarding_price}}</span>
+                        <br>   
+                         <span class="boldet_color">${{$package_price}}.00</span>
+                        <br>
+                        <span class="boldet_color">$100.00</span>    
+                    </div>
+                               
+                   
+                    <br>
+
                 <div id="lef" class="spaceTot">TOTAL:</div>
-                <div id="righ" class="spaceTot">$0<br></div>
+                <div id="righ" class="spaceTot">${{$package_price + $invoice->vo_mail_forwarding_price + '100'}}<br></div>
             </div>
         </div>
         <a href="http://www.alliancevirtualoffices.com/meeting-room-locations.php" target="_blank">
@@ -96,13 +141,198 @@
                 <div id="face"></div>
             </a>
         </div>
-        <div id="billing" class="t2">ADDRESS DETAILS</div> <br>
-        <div style="width: 447px; float: left;"><strong>Invoice Total:</strong></div>
-        <div style="float: left;"><span class="redB">$0</span></div>
-        <div style="clear: both;"><br>
+        <div class="t2 bordered_bottom">ADDRESS DETAILS</div>
+        <div  class="inovice_detaeils">
+            <div class="green_text pull-left">
+                Virtual Office Address
+                <br>
+                <span class="invoice_inner_texts">
+                    {{$center_addres->address1}}
+                    {{$center_addres->address2}}
+                    {{$center_addres->postal_code}}
+                </span>
+            </div>
+            <div class="green_text pull-right">
+                Mail Forwarding Address
+                <br>
+                <span class="invoice_inner_texts">
+                    {{$customer->address1}}
+                </span>
+            </div>  
+
+        </div>
+        <div class="t2 bordered_bottom">BILLING DETAILS</div>
+        <div id="billing" class="inovice_detaeils">
+            <div class="bordered_bottom">
+                <div class="green_text">
+                    Virtual Office Package
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Description:    {{$invoice->vo_plan}}:
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Price: 
+                        <span class="boldet_color pull-right">${{$package_price - $lr_price}}.00</span>
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Setup Fee:
+                        <span class="boldet_color pull-right">$100.00</span>
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Package Term:  {{$customer->duration}} Months
+                    </span>
+                </div>
+            </div>
+            <div class="bordered_bottom">
+                <div class="green_text">
+                    Mail Forwarding
+                    <br>
+                     <span class="invoice_boldet_text">
+                        Courier:  {{$mail_forwarding->name}}  
+                    </span>
+                    <br>
+                     <span class="invoice_boldet_text">
+                        Frequency:   {{$frequency}} 
+                    </span>
+                    <br>
+                     <span class="invoice_boldet_text">
+                        Price:    <span class="boldet_color pull-right">${{$mail_forwarding->price * $quality}} </span>     
+                    </span>
+                </div>
+            </div>
+             <div class="bordered_bottom" style="padding:10px 0px 10px 0px;">
+                <span class="green_text">
+                    Live Receptionist and Phone Package
+                </span>
+                <br>
+
+                 <span class="invoice_boldet_text">
+                     Package Price:
+                 </span>
+                <span class="invoice_inner_texts">
+                    {{$invoice->lr_name}}(Phone# {{$invoice->phone_number_selected}})
+                   
+                        <span class="boldet_color pull-right">${{$lr_price}}</span>
+                </span>
+            </div>
+             <div class="bordered_bottom" style="padding:10px 0px 10px 0px;">
+                <span class="green_text">
+                    Live Receptionist and Phone Package
+                </span>
+                <br>
+                 <span class="invoice_boldet_text">
+                     Package Price:
+                 </span>
+                 <span class="invoice_inner_texts">
+                    Package Discount (Phone #: )
+                    <span class="boldet_color pull-right">
+                        @if($package_price != '')
+                                -$10
+                        @else
+                            $0
+                        @endif                   
+                    </span>
+                </span>
+            </div>
+             <div >
+                <strong>Invoice Total:</strong>
+                <span class="boldet_color pull-right">{{$package_price + '4'*$mail_forwarding->price + '100'}}</span>
+            </div>
+        @endif
+        @if($invoice->type == 'mr')
+        <div class="pull-left">
+            Meeting Room
+             <br>
+            Mail Forwarding:
+            <br>
+            <span style="font-weight:bold; color:black;">TOTAL:</span>    
+        </div>
+        <div class="pull-right">
+            
+
+        </div>
+        <div style="clear:both;"></div>
+        </div>
+        </div>
+        <div class="t2 bordered_bottom">ADDRESS DETAILS</div>
+        <div  class="inovice_detaeils">
+            <div class="green_text">
+                    Meeting Room Location
+            </div>
+        </div>
+        <div class="t2 bordered_bottom">BILLING DETAILS</div>
+        <div  class="inovice_detaeils">
+            <div class="bordered_bottom">
+                <div class="green_text">
+                    Meeting Room
+                    <span class="invoice_boldet_text">
+                        Meeting Room:   
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Meeting Room: {{$mr_name->name}}
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Meeting Date: {{$invoice->mr_date}}
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Meeting Time:  {{$invoice->mr_start_time}} - {{$invoice->mr_end_time}}
+                    </span>
+                    <br>
+                    <span class="invoice_boldet_text">
+                        Amount Due:  
+                        <span class="boldet_color pull-right">$ {{$invoice->price}}</span>
+                    </span>
+                </div>
+            </div>
+            </div>  
+        <div class="t2 bordered_bottom">
+            <div  class="inovice_detaeils">
+                <div class="green_text">
+                    Meeting Room Amenities
+                    <br>
+                     <span class="invoice_boldet_text">
+                         Package Total Price:
+                     </span>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="t2">
+            <div  class="inovice_detaeils">
+             <span class="meeting_room_texts" style="font-weight:bold; color:#666">
+                Amount Due at time of meeting
+                </span>
+                <Br>
+               <span class="meeting_room_texts"> 
+                    Meeting Room Balance <span style="color:#666;">${{$mr_name->full_day_rate}}</span>
+                </span>
+                <br>    
+                <span class="meeting_room_texts"> 
+                Meeting Room Amenities Balance <span style="color:#666;">$</span>
+                </span>
+                <br>
+                 <span class="meeting_room_texts">
+                    Total Remaining Balance  <span style="color:#666;">${{$mr_name->full_day_rate}}</span>
+                    </span>
+                    <br>
+                    <br>
+                <div >
+                    <span class="invoice_boldet_text">Invoice Total:</span>
+                </div>
+                </div>
+                
+        @endif  
+        </div>
+         <br>
             <div id="questions">
                 Questions about your new invoice? &nbsp; Visit our 
-                <a class = "questions_a" href="http://www.alliancevirtualoffices.com/billing-faq.html">Billing FAQs</a> Page.&nbsp; &nbsp;
+                <a class = "questions_a" style="text-decortation:underline !important; color:#207F9F !important;" href="http://www.alliancevirtualoffices.com/billing-faq.html">Billing FAQs</a> Page.&nbsp; &nbsp;
             </div><br><br>
         <span style="color: red; font-weight: bold;">
             Original Invoice: {{$customer->id}}

@@ -146,8 +146,6 @@ class VirtualOfficesController extends Controller {
 			}				
 			$nearby_centers = $nearby_centers->sortBy('distance');
 			$location=$locationSeo->getCityLocationSeo(strtolower($city_slug),null,$country_code);
-			//dd( $center);
-			//dd($this->packages($center));
 			return view('virtual-offices.show', ['center' => $center, 'nearby_centers' => $nearby_centers, 'packages' => $this->packages($center), 'location' => $location]);
 		}
 	}

@@ -111,11 +111,11 @@ class CsrController extends Controller
         return view('admin.csr.charge', ['customer' => [], 'role_id' => $role]);
     }
 
-    public function test($name, $id,CustomerService $customerService, UserInterface $userService)
+    public function getCustomerInfo($name, $id,CustomerService $customerService, UserInterface $userService)
     {
         /*need more information*/
         $role = \Auth::user()->role->name;
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        return view('admin.csr.test', ['customer' => $customer, 'role' => $role]);
+        return view('admin.csr.customer_info', ['customer' => $customer, 'role' => $role]);
     }
 }

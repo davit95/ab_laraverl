@@ -7,9 +7,11 @@ use App\User;
 use App\Models\Role;
 use App\Models\Owner;
 use App\Models\City;
+use App\Models\Package;
 use App\Models\UsState;
 use App\Models\Center;
 use App\Models\AdminClients;
+use App\Models\TempCartItem;
 use Auth;
 
 class UserService implements UserInterface
@@ -17,14 +19,16 @@ class UserService implements UserInterface
 	/**
 	 * Create a new user service instance.
 	 */
-	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city, UsState $usState,AdminClients $adminClients) {
+	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city,Package $package, UsState $usState,AdminClients $adminClients, TempCartItem $tempCartItem) {
 		$this->user = $user;
 		$this->role = $role;
 		$this->owner = $owner;
 		$this->center = $center;
 		$this->city = $city;
+		$this->package = $package;
 		$this->usState = $usState;
 		$this->adminClients = $adminClients;
+		$this->tempCartItem = $tempCartItem;
 	}
 
 	public function test($id,$admin_id)
@@ -166,5 +170,25 @@ class UserService implements UserInterface
 			$role_id = $this->role->where('name', 'accounting_user')->first()->id;
 			return $this->user->where('role_id', $role_id)->get();
 		}
+	}
+
+	public function getCusomerInvoice($user_id){
+		 return $this->tempCartItem->where('user_id', $user_id)->first();
+	}
+
+	public function getPackagePrice($plan){
+		 return $this->package->where('name', $plan)->first()->price;
+	}
+
+	public function getMailForwardingPrice($part_number){
+		 return $this->package->where('part_number' , $part_number)->first();
+	}
+
+	public function getCenterAddress($center_id){
+		return $this->center->where('id', $center_id)->first();
+	}
+
+	public function getMeetingRoomName($mr_id, $center_id){
+		return $this->center->where('id' , $center_id)->first()->meeting_rooms->where('id',$mr_id)->first();
 	}
 }

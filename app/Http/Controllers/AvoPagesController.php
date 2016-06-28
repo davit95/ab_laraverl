@@ -7,7 +7,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomizeMailRequest;
 use App\Http\Requests\SendContactrequest;
 use App\Models\Center;
-
+use App\Models\Package;
 use App\Services\TelCountryService;
 use App\Services\TempCartItemService;
 use App\Services\CenterService;
@@ -101,15 +101,22 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService ) {
+	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService, Center $centers , Package  $package ,TempCartItemService  $tempCartItemService) {
 		$inputs = $request->all();
+		$temp_user_id = Cookie::get('temp_user_id');
 		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 		}
 		$inputs['duration'] = session('term');
 		session(['customer_information' => $inputs]);
 		$center = session('center');
-		if(null !== $customerService->createCustomer($inputs, $center)) {
+		$curency_id = session('currency');
+		$invoice = [
+			'curency_id' => $curency_id['id']
+		];
+		//dd($centers->find($center['center_id'])->prices->first()->with_live_receptionist_pack_price , session('currency'), session('customer_information'), session('center'));
+		if(null !== $user = $customerService->createCustomer($inputs, $center)) {
+			$tempCartItemService->updateUserId($temp_user_id, $user->id);	
 			return redirect('order-review')->withSuccess('Customer has been saccessfully created');
 		}
 		//dd(session('customer_information'));
@@ -248,47 +255,47 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
-		$inputs = $request->all();	
-		session(['term' => $inputs['term']]) ;
-		if (!isset($inputs['package_option'])) {
-			return redirect('thank-you');
-		}
-		if (isset($inputs['upgrade']) && $inputs['upgrade'] == 'yes') {
-			if ($inputs['package_option'] == 103) {
-				$inputs['package_option'] = 105;
-			}
-		}
-		$package      = $inputs['package_option'];
-		$center_id    = $inputs['center_id'];
-		$center_price = $center->find($center_id)->prices()->where('package_id', $package)->first();
-		$price        = $center_price->price;
-		if ($request->has('live_receptionist')) {
-			$inputs['lr_id']   = 402;
-			$inputs['lr_name'] = 'VIRTUAL OFFICE LIVE RECEPTIONIST 50';
-			$price             = $center_price->with_live_receptionist_pack_price;
-		}
-		$package_option    = $tempCartItemService->getPackageName($package);
-		$inputs['price']   = $price;
-		$inputs['vo_plan'] = $package_option;
-		if ($auth->guest()) {
-			if (null != $cookie = Cookie::get('temp_user_id')) {
-				$temp_user_id = $cookie;
-			} else {
-				$temp_user_id = str_random(40);
-				$cookieJar->queue('temp_user_id', $temp_user_id, 999999);
-			}
-
-			$inputs['temp_user_id'] = $temp_user_id;
-			if (null != $tempCartItemService->create($inputs)) {
-				if ($request->has('live_receptionist')) {
-					return redirect('/customize-phone');
-				} else {
-					return redirect('/customer-information')->withCenterid($center_id);
-				}
-			}
-		}
-		return redirect()->back()->withSuccess('Successfully send!');
-	}
+        $inputs = $request->all(); 
+        session(['term' => $inputs['term']]);
+        if (!isset($inputs['package_option'])) {
+            return redirect('thank-you');
+        }
+        if (isset($inputs['upgrade']) && $inputs['upgrade'] == 'yes') {
+            if ($inputs['package_option'] == 103) {
+                $inputs['package_option'] = 105;
+            }
+        }
+        $package      = $inputs['package_option'];
+        $center_id    = $inputs['center_id'];
+        $center_price = $center->find($center_id)->prices()->where('package_id', $package)->first();
+        $price        = $center_price->price;
+        if ($request->has('live_receptionist')) {
+            $inputs['lr_id']   = 402;
+            $inputs['lr_name'] = 'VIRTUAL OFFICE LIVE RECEPTIONIST 50';
+            $price             = $center_price->with_live_receptionist_pack_price;
+        }
+        $package_option    = $tempCartItemService->getPackageName($package);
+        $inputs['price']   = $price;
+        $inputs['vo_plan'] = $package_option;
+        if ($auth->guest()) {
+            if (null != $cookie = Cookie::get('temp_user_id')) {
+                $temp_user_id = $cookie;
+            } else {
+                $temp_user_id = str_random(40);
+                $cookieJar->queue('temp_user_id', $temp_user_id, 999999);
+            }
+            $inputs['user_id'] = session('user_id');
+            $inputs['temp_user_id'] = $temp_user_id;
+            if (null != $tempCartItemService->create($inputs)) {
+                if ($request->has('live_receptionist')) {
+                    return redirect('/customize-phone');
+                } else {
+                    return redirect('/customer-information')->withCenterid($center_id);
+                }
+            }
+        }
+        return redirect()->back()->withSuccess('Successfully send!');
+    }
 
 	public function sendContactThankYou() {
 		return view('avo-pages.thank-you');

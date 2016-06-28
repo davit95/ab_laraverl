@@ -46,6 +46,7 @@ class TempCartItemService {
 		$cart_item->package_option        = $inputs['package_option'];
 		$cart_item->country_code          = $inputs['country_code'];
 		$cart_item->phone_number_selected = $inputs['phone_number_selected'];
+
 		return $cart_item->save();
 	}
 
@@ -54,5 +55,15 @@ class TempCartItemService {
 	 */
 	public function destroyItem($id, $temp_user_id) {
 		return $this->tempCartItem->where('temp_user_id', $temp_user_id)->where('id', $id)->delete();
+	}
+
+	public function updateUserId($temp_user_id, $id){
+		$cart_item = $this->tempCartItem->where('temp_user_id', $temp_user_id)->orderBy('created_at', 'DESC')->first();
+		if (is_null($cart_item)) {
+			return false;
+		}
+		$cart_item->user_id  = $id;
+
+		return $cart_item->save();
 	}
 }

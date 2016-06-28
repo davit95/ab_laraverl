@@ -321,6 +321,7 @@ select.input-sm{
 }
 .formOinfo a{
   font-size: 12px;
+  color: black 
 }
 
 .tabs-container .tab-content {
@@ -612,4 +613,115 @@ a:-webkit-any-link {
 }
 .questions_a {
     color: #207F9F;
+}
+
+
+/* Costumer Text Area */ 
+
+
+.costumer_text_area{
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+}
+
+.customer_text_area_links{
+  text-decoration: none !important;
+  color: #369 !important ;
+  font-size: 12px;
+}
+
+.customer_text_area_links:hover{
+  text-decoration: underline !important; 
+}
+
+.customer_text_area_headers{
+  color: black !important;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 14px;
+}
+
+.customer_text_area_text{
+  font-size: 13px !important ;
+  font-weight: bold !important;
+  color: #949494 !important; 
+}
+
+.customer_text_area_text:first-child{
+  margin-top: 10px;
+}
+
+.customer_text_area_selects{
+    border: 2px solid #ADAFB2;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-size: 13px;
+    color: #333;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 30px;
+    height: 30px;
+    -webkit-appearance: menulist !important;
+    background: #DDDDDD !important; 
+}
+
+.customer_text_area_button{
+  border: 2px solid #ADAFB2;
+  border-radius: 5px !important;
+  padding: 1px 14px; 
+}
+
+.table>tbody>tr>td{
+  border-top:0px !important;
+  margin-left: 3px !important;
+  text-align: left !important;
+  color: black !important;
+  width: 150px !important;
+  padding: 0px !important;
+  height: 20px !important;
+  line-height: 30px !important;
+  margin-left: 3px !important;
+  font-size: 12px !important;
+}
+
+.table { 
+    border-spacing: 3px !important;
+    border-collapse: separate !important;
+}
+
+.table>tbody>tr{
+  height: 30px !important;
+}
+
+.text_align_left{
+  text-align: left !important;
+  padding-left: 30px !important;
+  line-height: initial;
+  padding-right: 10px !important;
+}
+
+tr:hover td{
+  background: #D5EAFF;
+}
+
+.left_side_area{
+  background: white !important;
+  border-radius: 5px; 
+  width: 361px;
+}
+
+.paddin_left_content{
+  padding-left:5% !important
+}
+
+.left_side_area_content{
+  float: none !important;
+  width: 100%!important;
+  overflow: none !important;
+  margin-bottom: 10px !important;
+  padding-left: 10px !important;
+}
+
+.right_side_content{
+  width: 60% !important;
 }

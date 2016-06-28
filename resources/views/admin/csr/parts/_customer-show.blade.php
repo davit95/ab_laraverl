@@ -152,8 +152,8 @@
                    <p> $ <input type="text" name="charge_amount" value="38.17" style="width: 70px;">  (Prorated amount)</p>
                 </div>
             </div>
-            <div class="line">
-                <span class="lh_fi mediumBold">
+            {{-- <div class="line"> --}}
+               {{--  <span class="lh_fi mediumBold">
                     <strong>Start Date:</strong>
                 </span>&nbsp;
                 
@@ -166,7 +166,7 @@
                                 <option value="{{$key}}">{{$month}}</option>
                         @endforeach
                     </select>
-                   <!-- <select name="start_date_month">
+                   <select name="start_date_month">
                        <option value="">{{ date('M', strtotime($customer->created_at)) }} ({{ date('m', strtotime($customer->created_at)) }})</option>
 
                        <option value="01">January (01)
@@ -182,7 +182,7 @@
                        </option><option value="11">November (11)
                        </option><option value="12">December (12)
                        </option>
-                    </select>  -->
+                    </select> 
                     /
                     <select name="start_date_day">
                         <option value=""><!-- {{ date('d', strtotime($customer->created_at)) }} --></option>
@@ -204,9 +204,9 @@
                             <option value="{{$i}}">{{$i}}</option>
                         @endfor
                     </select>
-                </div>
-            </div>
-            <div class="line">
+                </div> --}}
+            {{-- </div> --}}
+            {{-- <div class="line">
                 <span class="lh_fi mediumBold">
                     <strong>End Date:</strong>
                 </span>&nbsp;
@@ -306,8 +306,8 @@
                             <option value="{{$i}}">{{date('Y',$not_date )}}</option>
                         @endfor
                     </select>
-                </div>
-            </div>
+                </div> --}}
+            {{-- </div> --}}
             <div class="line">
                 <span class="lh_fi mediumBold">
                     
@@ -319,7 +319,7 @@
                     </p>
                 </div>
             </div>
-        {{Form::close()}}
+        {!!Form::close()!!}
         <div class="line">
             <span class="lh_fi mediumBold">
                 <hr>
