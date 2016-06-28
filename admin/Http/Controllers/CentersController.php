@@ -38,8 +38,7 @@ class CentersController extends Controller
     public function index(CenterService $centerService, OwnerService $ownerService)
     {
         $owners = $ownerService->getOwners();
-        //dd($owners);
-        $role = \Auth::user()->role->name;
+        
         if($role === 'super_admin' || $role === 'accounting_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
         } elseif($role === 'owner_user') {
@@ -74,6 +73,8 @@ class CentersController extends Controller
     {   
         $owners = ['' => 'no selected'] + $ownerService->getOwnersLists();
         //dd($usStateService->getAllUsStatesList());
+
+        $role = \Auth::user()->role->name;
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
         $states = [''=>'select state'] + $usStateService->getAllUsStatesList();
@@ -182,6 +183,7 @@ class CentersController extends Controller
         $packages = $centerService->getPackagesList();
         //dd($center->prices);
         //dd($sites, );
+
         if($center) {
             return view('admin.centers.create', 
             [
