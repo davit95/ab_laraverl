@@ -42,32 +42,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
-		$this->centers();
-		$this->centers_coordinates();
-		$this->centers_local_numbers();
-		$this->centers_emails();
-		$this->centers_prices();
-		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->virtual_offices_options();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
+		// $this->centers();
+		// $this->centers_coordinates();
+		$this->features();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
+		// $this->centers_prices();
+		// $this->centers_filters();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		// $this->virtual_offices_seos();
+		// $this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -226,6 +227,26 @@ class DataMigration extends Command {
 		$bar->finish();
 		$this->info(' ✔');
 	}
+
+	private function features() {
+		$this->info("\n migrating features table");
+		$this->make_new_connection();
+		$collection = DB::table('Features')->get();
+		DB::setDefaultConnection('mysql');
+		$bar        = $this->output->createProgressBar(count($collection));
+		foreach ($collection as $key => $value) {
+				$new_collection[] =
+				[
+					'name'       => $value->Name
+				];
+			$bar->advance();
+		}
+		//DB::table('centers_coordinates')->truncate();
+		DB::table('features')->insert($new_collection);
+		$bar->finish();
+		$this->info(' ✔');
+	}
+	
 
 	private function centers_emails() {
 		$this->info("\n migrating centers_emails table");

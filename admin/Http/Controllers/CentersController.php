@@ -38,7 +38,7 @@ class CentersController extends Controller
     public function index(CenterService $centerService, OwnerService $ownerService)
     {
         $owners = $ownerService->getOwners();
-        //dd($center->sites->lists('name')->toArray());
+
         $role = \Auth::user()->role->name;
         if($role === 'super_admin' || $role === 'accounting_user') {
             return view('admin.centers.index', ['centers' =>$centerService->getAllCenters(), 'role' => $role, 'owners' => $owners]);   
@@ -73,7 +73,8 @@ class CentersController extends Controller
         OwnerService $ownerService)
     {   
         $owners = ['' => 'no selected'] + $ownerService->getOwnersLists();
-        //dd($usStateService->getAllUsStatesList());
+        $features = $centerService->getAllFeatures();
+        //dd($features);
         $role = \Auth::user()->role->name;
         $sites = $centerService->getSites();
         $states = [''=>'select state'] + $usStateService->getAllUsStatesList();
@@ -106,7 +107,8 @@ class CentersController extends Controller
             'photos' => [],
             'sites' => $sites,
             'role' => $role,
-            'owners' => $owners
+            'owners' => $owners,
+            'features' => ['' => 'no selected'] + $features
         ]);
     }
 
@@ -118,6 +120,7 @@ class CentersController extends Controller
      */
     public function store(Request $request, CenterService $centerService)
     {
+        //dd($request->all());
         try {
             if (null != $center = $centerService->storeCenter( $request->all(), $request->file()) ) {
                 return redirect('centers')->withSuccess('Center has been successfully added.');

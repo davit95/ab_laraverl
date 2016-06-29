@@ -92,3 +92,13 @@ $('.country').on('change', function(){
     })
 })
 
+var click = 1;
+$('.features').on('click', function(){
+    if(click %2 == 0) {
+        $('.amenities').addClass('hide');
+    } else {
+        $('.amenities').removeClass('hide');
+    }
+    click++;
+})
+

@@ -44,6 +44,10 @@ class Center extends Model {
 		return $this->belongsToMany('App\\Models\\Photo', 'mr_photos', 'center_id', 'photo_id');
 	}
 
+	public function features() {
+		return $this->belongsToMany('App\\Models\\Feature', 'center_features', 'center_id', 'feature_id');
+	}
+
 	public function virtual_office_seo() {
 		return $this->hasOne('App\\Models\\VirtualOfficeSeo');
 	}
