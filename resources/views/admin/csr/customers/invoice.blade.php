@@ -85,6 +85,8 @@
                         {{$lr_price = '225'}}
                     @elseif($invoice->lr_id == 401)
                          {{$lr_price = '40'}}
+                         @else
+                         {{$lr_price = ''}}
                     @endif
                  @if($invoice->vo_mail_forwarding_frequency == 1)
                         {{$frequency  = 'Monthly'}}
@@ -358,7 +360,7 @@
          <br>
             <div id="questions">
                 Questions about your new invoice? &nbsp; Visit our 
-                <a class = "questions_a" style="text-decortation:underline !important; color:#207F9F !important;" href="http://www.alliancevirtualoffices.com/billing-faq.html">Billing FAQs</a> Page.&nbsp; &nbsp;
+                <a class = "questions_a" style="text-decortation:underline !important; color:#207F9F !important;" href="{{url('/billing-faq')}}">Billing FAQs</a> Page.&nbsp; &nbsp;
             </div><br><br>
         <span style="color: red; font-weight: bold;">
             Original Invoice: {{$customer->id}}
