@@ -350,11 +350,11 @@
                 <br>
                 <span>Start Date: {{\Carbon\Carbon::parse($invoice->mr_start_time)->format('M d,Y')}}</span>
                 <br>
-                <span>Term Length:</span>
+                <span>Term Length:{{$dataHour}}h. {{$dataMin}}m.</span>
                 <br>
                 <span>Automatic Term Renewal Date: {{\Carbon\Carbon::parse($invoice->mr_end_time)->format('M d,Y')}}</span>
                 <br>
-                <span>30 Day Cancellation Deadline NOTIFICATION:</span>
+                <span>30 Day Cancellation Deadline NOTIFICATION:{{\Carbon\Carbon::parse($invoice->mr_end_time)->subDays(30)->format('M d,Y')}} </span>
                 <br>
                 <span>
                     <a href="" style="text-decortation:underline !important; color:#207F9F !important;" >https://www.alliancevirtualoffices.com/vo-terms.html</a>
