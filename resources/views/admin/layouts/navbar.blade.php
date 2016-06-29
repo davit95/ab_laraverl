@@ -39,8 +39,8 @@
             </div>
         </a>
         <a href="{{ url('centers') }}" class="nd">
-            <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
-                <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
+            <div class="menu_btn @if(Request::is('center*')) || Request::is('centers*')) menu_active @endif">
+                <div class="@if(Request::is('center*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
                 <div class="menu_btnR m_menu">OWNERS<br>&amp; CENTERS</div>
             </div>
         </a>
@@ -55,13 +55,13 @@
     @endif
     @if($role == 'owner_user')
         <a href="{{ url('owners/'.\Auth::id()) }}" class="nd">
-            <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
-                <div class="@if(Request::is('owners*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
+            <div class="menu_btn @if(Request::is('owners*') && !Request::is('owners/request-detail*')) menu_active @endif">
+                <div class="@if(Request::is('owners*') && !Request::is('owners/request-detail*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
                 <div class="menu_btnR m_menu">MY ACCOUNT</div>
             </div>
         </a>
         <a href="{{ url('owners/request-details') }}" class="nd">
-            <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
+            <div class="menu_btn @if(Request::is('owners/request-detail*')) || Request::is('centers*')) menu_active @endif">
                 <div class="@if(Request::is('owners/request-detail*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
                 <div class="menu_btnR m_menu">REQUEST DETAILS</div>
             </div>
