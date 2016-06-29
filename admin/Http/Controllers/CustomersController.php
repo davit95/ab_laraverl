@@ -182,12 +182,22 @@ class CustomersController extends Controller
             $frequency  = '';
             $quality = '';
         }
-       
+        
         $mail_forwarding_description = $userService->getMailForwardingPrice($customer_invoice->vo_mail_forwarding_package);
         $center_address = $userService->getCenterAddress($customer_invoice->center_id);
+        
         if($customer_invoice->mr_id != null){
             $mr_name = $userService->getMeetingRoomName($customer_invoice->mr_id, $customer_invoice->center_id);
-        }else{$mr_name = '';}
+            $data_start = \Carbon\Carbon::parse($customer_invoice->mr_start_time);
+            $data_end = \Carbon\Carbon::parse($customer_invoice->mr_end_time);
+            $dataMin = $data_start->diffInMinutes($data_end);
+            $dataHour = $data_start->diffInHours($data_end);
+        }else{
+            $mr_name = '';
+            $mr_option_price = '';
+            $dataMin =  '';
+            $dataHour = '';
+        }
         if($customer) {
             return view('admin.csr.customers.invoice',['customer' => $customer,
                'role' => $customer = \Auth::user()->role->name ,
@@ -197,8 +207,9 @@ class CustomersController extends Controller
                'mr_name' => $mr_name,
                'lr_price' => $lr_price,
                'frequency' => $frequency,
-               'quality' => $quality
-
+               'quality' => $quality,
+               'dataMin' => $dataMin,
+               'dataHour' => $dataHour
             ]);
         } else {
             dd(404);
