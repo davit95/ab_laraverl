@@ -208,7 +208,6 @@ class CustomersController extends Controller
                'lr_price' => $lr_price,
                'frequency' => $frequency,
                'quality' => $quality,
-               'mr_option' => $mr_option_price,
                'dataMin' => $dataMin,
                'dataHour' => $dataHour
             ]);
