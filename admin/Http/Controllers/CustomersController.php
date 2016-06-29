@@ -137,6 +137,52 @@ class CustomersController extends Controller
                 $center_package_price = '';
             }
         }
+        if($customer_invoice->lr_id == 402)
+            {
+                $lr_price = '95';
+            }
+        elseif($customer_invoice->lr_id == 403)
+            {
+                $lr_price = '145';
+            }
+        elseif($customer_invoice->lr_id == 404)
+            {
+                $lr_price = '225';
+            }
+        elseif($customer_invoice->lr_id == 401)
+            {
+                $lr_price = '40';
+            }
+        else{
+
+            $lr_price = '';
+        }    
+         
+        if($customer_invoice->vo_mail_forwarding_frequency == 1)
+            {
+                $frequency  = 'Monthly';
+                $quality = 1;
+        }
+        elseif($customer_invoice->vo_mail_forwarding_frequency == 2)
+            {
+                $frequency  = 'Bi-Wekly';
+                $quality = 2;
+        }
+        elseif($customer_invoice->vo_mail_forwarding_frequency == 4)
+            {
+                $frequency  = 'Weekly';
+                $quality = 4;
+        }
+        elseif($customer_invoice->vo_mail_forwarding_frequency == 30)
+            { 
+                $frequency  = 'Daily';
+                $quality = 30;
+        }
+        else{
+            $frequency  = '';
+            $quality = '';
+        }
+       
         $mail_forwarding_description = $userService->getMailForwardingPrice($customer_invoice->vo_mail_forwarding_package);
         $center_address = $userService->getCenterAddress($customer_invoice->center_id);
         if($customer_invoice->mr_id != null){
@@ -148,7 +194,11 @@ class CustomersController extends Controller
                'invoice' => $customer_invoice, 'package_price' => $center_package_price,
                'mail_forwarding' => $mail_forwarding_description,
                'center_addres' => $center_address,
-               'mr_name' => $mr_name
+               'mr_name' => $mr_name,
+               'lr_price' => $lr_price,
+               'frequency' => $frequency,
+               'quality' => $quality
+
             ]);
         } else {
             dd(404);

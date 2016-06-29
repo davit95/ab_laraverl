@@ -77,28 +77,7 @@
 
                 {{$customer->phone}}<br>
                 {{$customer->email}}<br>
-                 @if($invoice->lr_id == 402)
-                        {{$lr_price = '95'}}
-                    @elseif($invoice->lr_id == 403)
-                        {{$lr_price = '145'}}
-                    @elseif($invoice->lr_id == 404)
-                        {{$lr_price = '225'}}
-                    @elseif($invoice->lr_id == 401)
-                         {{$lr_price = '40'}}
-                    @endif
-                 @if($invoice->vo_mail_forwarding_frequency == 1)
-                        {{$frequency  = 'Monthly'}}
-                        {{$quality = 1}}
-                 @elseif($invoice->vo_mail_forwarding_frequency == 2)
-                        {{$frequency  = 'Bi-Wekly'}}
-                        {{$quality = 2}}
-                 @elseif($invoice->vo_mail_forwarding_frequency == 4)
-                        {{$frequency  = 'Weekly'}}
-                        {{$quality = 4}}
-                 @elseif($invoice->vo_mail_forwarding_frequency == 30) 
-                        {{$frequency  = 'Daily'}}
-                        {{$quality = 30}}
-                 @endif  
+                 
                 <br><br>
             </div>
             <div id="InvoiceSumm">
@@ -248,7 +227,7 @@
         <div class="pull-left">
             Meeting Room
              <br>
-            Mail Forwarding:
+            Meeting Room Amenities
             <br>
             <span style="font-weight:bold; color:black;">TOTAL:</span>    
         </div>
@@ -300,11 +279,11 @@
                     </span>
                     <br>
                     <span class="invoice_boldet_text">
-                        Meeting Date: {{$invoice->mr_date}}
+                        Meeting Date: {{\Carbon\Carbon::parse($invoice->mr_date)->format('m/d/Y')}} 
                     </span>
                     <br>
                     <span class="invoice_boldet_text">
-                        Meeting Time:  {{$invoice->mr_start_time}} - {{$invoice->mr_end_time}}
+                        Meeting Time: {{\Carbon\Carbon::parse($invoice->mr_start_time)->format('H:i A')}}  - {{\Carbon\Carbon::parse($invoice->mr_end_time)->format('H:i A')}}
                     </span>
                     <br>
                     <span class="invoice_boldet_text">
@@ -369,11 +348,11 @@
                 <br>
                 <span class="invoice_boldet_text">IMPORTANT DATES:</span>
                 <br>
-                <span>Start Date: {{\Carbon\Carbon::parse($invoice->created_at)->format('M d,Y')}}</span>
+                <span>Start Date: {{\Carbon\Carbon::parse($invoice->mr_start_time)->format('M d,Y')}}</span>
                 <br>
                 <span>Term Length:</span>
                 <br>
-                <span>Automatic Term Renewal Date: {{$invoice->mr_end_time}}</span>
+                <span>Automatic Term Renewal Date: {{\Carbon\Carbon::parse($invoice->mr_end_time)->format('M d,Y')}}</span>
                 <br>
                 <span>30 Day Cancellation Deadline NOTIFICATION:</span>
                 <br>
