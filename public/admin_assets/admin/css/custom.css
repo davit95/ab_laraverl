@@ -725,3 +725,10 @@ tr:hover td{
 .right_side_content{
   width: 60% !important;
 }
+
+.request-detail{
+  font-size: 18px;
+}
+.request-detail .request-header, .notes, .contact-info{
+  margin-bottom: 30px;
+}

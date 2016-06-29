@@ -60,9 +60,15 @@
                 <div class="menu_btnR m_menu">MY ACCOUNT</div>
             </div>
         </a>
+        <a href="{{ url('owners/request-details') }}" class="nd">
+            <div class="menu_btn @if(Request::is('owners*')) || Request::is('centers*')) menu_active @endif">
+                <div class="@if(Request::is('owners/request-detail*')) || Request::is('centers*')) menu_btnL2_a @else menu_btnL2 @endif"></div>
+                <div class="menu_btnR m_menu">REQUEST DETAILS</div>
+            </div>
+        </a>
     @endif
     <a href="{{ url('logout') }}" class="nd">
-        <div class="menu_btn lh_menu grayMenu">LOGOUT</div> 
+        <div class="menu_btn lh_menu grayMenu">LOGOUT</div>
     </a>
 </div> 
 <script type="text/javascript">
