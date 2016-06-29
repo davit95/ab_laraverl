@@ -99,3 +99,5 @@ Route::group(['middleware' => 'superAdmin'], function () {
 	Route::get('/admin-users', 'UsersController@addAllianceUser');
 	Route::post('/admin-users', 'UsersController@createAdminUser');
 });
+
+Route::get('/billing-faq' , 'CsrController@biilingFaq');

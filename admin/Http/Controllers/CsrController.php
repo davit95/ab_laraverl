@@ -128,4 +128,9 @@ class CsrController extends Controller
         //dd($customers[5]->centers);
         return view('admin.csr.customers.customers-search', ['customers' => $customers]);
     }
+
+    public function biilingFaq()
+    {
+        return view('admin.csr.billing-faq');
+    }
 }

@@ -77,7 +77,6 @@
 
                 {{$customer->phone}}<br>
                 {{$customer->email}}<br>
-                 
                 <br><br>
             </div>
             <div id="InvoiceSumm">
@@ -337,7 +336,7 @@
          <br>
             <div id="questions">
                 Questions about your new invoice? &nbsp; Visit our 
-                <a class = "questions_a" style="text-decortation:underline !important; color:#207F9F !important;" href="http://www.alliancevirtualoffices.com/billing-faq.html">Billing FAQs</a> Page.&nbsp; &nbsp;
+                <a class = "questions_a" style="text-decortation:underline !important; color:#207F9F !important;" href="{{url('/billing-faq')}}">Billing FAQs</a> Page.&nbsp; &nbsp;
             </div><br><br>
         <span style="color: red; font-weight: bold;">
             Original Invoice: {{$customer->id}}
