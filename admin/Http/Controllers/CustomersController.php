@@ -187,7 +187,6 @@ class CustomersController extends Controller
         $center_address = $userService->getCenterAddress($customer_invoice->center_id);
         
         if($customer_invoice->mr_id != null){
-            $mr_option_price = $userService->getMrOptionPrice($customer_invoice->mr_id);
             $mr_name = $userService->getMeetingRoomName($customer_invoice->mr_id, $customer_invoice->center_id);
             $data_start = \Carbon\Carbon::parse($customer_invoice->mr_start_time);
             $data_end = \Carbon\Carbon::parse($customer_invoice->mr_end_time);
@@ -209,7 +208,6 @@ class CustomersController extends Controller
                'lr_price' => $lr_price,
                'frequency' => $frequency,
                'quality' => $quality,
-               'mr_option' => $mr_option_price,
                'dataMin' => $dataMin,
                'dataHour' => $dataHour
             ]);
