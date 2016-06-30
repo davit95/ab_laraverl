@@ -171,6 +171,7 @@ class CentersController extends Controller
         $center_coordinates = $centerService->getCentersCoordinatesByCenterId($id);
         $prices = $centerService->getCenterPrices($id);
         $photos = $centerService->getPhotosByCenterId($id);
+        $features = $centerService->getAllFeatures();
         
         if($role === 'super_admin') {    
             $center = $centerService->getVirtualOfficeById($id);    
@@ -203,7 +204,8 @@ class CentersController extends Controller
                 'sites' => $sites,
                 'role' => $role,
                 'owners' => $owners,
-                'viewable_sites' => $center->sites->lists('name')->toArray()
+                'viewable_sites' => $center->sites->lists('name')->toArray(),
+                'features' => ['' => 'no selected'] + $features
             ]);
         } else {
             dd(404);
