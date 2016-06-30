@@ -13,7 +13,9 @@ use App\Models\Region;
 use App\Models\Center;
 use App\Models\Role;
 use App\Models\Staff;
+use App\Models\AllworkRequestDetail;
 use App\User;
+use Illuminate\Auth\Guard;
 
 class OwnerService implements OwnerInterface
 {
@@ -29,7 +31,9 @@ class OwnerService implements OwnerInterface
 		Center $center,
 		User $user,
 		Staff $staff,
-		Role $role)
+		Role $role,
+		AllworkRequestDetail $requestDetail,
+		Guard $auth)
 	{
 		$this->owner = $owner;
 		$this->city = $city;
@@ -41,6 +45,8 @@ class OwnerService implements OwnerInterface
 		$this->role = $role;
 		$this->staff = $staff;
 		$this->filter_params = [];
+		$this->requestDetail = $requestDetail;
+		$this->auth = $auth;
 		$this->per_page = config('abcn.owners.pagination.per_page');
 	}
 
@@ -429,5 +435,15 @@ class OwnerService implements OwnerInterface
 			$result = $this->user->find($owner_id)->staffs()->attach([$staff->id]);
 		}
 		return $staff;
+	}
+
+	public function getRequestDetails()
+	{
+		return $this->auth->user()->request_details()->paginate(10);
+	}
+
+	public function getRequestDetailById($id)
+	{
+		return $this->requestDetail->find($id);
 	}
 }

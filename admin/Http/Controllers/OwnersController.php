@@ -293,5 +293,17 @@ class OwnersController extends Controller
     public function CreateStaff($id)
     {
         return view('admin.owners.forms.add_staff',['role' => \Auth::user()->role->name, 'owner_id' => $id]);
-    } 
+    }
+
+    public function getRequestDetails(OwnerInterface $ownerService)
+    {
+        $requestDetails = $ownerService->getRequestDetails();
+        return view('admin.owners.request-details.index', ['role' => \Auth::user()->role->name, 'requestDetails' => $requestDetails]);
+    }
+
+    public function getRequestDetailShow($id, OwnerInterface $ownerService)
+    {
+        $requestDetail = $ownerService->getRequestDetailById($id);
+        return view('admin.owners.request-details.show', ['role' => \Auth::user()->role->name, 'requestDetail' => $requestDetail]);
+    }
 }
