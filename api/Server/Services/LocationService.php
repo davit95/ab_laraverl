@@ -398,6 +398,7 @@ class LocationService {
 			$center->latitude      = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lat : "";
 			$center->longitude     = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lng : "";
 			$center->tax_name      = $nearby_center->tax_name;
+			$center->company_name  = $nearby_center->company_name;
 			$center->tax_percentage= $nearby_center->tax_percentage;
 			$center->distance      = $nearby_center->distance;
 			$center->image         = null !== $nearby_center->vo_photos()->first() ? "https://www.alliancevirtualoffices.com/images/locations/".$nearby_center->vo_photos()->first()->path : "";			
