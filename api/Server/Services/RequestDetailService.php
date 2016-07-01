@@ -25,8 +25,7 @@ class RequestDetailService {
 			$tmp['created_at'] = date('Y-m-d H:i:s');
 			$tmp['updated_at'] = date('Y-m-d H:i:s');
 			$details[] = $tmp;
-		}
-		dd($details);
+		}		
 		$this->requestDetail->insert($details);
 	}
 }
