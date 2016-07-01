@@ -32,8 +32,8 @@ class RequestDetailsController extends Controller
 
     public function addRequestDetail(Request $request, AllworkRequestDetail $requestDetail, RequestDetailService $requestDetailService)
     {
-        $inputs = $request->all();
-        $center_ids = json_decode($inputs['center_ids']);        
+        $inputs = $request->all();        
+        $center_ids = json_decode($inputs['center_ids']);
         $requestDetailService->store($center_ids, $request->all());
         return response()->json(['status' => 'success']);
     }
