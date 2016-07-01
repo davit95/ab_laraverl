@@ -109,6 +109,11 @@ class User extends Model implements AuthenticatableContract,
     public function centers()
     {
         return $this->hasMany('App\\Models\\Center', 'id', 'center_id');
+    }    
+
+    public function request_details()
+    {
+        return $this->hasMany('App\\Models\\AllworkRequestDetail', 'owner_id', 'id');
     }
 
     public function user_files() {

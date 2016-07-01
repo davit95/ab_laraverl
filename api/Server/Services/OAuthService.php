@@ -30,7 +30,7 @@ class OAuthService {
 				$refresh_token = str_random(25);
 				if( null!= $access_tokens  = $this->accessToken->create([
 					'api_key_id'    => $creds->id,
-					'accessToken'  => $access_token,
+					'accessToken'   => $access_token,
 					'refresh_token' => $refresh_token,
 					'expire_at'     => \Carbon\Carbon::now()->addDays(10),
 					'origin'        => $origin
@@ -84,10 +84,10 @@ class OAuthService {
 	{		
 		$inputs = $request->all();
 		if($request->isMethod('get')){
-			$access_token = $request->header('accessToken');			
+			$access_token = $request->header('accessToken');
 		}else{
 			$access_token = isset($inputs['accessToken']) ? $inputs['accessToken'] : null;
-		}		
+		}
 		$response = [];
 		// if(!isset($inputs['api_key'])){
 		// 	$response['errors'] = 'api_key is required';

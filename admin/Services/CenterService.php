@@ -14,6 +14,7 @@ use App\Models\Country;
 use App\Models\City;
 use App\Models\Site;
 use App\Models\Package;
+use App\Models\Feature;
 use App\User;
 use App\Models\Owner;
 use App\Models\CenterFilter;
@@ -44,7 +45,8 @@ class CenterService implements CenterInterface {
 		CenterFilter $centerFilter,
 		CenterPrice $centerPrice,
 		VirtualOfficeSeo $virtualOfficeSeo,
-		MeetingRoomSeo $meetingRoomSeo
+		MeetingRoomSeo $meetingRoomSeo,
+		Feature $feature
 		) {
 		$this->center = $center;
 		$this->photo  = $photo;
@@ -62,6 +64,7 @@ class CenterService implements CenterInterface {
 		$this->centerPrice = $centerPrice;
 		$this->virtualOfficeSeo = $virtualOfficeSeo;
 		$this->meetingRoomSeo = $meetingRoomSeo;
+		$this->feature = $feature;
 	}
 
 	/******************************/
@@ -357,6 +360,17 @@ class CenterService implements CenterInterface {
 		return $sites;
 	}
 
+	public function getFeaturesIds($inputs)
+	{
+		$ids = [];
+		for($i = 1; $i <= 10; $i++) {
+			if($inputs['feature'.$i] != '') {
+				$ids[] = $inputs['feature'.$i];
+			}
+		}
+		return $ids;
+	}
+
 	/**
 	 * create new center
 	 *
@@ -399,7 +413,10 @@ class CenterService implements CenterInterface {
 			if($files) {
 				$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
 			}
-			
+
+			if(!empty($this->getSitesIds($this->getSiteNames($inputs)))) {
+				$this->center->find($center->id)->features()->attach($this->getFeaturesIds($inputs));
+			}
 			$this->center->find($center->id)->sites()->attach($this->getSitesIds($this->getSiteNames($inputs)));
 
 			$prices_data = $this->getPricesParams($inputs,$center->id);
@@ -997,5 +1014,10 @@ class CenterService implements CenterInterface {
 		if($country == 'Australia') {
 			return ['states' => $this->state->where('country', 'australia')->lists('name', 'name')->toArray(), 'country' => 'AU'];
 		}
+	}
+
+	public function getAllFeatures()
+	{
+		return  $this->feature->lists('name', 'id')->toArray();
 	}
 }

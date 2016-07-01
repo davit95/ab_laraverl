@@ -41,6 +41,8 @@ Route::get('/allwork-centers', 'CentersController@getCentersByName');
 Route::get('/owners/add-document', 'OwnersController@getAddDocument');
 Route::get('/owners/documents', 'OwnersController@getDocuments');
 Route::get('/owners/{id}/add-staff', 'OwnersController@CreateStaff' );
+Route::get('/owners/request-details', 'OwnersController@getRequestDetails' );
+Route::get('/owners/request-detail/{id}', 'OwnersController@getRequestDetailShow' );
 Route::resource('/owners', 'OwnersController');
 
 //Route::get('/user', 'UsersController@index');

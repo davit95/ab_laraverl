@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
 use App\User;
 use App\Models\AllworkRequestDetail;
+use Api\Server\Services\RequestDetailService;
+
 class RequestDetailsController extends Controller
 {
     /**
@@ -28,9 +30,11 @@ class RequestDetailsController extends Controller
         
     }
 
-    public function addRequestDetail(Request $request, AllworkRequestDetail $requestDetail)
-    {        
-        $request_detail = $requestDetail->create($request->all());
+    public function addRequestDetail(Request $request, AllworkRequestDetail $requestDetail, RequestDetailService $requestDetailService)
+    {
+        $inputs = $request->all();        
+        $center_ids = json_decode($inputs['center_ids']);
+        $requestDetailService->store($center_ids, $request->all());
         return response()->json(['status' => 'success']);
     }
 }

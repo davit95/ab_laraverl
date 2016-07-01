@@ -62,7 +62,7 @@ class LocationService {
 	public function getAllStates()
 	{
 		$states = $this->usState->whereHas('active_cities', function($query){})->get(['name', 'code']);
-		return $states;	
+		return $states;
 	}
 
 	public function getStateLocations($country_slug, $state, $nearby, $options, $per_page, $page)
@@ -135,15 +135,15 @@ class LocationService {
 	    $city = $this->city->where('slug', $city_slug)->first();
 	    if(null!= $city){
 	    	$city_name = $city->name;
-	    }	    	    
+	    }
 	    $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')
 	    ->where(function($query){
 	    	$query->where('center_prices.package_id', '103')
 	    	->where('center_prices.price', '<>', '0')
-	    	->orWhere(['center_prices.package_id' => '105']);	    	
-	    })	    
+	    	->orWhere(['center_prices.package_id' => '105']);
+	    })
 	    ->where(['centers.country' => 'us', 'centers.us_state' => $state, 'centers.active_flag' => 'Y', 'centers.city_name' => $city_name])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])	    
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
 	    ->groupBy('centers.id')
 	    ->orderBy('center_prices.price', 'asc')
 	    ->select(['centers.*'])
@@ -183,7 +183,7 @@ class LocationService {
 	    ->orderBy('center_prices.price', 'asc')
 	    ->select(['centers.*'])
 	    ->paginate($per_page);
-		// $locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();		
+		// $locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
 		if(isset($nearby) && isset($options)){
 			return $this->getNeccessaryOptions($locations, true, true);	
 		}else if(isset($nearby)){
@@ -208,7 +208,7 @@ class LocationService {
 		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);
-		$description = isset($description); 		
+		$description = isset($description);
 		return $this->getNeccessaryOptions($location, $nearby, $options, $description);
 	}
 
@@ -218,7 +218,7 @@ class LocationService {
 		$per_page = isset($per_page) ? $per_page : 10;
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
-	    });	    
+	    });
 	    $city = $this->city->where('slug', $city_slug)->first();
 	    if(null!= $city){
 	    	$city_name = $city->name;
@@ -297,7 +297,7 @@ class LocationService {
 	public function getCenterOwnerEmail($center_id)
 	{
 		$center = $this->center->find($center_id);
-		$owner = $center->owner;		
+		$owner = $center->owner_user;		
 		if(null!== $owner){
 			return $owner->email;
 		}
@@ -398,6 +398,7 @@ class LocationService {
 			$center->latitude      = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lat : "";
 			$center->longitude     = isset($nearby_center->coordinate) ? $nearby_center->coordinate->lng : "";
 			$center->tax_name      = $nearby_center->tax_name;
+			$center->company_name  = $nearby_center->company_name;
 			$center->tax_percentage= $nearby_center->tax_percentage;
 			$center->distance      = $nearby_center->distance;
 			$center->image         = null !== $nearby_center->vo_photos()->first() ? "https://www.alliancevirtualoffices.com/images/locations/".$nearby_center->vo_photos()->first()->path : "";			

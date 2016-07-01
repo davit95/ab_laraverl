@@ -369,7 +369,7 @@ select.input-sm{
   -o-transition: all 0.4s ease-in-out;
 }
 
-.country, .state, .platinum_package, .owners, .postal_code {
+.country, .state, .platinum_package, .owners, .postal_code, .feature {
   width : 317px;
   height: 35px;
   margin-top: 1px;
@@ -724,4 +724,11 @@ a:-webkit-any-link {
 
 .right_side_content{
   width: 60% !important;
+}
+
+.request-detail{
+  font-size: 18px;
+}
+.request-detail .request-header, .notes, .contact-info{
+  margin-bottom: 30px;
 }

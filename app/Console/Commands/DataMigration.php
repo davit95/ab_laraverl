@@ -52,6 +52,7 @@ class DataMigration extends Command {
 		$this->products();
 		$this->centers();
 		$this->centers_coordinates();
+		$this->features();
 		$this->centers_local_numbers();
 		$this->centers_emails();
 		$this->centers_prices();
@@ -226,6 +227,26 @@ class DataMigration extends Command {
 		$bar->finish();
 		$this->info(' ✔');
 	}
+
+	private function features() {
+		$this->info("\n migrating features table");
+		$this->make_new_connection();
+		$collection = DB::table('Features')->get();
+		DB::setDefaultConnection('mysql');
+		$bar        = $this->output->createProgressBar(count($collection));
+		foreach ($collection as $key => $value) {
+				$new_collection[] =
+				[
+					'name'       => $value->Name
+				];
+			$bar->advance();
+		}
+		//DB::table('centers_coordinates')->truncate();
+		DB::table('features')->insert($new_collection);
+		$bar->finish();
+		$this->info(' ✔');
+	}
+	
 
 	private function centers_emails() {
 		$this->info("\n migrating centers_emails table");

@@ -192,6 +192,49 @@
     </div> 
     <div class="clear"></div>
 </div>
+
+
+<div class="h2wrapp mtop1">
+    <div class="h2Icon add features"></div>
+    <div class="h2txt">
+        <h2>ADD LOCATION,AMENITIES AND FEATURES</h2>
+    </div>
+</div>
+<div class="w_box hide amenities" style="width:100%">
+    <div class="centers_basic amenities">
+        <div class="form_left centers_basic">
+            {!! Form::label('Location Description') !!} 
+            {!! Form::textarea('location_desc', null,['class' => 'f1']) !!}
+            <br>
+            
+            <b>Feature</b>
+            <br>
+            @for($i = 1; $i <= 10; $i++)
+                {!! Form::select('feature'.$i, $features, null, ['class' => 'feature']) !!}
+            <br>
+            @endfor
+        </div>
+        <div class="form_right centers_basic">
+            {!! Form::label('Amenities Description') !!} 
+            {!! Form::textarea('amenities_desc', null,['class' => 'f1']) !!}
+            <br>
+            <b>Details</b>
+            <br>
+            @for($i = 1; $i <= 10; $i++)
+                {!! Form::label('Details') !!} 
+                {!! Form::text('detail'.$i, null, ['class' => 'f1']) !!}
+            <br>
+            @endfor
+        </div>         
+    </div>          
+    
+    <div class="clear"></div>
+</div>
+
+
+
+
+
 <div class="h2wrapp mtop1">
     <div class="h2Icon add"></div>
     <div class="h2txt">
