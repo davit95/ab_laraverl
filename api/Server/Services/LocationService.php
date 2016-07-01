@@ -297,7 +297,7 @@ class LocationService {
 	public function getCenterOwnerEmail($center_id)
 	{
 		$center = $this->center->find($center_id);
-		$owner = $center->owner;		
+		$owner = $center->owner_user;		
 		if(null!== $owner){
 			return $owner->email;
 		}
