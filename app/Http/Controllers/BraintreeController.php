@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Providers\AppServiceProvider;
 use App\Http\Controllers\Controller;
 
 class BraintreeController extends Controller
@@ -87,7 +88,10 @@ class BraintreeController extends Controller
 
     public function getForm()
     {
-        dd('here will be payment... in progress');
+
+        $client_token = \Braintree_ClientToken::generate();
+        //dd($client_token);y
+        return view('payment', ['client_token' => $client_token]);
         // spl_autoload_register(function ($className) {
         //     if (strpos($className, 'Braintree') !== 0) {
         //         return;
@@ -129,6 +133,46 @@ class BraintreeController extends Controller
         // return view('braintree.index');
     }
 
+    public function checkout(Request $request){
+
+        $nonceFromTheClient = $_POST["payment_method_nonce"];
+        $resultss = \Braintree_Customer::create([
+          'firstName'         => 'Artyom',
+          'lastName'          => 'Petrosyan',
+          'company'           => 'Testcompany',
+        'creditCard' => [
+            'paymentMethodNonce' => $nonceFromTheClient,
+            'billingAddress' => [
+            'firstName' => 'Artyom',
+            'lastName' => 'Petrosyan',
+            'company' => 'Testcompany',
+            'streetAddress' => '123 Address',
+            'locality' => 'Yerevan',
+            'region' => 'Armenia',
+            'postalCode' => '12345'
+            ],
+            'options' => [
+                'verifyCard' => true
+            ]
+        ]
+        ]);
+        if($resultss->success){
+       $result = \Braintree_Transaction::sale([
+          'amount' => '10.00',
+          'customerId' =>$resultss->customer->id,
+          'options' => [
+            'submitForSettlement' => True
+          ]
+        ]);
+       }
+       dd($result);
+    }
+
+
+    public function token(){
+        $clientToken = \Braintree_ClientToken::generate();
+        return  response()->json(['token' =>$clientToken]);
+    }
     public function callback(Request $request)
     {
         
@@ -140,4 +184,5 @@ class BraintreeController extends Controller
             dd('ura');
         }
     }
+
 }

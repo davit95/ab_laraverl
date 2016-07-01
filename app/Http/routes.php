@@ -16,14 +16,15 @@ Route::get('last-commit', function(){
     die();
 });
 
-Route::get('payment', function () {
-		return view('payment');
-	});
+// Route::get('payment', function () {
+// 		return view('payment');
+// 	});
 
 
 Route::get('test', function () {
 		return view('admin.reports.index');
 	});
+
 
 Route::group(['before' => 'auth.basic'], function () {		
 		Route::get('/', 'HomeController@index');
@@ -98,6 +99,12 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('mr-terms', 'AvoPagesController@mrTerms');
 		Route::get('change-currency', 'AvoPagesController@changeCurrency');
 
+		
+	});
+
 		Route::get('braintree', 'BraintreeController@getForm');
 		Route::get('braintree/callback', 'BraintreeController@callback');
-	});
+		Route::post('checkout', 'BraintreeController@checkout');
+		Route::post('/braintree/token', 'BraintreeController@token');
+
+		//Route::get('payment', 'BraintreeController')

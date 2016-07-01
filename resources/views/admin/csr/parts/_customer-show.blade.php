@@ -114,7 +114,7 @@
             </span>&nbsp;
             <div class="formOinfo">
                 <p>
-                    <a href="" title="Add AUX Charges to invoice # 125407282">
+                    <a href="/new_charge/{!!$customer->id!!}" title="Add AUX Charges to invoice # 125407282">
                         <img class="icon" src="https://www.alliancevirtualoffices.com/csr/images/add.png" alt="Edit" title="Edit"> Add extra charges to invoice 125407282
                     </a>
                 </p>

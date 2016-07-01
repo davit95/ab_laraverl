@@ -76,6 +76,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	//Route::get('/csr/customer-search' , 'CsrController@customerSearch');
 	Route::post('/csr/customer-search' , 'CsrController@customerSearch');
 	Route::get('/orders/{id}' , 'CustomersController@show');
+	Route::get('/new_charge/{id}' , 'CustomersController@extraCharge');
 	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
 	Route::get('/charge' , 'CsrController@charge');
 	//Route::resource('/customers' , 'CustomersController');
@@ -84,6 +85,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
 
 	Route::get('/customers/{id}' , 'CsrController@getCustomerInfo');
+	Route::get('/customers/{id}/manage-balance' , 'CsrController@manangBalance');
 });
 
 Route::group(['middleware' => 'client_user'], function () {

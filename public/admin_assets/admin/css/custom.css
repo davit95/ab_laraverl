@@ -176,7 +176,7 @@ th.action {
   width: 95px;
 }
 
-tbody tr td{
+/*tbody tr td{
   text-align: right;
   font-size: 14px;
   font-weight: 300;
@@ -194,7 +194,7 @@ tfoot tr td{
   text-align: center;
   font-family: 'Open Sans',sans-serif;
   color: #6D6E71;
-}
+}*/
 .submit_w a{
   color: white !important;  
 }
@@ -700,7 +700,7 @@ a:-webkit-any-link {
   padding-right: 10px !important;
 }
 
-tr:hover td{
+.table>tr:hover td{
   background: #D5EAFF;
 }
 

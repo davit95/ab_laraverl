@@ -79,6 +79,13 @@ class CustomersController extends Controller
         return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id, 'files' => $files]);
     }
 
+    public function extraCharge($id, CustomerService $customerService, UserInterface $userService){
+
+        $userService->test($id,\Auth::id());
+        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
+        return view('admin.csr.extra_charge', ['customer' => $customer]);
+    }
+
     public function store(Request $request, CustomerService $customerService) 
     {
         dd($request->all());
@@ -190,13 +197,13 @@ class CustomersController extends Controller
             $mr_name = $userService->getMeetingRoomName($customer_invoice->mr_id, $customer_invoice->center_id);
             $data_start = \Carbon\Carbon::parse($customer_invoice->mr_start_time);
             $data_end = \Carbon\Carbon::parse($customer_invoice->mr_end_time);
-            $dataMin = $data_start->diffInMinutes($data_end);
-            $dataHour = $data_start->diffInHours($data_end);
+            $data_min = $data_start->diffInMinutes($data_end);
+            $data_hour = $data_start->diffInHours($data_end);
         }else{
             $mr_name = '';
             $mr_option_price = '';
-            $dataMin =  '';
-            $dataHour = '';
+            $data_min =  '';
+            $data_hour = '';
         }
         if($customer) {
             return view('admin.csr.customers.invoice',['customer' => $customer,
@@ -208,8 +215,8 @@ class CustomersController extends Controller
                'lr_price' => $lr_price,
                'frequency' => $frequency,
                'quality' => $quality,
-               'dataMin' => $dataMin,
-               'dataHour' => $dataHour
+               'data_min' => $data_min,
+               'data_hour' => $data_hour
             ]);
         } else {
             dd(404);

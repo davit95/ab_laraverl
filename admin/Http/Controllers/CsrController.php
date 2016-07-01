@@ -133,4 +133,10 @@ class CsrController extends Controller
     {
         return view('admin.csr.billing-faq');
     }
+
+    public function manangBalance($id,CustomerService $customerService, UserInterface $userService){
+        $role = \Auth::user()->role->name;
+        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
+        return view('admin.csr.manage_balance', ['customer' => $customer, 'role' => $role]);
+    }
 }

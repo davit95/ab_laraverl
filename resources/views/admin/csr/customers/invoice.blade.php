@@ -349,7 +349,7 @@
                 <br>
                 <span>Start Date: {{\Carbon\Carbon::parse($invoice->mr_start_time)->format('M d,Y')}}</span>
                 <br>
-                <span>Term Length:{{$dataHour}}h. {{$dataMin}}m.</span>
+                <span>Term Length:{{$data_hour}}h. {{$data_min}}m.</span>
                 <br>
                 <span>Automatic Term Renewal Date: {{\Carbon\Carbon::parse($invoice->mr_end_time)->format('M d,Y')}}</span>
                 <br>

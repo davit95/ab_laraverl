@@ -1233,6 +1233,30 @@ input[type='checkbox']:checked+label span.checkbox:before {
     cursor: pointer;
 }
 
+.manage_balance_order{
+    width: 100% !important;
+    padding:10px;
+    background: white;
+    border-radius: 10px;
+    line-height: 15px;
+}
+
+
+.manage_balance_inputs{
+    border: 2px solid #ADAFB2 !important;
+    padding: 0px 10px !important;
+    font-size: 13px !important;
+    color: #333 !important;
+    line-height: 25px !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    border-radius: 5px !important;
+}
+
+.table_text_align{
+    text-align: left !important;
+}
+
 .remove_btn {
     color: #fff;
     font-weight: 400;

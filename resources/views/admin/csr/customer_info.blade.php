@@ -13,6 +13,7 @@
                 <div style="color: white; background-color: red; font-weight: bold;">CUSTOMER TERMINATED</div>
                 <span class="costumer_text_area">
                 Processing Departament 
+                
                 <br> 
                     {{$customer->first_name}}
                 <br>
@@ -67,7 +68,7 @@
         <br>
         • <a  class="customer_text_area_links" href="">Add Recurring Charge or Credit to 4309462</a>
         <br>
-        • <a  class="customer_text_area_links" href="">Manage Customer Balance</a>
+        • <a  class="customer_text_area_links" href="/customers/{!!$customer->id!!}/manage-balance">Manage Customer Balance</a>
          <br>
         <br>
         </div>
