@@ -16,7 +16,7 @@ class RequestDetailService {
 	public function store($center_ids, $inputs)
 	{
 		unset($inputs['_token'], $inputs['accessToken'], $inputs['center_ids'], $inputs['refresh_token']);		
-		$ids = $this->center->whereIn('id', $center_ids)->lists('owner_id', 'id')->toArray();
+		$ids = $this->center->whereIn('id', $center_ids)->lists('owner_user_id', 'id')->toArray();
 		$details = [];		
 		foreach ($center_ids as $id) {			
 			$tmp = $inputs;			
