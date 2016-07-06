@@ -47,12 +47,7 @@ class AuthController extends Controller
      * Get a validator for an incoming registration request.
      */
     public function postLogin(LoginRequest $request, Guard $auth)
-    {
-        /*if ($request->is('admin*'))
-{
-    
-}*/
-        //dd($request->is('admin'));
+    {      
         if ($auth->attempt($request->params(1))) {
             return redirect('/reports')->withSuccess('You has been successfully logged in.');
         }
@@ -67,8 +62,8 @@ class AuthController extends Controller
         }
         elseif ($auth->attempt($request->params(10))) {
             return redirect('/reports')->withSuccess('You has been successfully logged in.');
-        }
-        //return redirect()->back()->withInput()->withError(trans('auth.failed'));
+        }        
+        return redirect()->back()->withInput()->withError(trans('auth.failed'));
     }
 
     /**

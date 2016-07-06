@@ -22,5 +22,38 @@ class UserTableSeeder extends Seeder
             ];
             DB::table('users')->insert($user);
         }
+        if (null == $user = User::where('email','owner@admin.com')->first()) {
+            $user = [
+                'first_name' => 'Operator',
+                'last_name' => 'user',
+                'role_id' => 5,
+                'email' => 'owner@admin.com',
+                'username' => 'owner',
+                'password' => bcrypt('owner'),
+            ];
+            DB::table('users')->insert($user);
+        }
+        if (null == $user = User::where('email','csr@admin.com')->first()) {
+            $user = [
+                'first_name' => 'Client',
+                'last_name' => 'User',
+                'role_id' => 3,
+                'email' => 'csr@admin.com',
+                'username' => 'csruser',
+                'password' => bcrypt('asdasdasdd'),
+            ];
+            DB::table('users')->insert($user);
+        }
+        if (null == $user = User::where('email','admin-user@mail.ru')->first()) {
+            $user = [
+                'first_name' => 'Alliance',
+                'last_name' => 'User',
+                'role_id' => 10,
+                'email' => 'admin-user@mail.ru',
+                'username' => 'aliancecsruser',
+                'password' => bcrypt('admin'),
+            ];
+            DB::table('users')->insert($user);
+        }
     }
 }
