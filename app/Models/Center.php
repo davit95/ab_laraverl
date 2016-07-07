@@ -118,4 +118,8 @@ class Center extends Model {
 	public function center_sites() {
 		return $this->hasMany('App\\Models\\CenterSite');
 	}
+
+	public function space_types() {
+		return $this->hasMany('App\\Models\\CenterSpaceType');
+	}
 }

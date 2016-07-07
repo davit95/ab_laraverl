@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
  */
-
 Route::get('last-commit', function(){
 	echo shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit");
     die();

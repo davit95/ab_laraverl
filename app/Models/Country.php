@@ -16,4 +16,9 @@ class Country extends Model
     {
     	return $this->hasOne('App\\Models\\City')->where('active', 1)->selectRaw('country_id, count(*) as count')->groupBy('country_id');
     }
+
+    public function centers()
+    {
+    	return $this->hasMany('App\\Models\\Center');
+    }
 }

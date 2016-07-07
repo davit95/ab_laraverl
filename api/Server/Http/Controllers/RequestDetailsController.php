@@ -17,7 +17,7 @@ class RequestDetailsController extends Controller
      */
     public function __construct()
     {
-        
+        // $this->middleware('oauth');
     }
 
     /**
@@ -36,5 +36,17 @@ class RequestDetailsController extends Controller
         $center_ids = json_decode($inputs['center_ids']);
         $requestDetailService->store($center_ids, $request->all());
         return response()->json(['status' => 'success']);
+    }
+
+    public function getUserRequestDetail($user_id, RequestDetailService $requestDetailService)
+    {
+        $requestDetails = $requestDetailService->getUserRequestDetail($user_id);
+        return response()->json(['requestDetails' => $requestDetails]);   
+    }
+
+    public function showRequestDetail($id, $owner_id, RequestDetailService $requestDetailService)
+    {
+        $requestDetail = $requestDetailService->showRequestDetail($id, $owner_id);
+        return response()->json(['requestDetail' => $requestDetail]);
     }
 }

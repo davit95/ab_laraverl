@@ -12,10 +12,13 @@
 */
 Route::post('/add-location', 'LocationsController@addLocation');
 Route::post('/request-detail', 'RequestDetailsController@addRequestDetail');
+Route::get('/request-details-for-user/{user_id}', 'RequestDetailsController@getUserRequestDetail');
+Route::get('/request-details/{id}/{owner_id}', 'RequestDetailsController@showRequestDetail');
 Route::get('/location/show/{id}', 'LocationsController@getLocation');
 Route::get('/location/us/{state}', 'LocationsController@getStateLocations');
 Route::get('/location/search/{key}', 'LocationsController@getSearchLocation');
-Route::get('/location/search/{country_slug}/{key}', 'LocationsController@getSearchLocationByCountry');
+Route::get('/location/search/{space_type}/{key}', 'LocationsController@getSearchLocationBySpaceType');
+// Route::get('/location/search/{country_slug}/{key}', 'LocationsController@getSearchLocationByCountry');
 Route::get('/location/countries', 'LocationsController@getAllCountries');
 Route::get('/location/states', 'LocationsController@getAllStates');
 Route::get('/location/owner-email/{center_id}', 'LocationsController@getCenterOwnerEmail');

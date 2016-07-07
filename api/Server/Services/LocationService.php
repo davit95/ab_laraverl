@@ -35,10 +35,10 @@ class LocationService {
 
 	public function getLocationById($id)
 	{		
-		$location = $this->center->where('id', $id)->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
+		$location = $this->center->where('id', $id)->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'space_types'])->get();
 		$nearby = isset($nearby);
 		$options = isset($options);
-		$description = isset($description);		
+		$description = isset($description);
 		return $this->getNeccessaryOptions($location, $nearby, $options, $description);
 	}
 
@@ -205,7 +205,7 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
+		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'space_types'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);
 		$description = isset($description);
@@ -223,7 +223,7 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description'])->paginate($per_page);
+		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description', 'space_types'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);
 		$description = isset($description); 		
@@ -251,8 +251,7 @@ class LocationService {
 						$query->where('postal_code', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
 					})
 					->with('city')
-					->get(['name', 'id', 'city_id', 'country', 'city_name', 'us_state']);
-					// dd($this->center->where('id', 2053)->with('city')->first());
+					->get(['name', 'id', 'city_id', 'country', 'city_name', 'us_state']);					
 		foreach ($locations as $location) {
 			$location->city_slug = isset($location->city) ? $location->city->slug : '';
 			unset($location->city);
@@ -294,6 +293,79 @@ class LocationService {
 		return $searchResult;
 	}
 
+	public function getSearchLocationBySpaceType($type, $key)
+	{		
+	    $searchResult = [];
+	    $usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')
+	    						->where('country_code', 'US')
+	    						->distinct('name')
+	    						->whereHas('centers', function($query) use ($type){
+						    		$query->where('active_flag', 'Y');
+						    		$query->whereHas('space_types', function($q)  use ($type){
+						    			$q->where('type', $type);
+						    		});
+						    	})->get(['name', 'id', 'us_state_code', 'slug'])->toArray();		
+	    $searchResult = array_merge($searchResult, $usCities);
+	    $cities = $this->city->where('name', 'LIKE', '%'.$key.'%')
+	    					->whereNull('us_state_code')
+	    					->distinct('name')
+	    					->whereHas('centers', function($query) use ($type){
+					    		$query->where('active_flag', 'Y');
+					    		$query->whereHas('space_types', function($q) use ($type){
+					    			$q->where('type', $type);
+					    		});
+					    	})->get(['name', 'id', 'country_code', 'slug'])->toArray();
+	    $searchResult = array_merge($searchResult, $cities);
+	    $countries = $this->country
+	    				  ->where('name', 'LIKE', '%'.$key.'%')
+	    				  ->whereHas('centers', function($query) use ($type){
+					    		$query->where('active_flag', 'Y');
+					    		$query->whereHas('space_types', function($q) use ($type){
+					    			$q->where('type', $type);
+					    		});
+					       })
+	    				  ->distinct('name')
+	    				  ->get(['name', 'id', 'code'])->toArray();
+	    $searchResult = array_merge($searchResult, $countries);
+	    $locations = $this->center
+	    			->where(function($query) use ($key, $type){
+	    				$query->where('name', 'LIKE', '%'.$key.'%')
+	    				->where('active_flag', 'Y')
+	    				->whereHas('space_types', function($q) use ($type){
+	    					$q->where('type', $type);
+	    				});
+	    			})
+	    			->orWhere(function($query) use ($key, $type){
+	    				$query->where('postal_code', 'LIKE', '%'.$key.'%')
+	    				->where('active_flag', 'Y')
+	    				->whereHas('space_types', function($q) use ($type){
+	    					$q->where('type', $type);
+	    				});
+	    			})
+	    			->with('city')
+	    			->get(['name', 'id', 'city_id', 'country', 'city_name', 'us_state']);					
+	    foreach ($locations as $location) {
+	    	$location->city_slug = isset($location->city) ? $location->city->slug : '';
+	    	unset($location->city);
+	    	$location->type = 'vo';
+	    }
+	    $searchResult = array_merge($searchResult, $locations->toArray());
+	    $us_states = $this->usState
+	                      ->where('name', 'LIKE', '%'.$key.'%')
+	                      ->whereHas('centers', function($query) use ($type){
+					    		$query->where('active_flag', 'Y');
+					    		$query->whereHas('space_types', function($q)  use ($type){
+					    			$q->where('type', $type);
+					    		});
+					       })
+	                      ->get(['name', 'id', 'code']);
+	    foreach ($us_states as $state) {
+	    	$state->type = 'state';
+	    }
+	    $searchResult = array_merge($searchResult, $us_states->toArray());	
+	    return $searchResult;
+	}
+
 	public function getCenterOwnerEmail($center_id)
 	{
 		$center = $this->center->find($center_id);
@@ -323,7 +395,8 @@ class LocationService {
 				'tax_name'      => $location->tax_name,
 				'tax_percentage'=> $location->tax_percentage,
 				'images'        => [],	
-				'products'      => [],				
+				'products'      => [],			
+				'space_types'      => [],			
 
 			];			
 			foreach ($location->vo_photos as $photo) {
@@ -332,7 +405,10 @@ class LocationService {
 				$tempPhoto->location = "https://www.alliancevirtualoffices.com/images/locations/".$photo->name;
 				$tempPhoto->type = $photo->description;				
 				array_push($temp['images'], $tempPhoto);
-			}			
+			}
+			foreach ($location->space_types as $type) {				
+				array_push($temp['space_types'], $type);
+			}
 			foreach ($location->prices as $price) {
 				if($price->package_id == '103' || $price->package_id == '105'){
 					$product = new \stdClass();

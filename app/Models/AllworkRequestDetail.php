@@ -13,4 +13,9 @@ class AllworkRequestDetail extends Model
     {
     	return $this->belongsTo('\\App\\Models\\Center', 'center_id', 'id');
     }
+
+    public function center_info()
+    {
+    	return $this->belongsTo('\\App\\Models\\Center', 'center_id', 'id')->select(['id', 'name']);
+    }
 }

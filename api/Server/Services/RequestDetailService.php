@@ -28,4 +28,20 @@ class RequestDetailService {
 		}
 		$this->requestDetail->insert($details);
 	}
+
+	public function getUserRequestDetail($user_id)
+	{			
+		return $this->requestDetail->where('owner_id', $user_id)
+		->with('center_info')
+		->get();
+	}
+
+	public function showRequestDetail($id, $owner_id)
+	{
+		return $this->requestDetail
+		->where('id', $id)
+		->where('owner_id', $owner_id)
+		->with('center_info')
+		->first();
+	}
 }

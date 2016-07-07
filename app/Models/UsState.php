@@ -17,4 +17,9 @@ class UsState extends Model
     {
     	return $this->hasMany('App\\Models\\City', 'us_state_id')->where('active', 1)->where('country_code', 'US');
     }
+
+    public function centers()
+    {
+    	return $this->hasMany('App\\Models\\Center');
+    }
 }

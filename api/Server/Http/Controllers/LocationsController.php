@@ -95,6 +95,12 @@ class LocationsController extends Controller
         return response()->json(['locations' => $locations]);
     }
 
+    public function getSearchLocationBySpaceType($type, $key)
+    {
+        $locations = $this->locationService->getSearchLocationBySpaceType($type, $key);
+        return response()->json(['locations' => $locations]);
+    }
+
     public function getSearchLocationByCountry($country_slug, $key, Request $request)
     {
         $locations = $this->locationService->getSearchLocationByCountry($country_slug, $key);
