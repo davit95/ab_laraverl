@@ -21,6 +21,18 @@ class LocationsController extends Controller
         $this->page     = $request->page;
     }
 
+    public function getLocationsByOwnerId($owner_id, LocationService $locationService)
+    {
+        $locations = $locationService->getLocationsByOwnerId($owner_id);
+        return response()->json($locations);
+    }
+
+    public function getShowOwnerLocation($id, $owner_id, LocationService $locationService)
+    {
+        $location = $locationService->getOwnerLocationById($id, $owner_id);
+        return response()->json($location);
+    }
+
     /**
      * Create a resource.
      *

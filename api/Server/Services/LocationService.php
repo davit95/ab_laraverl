@@ -25,6 +25,25 @@ class LocationService {
 		$this->site = $site;
 	}
 
+	public function getLocationsByOwnerId($owner_id)
+	{
+		$locations = $this->center
+					->where('owner_user_id', $owner_id)
+					->where('active_flag', 'Y')
+					->get();
+		return $locations;
+	}
+
+	public function getOwnerLocationById($id, $owner_id)
+	{
+		$location = $this->center
+					->where('id', $id)
+					->where('owner_user_id', $owner_id)
+					->where('active_flag', 'Y')
+					->first();
+		return $location;		
+	}
+
 	public function addLocation($inputs)
 	{
 		$site = $this->site->where('name', 'allwork')->first();

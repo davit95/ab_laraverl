@@ -10,6 +10,8 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/locations/{owner_id}', 'LocationsController@getLocationsByOwnerId');
+Route::get('/locations/{id}/{owner_id}', 'LocationsController@getShowOwnerLocation');
 Route::post('/add-location', 'LocationsController@addLocation');
 Route::post('/request-detail', 'RequestDetailsController@addRequestDetail');
 Route::get('/request-details-for-user/{user_id}', 'RequestDetailsController@getUserRequestDetail');
