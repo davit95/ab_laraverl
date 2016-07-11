@@ -47,7 +47,7 @@ class AuthController extends Controller
      * Get a validator for an incoming registration request.
      */
     public function postLogin(LoginRequest $request, Guard $auth)
-    {      
+    {        
         if ($auth->attempt($request->params(1))) {
             return redirect('/reports')->withSuccess('You has been successfully logged in.');
         }
