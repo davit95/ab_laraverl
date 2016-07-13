@@ -50,6 +50,7 @@ class LocationService {
 		$site_id = isset($site) ? $site->id : null;
 		$center = $this->center->create($inputs);
 		$center->sites()->attach($site_id);
+		return $center;		
 	}
 
 	public function getLocationById($id)
@@ -383,6 +384,18 @@ class LocationService {
 	    }
 	    $searchResult = array_merge($searchResult, $us_states->toArray());	
 	    return $searchResult;
+	}
+
+	public function getSearchCity($key, $country = null, $state = null)
+	{
+		$query = ['active' => 1];
+		$query = isset($country) ? array_merge($query, ['country_code' => $country]) : $query;
+		$query = isset($state) ? array_merge($query, ['us_state_code' => $state]) : $query;		
+		$cities = $this->city
+				->where($query)
+				->where('name', 'like', '%'.$key.'%')
+				->get(['name', 'slug', 'id']);
+		return $cities;
 	}
 
 	public function getCenterOwnerEmail($center_id)

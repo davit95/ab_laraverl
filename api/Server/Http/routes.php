@@ -18,6 +18,7 @@ Route::get('/request-details-for-user/{user_id}', 'RequestDetailsController@getU
 Route::get('/request-details/{id}/{owner_id}', 'RequestDetailsController@showRequestDetail');
 Route::get('/location/show/{id}', 'LocationsController@getLocation');
 Route::get('/location/us/{state}', 'LocationsController@getStateLocations');
+Route::get('/location/search/city/{key}', 'LocationsController@getSearchCity');
 Route::get('/location/search/{key}', 'LocationsController@getSearchLocation');
 Route::get('/location/search/{space_type}/{key}', 'LocationsController@getSearchLocationBySpaceType');
 // Route::get('/location/search/{country_slug}/{key}', 'LocationsController@getSearchLocationByCountry');

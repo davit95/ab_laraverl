@@ -22,7 +22,7 @@ class LocationsController extends Controller
     }
 
     public function getLocationsByOwnerId($owner_id, LocationService $locationService)
-    {
+    {        
         $locations = $locationService->getLocationsByOwnerId($owner_id);
         return response()->json($locations);
     }
@@ -40,7 +40,9 @@ class LocationsController extends Controller
      */
     public function addLocation(Request $request, LocationService $locationService)
     {
-        $locationService->addLocation($request->all());   
+        $location = $locationService->addLocation($request->all());
+        $status = null!= $location ? 'success' : 'error';
+        return response()->json(['status' => $status]);
     }
 
     /**
@@ -90,8 +92,8 @@ class LocationsController extends Controller
     }
 
     public function getStateCenterLocation($state, $city, $center_id, Request $request)
-    {        
-        $locations = $this->locationService->getStateCenterLocation($state, $city, $center_id, $request->nearby, $request->options, $request->description);
+    {
+        $locations = $this->locationService->getStateCenterLocation($state, $city, $center_id, $request->nearby, $request->options, $request->description);        
         return response()->json(['locations' => $locations]);
     }
 
@@ -102,9 +104,17 @@ class LocationsController extends Controller
     }
 
     public function getSearchLocation($key)
-    {        
+    {
         $locations = $this->locationService->getSearchLocation($key);
         return response()->json(['locations' => $locations]);
+    }
+
+    public function getSearchCity($key, Request $request)
+    {
+        $country =  $request->country != "" ? $request->country : null;
+        $us_state = $request->us_state != "" ? $request->us_state : null;
+        $cities = $this->locationService->getSearchCity($key, $country, $us_state);
+        return response()->json(['cities' => $cities]);
     }
 
     public function getSearchLocationBySpaceType($type, $key)
