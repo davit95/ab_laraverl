@@ -22,6 +22,7 @@ class CartController extends Controller {
 			$price_total = 0;
 			if (null != $temp_user_id = Cookie::get('temp_user_id')) {
          		$items = $tempCartItemService->getItemsByTempUserId($temp_user_id);
+         		// dd($items);
          		for($i = count($items) -1; $i >= 0; $i--){
          			if($i == count($items) -1) {
          				if($items[$i]->type == 'mr'){
@@ -64,6 +65,7 @@ class CartController extends Controller {
          	else {
          		$items = [];
      		}  
+     		// dd($items, $price_total);
      		return view('cart.index', ['items' => $items, 'price_total' => round($price_total, 2)]);
 		}
 	}

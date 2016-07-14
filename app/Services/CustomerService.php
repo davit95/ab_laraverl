@@ -31,6 +31,11 @@ class CustomerService {
 		$this->file = $file;
 	}
 
+	public function getCustomerByEmail($email)
+	{
+		return $this->user->where('email', $email)->where('role_id', 3)->first();
+	}
+
 	public function test($id,$admin_id)
 	{
 		return $this->customer->where('id', $id)->update(['admin_id' => $admin_id]);
