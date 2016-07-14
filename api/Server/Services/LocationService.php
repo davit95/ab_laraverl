@@ -31,6 +31,11 @@ class LocationService {
 					->where('owner_user_id', $owner_id)
 					->where('active_flag', 'Y')
 					->get();
+        foreach ($locations as $location) {
+        	$location->city_slug = isset($location->city) ? $location->city->slug : '';
+        	unset($location->city);
+        	$location->type = 'vo';
+        }					
 		return $locations;
 	}
 
@@ -469,8 +474,12 @@ class LocationService {
 				$temp['description'] = isset($location->description) ? $location->description->avo_description : '';
 			}
 			if($nearby){
-				$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);				
-			}			
+				if($temp['latitude'] != "" && $temp['longitude'] != ""){
+					$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);
+				}else{
+					$temp['nearby_centers'] = [];
+				}
+			}
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
 		}
