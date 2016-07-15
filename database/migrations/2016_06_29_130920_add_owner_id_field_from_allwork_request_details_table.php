@@ -14,7 +14,7 @@ class AddOwnerIdFieldFromAllworkRequestDetailsTable extends Migration
     {
         Schema::table('allwork_request_details', function(Blueprint $table)
         {
-            $table->integer('owner_id');
+            $table->integer('owner_id')->after('center_id');
         });
     }
 
