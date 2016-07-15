@@ -18,8 +18,11 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\MeetingRoomsImagesMigration::class,
         \App\Console\Commands\VoImages::class,
         \App\Console\Commands\GenerateApiKey::class,        
+
         \App\Console\Commands\SpaceTypesSeeder::class,
         \App\Console\Commands\OwnersSeeder::class,
+       
+
     ];
 
     /**
