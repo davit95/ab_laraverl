@@ -8,7 +8,7 @@ class CountryCities
 		$this->arr = 
 		[
 			'Algeria'        			=> ['Algiers'],
-			'Australia'      			=> ['North Sydney', 'Brisbane', 'Edgecliff', 'Frankston','Perth', 'Malvern','Melbourne','Sydney', 'Walkerville'],
+			'Australia'      			=> ['North Sydney', 'Brisbane', 'Edgecliff', 'Frankston','Perth', 'Malvern','Melbourne','Sydney', 'Walkerville', 'Spring Hill'],
 			'Belgium'        			=> ['Brussels', 'Brussels Schuman', 'Gent', 'Kortrijk', 'Mechelen'],
 			'Belize'         			=> ['Belize City'],
 			'Brazil'         			=> ['Sao Paulo'],
