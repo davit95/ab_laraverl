@@ -27,7 +27,7 @@ class AddAccessTokenFieldFromApiServerAccessTokens extends Migration
     {
         Schema::table('api_server_access_tokens', function(Blueprint $table)
         {
-            $table->dropColumn('access_token');
+            $table->dropColumn('accessToken');
         });
     }
 }

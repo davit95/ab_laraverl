@@ -56,6 +56,13 @@ class LocationsController extends Controller
         return response()->json($locations);
     }
 
+    public function updateLocation($id, $owner_id, Request $request)
+    {
+        $location = $this->locationService->updateLocation($id, $owner_id, $request->all());
+        $status = $location ? 'success' : 'error';
+        return response()->json(['status' => $status]);
+    }
+
     /**
      * Display a listing of the resource.
      *
