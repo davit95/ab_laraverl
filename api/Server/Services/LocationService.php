@@ -58,6 +58,19 @@ class LocationService {
 		return $center;		
 	}
 
+	public function updateLocation($id, $owner_id, $inputs)
+	{
+		$inputs = array_filter($inputs);
+		$location = $this->center
+					->where('id', $id)
+					->where('owner_user_id', $owner_id)					
+					->first();
+		if( null!= $location ){
+			$location = $location->update($inputs);
+		}					
+		return $location;
+	}
+
 	public function getLocationById($id)
 	{		
 		$location = $this->center->where('id', $id)->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'space_types'])->get();
@@ -418,7 +431,8 @@ class LocationService {
 		foreach ($locations as $location) {			
 			$temp = [
 				'id'            => $location->id,
-				'building_name' => $location->name,
+				'name'          => $location->name,
+				'building_name' => $location->building_name,
 				'address_1'     => $location->address1,
 				'address_2'     => $location->address2,
 				'city'          => $location->city_name,
