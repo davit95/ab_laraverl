@@ -42,33 +42,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
-		$this->centers();
-		$this->centers_coordinates();
-		$this->features();
-		$this->centers_local_numbers();
-		$this->centers_emails();
-		$this->centers_prices();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
+		// $this->centers();
+		// $this->centers_coordinates();
+		// $this->features();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
+		// $this->centers_prices();
 		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->virtual_offices_options();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		// $this->virtual_offices_seos();
+		// $this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -456,6 +456,7 @@ class DataMigration extends Command {
 		$this->info("\n migrating centers_filters table");
 		DB::setDefaultConnection('mysql');
 		$centers = DB::table('centers')->get();
+		//dd($centers[162]);
 		$bar     = $this->output->createProgressBar(count($centers));
 		$this->make_new_connection();
 		foreach ($centers as $center) {
