@@ -699,7 +699,8 @@ class DataMigration extends Command {
             $new_collection[] =
             [
                 'id'           => $value->OwnerID,
-                'company_name' => $value->OwnerName,
+                'company_name' => $value->CompanyName,
+                'owner_name' => $value->OwnerName,
                 'phone'    => $value->Phone,
                 'fax'      => $value->Fax,
                 // 'url'      => $value->URL,
