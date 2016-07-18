@@ -436,7 +436,7 @@ class LocationService {
 				'address_1'     => $location->address1,
 				'address_2'     => $location->address2,
 				'city'          => $location->city_name,
-				'company_name'  => $location->owner->company_name,
+				'company_name'  => $location->owner_user->company_name,
 				'city_slug'     => null!= $location->city ? $location->city->slug : '',
 				'state'         => $location->us_state,
 				'postal_code'   => $location->postal_code,
