@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::post('/location/update/{id}/{owner_id}', 'LocationsController@updateLocation');
 Route::get('/locations/{owner_id}', 'LocationsController@getLocationsByOwnerId');
 Route::get('/locations/{id}/{owner_id}', 'LocationsController@getShowOwnerLocation');
 Route::post('/add-location', 'LocationsController@addLocation');
@@ -18,6 +19,7 @@ Route::get('/request-details-for-user/{user_id}', 'RequestDetailsController@getU
 Route::get('/request-details/{id}/{owner_id}', 'RequestDetailsController@showRequestDetail');
 Route::get('/location/show/{id}', 'LocationsController@getLocation');
 Route::get('/location/us/{state}', 'LocationsController@getStateLocations');
+Route::get('/location/search/city/{key}', 'LocationsController@getSearchCity');
 Route::get('/location/search/{key}', 'LocationsController@getSearchLocation');
 Route::get('/location/search/{space_type}/{key}', 'LocationsController@getSearchLocationBySpaceType');
 // Route::get('/location/search/{country_slug}/{key}', 'LocationsController@getSearchLocationByCountry');

@@ -456,6 +456,7 @@ class DataMigration extends Command {
 		$this->info("\n migrating centers_filters table");
 		DB::setDefaultConnection('mysql');
 		$centers = DB::table('centers')->get();
+		//dd($centers[162]);
 		$bar     = $this->output->createProgressBar(count($centers));
 		$this->make_new_connection();
 		foreach ($centers as $center) {
@@ -675,37 +676,111 @@ class DataMigration extends Command {
 	}
 
 	private function owners() {
-		$this->info("\n migrating owners table");
-		$this->make_new_connection();
-		$collection = DB::table('Center_Owner')->get();
-		$bar        = $this->output->createProgressBar(count($collection));
-		foreach ($collection as $key => $value) {
-			//dd($collection);
-			$new_collection[] =
-			[
-				'id'           => $value->OwnerID,
-				'company_name' => $value->OwnerName,
-				'phone'    => $value->Phone,
-				'fax'      => $value->Fax,
-				// 'url'      => $value->URL,
-				'email'    => $value->Email,
-				'address1' => $value->Address1,
-				'address2' => $value->Address2,
-				'role_id'  => 5,
-				//'city_id'      => '------------',
-				//'region_id'    => '------------',
-				//'us_state_id'  => '------------',
-				//'country_id'   => '------------',
-				'postal_code'  => $value->PostalCode,				
-			];
-			$bar->advance();
-		}
-		DB::setDefaultConnection('mysql');
-		//DB::table('owners')->truncate();
-		DB::table('users')->insert($new_collection);
-		DB::table('owners')->insert($new_collection);
-		$bar->finish();
-		$this->info(' ✔');
+        $this->info("\n migrating owners table");
+        $this->make_new_connection();
+        $collection = DB::table('Center_Owner')->get();
+        $passwords =  DB::table('Owner_Logins')->lists('Password', 'Owner_ID');
+        //$passwords = DB::table('Customer_Hashes')->lists('Password', 'Customer_ID');
+        $bar        = $this->output->createProgressBar(count($collection));
+        $emails = [];
+        $duplicate_emails = [];
+        foreach($collection as $key => $value){
+            $value->Email = strtolower($value->Email);
+            if(in_array($value->Email, $emails)){
+                $value->Email = $value->OwnerID.'_'.$value->Email;
+                $emails[] = $value->Email;
+                $email = $value->Email;
+                //DB::table('users')->where('id', $id)->update(['email' => $collection[$id]]);  
+            } 
+            else {
+                $emails[] = $value->Email;
+                $email = $value->Email;
+            }
+            $new_collection[] =
+            [
+                'id'           => $value->OwnerID,
+                'company_name' => $value->CompanyName,
+                'owner_name' => $value->OwnerName,
+                'phone'    => $value->Phone,
+                'fax'      => $value->Fax,
+                // 'url'      => $value->URL,
+                'email'    => $email,
+                'address1' => $value->Address1,
+                'address2' => $value->Address2,
+                'role_id'  => 5,
+                'password'        => isset($passwords[$value->OwnerID]) ? bcrypt($passwords[$value->OwnerID]) : null,
+                //'city_id'      => '------------',
+                //'region_id'    => '------------',
+                //'us_state_id'  => '------------',
+                //'country_id'   => '------------',
+                'postal_code'  => $value->PostalCode,               
+            ];
+            $new_collection_owners[] =
+            [
+                'id'           => $value->OwnerID,
+                'company_name' => $value->OwnerName,
+                'phone'    => $value->Phone,
+                'fax'      => $value->Fax,
+                // 'url'      => $value->URL,
+                'email'    => $value->Email,
+                'address1' => $value->Address1,
+                'address2' => $value->Address2,
+                'role_id'  => 5,
+                //'city_id'      => '------------',
+                //'region_id'    => '------------',
+                //'us_state_id'  => '------------',
+                //'country_id'   => '------------',
+                'postal_code'  => $value->PostalCode,               
+            ];
+            $bar->advance();  
+        }
+
+        //dd($new_collection[2]);
+        // foreach ($collection as $key => $value) {
+        //     //dd($collection);
+        //     $new_collection[] =
+        //     [
+        //         'id'           => $value->OwnerID,
+        //         'company_name' => $value->OwnerName,
+        //         'phone'    => $value->Phone,
+        //         'fax'      => $value->Fax,
+        //         // 'url'      => $value->URL,
+        //         'email'    => $value->Email,
+        //         'address1' => $value->Address1,
+        //         'address2' => $value->Address2,
+        //         'role_id'  => 5,
+
+        //         //'city_id'      => '------------',
+        //         //'region_id'    => '------------',
+        //         //'us_state_id'  => '------------',
+        //         //'country_id'   => '------------',
+        //         'postal_code'  => $value->PostalCode,               
+        //     ];
+        //     $new_collection_owners[] =
+        //     [
+        //         'id'           => $value->OwnerID,
+        //         'company_name' => $value->OwnerName,
+        //         'phone'    => $value->Phone,
+        //         'fax'      => $value->Fax,
+        //         // 'url'      => $value->URL,
+        //         'email'    => $value->Email,
+        //         'address1' => $value->Address1,
+        //         'address2' => $value->Address2,
+        //         'role_id'  => 5,
+        //         //'city_id'      => '------------',
+        //         //'region_id'    => '------------',
+        //         //'us_state_id'  => '------------',
+        //         //'country_id'   => '------------',
+        //         'postal_code'  => $value->PostalCode,               
+        //     ];
+        //     $bar->advance();
+        // }
+        DB::setDefaultConnection('mysql');
+        //DB::table('owners')->truncate();
+        DB::table('users')->insert($new_collection);
+        DB::table('owners')->insert($new_collection_owners);
+        $bar->finish();
+        $this->info(' ✔');
 
 	}
 
@@ -815,14 +890,27 @@ class DataMigration extends Command {
 		$int_perc       = 0;
 		$new_collection = [];
 		$count          = 0;
+		$emails = [];
+        $duplicate_emails = [];
 		foreach ($collection as $key => $value) {
+			$value->Email = strtolower($value->Email);
+			if(in_array($value->Email, $emails)){
+			    $value->Email = $value->Customer_ID.'_'.$value->Customer_ID.'_'.$value->Email;
+			    $emails[] = $value->Email;
+			    $email = $value->Email;
+			    //DB::table('users')->where('id', $id)->update(['email' => $collection[$id]]);  
+			} 
+			else {
+			    $emails[] = $value->Email;
+			    $email = $value->Email;
+			}
 			$new_collection[] =
 			[
 				'id'            => $value->Customer_ID,
 				'first_name'    => $value->First_Name,
 				'last_name'     => $value->Last_Name,
 				'company_name'  => $value->Company_Name,
-				'email'         => $value->Email,
+				'email'         => $email,
 				'username'      => $value->Username,
 				'phone'         => $value->Phone1,
 				'passwrod_hint' => $value->Password_Hint,

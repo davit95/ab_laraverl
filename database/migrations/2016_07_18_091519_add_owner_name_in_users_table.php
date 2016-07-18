@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddOwnerIdFieldFromAllworkRequestDetailsTable extends Migration
+class AddOwnerNameInUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class AddOwnerIdFieldFromAllworkRequestDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::table('allwork_request_details', function(Blueprint $table)
+        Schema::table('users', function(Blueprint $table)
         {
-            $table->integer('owner_id')->after('center_id');
+            $table->string('owner_name')->after('last_name');
         });
     }
 
@@ -27,7 +27,7 @@ class AddOwnerIdFieldFromAllworkRequestDetailsTable extends Migration
     {
         Schema::table('allwork_request_details', function(Blueprint $table)
         {
-            $table->dropColumn('owner_id');
+            $table->dropColumn('owner_name');
         });
     }
 }

@@ -31,6 +31,11 @@ class LocationService {
 					->where('owner_user_id', $owner_id)
 					->where('active_flag', 'Y')
 					->get();
+        foreach ($locations as $location) {
+        	$location->city_slug = isset($location->city) ? $location->city->slug : '';
+        	unset($location->city);
+        	$location->type = 'vo';
+        }					
 		return $locations;
 	}
 
@@ -50,6 +55,20 @@ class LocationService {
 		$site_id = isset($site) ? $site->id : null;
 		$center = $this->center->create($inputs);
 		$center->sites()->attach($site_id);
+		return $center;		
+	}
+
+	public function updateLocation($id, $owner_id, $inputs)
+	{
+		$inputs = array_filter($inputs);
+		$location = $this->center
+					->where('id', $id)
+					->where('owner_user_id', $owner_id)					
+					->first();
+		if( null!= $location ){
+			$location = $location->update($inputs);
+		}					
+		return $location;
 	}
 
 	public function getLocationById($id)
@@ -385,6 +404,18 @@ class LocationService {
 	    return $searchResult;
 	}
 
+	public function getSearchCity($key, $country = null, $state = null)
+	{
+		$query = ['active' => 1];
+		$query = isset($country) ? array_merge($query, ['country_code' => $country]) : $query;
+		$query = isset($state) ? array_merge($query, ['us_state_code' => $state]) : $query;		
+		$cities = $this->city
+				->where($query)
+				->where('name', 'like', '%'.$key.'%')
+				->get(['name', 'slug', 'id']);
+		return $cities;
+	}
+
 	public function getCenterOwnerEmail($center_id)
 	{
 		$center = $this->center->find($center_id);
@@ -400,11 +431,12 @@ class LocationService {
 		foreach ($locations as $location) {			
 			$temp = [
 				'id'            => $location->id,
-				'building_name' => $location->name,
+				'name'          => $location->name,
+				'building_name' => $location->building_name,
 				'address_1'     => $location->address1,
 				'address_2'     => $location->address2,
 				'city'          => $location->city_name,
-				'company_name'  => $location->company_name,
+				'company_name'  => $location->owner->company_name,
 				'city_slug'     => null!= $location->city ? $location->city->slug : '',
 				'state'         => $location->us_state,
 				'postal_code'   => $location->postal_code,
@@ -415,7 +447,7 @@ class LocationService {
 				'tax_percentage'=> $location->tax_percentage,
 				'images'        => [],	
 				'products'      => [],			
-				'space_types'      => [],			
+				'space_types'      => [],
 
 			];			
 			foreach ($location->vo_photos as $photo) {
@@ -448,6 +480,7 @@ class LocationService {
 				$product->price_type = 'hourly';
 				array_push($temp['products'], $product);
 			}
+			$temp['space_types'] = $location->space_types;
 
 			if($options){
 				$temp['center_options'] = $location->options;	
@@ -456,8 +489,12 @@ class LocationService {
 				$temp['description'] = isset($location->description) ? $location->description->avo_description : '';
 			}
 			if($nearby){
-				$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);				
-			}			
+				if($temp['latitude'] != "" && $temp['longitude'] != ""){
+					$temp['nearby_centers'] = $this->getNearByCenters($temp['id'], $temp['latitude'], $temp['longitude']);
+				}else{
+					$temp['nearby_centers'] = [];
+				}
+			}
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
 		}
