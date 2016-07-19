@@ -59,17 +59,18 @@ class CustomersController extends Controller
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
 
         $files = $customerService->getCustomerFiles($id);
+        $not_date = '';
 
         if($customer) {
             $role_id = \Auth::user()->role_id;
             if($id == $customer->id) {
                 $center = $userService->getCustomerCenterById($customer->center_id);
-                $end_date = strtotime("+".$customer->duration."months", strtotime($customer->created_at));
-                if($customer->duration == 6) {
-                    $not_date = strtotime("+5 months", strtotime($customer->created_at));
-                } elseif($customer->duration == 12) {
-                    $not_date = strtotime("+11 months", strtotime($customer->created_at));
-                }
+                // $end_date = strtotime("+".$customer->duration."months", strtotime($customer->created_at));
+                // if($customer->duration == 6) {
+                //     $not_date = strtotime("+5 months", strtotime($customer->created_at));
+                // } elseif($customer->duration == 12) {
+                //     $not_date = strtotime("+11 months", strtotime($customer->created_at));
+                // }
             } else {
                 dd(404);
             }
