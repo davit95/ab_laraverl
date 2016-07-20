@@ -17,7 +17,7 @@ class GenerateApiKey extends Command
      *
      * @var string
      */
-    protected $signature = "api-key {ip}";
+    protected $signature = "api-key";
 
     /**
      * The console command description.
@@ -47,13 +47,14 @@ class GenerateApiKey extends Command
         $this->info('');
         $api_key = str_random(20);
         $api_secret = str_random(20);
-        $ip = $this->argument('ip');
+        // $ip = $this->argument('ip');
         $apiCred->create([
             'api_key'    => $api_key,
             'api_secret' => $api_secret,
-            'origin'     => $ip
+            // 'origin'     => $ip
         ]);
-        $this->info('New API key and secret for '.$ip);
+        // $this->info('New API key and secret for '.$ip);
+        $this->info('New API key and secret');
         $this->info($api_key);
         $this->info($api_secret);
     }

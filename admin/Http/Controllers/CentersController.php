@@ -186,7 +186,7 @@ class CentersController extends Controller
         $packages = $centerService->getPackagesList();
         //dd($center->prices);
         //dd($sites, );
-
+        //dd($center);
         if($center) {
             return view('admin.centers.create', 
             [

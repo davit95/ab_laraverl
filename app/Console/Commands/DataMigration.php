@@ -703,7 +703,7 @@ class DataMigration extends Command {
                 'owner_name' => $value->OwnerName,
                 'phone'    => $value->Phone,
                 'fax'      => $value->Fax,
-                // 'url'      => $value->URL,
+                'url'      => $value->URL,
                 'email'    => $email,
                 'address1' => $value->Address1,
                 'address2' => $value->Address2,

@@ -59,6 +59,7 @@ class CustomersController extends Controller
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
 
         $files = $customerService->getCustomerFiles($id);
+        $not_date = '';
 
         if($customer) {
             $role_id = \Auth::user()->role_id;
