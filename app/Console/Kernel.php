@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
 
         \App\Console\Commands\SpaceTypesSeeder::class,
         \App\Console\Commands\OwnersSeeder::class,
+        \App\Console\Commands\AwsImagesSeoDataMigration::class,
        
 
     ];
