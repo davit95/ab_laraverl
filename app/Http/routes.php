@@ -30,6 +30,8 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/login', 'Auth\AuthController@getLogin');
 		Route::post('/login', 'Auth\AuthController@postLogin');
 
+		Route::post('/customlogin', 'Auth\AuthController@customPostLogin');
+
 		Route::get('/virtual-offices', 'VirtualOfficesController@index');
 
 		Route::get('/virtual-offices/{country_slug}', 'VirtualOfficesController@getCountryVirtualOffices');
