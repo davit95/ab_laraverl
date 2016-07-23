@@ -46,7 +46,7 @@ class GenerateApiKey extends Command
         $this->info('Generating new API key and secret');
         $this->info('');
         $api_key = str_random(20);
-        $api_secret = str_random(20);        
+        $api_secret = str_random(20);
         $full_access= $this->argument('full_access');
         $apiCred->create([
             'api_key'    => $api_key,
