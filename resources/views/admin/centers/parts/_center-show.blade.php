@@ -24,6 +24,7 @@
             <span class="lh_fi mediumBold">Building Name:</span>&nbsp;
             <div class="formOinfo">{{ $center->building_name }}</div>
         </div>
+
         <div class="line">
             <span class="lh_fi mediumBold">Postal Code:</span>&nbsp;
             <div class="formOinfo">{{ $center->postal_code }}</div>
@@ -55,13 +56,14 @@
         <div class="line">
             <span class="lh_fi mediumBold">Center Status:</span>&nbsp;
             <div class="formOinfo">
-                @if($center->center_filter->virtual_office == 0)
+                @if(isset($center->center_filter->virtual_office) && $center->center_filter->virtual_office == 0)
                     pending review
                 @else
                     done
                 @endif
             </div>
         </div>
+        
         <!-- <div class="line">
             <span class="lh_fi mediumBold">Amenities:</span>&nbsp;
             <div class="formOinfo">{{ $center->amenities }}</div>
@@ -126,6 +128,7 @@
                  {{ isset($center->owner_user->address2) ? $center->owner_user->address2 : '' }}
              </div>
          </div>
+
          <!-- <div class="line">
              <span class="lh_fi mediumBold">Region/County:</span>&nbsp;
              <div class="formOinfo">

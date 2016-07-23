@@ -43,10 +43,10 @@
         </div>
         <div class="form_right centers_basic">
             <div class="services_wrapp">
-                {!! Form::checkbox('avo_vo', 'VO' , (isset($center) && $center->center_filter->virtual_office == 1) ? true : null, ['id' => '1']) !!}
+                {!! Form::checkbox('avo_vo', 'VO' , (isset($center->center_filter) && $center->center_filter->virtual_office == 1) ? true : null, ['id' => '1']) !!}
                 {!! Form::label('') !!}
                 VO &nbsp; &nbsp;
-                {!! Form::checkbox('avo_mr', 'MR' ,  (isset($center) && $center->center_filter->meeting_room == 1) ? true : null, ['id' => '2']) !!}
+                {!! Form::checkbox('avo_mr', 'MR' ,  (isset($center->center_filter) && $center->center_filter->meeting_room == 1) ? true : null, ['id' => '2']) !!}
                 {!! Form::label('') !!}
                 MR &nbsp; &nbsp;
             </div>
@@ -79,6 +79,7 @@
         <div class="clear"></div>
     </div>
 @endif
+
 
 
     <!-- @foreach($photos as $photo_id => $photo)
@@ -128,10 +129,11 @@
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
-        @if(isset($center))
+        @if(isset($center->center_filter))
             {!! Form::label('Make this center active or inactive') !!}
             {!! Form::checkbox('active',$center->center_filter->virtual_office, $center->center_filter->virtual_office == 1 ? true : null) !!}
         @endif
+        
         <!-- {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
         <br> 
@@ -155,40 +157,10 @@
         <br>
         {!! Form::label('meta_description','Meta Description') !!}
         {!! Form::text('meta_description',isset($center->virtual_office_seo->meta_description) ? $center->virtual_office_seo->meta_description : null,['class' => 'f1']) !!} -->
-    </div>        
+    </div>     
+
     <div class="form_right centers_basic">
-        <br>
-        <!-- {!! Form::label('avo_description','Avo Description') !!}
-        {!! Form::text('avo_description',isset($center->virtual_office_seo->avo_description) ? $center->virtual_office_seo->avo_description : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('abcn_title','Abcn Title') !!}
-        {!! Form::text('abcn_title',isset($center->virtual_office_seo->abcn_title) ? $center->virtual_office_seo->abcn_title : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('abcn_description','Abcn Description') !!}
-        {!! Form::text('abcn_description',isset($center->virtual_office_seo->abcn_description) ? $center->virtual_office_seo->abcn_description : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('price','price') !!} 
-        {!! Form::text('price', isset($center_package['platinum']) ? $center_package['platinum']->price : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('with_live_receptionist_full_price','Live Receptionist Full Price') !!}
-        {!! Form::text('with_live_receptionist_full_price', isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_full_price : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('with_live_receptionist_pak_price','Live Receptionist  Price') !!}
-        {!! Form::text('with_live_receptionist_pak_price',  isset($center_package['platinum']) ? $center_package['platinum']->with_live_receptionist_pack_price : null,['class' => 'f1']) !!}
-        <br>
-        {!! Form::label('lat','*Address Latitude: ') !!}
-        {!! Form::text('lat', isset($center_coordinates->lat) ? $center_coordinates->lat : null,['class' => 'f1b'])!!}
-        <a  class="getBtn" onclick="getLatAndLng()">GET</a>
-        <div class="clear"></div>
-        {!! Form::label('lng','*Address Longitude: ') !!}
-        {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
-        <br>
-        {!! Form::label('package','Package') !!}
-        {!! Form::select('package',$packages ,null,['class' => 'platinum_package']) !!}
-        <br>
-        {!! Form::label('Make this center active or inactive') !!}
-        {!! Form::checkbox('active',isset($center) && $center->center_filter->virtual_office == 1 ? true : null,['checked' => '']) !!} -->
-        <div class="clear"></div>
+
     </div> 
     <div class="clear"></div>
 </div>
