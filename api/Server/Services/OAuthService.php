@@ -121,6 +121,15 @@ class OAuthService {
 		}
 	}
 	
+	public function getAccessToken($access_token)
+	{
+		$access_tokens = $this->accessToken
+		->where('accessToken' , $access_token)
+		// ->where('origin', $origin)
+		->first();
+		return null!= $access_tokens ? $access_tokens : false;
+	}
+
 	private function checkAccessToken($origin, $access_token)
 	{
 		$access_tokens = $this->accessToken
