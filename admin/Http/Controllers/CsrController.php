@@ -39,6 +39,7 @@ class CsrController extends Controller
         $role = \Auth::user()->role->name;  
         if($role === 'super_admin' || $role == 'accounting_user') {
             $invoices = $invoiceService->getPendingInvoices();
+            $customers = $userService->getALlCustomers();
         } elseif(\Auth::user()->role->name === 'client_user') {
             // $customers[] = \Auth::user();
             //$role_id = \Auth::user()->role_id;
@@ -54,7 +55,7 @@ class CsrController extends Controller
             return view('admin.csr.index', ['customers' => $customers, 'role' => $role, 'your_customers' => $your_customers, 'new_customers' => $new_customers]);  
         }
        // dd($customers); 
-        return view('admin.csr.index', ['invoices' => $invoices, 'role' => $role]);
+        return view('admin.csr.index', ['invoices' => $invoices, 'role' => $role, 'customers' => $customers]);
     }
 
     /**
@@ -121,8 +122,18 @@ class CsrController extends Controller
         /*need more information*/
         $role = \Auth::user()->role->name;
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        // dd($customer);
-        return view('admin.csr.customer_info', ['customer' => $customer, 'role' => $role]);
+        $next_invoices = $userService->getCustomerPendingInvoices($id);
+        $declined_invoices = $userService->getCustomerDeclinedInvoices($id);
+        $completed_invoices = $userService->getCustomerCompletedInvoices($id);
+        //dd($next_invoices);
+        return view('admin.csr.customer_info',
+        [
+            'customer'           => $customer, 
+            'role'               => $role, 
+            'next_invoices'      => $next_invoices, 
+            'declined_invoices'  => $declined_invoices,
+            'completed_invoices' => $completed_invoices
+        ]);
     }
 
     public function customerSearch(Request $request, CustomerService $customerService)

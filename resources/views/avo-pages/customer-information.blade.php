@@ -99,29 +99,24 @@
                     <div class="wrapDescrip">
                         <h1 class="gray2">ACCOUNT INFORMATION & CHECKOUT</h1>
                         <div class="signin-info changeMtop2 ">
-                            <form action="" method="post" name="signin" >
-                                <input type="hidden" name="returning_customer_yes" value="1" />
-                                <p><span class="mediumBold">Please enter your email and password below.</span></p><br>
-                                <div class="existingL">
-                                    <label>Email Address</label>
-                                </div>
-                                <div class="existingR">
-                                    <input class="checkOutInput" type="text" name="Email" value=""/>
-                                </div>
+                            {!! Form::open(['method' => 'POST' , 'url' => url('customlogin')]) !!}
+                                <input type="hidden" name="step" value="2">
+                                <p><span class="mediumBold"> {!! Form::label('Please enter your email and password below.') !!}</span></p><br>
+                                <div class="existingL">{!! Form::label('Email Address') !!}</div>
+                                <div class="existingR">{!! Form::email('email', null ,[]) !!}</div>
                                 <div class="clear"></div>
-                                <div class="existingL"><label>Password</label></div>
-                                <div class="existingR">
-                                    <input class="checkOutInput" type="password" name="LPassword" value=""/>
-                                </div>
+                                <div class="existingL">{!! Form::label('Password') !!}</div>
+                                <div class="existingR">{!! Form::password('password', []) !!}</div>
                                 <div class="clear"></div>
                                 <div class="existingL"></div>
-                                <input value="SUBMIT" class="aquaBtn changeMtop minW" type="submit"><br>
-
+                                {!! Form::submit('SUBMIT',['class' => 'aquaBtn changeMtop minW' ]) !!}
+                                <!-- <input value="SUBMIT" class="aquaBtn changeMtop minW" type="submit"> --><br>
                                 <div class="existingL"></div>
-                                <div class="help hide">
-                                    <img src="images/info.png" class="tooltip"/> Having problems signing in?
+                                <div class="help">
+                                    <img src="/images/info.png" class="tooltip tooltipstered"> Having problems signing in?<br>
+                                    <a href="https://www.alliancevirtualoffices.com/password-reset.php" class="aqua">Password Recovery</a>
                                 </div>
-                            </form>
+                            {!! Form::close() !!}
                         </div><!--/signin-info-->
 
                         {!! Form::model(session('customer_information'), ['class' => 'custInfoForm', 'url' => url('/customer-information') ,'method' => 'POST']) !!}

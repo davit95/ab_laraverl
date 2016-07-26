@@ -40,6 +40,7 @@ class InvoicesController extends Controller
         if($braintree_enviorenment == 'production') {
             $braintree_configs = config('braintree.production_credentials');
         } elseif($braintree_enviorenment == 'sandbox') {
+            //dd('as');
             $braintree_configs = config('braintree.sandbox_credentials');
         } else {
             throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);
@@ -50,13 +51,14 @@ class InvoicesController extends Controller
             throw new Exception("Invalid invoice", 1);
         }
         $customer = $invoice->customer;
+        //dd($customer);
         if(!$this->checkCustomerCreditCardCredentials($customer)) {
             throw new Exception("The Customer CC credentials are invalid", 1);
             
         }
         $amount    = $invoice->price;
         $order_id  = $invoice->id;
-        $cc_number = $braintree_enviorenment == 'production' ? $customer->cc_number : 4111111411111111 ;
+        $cc_number = $braintree_enviorenment == 'production' ? $customer->cc_number : 4012000033330026 ;
         $cc_month  = $customer->cc_month;
         $cc_year   = $customer->cc_year;
         // dd($cc_number);
@@ -82,9 +84,10 @@ class InvoicesController extends Controller
             // logic for sandox mode
             if($result->success) {
                 $f = serialize($result);
-                dd(unserialize($f));
+                dd($f);
+                dd(unserialize($f), 'aaaaa');
             } else {
-                dd($result);
+                dd($result, 'as');
             }
         } else {
             // logic for production

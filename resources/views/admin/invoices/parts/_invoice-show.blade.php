@@ -178,12 +178,12 @@
                 <strong>Changes Log:</strong>
             </span>&nbsp;
             <div class="formOinfo">
-                <p> 
+                <!-- <p> 
                     ISAAC<br>
                     March 28, 2016, 9:56 am<br>
                     Changed to close<br>
                     Comments: <br>
-                </p>
+                </p> -->
             </div>
         </div>
         <div class="line">

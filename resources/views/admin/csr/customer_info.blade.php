@@ -10,25 +10,25 @@
             <div class="formOinfo left_side_area_content">
                 <span class="lh_fi mediumBold customer_text_area_headers" > Customer Information: </span>
                 <div style="float: right;"><img src="https://www.alliancevirtualoffices.com/csr/images/visa-icon.jpg" border="0" style="margin:31px 11px;"></div>
-                <div style="color: white; background-color: red; font-weight: bold;">CUSTOMER TERMINATED</div>
+                <!-- <div style="color: white; background-color: red; font-weight: bold;">CUSTOMER TERMINATED</div> -->
                 <span class="costumer_text_area">
+                    <br>
                 Processing Departament 
-                
                 <br> 
                     {{$customer->first_name}}
                 <br>
-                6856 Citradora ct
+                {{$customer->address1}}
                 <br>
                 <br>              
-                Gargen Grove, CA 92845
+                {{$customer->first_name}} {{$customer->last_name}}, {{isset($customer->country) ? $customer->country->code : null }} {{$customer->postal_code}}
                 <br>
-                949-642-1171
+                {{$customer->fax}}
                 <br>
-                Michael@processingdepertament.org
+                {{$customer->email}}
                 <br>
                 Customer Type: AVO Direct 
                 <br>
-                Phone.com Phone Number: 18004460535
+                Phone.com Phone Number: {{$customer->phone}}
                 <br>
                 <br>
                 </span>
@@ -120,11 +120,13 @@
                         <td ><strong>Invoice Date</strong></td>
                         <td ><strong>Amount</strong></td>
                     </tr> 
-                    <tr>
-                        <td><a class="customer_text_area_links" href="" target="V">125402041</a></td>
-                        <td>April 28, 2011</td>
-                        <td>$235.00</td>
-                    </tr>   
+                    @foreach($completed_invoices as $invoice)
+                        <tr>
+                            <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
+                            <td>{{$invoice->created_at}}</td>
+                            <td>$ {{$invoice->price}}</td>
+                        </tr>
+                    @endforeach   
                 </tbody>
             </table>  
         </div>
@@ -140,6 +142,14 @@
                         <td ><strong>Amount</strong></td>
                         <td ><strong>Action</strong></td>
                     </tr>
+                    @foreach($declined_invoices as $invoice)
+                        <tr>
+                            <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
+                            <td>{{$invoice->created_at}}</td>
+                            <td>$ {{$invoice->price}}</td>
+                            <td> </td>
+                        </tr>
+                    @endforeach 
                 </tbody>
             </table>
         </div>
@@ -155,12 +165,14 @@
                         <td ><strong>Amount</strong></td>
                         <td ><strong>Action</strong></td>
                     </tr>
-                    <tr>
-                        <td><a class="customer_text_area_links" href="" target="V">4309462</a></td>
-                        <td>December 31, 1969</td>
-                        <td>$322.88</td>
-                        <td> </td>
-                    </tr> 
+                    @foreach($next_invoices as $invoice)
+                        <tr>
+                            <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
+                            <td>{{$invoice->created_at}}</td>
+                            <td>$ {{$invoice->price}}</td>
+                            <td> </td>
+                        </tr>
+                    @endforeach 
                 </tbody>
             </table>
              <span class="lh_fi mediumBold customer_text_area_headers">

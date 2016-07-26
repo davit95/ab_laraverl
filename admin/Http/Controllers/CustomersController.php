@@ -40,6 +40,7 @@ class CustomersController extends Controller
 
     public function show($id, CustomerService $customerService, UserInterface $userService)
     {
+        //dd('show');
         $temp_user_id = Cookie::get('temp_user_id');
         //dd($temp_user_id);
         $months['01'] = 'January (01)';

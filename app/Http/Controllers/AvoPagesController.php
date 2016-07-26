@@ -19,6 +19,8 @@ use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use Carbon\Carbon;
+use Auth;
+
 
 
 
@@ -109,7 +111,7 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function postCustomerInformation( Invoice $invoice, CustomerRequest $request, CountryService $countryService ,CustomerService $customerService, Center $centers , Package  $package ,TempCartItemService  $tempCartItemService) {
+	public function postCustomerInformation( Invoice $invoice, CustomerRequest $request, CountryService $countryService ,CustomerService $customerService, Center $centers , Package  $package ,TempCartItemService  $tempCartItemService, Auth $auth) {
 		$inputs = $request->all();
 		$email = $request->get('email');
 		$temp_user_id = Cookie::get('temp_user_id');
@@ -128,12 +130,14 @@ class AvoPagesController extends Controller {
 			session(['customer_information' => $inputs]);
 			$center = session('center');
 			$curency_id = session('currency');
-			$invoice = [
-				'curency_id' => $curency_id['id']
-			];
+			// $invoice = [
+			// 	'curency_id' => $curency_id['id']
+			// ];
 
 			if(null !== $user = $customerService->createCustomer($inputs, $center)) {
-				$tempCartItemService->updateUserId($temp_user_id, $user->id);	
+				$tempCartItemService->updateUserId($temp_user_id, $user->id);
+				$customer_id = $user->id;
+				//dd(Auth::login($user), 'as', $user);
 			}
 		}
 		// dd($customer);
@@ -263,6 +267,7 @@ class AvoPagesController extends Controller {
 		if (!session('customer_information')) {
 			return redirect('customer-information');
 		}
+		//dd(\Auth::user());
 		$customer = session('customer_information');
 		$price_total = 0;
 		$has_vo      = false;
