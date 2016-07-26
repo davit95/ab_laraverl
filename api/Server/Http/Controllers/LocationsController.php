@@ -18,7 +18,7 @@ class LocationsController extends Controller
         $this->middleware('oauth');
         $this->locationService = $locationService;
         $this->per_page = $request->per_page;
-        $this->page     = $request->page;
+        $this->page     = $request->page;        
     }
 
     public function getLocationsByOwnerId($owner_id, LocationService $locationService)
@@ -76,37 +76,37 @@ class LocationsController extends Controller
 
     public function getStateLocations($state, Request $request)
     {                
-        $locations = $this->locationService->getStateLocations('us', $state, $request->nearby, $request->options, $this->per_page, $this->page);        
+        $locations = $this->locationService->getStateLocations('us', $state, $request->nearby, $request->options, $this->per_page, $this->page, $request->header('accessToken'));        
         return response()->json(['locations' => $locations]);
     }
 
     public function getCountryLocations($country_slug, Request $request)
     {
-        $locations = $this->locationService->getCountryLocations($country_slug, $request->nearby, $request->options, $this->per_page, $this->page);
+        $locations = $this->locationService->getCountryLocations($country_slug, $request->nearby, $request->options, $this->per_page, $this->page, $request->header('accessToken'));
         return response()->json(['locations' => $locations]);
     }
 
     public function getStateCityLocations($state, $city, Request $request)
     {
-        $locations = $this->locationService->getStateCityLocations($state, $city, $request->nearby, $request->options, $this->per_page, $this->page);        
+        $locations = $this->locationService->getStateCityLocations($state, $city, $request->nearby, $request->options, $this->per_page, $this->page, $request->header('accessToken'));        
         return response()->json(['locations' => $locations]);
     }
 
     public function getCityLocations($country_slug, $city, Request $request)
     {
-        $locations = $this->locationService->getCityLocations($country_slug, $city, $request->nearby, $request->options, $this->per_page, $this->page);
+        $locations = $this->locationService->getCityLocations($country_slug, $city, $request->nearby, $request->options, $this->per_page, $this->page, $request->header('accessToken'));
         return response()->json(['locations' => $locations]);
     }
 
     public function getStateCenterLocation($state, $city, $center_id, Request $request)
     {
-        $locations = $this->locationService->getStateCenterLocation($state, $city, $center_id, $request->nearby, $request->options, $request->description);        
+        $locations = $this->locationService->getStateCenterLocation($state, $city, $center_id, $request->nearby, $request->options, $request->description, $request->header('accessToken'));        
         return response()->json(['locations' => $locations]);
     }
 
     public function getCenterLocation($country_slug, $city, $center_id, Request $request)
     {
-        $locations = $this->locationService->getCenterLocation($country_slug, $city, $center_id, $request->nearby, $request->options, $request->description);
+        $locations = $this->locationService->getCenterLocation($country_slug, $city, $center_id, $request->nearby, $request->options, $request->description, $request->header('accessToken'));
         return response()->json(['locations' => $locations]);
     }
 

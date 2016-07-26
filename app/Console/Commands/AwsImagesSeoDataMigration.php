@@ -59,10 +59,10 @@ class AwsImagesSeoDataMigration extends Command
             foreach ($worksheet->toArray() as $key => $value) {
                 $new_collection[] =
                 [
-                    'center_id' => round($value[0]),
-                    'image_name'       => $value[1],
-                    'description'       => $value[2],
-                    'alt'       => $value[3],
+                    'center_id'     => round($value[0]),
+                    'image_name'    => $value[1],
+                    'description'   => $value[2],
+                    'alt'           => $value[3],
                     'caption'       => $value[4],
                 ];
             }

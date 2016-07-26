@@ -17,7 +17,7 @@ class GenerateApiKey extends Command
      *
      * @var string
      */
-    protected $signature = "api-key";
+    protected $signature = "api-key {full_access=false}";
 
     /**
      * The console command description.
@@ -47,10 +47,11 @@ class GenerateApiKey extends Command
         $this->info('');
         $api_key = str_random(20);
         $api_secret = str_random(20);
-        // $ip = $this->argument('ip');
+        $full_access= $this->argument('full_access');
         $apiCred->create([
             'api_key'    => $api_key,
             'api_secret' => $api_secret,
+            'full_access' => $full_access
             // 'origin'     => $ip
         ]);
         // $this->info('New API key and secret for '.$ip);
@@ -66,8 +67,8 @@ class GenerateApiKey extends Command
      */
     protected function getArguments()
     {
-        return [
-            // ['ip', InputArgument::REQUIRED, 'Ip address'],
+        return [            
+            ['full_access', InputArgument::REQUIRED, 'Full Access'],
         ];
     }
 }

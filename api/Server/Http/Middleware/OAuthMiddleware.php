@@ -14,7 +14,7 @@ class OAuthMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {        
         $oauthService = new OAuthService();
         $response = $oauthService->passOauth($request);
         if(isset($response['expire'])){

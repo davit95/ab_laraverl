@@ -30,6 +30,7 @@ class OAuthService {
 				$refresh_token = str_random(25);
 				if( null!= $access_tokens  = $this->accessToken->create([
 					'api_key_id'    => $creds->id,
+					'full_access'   => $creds->full_access,
 					'accessToken'   => $access_token,
 					'refresh_token' => $refresh_token,
 					'expire_at'     => \Carbon\Carbon::now()->addDays(10),
@@ -50,7 +51,7 @@ class OAuthService {
 			return 'AccessToken is required';
 		}else if(!isset($refresh_token) || $refresh_token == ""){
 			return 'refresh_token is required';
-		}else{			
+		}else{
 			if(!$access_token = $this->checkAccessToken($request->ip(), $access_token)){
 				return 'Invalid Access Token';
 			}else{
@@ -76,7 +77,7 @@ class OAuthService {
 						];
 					}
 				}
-			}			
+			}
 		}
 	}
 
@@ -109,7 +110,7 @@ class OAuthService {
 			// }else{
 			if(!$access_tokens = $this->checkAccessToken($request->ip(), $access_token)){
 				$response['errors'] = 'Invalid access token';
-				return $response;					
+				return $response;
 			}else{
 				$expire_at = \Carbon\Carbon::parse($access_tokens->expire_at);
 				if($expire_at->isPast()){
@@ -117,11 +118,20 @@ class OAuthService {
 					return $response;
 				}
 			}
-		}		
+		}
 	}
 	
+	public function getAccessToken($access_token)
+	{
+		$access_tokens = $this->accessToken
+		->where('accessToken' , $access_token)
+		// ->where('origin', $origin)
+		->first();
+		return null!= $access_tokens ? $access_tokens : false;
+	}
+
 	private function checkAccessToken($origin, $access_token)
-	{		
+	{
 		$access_tokens = $this->accessToken
 		->where('accessToken' , $access_token)
 		// ->where('origin', $origin)
