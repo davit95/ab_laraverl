@@ -495,14 +495,15 @@ class LocationService {
 				$tempPhoto->name = $photo->path;
 				$tempPhoto->location = "https://www.alliancevirtualoffices.com/images/locations/".$photo->name;
 				$tempPhoto->type = $photo->description;
-				if($full_access){
-					dd($photo->aws_seo);
+				if($full_access){					
 					if(isset($photo->aws_seo)){
+						dump('yes');
 						$tempPhoto->type = $photo->aws_seo->description;
 						$tempPhoto->alt = $photo->aws_seo->alt;
 						$tempPhoto->caption = $photo->aws_seo->caption;
 					}
 				}
+				dd($tempPhoto);
 				array_push($temp['images'], $tempPhoto);
 			}			
 			foreach ($location->space_types as $type) {				
