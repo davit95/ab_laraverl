@@ -496,7 +496,7 @@ class LocationService {
 				$tempPhoto->location = "https://www.alliancevirtualoffices.com/images/locations/".$photo->name;
 				$tempPhoto->type = $photo->description;
 				if($full_access){					
-					if(isset($photo->aws_seo)){
+					if(null!== $photo->aws_seo){
 						dump('yes');
 						$tempPhoto->type = $photo->aws_seo->description;
 						$tempPhoto->alt = $photo->aws_seo->alt;
