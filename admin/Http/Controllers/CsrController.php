@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
 use Admin\Contracts\UserInterface;
 use Admin\Services\CenterService;
+use App\Services\InvoiceService;
 
 class CsrController extends Controller
 {
@@ -31,16 +32,19 @@ class CsrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserInterface $userService, CustomerService $customerService)
+    public function index(UserInterface $userService, CustomerService $customerService, InvoiceService $invoiceService)
     {
+        $invoices = null;
+        // dd($pending_invoices);
         $role = \Auth::user()->role->name;  
         if($role === 'super_admin' || $role == 'accounting_user') {
-            $customers = $userService->getAllCustomers();
+            $invoices = $invoiceService->getPendingInvoices();
+            $customers = $userService->getALlCustomers();
         } elseif(\Auth::user()->role->name === 'client_user') {
-            $customers[] = \Auth::user();
+            // $customers[] = \Auth::user();
             //$role_id = \Auth::user()->role_id;
         } elseif(\Auth::user()->role->name === 'owner_user') {
-             $customers = $userService->getALlCustomersByOwnerId(\Auth::user()->owner_id);
+             // $customers = $userService->getALlCustomersByOwnerId(\Auth::user()->owner_id);
         }
         elseif(\Auth::user()->role->name === 'admin') {
             $role_id = \Auth::user()->role_id;
@@ -50,8 +54,8 @@ class CsrController extends Controller
             //dd($new_customers);
             return view('admin.csr.index', ['customers' => $customers, 'role' => $role, 'your_customers' => $your_customers, 'new_customers' => $new_customers]);  
         }
-        
-        return view('admin.csr.index', ['customers' => $customers, 'role' => $role]);
+       // dd($customers); 
+        return view('admin.csr.index', ['invoices' => $invoices, 'role' => $role, 'customers' => $customers]);
     }
 
     /**
@@ -118,7 +122,18 @@ class CsrController extends Controller
         /*need more information*/
         $role = \Auth::user()->role->name;
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        return view('admin.csr.customer_info', ['customer' => $customer, 'role' => $role]);
+        $next_invoices = $userService->getCustomerPendingInvoices($id);
+        $declined_invoices = $userService->getCustomerDeclinedInvoices($id);
+        $completed_invoices = $userService->getCustomerCompletedInvoices($id);
+        //dd($next_invoices);
+        return view('admin.csr.customer_info',
+        [
+            'customer'           => $customer, 
+            'role'               => $role, 
+            'next_invoices'      => $next_invoices, 
+            'declined_invoices'  => $declined_invoices,
+            'completed_invoices' => $completed_invoices
+        ]);
     }
 
     public function customerSearch(Request $request, CustomerService $customerService)

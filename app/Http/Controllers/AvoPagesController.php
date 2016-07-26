@@ -17,6 +17,12 @@ use Cookie;
 use Illuminate\Auth\Guard;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
+use App\Models\Invoice;
+use Carbon\Carbon;
+use Auth;
+
+
+
 
 class AvoPagesController extends Controller {
 	/**
@@ -24,6 +30,10 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
+	public function __construct(TempCartItemService $tempCartItemService)
+	{
+		$this->tempCartItemService = $tempCartItemService;
+	}
 	public function cvv2() {
 		return view('avo-pages.cvv2');
 	}
@@ -101,30 +111,125 @@ class AvoPagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function postCustomerInformation( CustomerRequest $request, CountryService $countryService ,CustomerService $customerService, Center $centers , Package  $package ,TempCartItemService  $tempCartItemService) {
+	public function postCustomerInformation( Invoice $invoice, CustomerRequest $request, CountryService $countryService ,CustomerService $customerService, Center $centers , Package  $package ,TempCartItemService  $tempCartItemService, Auth $auth) {
 		$inputs = $request->all();
-
+		$email = $request->get('email');
 		$temp_user_id = Cookie::get('temp_user_id');
+		$card_items = $this->getTempCardItems();
+		$invoice_insertable = [];
+		$customer = $customerService->getCustomerByEmail($email);
+		// dd($card_items);
+		if($customer) {
+			$customer_id = $customer->id;
+		} else {
+			//
+			if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
+				$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
+			}
+			$inputs['duration'] = session('term');
+			session(['customer_information' => $inputs]);
+			$center = session('center');
+			$curency_id = session('currency');
+			// $invoice = [
+			// 	'curency_id' => $curency_id['id']
+			// ];
 
-		//dd($inputs, session('item')->first());
-
-		if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
-			$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
+			if(null !== $user = $customerService->createCustomer($inputs, $center)) {
+				$tempCartItemService->updateUserId($temp_user_id, $user->id);
+				$customer_id = $user->id;
+				//dd(Auth::login($user), 'as', $user);
+			}
 		}
-		$inputs['duration'] = session('term');
+		// dd($customer);
+		// dd($inputs);
+		
+		// dd($card_items->toArray());
+		// dd($inputs);
+		foreach ($card_items as $value) {
+			$price = 0;
+			if($value->type == 'vo') { 
+				$price = $value->sum;
+			} elseif($value->type == 'mr') {
+				$price = $value->price_due;
+			} elseif($value->type == 'lr') {
+				$price = $value->price;
+			}
+
+			$item_id = null;
+			if($value->type == 'vo') { 
+				$item_id = $value->center_id;
+			} elseif($value->type == 'mr') {
+				$item_id = $value->mr_id;
+			} elseif($value->type == 'lr') {
+				$item_id = $value->lr_id;
+			}
+			$temp['type'] = $value->type;
+			$temp['payment_type'] = 'initial';
+			$temp['item_id'] = $item_id;
+			$temp['price'] = $price;
+			$temp['is_recurring'] = $value->type == 'vo' ? 1 : 0;
+			$temp['recurring_period_within_month'] = $value->type == 'vo' ? $value->monthly_period : null;
+			$temp['recurring_attempts'] = $value->type == 'vo' ? 0 : null;
+			$temp['customer_id'] = $customer_id;
+			$temp['status'] = 'pending';
+			$temp['payment_response'] = null;
+			$temp['serialized_card_item_info'] = serialize($value->toArray());
+			$temp['created_at'] = Carbon::now()->__toString();
+			$temp['updated_at'] = Carbon::now()->__toString();;
+			$invoice_insertable[] = $temp;
+		}
 		session(['customer_information' => $inputs]);
-		$center = session('center');
-		$curency_id = session('currency');
-		$invoice = [
-			'curency_id' => $curency_id['id']
-		];
-		//dd($centers->find($center['center_id'])->prices->first()->with_live_receptionist_pack_price , session('currency'), session('customer_information'), session('center'));
-		if(null !== $user = $customerService->createCustomer($inputs, $center)) {
-			$tempCartItemService->updateUserId($temp_user_id, $user->id);	
-			return redirect('order-review')->withSuccess('Customer has been saccessfully created');
-		}
-		//dd(session('customer_information'));
-		//return redirect('order-review')->withWarning('Need to know where we want to save customer information.');
+		$invoice->insert($invoice_insertable);
+		// dd($invoice_insertable);
+		return redirect('order-review')->withSuccess('Customer has been saccessfully created');
+	}
+
+	private function getTempCardItems()
+	{
+			$price_total = 0;
+			if (null != $temp_user_id = Cookie::get('temp_user_id')) {
+         		$items = $this->tempCartItemService->getItemsByTempUserId($temp_user_id);
+         		// dd($items);
+         		for($i = count($items) -1; $i >= 0; $i--){
+         			if($i == count($items) -1) {
+         				if($items[$i]->type == 'mr'){
+         					$mr_start_time        = strtotime($items[$i]->mr_start_time);
+			                $mr_end_time          = strtotime($items[$i]->mr_end_time);
+			                $items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+			                $items[$i]->price_due      = $items[$i]->price*30/100;
+			                $items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+			                $price_total += $items[$i]->price_due;
+         				}
+         				if ($items[$i]->type == 'vo') {
+			                $items[$i]->sum = $items[$i]->price + $items[$i]->vo_mail_forwarding_price+100;
+			                $price_total += $items[$i]->sum;
+		            	}
+			            if ($items[$i]->type == 'lr') {
+			                $price_total += $items[$i]->price;
+		            	}
+         			}
+         			else{
+         				if($items[$i]->type == 'mr'){
+         					$mr_start_time        = strtotime($items[$i]->mr_start_time);
+			                $mr_end_time          = strtotime($items[$i]->mr_end_time);
+			                $items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+			                $items[$i]->price = $items[$i]->price + $items[$i+1]->price_due;
+			                $items[$i]->price_due      = $items[$i]->price*30/100;
+			                $items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+			                $price_total += $items[$i]->price_due;
+         				}
+         				if ($items[$i]->type == 'vo') {
+			                $items[$i]->sum = $items[$i]->price + $items[$i]->vo_mail_forwarding_price+100;
+			                $price_total += $items[$i]->sum;
+			                
+		            	}
+			            if ($items[$i]->type == 'lr') {
+			                $price_total += $items[$i]->price;
+		            	}
+         			}
+         		}	
+			}
+ 		return $items;
 	}
 
 	/**
@@ -162,6 +267,7 @@ class AvoPagesController extends Controller {
 		if (!session('customer_information')) {
 			return redirect('customer-information');
 		}
+		//dd(\Auth::user());
 		$customer = session('customer_information');
 		$price_total = 0;
 		$has_vo      = false;
@@ -262,6 +368,7 @@ class AvoPagesController extends Controller {
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
         $inputs = $request->all(); 
+        // dd($request->all());
         session(['term' => $inputs['term']]);
         if (!isset($inputs['package_option'])) {
             return redirect('thank-you');
@@ -292,6 +399,9 @@ class AvoPagesController extends Controller {
             }
             $inputs['user_id'] = session('user_id');
             $inputs['temp_user_id'] = $temp_user_id;
+            if(isset($inputs['term'])) {
+	            $inputs['monthly_period'] = $inputs['term']; 
+            }
             if (null != $tempCartItemService->create($inputs)) {
                 if ($request->has('live_receptionist')) {
                     return redirect('/customize-phone');

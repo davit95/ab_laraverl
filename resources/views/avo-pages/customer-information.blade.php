@@ -99,7 +99,8 @@
                     <div class="wrapDescrip">
                         <h1 class="gray2">ACCOUNT INFORMATION & CHECKOUT</h1>
                         <div class="signin-info changeMtop2 ">
-                            {!! Form::open(['method' => 'POST' , 'url' => url('login')]) !!}
+
+                            {!! Form::open(['method' => 'POST' , 'url' => url('customlogin')]) !!}
                                 <input type="hidden" name="step" value="2">
                                 <p><span class="mediumBold"> {!! Form::label('Please enter your email and password below.') !!}</span></p><br>
                                 <div class="existingL">{!! Form::label('Email Address') !!}</div>

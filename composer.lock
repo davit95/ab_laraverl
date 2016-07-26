@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "03723ccf1485cbf73f63b24fef00487e",
-    "content-hash": "56f0288ea0ec745f2e251663a91f5615",
+    "hash": "015e233ad63225787c6b21e5bb5978c7",
+    "content-hash": "c7d2cdff22fed3e4576068dbd9b754be",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -201,16 +201,16 @@
         },
         {
             "name": "braintree/braintree_php",
-            "version": "3.13.0",
+            "version": "3.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "cbee7c8c998aff5d5df682cc0b2cf3f403dbba76"
+                "reference": "0c13b6235bc99c287d18e8cfc02359e66abaa3fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/cbee7c8c998aff5d5df682cc0b2cf3f403dbba76",
-                "reference": "cbee7c8c998aff5d5df682cc0b2cf3f403dbba76",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/0c13b6235bc99c287d18e8cfc02359e66abaa3fb",
+                "reference": "0c13b6235bc99c287d18e8cfc02359e66abaa3fb",
                 "shasum": ""
             },
             "require": {
@@ -244,7 +244,7 @@
                 }
             ],
             "description": "Braintree PHP Client Library",
-            "time": "2016-05-23 18:22:21"
+            "time": "2016-06-23 15:36:49"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -4830,7 +4830,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/3da167e77f4d4d6a7b24845146b24f81b20cb580",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/ebcc5b4185b340d7908cb487b8beb3fed069d756",
                 "reference": "3da167e77f4d4d6a7b24845146b24f81b20cb580",
                 "shasum": ""
             },

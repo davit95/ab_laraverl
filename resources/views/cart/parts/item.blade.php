@@ -24,7 +24,7 @@
                 @endif
             </span>
             <br>
-            <span class="smallLine mediumBold">12 month term</span>
+            <span class="smallLine mediumBold">{{$item->monthly_period}} month term</span>
         </p>
         <table width="100%">
             <tr>

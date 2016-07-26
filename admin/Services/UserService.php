@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\Owner;
 use App\Models\City;
 use App\Models\Package;
+use App\Models\Invoice;
 use App\Models\UsState;
 use App\Models\Center;
 use App\Models\AdminClients;
@@ -19,13 +20,14 @@ class UserService implements UserInterface
 	/**
 	 * Create a new user service instance.
 	 */
-	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city,Package $package, UsState $usState,AdminClients $adminClients, TempCartItem $tempCartItem) {
+	public function __construct(User $user, Role $role, Owner $owner, Center $center, City $city,Package $package,Invoice $invoice, UsState $usState,AdminClients $adminClients, TempCartItem $tempCartItem) {
 		$this->user = $user;
 		$this->role = $role;
 		$this->owner = $owner;
 		$this->center = $center;
 		$this->city = $city;
 		$this->package = $package;
+		$this->invoice = $invoice;
 		$this->usState = $usState;
 		$this->adminClients = $adminClients;
 		$this->tempCartItem = $tempCartItem;
@@ -220,6 +222,20 @@ class UserService implements UserInterface
 	{
 		$user = $this->getUserById($id);
 		return $user->delete();
+	}
 
+	public function getCustomerPendingInvoices($customer_id)
+	{
+		return $this->invoice->where('customer_id', $customer_id)->where('status', 'pending')->get();
+	}
+
+	public function getCustomerDeclinedInvoices($customer_id)
+	{
+		return $this->invoice->where('customer_id', $customer_id)->where('status', 'declined')->get();
+	}
+
+	public function getCustomerCompletedInvoices($customer_id)
+	{
+		return $this->invoice->where('customer_id', $customer_id)->where('status', 'completed')->get();
 	}
 }

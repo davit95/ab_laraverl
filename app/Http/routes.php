@@ -29,6 +29,7 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('/', 'HomeController@index');
 		Route::get('/login', 'Auth\AuthController@getLogin');
 		Route::post('/login', 'Auth\AuthController@postLogin');
+		Route::post('/customlogin', 'Auth\AuthController@customPostLogin');
 
 		Route::post('/customlogin', 'Auth\AuthController@customPostLogin');
 
