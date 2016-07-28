@@ -236,6 +236,6 @@ class UserService implements UserInterface
 
 	public function getCustomerCompletedInvoices($customer_id)
 	{
-		return $this->invoice->where('customer_id', $customer_id)->where('status', 'completed')->get();
+		return $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->get();
 	}
 }

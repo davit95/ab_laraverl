@@ -14,7 +14,7 @@ class InvoiceService {
 
 	public function getPendingInvoices()
 	{
-		return $this->invoice->where('status', 'pending')->with('customer')->get();
+		return $this->invoice->with('customer')->get();
 	}
 
 	public function createInvoices($invoices)
@@ -25,6 +25,13 @@ class InvoiceService {
 	public function getInvoiceById($id)
 	{
 		return $this->invoice->where('id', $id)->with('customer')->first();
+	}
+
+	public function updateInvoiceStatus($id, $payments_response)
+	{
+		$invoice = $this->invoice->where('id', $id)->first();
+		$invoice->update(['status' => 'approved', 'payment_response' => $payments_response]);
+		return $invoice;
 	}
 
 	

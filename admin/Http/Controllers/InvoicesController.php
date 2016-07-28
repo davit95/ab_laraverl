@@ -84,15 +84,31 @@ class InvoicesController extends Controller
             // logic for sandox mode
             if($result->success) {
                 $f = serialize($result);
-                dd($f);
-                dd(unserialize($f), 'aaaaa');
+                $attributes = unserialize($f)->transaction;
+                $attributes = serialize($attributes);
+                dd(unserialize($attributes));
+                $invoice = $invoiceService->updateInvoiceStatus($id, $attributes);
+                if($invoice) {
+                    dd('need more information where to redirect');
+                }    
             } else {
-                dd($result, 'as');
+                return redirect()->back()->withError('You have an error');
             }
         } else {
             // logic for production
-        }
-        
+            if($result->success) {
+                $f = serialize($result);
+                $attributes = unserialize($f)->transaction;
+                $attributes = serialize($attributes);
+                //dd(unserialize($attributes));
+                $invoice = $invoiceService->updateInvoiceStatus($id, $attributes);
+                if($invoice) {
+                    dd('need more information where to redirect');
+                }    
+            } else {
+                return redirect()->back()->withError('You have an error');
+            }
+        }    
     }
 
     private function checkCustomerCreditCardCredentials($customer)
