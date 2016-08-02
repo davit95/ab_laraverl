@@ -44,33 +44,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
-		$this->centers();
-		$this->centers_coordinates();
-		$this->features();
-		$this->centers_local_numbers();
-		$this->centers_emails();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
+		// $this->centers();
+		// $this->centers_coordinates();
+		// $this->features();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
 		$this->centers_prices();
-		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->virtual_offices_options();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->centers_filters();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		// $this->virtual_offices_seos();
+		// $this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -639,10 +639,10 @@ class DataMigration extends Command {
 		$center_ids  = DB::table('centers')->lists('old_id');
 		$center_ids_lists  = DB::table('centers')->lists('old_id','id');
 		$package_ids = DB::table('packages')->lists('id');
-		$center_prices_id_lists = DB::table('centers')->lists('id');
+		$center_prices_id_lists = DB::table('center_prices')->lists('center_id');
 		$new_collection = [];
 		foreach ($prices as $price) {
-			if(in_array($price->Center_ID, $center_ids_lists) && in_array($price->Package_ID, $package_ids)) {
+			if(in_array($price->Center_ID, $center_ids) && in_array($price->Package_ID, $package_ids)) {
 				$center_id = array_search($price->Center_ID, $center_ids_lists);
 				if(!in_array($center_id, $center_prices_id_lists)) {
 					$new_collection[] =
