@@ -29,13 +29,11 @@
 							@include('alerts.messages')
 							@include('admin.csr.orders')
 						</div>
-					@endif
-					
+					@endif					
 				</div>
 			</div>
 		    <!-- <div class="dataTable_wrapper">                
 		        @include('alerts.messages')
-	            
 		    </div> -->
 		</div>   
 	</div>

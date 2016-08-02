@@ -51,9 +51,39 @@
                     <div class="files-category customer_text_area_text">Post Office Form</div>
                     <div class="files-category customer_text_area_text">Misc.</div>
                     <div class="files-category customer_text_area_text">CMRA</div>
-                    <a class="customer_text_area_links" href="">
-                        <img class="icon" src="https://www.alliancevirtualoffices.com/csr/images/upload.png"> Upload file for this customer
-                    </a>
+                    <div class="formOinfo">
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Upload File</button>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  
+                                </div>
+                                <div class="modal-body">
+                                    {!! Form::open( [ 'url' => url('/customers/'.$customer->id.'/upload'), 'method' => 'POST', 'files' => true ]) !!}
+                                        {!! Form::label('Type of file :') !!}
+                                        {!! Form::select('file_category', ['Identification' => 'Identification', 'Post Office Form' => 'Post Office Form', 'Misc.' => 'Misc.'], null, ['class' => 'form-control', 'data-multi' => true]) !!}
+                                        <br>
+                                        {!! Form::label('Please choose a file :') !!}
+                                        {!! Form::file('file', null,[ 'class' => 'gray_btn']) !!} 
+                                </div>
+                                <div class="modal-footer">
+                                    {!! Form::submit('Upload', array('class'=>'btn btn-primary')) !!}
+                                    <button type="button" class="btn btn-default icon" data-dismiss="modal">Close</button>
+                                    {!! Form::close() !!}
+                                </div>
+                                    @include('alerts.messages')
+                              </div>
+                              
+                            </div>
+                          </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>         

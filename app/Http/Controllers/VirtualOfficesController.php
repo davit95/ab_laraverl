@@ -55,6 +55,7 @@ class VirtualOfficesController extends Controller {
 	 * @return Response
 	 */
 	public function getCityVirtualOffices($country_code, $city_slug, $city_id , CenterService $centerService, CityService $cityService, CenterCoordinateService $centerCoordinateService, TelephonyPackageIncludeService $telephonyPackageIncludeService , Request $request) {		
+		dd('$city');
 		if (null != $city = $cityService->getCityByCountryCodeAndCitySlug($country_code, $city_slug, $city_id)) {
 			$centers           = $centerService->getVirtualOfficesByCityId($city->id);
 			$center_ids        = $centers->lists('id')->toArray();
