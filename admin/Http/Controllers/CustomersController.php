@@ -121,7 +121,6 @@ class CustomersController extends Controller
         else {
             return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
         }
-        //dd();
     }
 
     public function getBalance($id, CustomerService $customerService)

@@ -126,6 +126,7 @@ class CsrController extends Controller
         $declined_invoices = $userService->getCustomerDeclinedInvoices($id);
         $completed_invoices = $userService->getCustomerCompletedInvoices($id);
         //dd($next_invoices);
+        //dd($customer->invoices);
         return view('admin.csr.customer_info',
         [
             'customer'           => $customer, 

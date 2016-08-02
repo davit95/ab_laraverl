@@ -44,33 +44,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
-		$this->centers();
-		$this->centers_coordinates();
-		$this->features();
-		$this->centers_local_numbers();
-		$this->centers_emails();
-		$this->centers_prices();
-		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->virtual_offices_options();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
+		// $this->centers();
+		// $this->centers_coordinates();
+		// $this->features();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
+		// $this->centers_prices();
+		// $this->centers_filters();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		 $this->virtual_offices_seos();
+		// $this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -414,17 +414,15 @@ class DataMigration extends Command {
 		$vo_photos  = [];
 		DB::setDefaultConnection('mysql');
 		$center_ids = DB::table('centers')->lists('old_id','id');
-		$photo_id_lists = DB::table('vo_photos')->lists('center_id', 'photo_id');
+		$photo_id_lists = DB::table('vo_photos')->lists('photo_id');
+		$vo_centers_id_lists = DB::table('vo_photos')->lists('center_id');
 		$vo_photos = [];
 		//dd($photo_id_lists);
 		foreach ($collection as $center) {
 			$center_photos = [$center->Photo1, $center->Photo2, $center->Photo3, $center->Photo4, $center->Photo5, $center->Photo6];
-			if(!in_array($center->CenterID, $center_ids)) {
+			if(in_array($center->CenterID, $center_ids)) {
 				$center_id = array_search($center->CenterID, $center_ids);
-				//dd($center_id);
-				$photo_id = array_search($center_id, $photo_id_lists);
-				//dd($photo_id);
-				if(null == $photo_id) {
+				if(!in_array($center_id, $vo_centers_id_lists)) {
 					foreach ($center_photos as $center_photo) {
 						if ((null != $unique_image = DB::table('photos')->where('path', $center_photo)->first()) && ($center_photo != null || $center_photo != '')) {
 							$vo_photos[] = ['center_id' => $center_id, 'photo_id' => $unique_image->id];
@@ -450,31 +448,35 @@ class DataMigration extends Command {
 		DB::setDefaultConnection('mysql');
 		$center_ids = DB::table('centers')->lists('old_id','id');
 		$center_id_lists = DB::table('centers')->lists('old_id');
+		$seo_data = DB::table('virtual_offices_seos')->get();
 		$new_collection = [];
 		foreach ($collection as $key => $value) {
-			if(!in_array($value->Center_ID, $center_id_lists)) {
-				if(in_array($value->Center_ID, $center_ids)) {
-					$center_id = array_search($value->Center_ID, $center_ids);
-					$new_collection[] =
-					[
-						'center_id'        => $center_id,
-						'sentence1'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_1) ? utf8_decode($value->Sentence_1) : $value->Sentence_1,
-						'sentence2'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_2) ? utf8_decode($value->Sentence_2) : $value->Sentence_2,
-						'sentence3'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_3) ? utf8_decode($value->Sentence_3) : $value->Sentence_3,
-						'avo_description'  => preg_match('/[^a-zA-Z1-9( ,-]/', $value->AVO_Description) ? utf8_decode($value->AVO_Description) : $value->AVO_Description,
-						'meta_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Title) ? utf8_decode($value->Meta_Title) : $value->Meta_Title,
-						'meta_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Description) ? utf8_decode($value->Meta_Description) : $value->Meta_Description,
-						'meta_keywords'    => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Keywords) ? utf8_decode($value->Meta_Keywords) : $value->Meta_Keywords,
-						'h1'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H1) ? utf8_decode($value->H1) : $value->H1,
-						'h2'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H2) ? utf8_decode($value->H2) : $value->H2,
-						'h3'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H3) ? utf8_decode($value->H3) : $value->H3,
-						'seo_footer'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->SEO_Footer) ? utf8_decode($value->SEO_Footer) : $value->SEO_Footer,
-						'abcn_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Description) ? utf8_decode($value->ABCN_Description) : $value->ABCN_Description,
-						'abcn_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Title) ? utf8_decode($value->ABCN_Title) : $value->ABCN_Title,
-						'subhead'          => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Subhead) ? utf8_decode($value->Subhead) : $value->Subhead,
-					];
+			if(empty($seo_data)) {
+				if(in_array($value->Center_ID, $center_id_lists)) {
+					if(in_array($value->Center_ID, $center_ids)) {
+						$center_id = array_search($value->Center_ID, $center_ids);
+						$new_collection[] =
+						[
+							'center_id'        => $center_id,
+							'sentence1'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_1) ? utf8_decode($value->Sentence_1) : $value->Sentence_1,
+							'sentence2'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_2) ? utf8_decode($value->Sentence_2) : $value->Sentence_2,
+							'sentence3'        => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Sentence_3) ? utf8_decode($value->Sentence_3) : $value->Sentence_3,
+							'avo_description'  => preg_match('/[^a-zA-Z1-9( ,-]/', $value->AVO_Description) ? utf8_decode($value->AVO_Description) : $value->AVO_Description,
+							'meta_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Title) ? utf8_decode($value->Meta_Title) : $value->Meta_Title,
+							'meta_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Description) ? utf8_decode($value->Meta_Description) : $value->Meta_Description,
+							'meta_keywords'    => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Meta_Keywords) ? utf8_decode($value->Meta_Keywords) : $value->Meta_Keywords,
+							'h1'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H1) ? utf8_decode($value->H1) : $value->H1,
+							'h2'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H2) ? utf8_decode($value->H2) : $value->H2,
+							'h3'               => preg_match('/[^a-zA-Z1-9( ,-]/', $value->H3) ? utf8_decode($value->H3) : $value->H3,
+							'seo_footer'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->SEO_Footer) ? utf8_decode($value->SEO_Footer) : $value->SEO_Footer,
+							'abcn_description' => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Description) ? utf8_decode($value->ABCN_Description) : $value->ABCN_Description,
+							'abcn_title'       => preg_match('/[^a-zA-Z1-9( ,-]/', $value->ABCN_Title) ? utf8_decode($value->ABCN_Title) : $value->ABCN_Title,
+							'subhead'          => preg_match('/[^a-zA-Z1-9( ,-]/', $value->Subhead) ? utf8_decode($value->Subhead) : $value->Subhead,
+						];
+					}
 				}
 			}
+			
 				
 			$bar->advance();
 		}

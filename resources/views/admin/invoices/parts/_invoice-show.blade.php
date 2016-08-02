@@ -8,7 +8,7 @@
                 <p>
                     <strong>
                         <a href="{{ ""  }}" target="V">
-                            {{$invoice->customer->id}}
+                            {{$invoice->id}}
                         </a>
                     </strong> &nbsp;
                     <a href="" target="V">
@@ -84,8 +84,8 @@
                         <div class="modal-footer">
                             {!! Form::submit('Upload', array('class'=>'btn btn-primary')) !!}
                             <button type="button" class="btn btn-default icon" data-dismiss="modal">Close</button>
-                        </div>
                             {!! Form::close() !!}
+                        </div>
                             @include('alerts.messages')
                       </div>
                       
