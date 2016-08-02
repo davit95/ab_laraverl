@@ -1519,6 +1519,7 @@ class DataMigration extends Command {
 		$this->make_new_connection();
 		$collection = DB::table('Location_SEO')->get();
 		$bar        = $this->output->createProgressBar(count($collection));
+		$new_collection = [];
 		foreach ($collection as $key => $value) {
 			if(!in_array($value->City, $cities)) {
 				$new_collection[] =
