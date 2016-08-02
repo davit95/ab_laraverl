@@ -47,11 +47,14 @@ class SpaceTypesSeeder extends Command
         $this->make_new_connection();
         $collection = DB::table('Center_Space_Type')->get();
         DB::setDefaultConnection('mysql');
-        $center_ids = DB::table('centers')->lists('id');
+        //$center_ids = DB::table('centers')->lists('id');
+        $center_old_ids = DB::table('centers')->lists('old_id');
+        $center_old_id_list = DB::table('centers')->lists('old_id', 'id');
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value) {
             if (in_array($value->Center_ID, $center_ids)) {
                 $slug = str_replace(' ', '_', strtolower($value->Type));
+                $center_id = array_search($value->Center_ID, $center_old_id_list);
                 $new_collection[] =
                 [
                     'id'        => $value->Object_ID,
