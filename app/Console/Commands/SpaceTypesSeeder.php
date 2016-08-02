@@ -82,8 +82,8 @@ class SpaceTypesSeeder extends Command
                $center_id = array_search($value->Center_ID, $center_old_id_list);
                $new_collection[] =
                [
-                   'id'        => $center_id,
-                   'center_id' => $value->Center_ID,
+                   'id'        => $value->Object_ID,
+                   'center_id' => $center_id,
                    'type'      => $value->Type,
                    'slug'      => $slug
                ];
