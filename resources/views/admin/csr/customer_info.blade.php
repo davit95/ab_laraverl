@@ -214,7 +214,7 @@
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
                             <td>$ {{$invoice->price}}</td>
-                            <td> </td>
+                            <td><a href="{{url('invoices/'.$invoice->id.'/charge')}}">Charge now</a> </td>
                         </tr>
                     @endforeach 
                 </tbody>
