@@ -25,6 +25,9 @@ class ChangeClientIdInAdminClientsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('admin_clients');
+        Schema::table('admin_clients', function(Blueprint $table)
+        {
+            $table->renameColumn('invoice_id', 'client_id');
+        });
     }
 }
