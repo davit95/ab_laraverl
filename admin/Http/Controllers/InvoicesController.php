@@ -28,9 +28,9 @@ class InvoicesController extends Controller
     public function show($id, InvoiceService $invoiceService)
     {
         $invoice = $invoiceService->getInvoiceById($id);
-        // dd($invoice);
+        $invoiceService->makeAdminCustomer($id);
         return view('admin.invoices.show', ['invoice' => $invoice]);
-        return redirect('users');
+        //return redirect('users');
     }
 
     public function chargeInvoice($id, InvoiceService $invoiceService)

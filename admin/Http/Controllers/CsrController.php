@@ -35,11 +35,10 @@ class CsrController extends Controller
     public function index(UserInterface $userService, CustomerService $customerService, InvoiceService $invoiceService)
     {
         $invoices = null;
-        // dd($pending_invoices);
         $role = \Auth::user()->role->name;  
         if($role === 'super_admin' || $role == 'accounting_user') {
-            $invoices = $invoiceService->getPendingInvoices();
-            $customers = $userService->getALlCustomers();
+            $invoices = $invoiceService->getAllInvoices();
+            //$customers = $userService->getALlCustomers();
         } elseif(\Auth::user()->role->name === 'client_user') {
             // $customers[] = \Auth::user();
             //$role_id = \Auth::user()->role_id;
@@ -48,14 +47,12 @@ class CsrController extends Controller
         }
         elseif(\Auth::user()->role->name === 'admin') {
             $role_id = \Auth::user()->role_id;
-            $your_customers = $userService->getYourCustomers(\Auth::id());
-            $customers = $userService->getALlCustomers(); 
-            $new_customers = $customers->diff($your_customers);
-            //dd($new_customers);
-            return view('admin.csr.index', ['customers' => $customers, 'role' => $role, 'your_customers' => $your_customers, 'new_customers' => $new_customers]);  
+            $your_invoices = $invoiceService->getYourInvoices();
+            $new_invoices = $invoiceService->getNewInvoices();
+            $new_invoices_ids = $invoiceService->checkStatus();
+            return view('admin.csr.index', ['role' => $role, 'your_invoices' => $your_invoices, 'new_invoices' => $new_invoices, 'new_invoices_ids' => $new_invoices_ids]);  
         }
-       // dd($customers); 
-        return view('admin.csr.index', ['invoices' => $invoices, 'role' => $role, 'customers' => $customers]);
+        return view('admin.csr.index', ['invoices' => $invoices, 'role' => $role, 'new_invoices_ids' => []]);
     }
 
     /**
@@ -127,6 +124,7 @@ class CsrController extends Controller
         $completed_invoices = $userService->getCustomerCompletedInvoices($id);
         //dd($next_invoices);
         //dd($customer->invoices);
+        //dd($customer->status);
         return view('admin.csr.customer_info',
         [
             'customer'           => $customer, 

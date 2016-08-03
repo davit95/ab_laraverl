@@ -10,7 +10,9 @@
             <div class="formOinfo left_side_area_content">
                 <span class="lh_fi mediumBold customer_text_area_headers" > Customer Information: </span>
                 <div style="float: right;"><img src="https://www.alliancevirtualoffices.com/csr/images/visa-icon.jpg" border="0" style="margin:31px 11px;"></div>
-                <!-- <div style="color: white; background-color: red; font-weight: bold;">CUSTOMER TERMINATED</div> -->
+                @if($customer->status == '' || $customer->status == null)
+                    <div style="color: white; background-color: red; font-weight: bold;">CUSTOMER TERMINATED</div>
+                @endif
                 <span class="costumer_text_area">
                     <br>
                 Processing Departament 
@@ -93,11 +95,11 @@
          <span class="lh_fi mediumBold customer_text_area_headers">
             Invoice / Account Options    
         </span><br><br>
-        • <a  class="customer_text_area_links" href="?step=new-charge&amp;invoice=4309462"> Add extra charges to upcoming invoice</a> 
+        <!-- • <a  class="customer_text_area_links" href="?step=new-charge&amp;invoice=4309462"> Add extra charges to upcoming invoice</a> 
         (#<a class="customer_text_area_links" href="" target="_blank">4309462</a>)
         <br>
         • <a  class="customer_text_area_links" href="">Add Recurring Charge or Credit to 4309462</a>
-        <br>
+        <br> -->
         • <a  class="customer_text_area_links" href="/customers/{!!$customer->id!!}/manage-balance">Manage Customer Balance</a>
          <br>
         <br>
@@ -105,39 +107,51 @@
        
         <div class="line text_align_left">
             <span class="lh_fi mediumBold customer_text_area_headers">
-            Customer Status    
-            </span>
-            <br>
-            <br>
-            <span class="costumer_text_area">
-                Customer Admin Status:
-            </span>
-            <select name="customer_status" class="customer_text_area_selects" style="float: right; margin-top: -8px;">
-                <option value="Active">Active</option>
-                <option value="Pending">Pending</option>
-                <option value="Hold" selected="selected">Hold</option>
-            </select>
-        </div> 
-        <div class="line text_align_left">
-            <br>
-            <span class="lh_fi mediumBold customer_text_area_headers">
-                Recurring Charging Status    
-            </span>
-            <br>
-            <div class="cerca" style="height: 35px; padding-top: 10px; background-color: red; color: white;">125402041
-                <select class="statusChange customer_text_area_selects" name="recurring_status_125402041" style="float: right; margin-top: -8px;">
-                    <option value="Live">Live</option>
-                    <option value="Closed" selected="selected">Closed</option>
-                    <option value="Hold">Hold</option>
-                    <option value="Pending">Pending</option>
+            Customer Status 
+            {!! Form::open(['method' => 'post' , 'url' => '/customer-status/'.$customer->id]) !!}
+                </span>
+                <br>
+                <br>
+                <span class="costumer_text_area">
+                    Customer Admin Status:
+                </span>
+                <select name="customer_status" class="customer_text_area_selects" style="float: right; margin-top: -8px;">
+                    @if($customer->status == 'pending' || $customer->status == 'active')
+                        @foreach(['Active', 'Pending', 'Hold'] as $status)
+                            @if(strtolower($status) == $customer->status)
+                                <option value="{{$status}}"  selected = "{{$status}}">{{$status}}</option>
+                            @else
+                                <option value="{{$status}}">{{$status}}</option>
+                            @endif
+                        @endforeach
+                    @else
+                        <option value="Active">Active</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Hold" selected = "Hold">Hold</option>
+                    @endif
                 </select>
-            </div>
-            <div class="StatusNotes" id="closing_notes_for_125402041" style="display: none;">
-                Notes:
-                <textarea name="notes_for_125402041" style="width: 150px; height: 60px; float: right; margin-top: -10px;"></textarea>
-                <br class="clear">
             </div> 
-            <input type="submit" name="submit" value="Submit" class="customer_text_area_button">
+            <div class="line text_align_left">
+                <br>
+                <span class="lh_fi mediumBold customer_text_area_headers">
+                    Recurring Charging Status    
+                </span>
+                <br>
+                <!-- <div class="cerca" style="height: 35px; padding-top: 10px; background-color: red; color: white;">125402041
+                    <select class="statusChange customer_text_area_selects" name="recurring_status_125402041" style="float: right; margin-top: -8px;">
+                        <option value="Live">Live</option>
+                        <option value="Closed" selected="selected">Closed</option>
+                        <option value="Hold">Hold</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div> -->
+                <div class="StatusNotes" id="closing_notes_for_125402041" style="display: none;">
+                    Notes:
+                    <textarea name="notes_for_125402041" style="width: 150px; height: 60px; float: right; margin-top: -10px;"></textarea>
+                    <br class="clear">
+                </div> 
+                <input type="submit" name="submit" value="Submit" class="customer_text_area_button">
+            {!! Form::close() !!}
         </div>
         <div class="line text_align_left">
              <span class="lh_fi mediumBold customer_text_area_headers">
