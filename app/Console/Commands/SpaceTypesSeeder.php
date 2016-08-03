@@ -52,22 +52,22 @@ class SpaceTypesSeeder extends Command
         $center_old_id_list = DB::table('centers')->lists('old_id', 'id');
         $bar = $this->output->createProgressBar(count($collection));
         foreach ($collection as $key => $value) {
-            if (in_array($value->Center_ID, $center_ids)) {
-                $slug = str_replace(' ', '_', strtolower($value->Type));
-                $center_id = array_search($value->Center_ID, $center_old_id_list);
-                $new_collection[] =
-                [
-                    'id'        => $value->Object_ID,
-                    'center_id' => $value->Center_ID,
-                    'type'      => $value->Type,
-                    'slug'      => $slug
-                ];
-            }
-            $bar->advance();
+          if (in_array($value->Center_ID, $center_old_ids)) {
+              $slug = str_replace(' ', '_', strtolower($value->Type));
+              $center_id = array_search($value->Center_ID, $center_old_id_list);
+              $new_collection[] =
+              [
+                  'id'        => $value->Object_ID,
+                  'center_id' => $center_id,
+                  'type'      => $value->Type,
+                  'slug'      => $slug
+              ];
+          }
+          $bar->advance();
         }
         DB::table('center_space_types')->insert($new_collection);
         $bar->finish();
-        $this->info(' ✔');
+        $this->info(' :heavy_check_mark:');
     }
 
     private function make_new_connection() {
