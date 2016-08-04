@@ -114,17 +114,12 @@ class CsrController extends Controller
 
 
     public function getCustomerInfo($id,CustomerService $customerService, UserInterface $userService)
-
     {
-        /*need more information*/
         $role = \Auth::user()->role->name;
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
         $next_invoices = $userService->getCustomerPendingInvoices($id);
         $declined_invoices = $userService->getCustomerDeclinedInvoices($id);
         $completed_invoices = $userService->getCustomerCompletedInvoices($id);
-        //dd($next_invoices);
-        //dd($customer->invoices);
-        //dd($customer->status);
         return view('admin.csr.customer_info',
         [
             'customer'           => $customer, 
