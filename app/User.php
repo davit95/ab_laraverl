@@ -57,7 +57,8 @@ class User extends Model implements AuthenticatableContract,
         'duration',
         'center_id',
         'live_receptionist',
-        'package_option'
+        'package_option',
+        'url'
    ];
 
     /**

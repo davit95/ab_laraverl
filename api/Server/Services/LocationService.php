@@ -100,6 +100,12 @@ class LocationService {
 		return $countries;
 	}
 
+	public function getAllCountriesListsNameId()
+	{
+		$countries = $this->country->whereHas('active_cities', function($query){})->lists('name', 'id');
+		return $countries;
+	}
+
 	public function getAllStates()
 	{
 		$states = $this->usState->whereHas('active_cities', function($query){})->get(['name', 'code']);

@@ -154,6 +154,12 @@ class LocationsController extends Controller
         return response()->json(['countries' => $countries]);
     }
 
+    public function getAllCountriesListsNameId()
+    {
+        $countries = $this->locationService->getAllCountriesListsNameId();
+        return response()->json(['countries' => $countries]);
+    }
+
     public function getAllStates()
     {
         $states = $this->locationService->getAllStates();
