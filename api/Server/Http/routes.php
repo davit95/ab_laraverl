@@ -24,6 +24,7 @@ Route::get('/location/search/{key}', 'LocationsController@getSearchLocation');
 Route::get('/location/search/{space_type}/{key}', 'LocationsController@getSearchLocationBySpaceType');
 // Route::get('/location/search/{country_slug}/{key}', 'LocationsController@getSearchLocationByCountry');
 Route::get('/location/countries', 'LocationsController@getAllCountries');
+Route::get('/location/countries-list-name-id', 'LocationsController@getAllCountriesListsNameId');
 Route::get('/location/states', 'LocationsController@getAllStates');
 Route::get('/location/owner-email/{center_id}', 'LocationsController@getCenterOwnerEmail');
 Route::get('/location/all-search', 'LocationsController@getAllLocationsForSearch');

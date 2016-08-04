@@ -30,7 +30,7 @@ class UsersController extends Controller
 
     public function postAddUserFromAllwork(Request $request)
     {
-        $inputs  = $request->all();
+        $inputs  = $request->inputs;
         $role    = Role::where('name', 'allwork_user')->first();
         $role_id = isset($role) ? $role->id : null;
         $inputs['role_id'] = $role_id;
