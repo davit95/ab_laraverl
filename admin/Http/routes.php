@@ -84,12 +84,15 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
 	Route::get('/charge' , 'CsrController@charge');
 	//Route::resource('/customers' , 'CustomersController');
+	Route::get('/customers/{id}/edit' , 'CustomersController@edit');
+	Route::put('/customers/{id}' , 'CustomersController@update');
 	Route::get('/customers/{id}/file' , 'CustomersController@uploadFile');
 	Route::post('/customers/{id}/upload' , 'CustomersController@uploadFile');
 	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
 
 	Route::get('/customers/{id}' , 'CsrController@getCustomerInfo');
 	Route::get('/customers/{id}/manage-balance' , 'CsrController@manangBalance');
+	Route::post('/customer-status/{id}' , 'CustomersController@UpdateStatus');
 });
 
 Route::group(['middleware' => 'client_user'], function () {

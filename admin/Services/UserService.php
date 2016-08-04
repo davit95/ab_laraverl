@@ -238,4 +238,12 @@ class UserService implements UserInterface
 	{
 		return $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->get();
 	}
+
+	public function updateCustomerStatus($id, $status)
+	{
+		$customer = $this->user->find($id);
+		$status = strtolower($status);
+		$customer->update(['status' => $status]);
+		return $customer;
+	}
 }

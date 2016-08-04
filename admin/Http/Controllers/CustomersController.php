@@ -223,4 +223,13 @@ class CustomersController extends Controller
             dd(404);
         }
     }
+
+    public function UpdateStatus($id, Request $request, UserInterface $userService)
+    {
+        //dd($request->all());
+        if(null != $customer = $userService->updateCustomerStatus($id, $request->get('customer_status'))) {
+            return redirect('customers/'.$customer->id)->withSuccess('Customer status has been successfully updated.');
+        }
+        return redirect('customers/'.$customer->id)->withWarning('Whoops, looks like something went wrong, please try later.');
+    }
 }

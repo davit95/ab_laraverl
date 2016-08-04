@@ -14,7 +14,7 @@
     </tr>
 </thead>
     <tbody>
-       @forelse( $your_customers as $customer )
+       @forelse( $your_invoices as $invoice )
             @include('admin.csr.parts._order-item')
         @empty
             @include('alerts.no-data-table')
