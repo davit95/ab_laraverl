@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Services\InvoiceService;
+use App\Services\CustomerService;
 use Exception;
 
 class InvoicesController extends Controller
@@ -33,7 +34,7 @@ class InvoicesController extends Controller
         //return redirect('users');
     }
 
-    public function chargeInvoice($id, InvoiceService $invoiceService)
+    public function chargeInvoice($id, InvoiceService $invoiceService, CustomerService $customerService)
     {
         $braintree_enviorenment = config('braintree.env');
         $braintree_configs = [];
@@ -86,13 +87,29 @@ class InvoicesController extends Controller
                 $f = serialize($result);
                 $attributes = unserialize($f)->transaction;
                 $attributes = serialize($attributes);
-                dd(unserialize($attributes));
-                $invoice = $invoiceService->updateInvoiceStatus($id, $attributes);
-                if($invoice) {
-                    dd('need more information where to redirect');
+                $new_invoice = $invoiceService->createInvoice($id);
+                if($new_invoice) {
+                    $invoice = $invoiceService->updateInvoiceParams($id, $attributes);
+                    if(null !== $invoice) {
+                        return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                    } else {
+                        //something whent wrong
+                    }
+                } else {
+                    $invoice = $invoiceService->updateInvoiceParamsById($id, $attributes);
+                    if($invoice) {
+                        return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                    } else {
+                        // something whent wrong
+                    }
                 }    
             } else {
-                return redirect()->back()->withError('You have an error');
+                $new_decline_invoice = $invoiceService->createDeclineInvoice($id);
+                if($new_decline_invoice) {
+                    return redirect()->back()->withError('You have an error');
+                } else {
+                    //something whent wrong
+                }
             }
         } else {
             // logic for production
@@ -100,10 +117,10 @@ class InvoicesController extends Controller
                 $f = serialize($result);
                 $attributes = unserialize($f)->transaction;
                 $attributes = serialize($attributes);
-                //dd(unserialize($attributes));
                 $invoice = $invoiceService->updateInvoiceStatus($id, $attributes);
                 if($invoice) {
-                    dd('need more information where to redirect');
+                    $new_invoice = $invoiceService->createInvoice($id);
+                    dd($new_invoice, 'aa');
                 }    
             } else {
                 return redirect()->back()->withError('You have an error');

@@ -7,6 +7,7 @@ use App\Models\UsState;
 use App\Models\Center;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Invoice;
 use App\Models\File;
 use App\Models\Role;
 use App\User;
@@ -17,6 +18,7 @@ class CustomerService {
 		Center $center,
 		City $city,
 		Country $country,
+		Invoice $invoice,
 		Role $role,
 		UsState $usState,
 		File $file
@@ -26,6 +28,7 @@ class CustomerService {
 		$this->center = $center;
 		$this->city = $city;
 		$this->country = $country;
+		$this->invoice = $invoice;
 		$this->role = $role;
 		$this->usState = $usState;
 		$this->file = $file;
@@ -50,7 +53,7 @@ class CustomerService {
 
 	public function getCustomerParams($data, $center)
 	{
-		//dd($data);
+		//dd($data, $center);
 		$data = array_merge($data,$center);
 		$city = $this->city->where('name', $data['city'])->first();
 		if($city) {
@@ -74,6 +77,7 @@ class CustomerService {
 		$data['password'] = bcrypt($data['password']);
 		$role_id = $this->role->where('name', 'client_user')->first()->id;
 		$data['role_id'] = $role_id;
+		$data['status'] =  'pending';
 		unset($data['city']);
 		unset($data['state']);
 		unset($data['country']);
@@ -209,6 +213,11 @@ class CustomerService {
 	{
 		$customers = $this->user->where('first_name', 'LIKE', "{$key}%")->get();
 		return $customers;
+	}
+
+	public function updateCustomerStatus($invoice_id)
+	{
+		dd($this->invoice->find($invoice_id));
 	}
 
 }
