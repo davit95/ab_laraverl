@@ -130,6 +130,7 @@ class AvoPagesController extends Controller {
 			session(['customer_information' => $inputs]);
 			$center = session('center');
 			$curency_id = session('currency');
+			//dd($center);
 			// $invoice = [
 			// 	'curency_id' => $curency_id['id']
 			// ];

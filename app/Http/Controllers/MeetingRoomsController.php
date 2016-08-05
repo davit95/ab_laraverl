@@ -198,7 +198,8 @@ class MeetingRoomsController extends Controller {
 				$center->meeting_rooms[$key]->included = $included;
 				$center->meeting_rooms[$key]->paid     = $paid;
 			}
-			//dd($center->mr_photos);
+			$response = ['center_id' => $center->toArray()['id'],];
+			session(['center' => $response]);
 			return view('meeting-rooms.show', ['center' => $center, 'nearby_centers' => $nearby_centers]);
 		} else {
 			return 'aa';

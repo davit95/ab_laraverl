@@ -53,7 +53,7 @@ class CustomerService {
 
 	public function getCustomerParams($data, $center)
 	{
-		//dd($data);
+		//dd($data, $center);
 		$data = array_merge($data,$center);
 		$city = $this->city->where('name', $data['city'])->first();
 		if($city) {

@@ -237,7 +237,7 @@ class UserService implements UserInterface
 	public function getCustomerCompletedInvoices($customer_id)
 	{
 		
-		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('basic_invoice_id', 0)->get();
+		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'reccuring')->where('status', '<>', 'declined')->get();
 
 		// foreach ($basic_invoices as $invoice) {
 		// 	if($invoice->recurring_period_within_month == $invoice->recurring_attempts) {

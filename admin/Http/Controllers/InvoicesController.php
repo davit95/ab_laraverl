@@ -83,7 +83,6 @@ class InvoicesController extends Controller
                    ));
         if($braintree_enviorenment == 'sandbox') {
             // logic for sandox mode
-            //dd($result);
             if($result->success) {
                 $f = serialize($result);
                 $attributes = unserialize($f)->transaction;
@@ -91,14 +90,26 @@ class InvoicesController extends Controller
                 $new_invoice = $invoiceService->createInvoice($id);
                 if($new_invoice) {
                     $invoice = $invoiceService->updateInvoiceParams($id, $attributes);
-                    //$customer_status = $customerService->updateCustomerStatus($id);
                     if(null !== $invoice) {
                         return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                    } else {
+                        //something whent wrong
+                    }
+                } else {
+                    $invoice = $invoiceService->updateInvoiceParamsById($id, $attributes);
+                    if($invoice) {
+                        return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                    } else {
+                        // something whent wrong
                     }
                 }    
             } else {
                 $new_decline_invoice = $invoiceService->createDeclineInvoice($id);
-                return redirect()->back()->withError('You have an error');
+                if($new_decline_invoice) {
+                    return redirect()->back()->withError('You have an error');
+                } else {
+                    //something whent wrong
+                }
             }
         } else {
             // logic for production
