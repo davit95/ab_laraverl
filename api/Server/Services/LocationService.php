@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\UsState;
 use App\Models\Site;
+use App\Models\Photo;
 use DB;
 use Illuminate\Pagination\Paginator;
 use App\Services\CenterCoordinateService;
@@ -17,7 +18,7 @@ class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site, OAuthService $oAuthService) {
+	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site, OAuthService $oAuthService, Photo $photo) {
 		$this->center = $center;
 		$this->city   = $city;
 		$this->country = $country;
@@ -26,6 +27,7 @@ class LocationService {
 		$this->centerService = $centerService;
 		$this->site = $site;
 		$this->oAuthService = $oAuthService;
+	    $this->photo = $photo;
 	}
 
 	public function getLocationsByOwnerId($owner_id)
@@ -54,9 +56,23 @@ class LocationService {
 
 	public function addLocation($inputs)
 	{		
-		$site = $this->site->where('name', 'allwork')->first();		
+		$site = $this->site->where('name', 'allwork')->first();			
 		$site_id = isset($site) ? $site->id : null;
-		$center = $this->center->create($inputs);
+		$center = $this->center->create($inputs['inputs']);
+		\Log::info($inputs);
+		if(null !== $center){
+			if(isset($inputs['images'])){
+				$destinationPath = public_path().'/images/centers';
+				foreach ($inputs['images'] as $image) {
+					$name = str_random('20').'.'.$image->getClientOriginalExtension();
+	                $image->move($destinationPath, $name);
+	                $photo = $this->photo->create(['path' => $name]);
+	                if(null!== $photo){
+	                	$center->vo_photos()->attach($photo->id);
+	                }
+				}				
+			}
+		}
 		$center->sites()->attach($site_id);
 		return $center;		
 	}
