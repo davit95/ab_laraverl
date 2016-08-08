@@ -65,6 +65,7 @@ class InvoiceService {
 	public function createInvoice($id)
 	{
 		$invoice = $this->invoice->find($id);
+		//dd($invoice);
 		if($invoice->recurring_attempts != $invoice->recurring_period_within_month && $invoice->type != 'mr') {
 			if($invoice->basic_invoice_id != 0) {
 				$id = $invoice->basic_invoice_id;
@@ -87,20 +88,20 @@ class InvoiceService {
 	public function getInvoiceParams($invoice, $payment_type, $basic_invoice_id)
 	{
 		if($invoice->basic_invoice_id == 0) {
-			$invoice_reccuring_attempt = $invoice->recurring_attempts;
-			$invoice_reccuring_attempt ++;
+			$invoice_recurring_attempt = $invoice->recurring_attempts;
+			$invoice_recurring_attempt ++;
 		} else {
-			$invoice_reccuring_attempt = $this->invoice
+			$invoice_recurring_attempt = $this->invoice
 				->where('payment_type', 'initial')
 				->where('status', $payment_type)
 				->where('basic_invoice_id', $basic_invoice_id)
 				->orderBy('id', 'DESC')->first()->recurring_attempts;
-			$invoice_reccuring_attempt++;
+			$invoice_recurring_attempt++;
 		}
 	
 		$invoice_params = $invoice->toArray();
 		$invoice_params['basic_invoice_id'] = $basic_invoice_id;
-		$invoice_params['recurring_attempts'] = $invoice_reccuring_attempt;
+		$invoice_params['recurring_attempts'] = $invoice_recurring_attempt;
 		$invoice_params['payment_type'] = 'initial';
 		return $invoice_params;
 	}
@@ -121,26 +122,31 @@ class InvoiceService {
 	{
 		$invoice = $this->invoice->where('id', $id)->first();
 		if($invoice->basic_invoice_id != 0) {
-			$invoice_reccuring_attempt = $invoice->recurring_attempts;
-			$invoice_reccuring_attempt++;
+			$invoice_recurring_attempt = $invoice->recurring_attempts;
+			$invoice_recurring_attempt++;
 			$basic_invoice = $this->invoice->find($invoice->basic_invoice_id);
-			$basic_invoice->update([ 'recurring_attempts' =>  $invoice_reccuring_attempt]);
+			$basic_invoice->update([ 'recurring_attempts' =>  $invoice_recurring_attempt]);
 		} else {
-			$invoice_reccuring_attempt = $invoice->recurring_attempts;
+			$invoice_recurring_attempt = $invoice->recurring_attempts;
 		}
 		
-		$invoice_reccuring_attempt++;
+		$invoice_recurring_attempt++;
 		$invoice_perriod = $invoice->recurring_period_within_month;
 		$status = 'approved';
-		$invoice->update(['status' => $status, 'recurring_attempts' =>  $invoice_reccuring_attempt, 'payment_response' => $payments_response, 'payment_type' => 'reccuring']);
+		$invoice->update(['status' => $status, 'recurring_attempts' =>  $invoice_recurring_attempt, 'payment_response' => $payments_response, 'payment_type' => 'recurring']);
 		return $invoice;
 	}
 
 	public function updateInvoiceParamsById($id, $payments_response)
 	{
 		$invoice = $this->invoice->find($id);
-		$invoice->update(['payment_type' => 'reccuring', 'payment_response' => $payments_response, 'status' => 'approved']);
+		$invoice->update(['payment_type' => 'recurring', 'payment_response' => $payments_response, 'status' => 'approved']);
 		return $invoice;
+	}
+
+	public function getAllPendingInvoicesByCustomerId($customer_id)
+	{
+		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->get();
 	}
 
 	
