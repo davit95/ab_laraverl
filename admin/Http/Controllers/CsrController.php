@@ -14,6 +14,7 @@ use App\Exceptions\Custom\FailedTransactionException;
 use Admin\Contracts\UserInterface;
 use Admin\Services\CenterService;
 use App\Services\InvoiceService;
+use Carbon\Carbon;
 
 class CsrController extends Controller
 {
@@ -120,13 +121,22 @@ class CsrController extends Controller
         $next_invoices = $userService->getCustomerPendingInvoices($id);
         $declined_invoices = $userService->getCustomerDeclinedInvoices($id);
         $completed_invoices = $userService->getCustomerCompletedInvoices($id);
+        $recurring_invoice = $userService->getRecurringInvoice($id);
+
+        $date = new Carbon;
+        $recurring_invoice_start_date = $date->parse($recurring_invoice->created_at)->format('d/m/Y');
+        $recurring_invoice_end_date = $date->parse($recurring_invoice->created_at)->addMonth($recurring_invoice->recurring_period_within_month)->format('d/m/Y');
+
         return view('admin.csr.customer_info',
         [
             'customer'           => $customer, 
             'role'               => $role, 
             'next_invoices'      => $next_invoices, 
             'declined_invoices'  => $declined_invoices,
-            'completed_invoices' => $completed_invoices
+            'completed_invoices' => $completed_invoices,
+            'recurring_invoice'  => $recurring_invoice,
+            'recurring_invoice_start_date'  => $recurring_invoice_start_date,
+            'recurring_invoice_end_date'    => $recurring_invoice_end_date
         ]);
     }
 

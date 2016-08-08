@@ -137,6 +137,9 @@
                     Recurring Charging Status    
                 </span>
                 <br>
+                {{$recurring_invoice->id}}
+                <br>
+                <br>
                 <!-- <div class="cerca" style="height: 35px; padding-top: 10px; background-color: red; color: white;">125402041
                     <select class="statusChange customer_text_area_selects" name="recurring_status_125402041" style="float: right; margin-top: -8px;">
                         <option value="Live">Live</option>
@@ -219,6 +222,10 @@
                     @endforeach 
                 </tbody>
             </table>
+            <br>
+            <a href="{{url('/invoices/'.$customer->id.'/charge-all')}}">Charge All</a>
+            <br>
+            <br>
              <span class="lh_fi mediumBold customer_text_area_headers">
                 DNC History:
             </span>&nbsp;
@@ -227,6 +234,12 @@
             <span class="lh_fi mediumBold customer_text_area_headers">
                 Recurring Charges:
             </span>&nbsp;
+            <br>
+            Account: {{$recurring_invoice->id}}<br>
+            Description: Free LR<br>
+            Amount: $- {{$recurring_invoice->price}}<br>
+            Start Date: {{$recurring_invoice_start_date}}<br>
+            End Date: {{$recurring_invoice_end_date}}<br>
         </div>
         
            

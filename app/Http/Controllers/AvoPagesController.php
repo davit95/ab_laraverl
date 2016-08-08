@@ -176,7 +176,7 @@ class AvoPagesController extends Controller {
 			$temp['payment_response'] = null;
 			$temp['serialized_card_item_info'] = serialize($value->toArray());
 			$temp['created_at'] = Carbon::now()->__toString();
-			$temp['updated_at'] = Carbon::now()->__toString();;
+			$temp['updated_at'] = Carbon::now()->__toString();
 			$invoice_insertable[] = $temp;
 		}
 		session(['customer_information' => $inputs]);
