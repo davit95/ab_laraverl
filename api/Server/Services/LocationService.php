@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\UsState;
 use App\Models\Site;
+use App\Models\Photo;
 use DB;
 use Illuminate\Pagination\Paginator;
 use App\Services\CenterCoordinateService;
@@ -17,7 +18,7 @@ class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site, OAuthService $oAuthService) {
+	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site, OAuthService $oAuthService, Photo $photo) {
 		$this->center = $center;
 		$this->city   = $city;
 		$this->country = $country;
@@ -26,6 +27,7 @@ class LocationService {
 		$this->centerService = $centerService;
 		$this->site = $site;
 		$this->oAuthService = $oAuthService;
+	    $this->photo = $photo;
 	}
 
 	public function getLocationsByOwnerId($owner_id)
@@ -53,10 +55,24 @@ class LocationService {
 	}
 
 	public function addLocation($inputs)
-	{
-		$site = $this->site->where('name', 'allwork')->first();
+	{		
+		$site = $this->site->where('name', 'allwork')->first();			
 		$site_id = isset($site) ? $site->id : null;
-		$center = $this->center->create($inputs);
+		$center = $this->center->create($inputs['inputs']);
+		\Log::info($inputs);
+		if(null !== $center){
+			if(isset($inputs['images'])){
+				$destinationPath = public_path().'/images/centers';
+				foreach ($inputs['images'] as $image) {
+					$name = str_random('20').'.'.$image->getClientOriginalExtension();
+	                $image->move($destinationPath, $name);
+	                $photo = $this->photo->create(['path' => $name]);
+	                if(null!== $photo){
+	                	$center->vo_photos()->attach($photo->id);
+	                }
+				}				
+			}
+		}
 		$center->sites()->attach($site_id);
 		return $center;		
 	}
@@ -114,6 +130,7 @@ class LocationService {
 
 	public function getStateLocations($country_slug, $state, $nearby, $options, $per_page, $page, $access_token)
 	{
+		$paginate = false;
 		$access_token = $this->oAuthService->getAccessToken($access_token);
 		$full_access = $access_token ? $access_token->full_access : false;
 		$page = isset($page) ? $page : 1;
@@ -136,16 +153,17 @@ class LocationService {
 	    ->orderBy('center_prices.price', 'asc');
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
+	    	$paginate = true;
 	    }else{
 	    	$locations = $locations->get();
 	    }
 		// $locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'active_flag' => 'Y'])->with(['prices', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms'])->paginate($per_page);		
 		if(isset($nearby) && isset($options)){
-			return $this->getNeccessaryOptions($locations, true, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
-			return $this->getNeccessaryOptions($locations, true, false,false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, false,false, $full_access, $paginate);
 		}else{
-			return $this->getNeccessaryOptions($locations, false, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, false, true, false, $full_access, $paginate);
 		}
 		return $this->getNeccessaryOptions($locations);
 	}
@@ -154,6 +172,7 @@ class LocationService {
 	{
 		$access_token = $this->oAuthService->getAccessToken($access_token);
 		$full_access = $access_token ? $access_token->full_access : false;
+		$paginate = false;
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : false;
 		if($per_page){
@@ -174,22 +193,24 @@ class LocationService {
 	    ->orderBy('center_prices.price', 'asc');
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
+	    	$paginate = true;
 	    }else{
 	    	$locations = $locations->get();
 	    }
 		// $locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
 		if(isset($nearby) && isset($options)){
-			return $this->getNeccessaryOptions($locations, true, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
-			return $this->getNeccessaryOptions($locations, true, false,false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, false,false, $full_access, $paginate);
 		}else{
-			return $this->getNeccessaryOptions($locations, false, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, false, true, false, $full_access, $paginate);
 		}
 		return $this->getNeccessaryOptions($locations);
 	}
 
 	public function getStateCityLocations($state, $city_slug, $nearby, $options, $per_page, $page, $access_token)
 	{
+		$paginate = false;
 		$access_token = $this->oAuthService->getAccessToken($access_token);
 		$full_access = $access_token ? $access_token->full_access : false;
 		$page = isset($page) ? $page : 1;
@@ -216,17 +237,18 @@ class LocationService {
 	    ->select(['centers.*']);
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
+	    	$paginate = true;
 	    }else{
 	    	$locations = $locations->get();
 	    }	    
 	    
 		// $locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
 		if(isset($nearby) && isset($options)){
-			return $this->getNeccessaryOptions($locations, true, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
-			return $this->getNeccessaryOptions($locations, true, false,false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, false,false, $full_access, $paginate);
 		}else{
-			return $this->getNeccessaryOptions($locations, false, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, false, true, false, $full_access, $paginate);
 		}
 		return $this->getNeccessaryOptions($locations);
 	}
@@ -235,6 +257,7 @@ class LocationService {
 	{
 		$access_token = $this->oAuthService->getAccessToken($access_token);
 		$full_access = $access_token ? $access_token->full_access : false;
+		$paginate = false;
 		$page = isset($page) ? $page : 1;
 		$per_page = isset($per_page) ? $per_page : false;
 		if($per_page){
@@ -259,16 +282,17 @@ class LocationService {
 	    ->select(['centers.*']);
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
+	    	$paginate = true;
 	    }else{
 	    	$locations = $locations->get();
 	    }
 		// $locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
 		if(isset($nearby) && isset($options)){
-			return $this->getNeccessaryOptions($locations, true, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
-			return $this->getNeccessaryOptions($locations, true, false,false, $full_access);
+			return $this->getNeccessaryOptions($locations, true, false,false, $full_access, $paginate);
 		}else{
-			return $this->getNeccessaryOptions($locations, false, true, false, $full_access);
+			return $this->getNeccessaryOptions($locations, false, true, false, $full_access, $paginate);
 		}
 		return $this->getNeccessaryOptions($locations);
 	}
@@ -470,7 +494,7 @@ class LocationService {
 		}
 	}
 
-	private function getNeccessaryOptions($locations, $nearby = false, $options = false, $description = false, $full_access = false)
+	private function getNeccessaryOptions($locations, $nearby = false, $options = false, $description = false, $full_access = false, $pagination = false)
 	{		
 		$locationsArray = [];
 		foreach ($locations as $location) {
@@ -550,6 +574,9 @@ class LocationService {
 			}
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
+			if($pagination){
+				$locationsArray['pages_count'] = $locations->lastPage();
+			}
 		}
 		return $locationsArray;
 	}
