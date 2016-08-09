@@ -44,33 +44,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
 		$this->centers();
-		$this->centers_coordinates();
-		$this->features();
-		$this->centers_local_numbers();
-		$this->centers_emails();
-		$this->centers_prices();
-		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->virtual_offices_options();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->centers_coordinates();
+		// $this->features();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
+		// $this->centers_prices();
+		// $this->centers_filters();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		// $this->virtual_offices_seos();
+		// $this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -90,6 +90,11 @@ class DataMigration extends Command {
 		//dd($users_ids);
 		$new_collection = [];
 		foreach ($collection as $key => $value) {
+			if($value->City == 'Melbourne') {
+				$value->City = utf8_decode($value->City);
+				$city      = DB::table('cities')->where('name', trim($value->City))->where('country_code', $value->Country)->first();
+				dd($city);
+			}
 			if(!in_array($value->CenterID, $centers_old_id_lists)) {
 				if(!is_null($value->State) && $value->State != '') {
 					$city      = DB::table('cities')->where('name', trim($value->City))->where('country_code', $value->Country)->where('us_state_code', $value->State)->first();
@@ -99,6 +104,7 @@ class DataMigration extends Command {
 					}
 					$city      = DB::table('cities')->where('name', trim($value->City))->where('country_code', $value->Country)->first();
 				}
+				
 				$country   = DB::table('countries')->where('code', $value->Country)->first();
 				$state     = DB::table('us_states')->where('code', $value->State)->first();
 				$owner_ids = DB::table('owners')->lists('id');
