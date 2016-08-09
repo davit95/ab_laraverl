@@ -57,7 +57,11 @@ class LocationService {
 	public function addLocation($inputs)
 	{		
 		$site = $this->site->where('name', 'allwork')->first();			
-		$site_id = isset($site) ? $site->id : null;
+		$site_id = isset($site) ? $site->id : null;		
+		$city = $this->city->find($inputs['inputs']['city_id']);
+	    if(null!= $city){
+	    	$inputs['inputs']['city_name'] = $city->name;	
+	    }
 		$center = $this->center->create($inputs['inputs']);
 		\Log::info($inputs);
 		if(null !== $center){
@@ -88,6 +92,19 @@ class LocationService {
 			$location = $location->update($inputs);
 		}					
 		return $location;
+	}
+
+	public function getCitiesByCountry($country_code, $state)
+	{
+		$where = ['country_code' => $country_code];
+		$where['active'] = 1;
+		if($state != "0"){
+			$where['us_state_code'] = $state;
+		}
+		$cities = $this->city->where($where)->distinct('name')->whereHas('centers', function($query){
+					$query->where('active_flag', 'Y');
+				})->get(['id', 'name']);
+		return $cities;		
 	}
 
 	public function getLocationById($id)
@@ -325,11 +342,11 @@ class LocationService {
 		$per_page = isset($per_page) ? $per_page : 10;
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
-	    });
+	    });	    
 	    $city = $this->city->where('slug', $city_slug)->first();
 	    if(null!= $city){
 	    	$city_name = $city->name;
-	    }
+	    }	    
 		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description', 'space_types'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);
