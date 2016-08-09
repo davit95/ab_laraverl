@@ -44,33 +44,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		// $this->regions();
-		// $this->us_states();
-		// $this->countries();
+		$this->regions();
+		$this->us_states();
+		$this->countries();
 		$this->cities();
-		// $this->users();
-		// $this->users_files();
-		// $this->owners();
-		// $this->products();
-		// $this->centers();
-		// $this->centers_coordinates();
-		// $this->features();
-		// $this->centers_local_numbers();
-		// $this->centers_emails();
-		// $this->centers_prices();
-		// $this->centers_filters();
-		// $this->meeting_rooms();
-		// $this->meeting_rooms_seos();
-		// $this->meeting_rooms_options();
-		// $this->virtual_offices_seos();
-		// $this->virtual_offices_options();
-		// $this->centers_photos();
-		// $this->vo_photos();
-		// $this->telephony_package_includes();
-		// $this->tel_countries();
-		// $this->tel_prefixes();
-		// $this->detect_active_cities();
-		// $this->location_SEO();
+		$this->users();
+		$this->users_files();
+		$this->owners();
+		$this->products();
+		$this->centers();
+		$this->centers_coordinates();
+		$this->features();
+		$this->centers_local_numbers();
+		$this->centers_emails();
+		$this->centers_prices();
+		$this->centers_filters();
+		$this->meeting_rooms();
+		$this->meeting_rooms_seos();
+		$this->meeting_rooms_options();
+		$this->virtual_offices_seos();
+		$this->virtual_offices_options();
+		$this->centers_photos();
+		$this->vo_photos();
+		$this->telephony_package_includes();
+		$this->tel_countries();
+		$this->tel_prefixes();
+		$this->detect_active_cities();
+		$this->location_SEO();
 	}
 
 	private function centers() {
@@ -727,42 +727,42 @@ class DataMigration extends Command {
         //dd('ass');
         $cities_name_lists = DB::table('cities')->lists('name');
         $cities = [];
-        // foreach ($states as $st_name => $state) {
-        //     foreach ($state as $city) {
-        //         if ($count%250 == 0) {
-        //             $key++;
-        //         }
-        //         if(!in_array($city, $cities_name_lists)) {
-        //         	$cities[$key][] =
-        //         	[
-        //         	    'name'          => $city,
-        //         	    'us_state'      => $st_name,
-        //         	    'slug'          => str_slug($city),
-        //         	    'us_state_id'   => $us_state_ids["$st_name"],
-        //         	    'us_state_code' => $us_state_codes["$st_name"],
-        //         	    'country_code'  => $us->code,
-        //         	    'business_info' => isset($business_infos[strtolower($city)])?$business_infos[strtolower($city)]:'',
-        //         	    'general_info'  => isset($general_infos[strtolower($city)])?$general_infos[strtolower($city)]:'',
-        //         	    'country_id'    => $us_id
-        //         	];
-        //         }
-        //         $count++;
+        foreach ($states as $st_name => $state) {
+            foreach ($state as $city) {
+                if ($count%250 == 0) {
+                    $key++;
+                }
+                if(!in_array($city, $cities_name_lists)) {
+                	$cities[$key][] =
+                	[
+                	    'name'          => $city,
+                	    'us_state'      => $st_name,
+                	    'slug'          => str_slug($city),
+                	    'us_state_id'   => $us_state_ids["$st_name"],
+                	    'us_state_code' => $us_state_codes["$st_name"],
+                	    'country_code'  => $us->code,
+                	    'business_info' => isset($business_infos[strtolower($city)])?$business_infos[strtolower($city)]:'',
+                	    'general_info'  => isset($general_infos[strtolower($city)])?$general_infos[strtolower($city)]:'',
+                	    'country_id'    => $us_id
+                	];
+                }
+                $count++;
 
-        //     }
+            }
 
-        // }
-        // $bar_states = $this->output->createProgressBar(count($cities));
-        // if(!empty($cities)) {
-        // 	foreach ($cities as $key => $city) {
-        // 	    DB::table('cities')->insert($city);
-        // 	    $cities_name_lists[] = $city;
-        //         $city = [];
-        // 	    $bar_states->advance();
-        // 	}
-        // }
+        }
+        $bar_states = $this->output->createProgressBar(count($cities));
+        if(!empty($cities)) {
+        	foreach ($cities as $key => $city) {
+        	    DB::table('cities')->insert($city);
+        	    $cities_name_lists[] = $city;
+                $city = [];
+        	    $bar_states->advance();
+        	}
+        }
         
-        //$bar_states->finish();
-        //$this->info(" :heavy_check_mark:\n");
+        $bar_states->finish();
+        $this->info(" :heavy_check_mark:\n");
 
         $this->info(" migrating other cities table");
         $countries_name_lists = DB::table('cities')->where('us_state_code', null)->lists('name');
