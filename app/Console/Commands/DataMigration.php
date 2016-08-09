@@ -532,7 +532,7 @@ class DataMigration extends Command {
 		$this->make_new_connection();
 		$collection = DB::table('Center_SEO_MR')->get();
 		DB::setDefaultConnection('mysql');
-		$center_ids = DB::table('centers')->lists('id');
+		$center_ids = DB::table('centers')->lists('old_id','id');
 		$bar        = $this->output->createProgressBar(count($collection));
 		$new_collection = [];
 		foreach ($collection as $key => $value) {
@@ -766,13 +766,14 @@ class DataMigration extends Command {
 
         $this->info(" migrating other cities table");
         $countries_name_lists = DB::table('cities')->lists('name');
+        $countries_codes_lists = DB::table('cities')->lists('country_code');
         //dd($countries_name_lists);
         $arr = [];
         foreach ($other_cities as $country => $cities) {
             $country_obj = DB::table('countries')->where('name', $country)->first();
             if (null != $country_obj) {
                 foreach ($cities as $city) {
-                	if(!in_array($city, $countries_name_lists)) {
+                	if(!in_array($city, $countries_name_lists) || (in_array($city, $countries_name_lists) && !in_array($country_obj->code, $countries_codes_lists))) {
                 		$arr =
                 		[
                 		    'name'          => $city,
