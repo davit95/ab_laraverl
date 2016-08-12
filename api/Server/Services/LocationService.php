@@ -616,7 +616,7 @@ class LocationService {
 		foreach ($nearby_centers as $nearby_center) {
 			$center = new \stdClass();
 			$center->id            = $nearby_center->id;
-			$center->building_name = $nearby_center->building_name;
+			$center->building_name = $nearby_center->name;
 			$center->address_1     = $nearby_center->address1;
 			$center->address_2     = $nearby_center->address2;
 			$center->city          = $nearby_center->city_name;
