@@ -99,6 +99,7 @@ class DataMigration extends Command {
 					}
 					$city      = DB::table('cities')->where('name', trim($value->City))->where('country_code', $value->Country)->first();
 				}
+				
 				$country   = DB::table('countries')->where('code', $value->Country)->first();
 				$state     = DB::table('us_states')->where('code', $value->State)->first();
 				$owner_ids = DB::table('owners')->lists('id');
@@ -532,7 +533,7 @@ class DataMigration extends Command {
 		$this->make_new_connection();
 		$collection = DB::table('Center_SEO_MR')->get();
 		DB::setDefaultConnection('mysql');
-		$center_ids = DB::table('centers')->lists('id');
+		$center_ids = DB::table('centers')->lists('old_id','id');
 		$bar        = $this->output->createProgressBar(count($collection));
 		$new_collection = [];
 		foreach ($collection as $key => $value) {
@@ -765,14 +766,15 @@ class DataMigration extends Command {
         $this->info(" :heavy_check_mark:\n");
 
         $this->info(" migrating other cities table");
-        $countries_name_lists = DB::table('cities')->lists('name');
-        //dd($countries_name_lists);
+        $countries_name_lists = DB::table('cities')->where('us_state_code', null)->lists('name');
+        $countries_codes_lists = DB::table('cities')->lists('country_code');
+
         $arr = [];
         foreach ($other_cities as $country => $cities) {
             $country_obj = DB::table('countries')->where('name', $country)->first();
             if (null != $country_obj) {
                 foreach ($cities as $city) {
-                	if(!in_array($city, $countries_name_lists)) {
+                	if(!in_array($city, $countries_name_lists) || (in_array($city, $countries_name_lists) && !in_array($country_obj->code, $countries_codes_lists))) {
                 		$arr =
                 		[
                 		    'name'          => $city,

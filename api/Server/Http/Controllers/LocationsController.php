@@ -33,6 +33,12 @@ class LocationsController extends Controller
         return response()->json($location);
     }
 
+    public function getCitiesByCountry(Request $request, LocationService $locationService)
+    {
+        $cities = $locationService->getCitiesByCountry($request->country_code, $request->state);
+        return response()->json($cities);
+    }
+
     /**
      * Create a resource.
      *
@@ -40,7 +46,7 @@ class LocationsController extends Controller
      */
     public function addLocation(Request $request, LocationService $locationService)
     {
-        \Log::Info($request->file());
+        \Log::Info($request->all());
         $location = $locationService->addLocation($request->all());
         $status = null!= $location ? 'success' : 'error';
         return response()->json(['status' => $status]);

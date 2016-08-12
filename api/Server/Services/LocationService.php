@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\UsState;
 use App\Models\Site;
+use App\Models\Photo;
 use DB;
 use Illuminate\Pagination\Paginator;
 use App\Services\CenterCoordinateService;
@@ -17,7 +18,7 @@ class LocationService {
 	/**
 	 * Create a new center service instance.
 	 */
-	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site, OAuthService $oAuthService) {
+	public function __construct(Center $center, City $city, Country $country, UsState $usState, CenterCoordinateService $centerCoordinateService, CenterService $centerService, Site $site, OAuthService $oAuthService, Photo $photo) {
 		$this->center = $center;
 		$this->city   = $city;
 		$this->country = $country;
@@ -26,6 +27,7 @@ class LocationService {
 		$this->centerService = $centerService;
 		$this->site = $site;
 		$this->oAuthService = $oAuthService;
+	    $this->photo = $photo;
 	}
 
 	public function getLocationsByOwnerId($owner_id)
@@ -54,9 +56,27 @@ class LocationService {
 
 	public function addLocation($inputs)
 	{		
-		$site = $this->site->where('name', 'allwork')->first();		
-		$site_id = isset($site) ? $site->id : null;
-		$center = $this->center->create($inputs);
+		$site = $this->site->where('name', 'allwork')->first();			
+		$site_id = isset($site) ? $site->id : null;		
+		$city = $this->city->find($inputs['inputs']['city_id']);
+	    if(null!= $city){
+	    	$inputs['inputs']['city_name'] = $city->name;	
+	    }
+		$center = $this->center->create($inputs['inputs']);
+		\Log::info($inputs);
+		if(null !== $center){
+			if(isset($inputs['images'])){
+				$destinationPath = public_path().'/images/centers';
+				foreach ($inputs['images'] as $image) {
+					$name = str_random('20').'.'.$image->getClientOriginalExtension();
+	                $image->move($destinationPath, $name);
+	                $photo = $this->photo->create(['path' => $name]);
+	                if(null!== $photo){
+	                	$center->vo_photos()->attach($photo->id);
+	                }
+				}				
+			}
+		}
 		$center->sites()->attach($site_id);
 		return $center;		
 	}
@@ -72,6 +92,19 @@ class LocationService {
 			$location = $location->update($inputs);
 		}					
 		return $location;
+	}
+
+	public function getCitiesByCountry($country_code, $state)
+	{
+		$where = ['country_code' => $country_code];
+		$where['active'] = 1;
+		if($state != "0"){
+			$where['us_state_code'] = $state;
+		}
+		$cities = $this->city->where($where)->distinct('name')->whereHas('centers', function($query){
+					$query->where('active_flag', 'Y');
+				})->get(['id', 'name']);
+		return $cities;		
 	}
 
 	public function getLocationById($id)
@@ -309,11 +342,11 @@ class LocationService {
 		$per_page = isset($per_page) ? $per_page : 10;
 		Paginator::currentPageResolver(function () use ($page) {
 		    return $page;
-	    });
+	    });	    
 	    $city = $this->city->where('slug', $city_slug)->first();
 	    if(null!= $city){
 	    	$city_name = $city->name;
-	    }
+	    }	    
 		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description', 'space_types'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);

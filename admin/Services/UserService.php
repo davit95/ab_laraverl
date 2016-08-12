@@ -224,6 +224,11 @@ class UserService implements UserInterface
 		return $user->delete();
 	}
 
+	public function getRecurringInvoice($customer_id)
+	{
+		return $this->getCustomerCompletedInvoices($customer_id)->first();
+	}
+
 	public function getCustomerPendingInvoices($customer_id)
 	{
 		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->where('status', '<>', 'declined')->get();
@@ -237,7 +242,7 @@ class UserService implements UserInterface
 	public function getCustomerCompletedInvoices($customer_id)
 	{
 		
-		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'reccuring')->where('status', '<>', 'declined')->get();
+		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'recurring')->where('status', '<>', 'declined')->get();
 
 		// foreach ($basic_invoices as $invoice) {
 		// 	if($invoice->recurring_period_within_month == $invoice->recurring_attempts) {
