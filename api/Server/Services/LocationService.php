@@ -550,8 +550,8 @@ class LocationService {
 					}
 				}				
 				array_push($temp['images'], $tempPhoto);
-			}			
-			foreach ($location->space_types as $type) {				
+			}
+			foreach ($location->space_types as $type) {
 				array_push($temp['space_types'], $type);
 			}
 			foreach ($location->prices as $price) {
