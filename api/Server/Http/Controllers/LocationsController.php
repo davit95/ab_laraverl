@@ -49,7 +49,7 @@ class LocationsController extends Controller
         \Log::Info($request->all());
         $location = $locationService->addLocation($request->all());
         $status = null!= $location ? 'success' : 'error';
-        return response()->json(['status' => $status]);
+        return response()->json(['status' => $status, 'location' => $location]);
     }
 
     /**
