@@ -18,6 +18,8 @@ class CreateCenterProgramPartnersTable extends Migration
             $table->bigInteger('center_id');
             $table->string('program_name');
             $table->string('program_badge_url');
+
+            $table->foreign('center_id')->references('id')->on('centers')->onUpdate('restrict')->onDelete('set null');
         });
     }
 
