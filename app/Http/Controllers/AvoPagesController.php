@@ -123,6 +123,7 @@ class AvoPagesController extends Controller {
 			$customer_id = $customer->id;
 		} else {
 			//
+			//
 			if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 				$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 			}
@@ -130,15 +131,57 @@ class AvoPagesController extends Controller {
 			session(['customer_information' => $inputs]);
 			$center = session('center');
 			$curency_id = session('currency');
-			//dd($center);
-			// $invoice = [
-			// 	'curency_id' => $curency_id['id']
-			// ];
-
 			if(null !== $user = $customerService->createCustomer($inputs, $center)) {
 				$tempCartItemService->updateUserId($temp_user_id, $user->id);
 				$customer_id = $user->id;
-				//dd(Auth::login($user), 'as', $user);
+
+				$braintree_enviorenment = config('braintree.env');
+				$braintree_configs = [];
+				if($braintree_enviorenment == 'production') {
+				    $braintree_configs = config('braintree.production_credentials');
+				} elseif($braintree_enviorenment == 'sandbox') {
+				    //dd('as');
+				    $braintree_configs = config('braintree.sandbox_credentials');
+				} else {
+				    throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);
+				    
+				}	
+				// if(!$this->checkCustomerCreditCardCredentials($user)) {
+				//     throw new Exception("The Customer CC credentials are invalid", 1);
+				    
+				// }
+				$cc_number = $braintree_enviorenment == 'production' ? $customer->cc_number : 4012000033330026 ;
+				$cc_month  = $request->cc_month;
+				$cc_year   = $request->cc_year;
+				\Braintree_Configuration::environment($braintree_enviorenment);
+				\Braintree_Configuration::merchantId($braintree_configs['merchant_id']);
+				\Braintree_Configuration::publicKey($braintree_configs['public_key']);
+				\Braintree_Configuration::privateKey($braintree_configs['private_key']);
+
+				$customer = \Braintree_Customer::create([
+				    'creditCard' => [
+				            'number' => $cc_number,
+				            'expirationMonth' => $cc_month,
+				            'expirationYear' => $cc_year,
+
+				        'billingAddress' => [
+				            'firstName' => $request->first_name,
+				            'lastName' => $request->last_name,
+				            'company' => $request->company_name,
+				            'streetAddress' => $request->address1,
+				            'locality' => $request->city,
+				            'region' => $request->state,
+				            'postalCode' => $request->postal_code,
+				        ],
+
+
+				    ]
+				]);
+				if($customer->success) {
+					$customerService->createCustomerSerializedInfo($customer,$customer_id);
+				} else {
+					return redirect()->back()->withWarning('You have payment error ');
+				}	
 			}
 		}
 		// dd($customer);

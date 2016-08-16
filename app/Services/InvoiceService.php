@@ -37,13 +37,13 @@ class InvoiceService {
 	public function getNewInvoices()
 	{
 		$invoice_ids = $this->adminClients->where('admin_id', \Auth::id())->lists('invoice_id');
-		return $this->invoice->where('basic_invoice_id', 0)->whereNotIn('id', $invoice_ids)->get();
+		return $this->invoice->whereNotIn('id', $invoice_ids)->get();
 	}
 
 	public function getYourInvoices()
 	{
 		$invoice_ids = $this->adminClients->where('admin_id', \Auth::id())->lists('invoice_id');
-		return $this->invoice->where('basic_invoice_id', 0)->whereIn('id', $invoice_ids)->get();
+		return $this->invoice->whereIn('id', $invoice_ids)->get();
 	}
 
 	public function makeAdminCustomer($id)

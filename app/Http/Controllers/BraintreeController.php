@@ -17,7 +17,7 @@ class BraintreeController extends Controller
      */
     public function index()
     {
-        //
+        dd('aa');
     }
 
     /**
@@ -88,49 +88,36 @@ class BraintreeController extends Controller
 
     public function getForm()
     {
+        $braintree_enviorenment = config('braintree.env');
+        $braintree_configs = [];
+        if($braintree_enviorenment == 'production') {
+            $braintree_configs = config('braintree.production_credentials');
+        } elseif($braintree_enviorenment == 'sandbox') {
+            //dd('as');
+            $braintree_configs = config('braintree.sandbox_credentials');
+        } else {
+            throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);
+            
+        }
+        \Braintree_Configuration::environment($braintree_enviorenment);
+        \Braintree_Configuration::merchantId($braintree_configs['merchant_id']);
+        \Braintree_Configuration::publicKey($braintree_configs['public_key']);
+        \Braintree_Configuration::privateKey($braintree_configs['private_key']);
+        return view('braintree.index');
+    }
+   
 
-        $client_token = \Braintree_ClientToken::generate();
-        //dd($client_token);y
-        return view('payment', ['client_token' => $client_token]);
-        // spl_autoload_register(function ($className) {
-        //     if (strpos($className, 'Braintree') !== 0) {
-        //         return;
-        //     }
-        //     $fileName = dirname(__DIR__) . '/lib/';
-        //     if ($lastNsPos = strripos($className, '\\')) {
-        //         $namespace = substr($className, 0, $lastNsPos);
-        //         $className = substr($className, $lastNsPos + 1);
-        //         $fileName  .= str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-        //     }
-        //     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-        //     if (is_file($fileName)) {
-        //         require_once $fileName;
-        //     }
-        // });
+    private function checkCustomerCreditCardCredentials($customer)
+    {
+        if( $customer->cc_name === null || $customer->cc_name == '' ||
+            $customer->cc_number === null || $customer->cc_number == '' || 
+            $customer->cc_year === null || $customer->cc_year == '' || 
+            $customer->cc_month === null || $customer->cc_month == '' || 
+            $customer->cvv2 === null || $customer->cvv2 == '' ) {
 
-        // if (version_compare(PHP_VERSION, '5.4.0', '<')) {
-        //     throw new Braintree_Exception('PHP version >= 5.4.0 required');
-        // }
-        // function requireDependencies() {
-        //     $requiredExtensions = ['xmlwriter', 'openssl', 'dom', 'hash', 'curl'];
-        //     foreach ($requiredExtensions AS $ext) {
-        //         if (!extension_loaded($ext)) {
-        //             throw new Braintree_Exception('The Braintree library requires the ' . $ext . ' extension.');
-        //         }
-        //     }
-        // }
-        // requireDependencies();
-
-        // \Braintree_Configuration::environment('sandbox');
-        // \Braintree_Configuration::merchantId('hcz2tmfpjngv9rjk');
-        // \Braintree_Configuration::publicKey('5w5dbwftxgt56dxx');
-        // \Braintree_Configuration::privateKey('bb8b66c74d8740508bc72d28d116ad07');
-        // \Braintree_ClientToken::generate();
-
-        // //$clientToken = \Braintree_ClientToken::generate();
-        // //$nonceFromTheClient = $_POST["payment_method_nonce"];
-        // //dd($clientToken);
-        // return view('braintree.index');
+            return false;
+        }
+        return true;
     }
 
     public function checkout(Request $request){
@@ -175,13 +162,73 @@ class BraintreeController extends Controller
     }
     public function callback(Request $request)
     {
-        
+        //dd($_POST, $request->all());
+        \Braintree_Configuration::environment('sandbox');
+               \Braintree_Configuration::merchantId('hcz2tmfpjngv9rjk');
+               \Braintree_Configuration::publicKey('5w5dbwftxgt56dxx');
+               \Braintree_Configuration::privateKey('bb8b66c74d8740508bc72d28d116ad07');
+
         if (isset($_GET["id"])) {
-            $result = \Braintree_TransparentRedirect::confirm($_SERVER['QUERY_STRING']);
-            //var_dump($result);exit();
+               $result = \Braintree_TransparentRedirect::confirm($_SERVER['QUERY_STRING']);
         }
-        if (isset($result) && $result->success) {
-            dd('ura');
+        dd($result);
+        //dd($this->create_customer());
+        
+        //$result = \Braintree_TransparentRedirect::confirm($_SERVER['QUERY_STRING']);
+    }
+
+    #Function to store customer's information and credit card to BrainTree Vault
+    public function create_customer(){
+        dd($_POST);
+        #Set timezone if not specified in php.ini
+            //date_default_timezone_set('America/Los_Angeles');
+        \Braintree_Configuration::environment('sandbox');
+                      \Braintree_Configuration::merchantId('hcz2tmfpjngv9rjk');
+                      \Braintree_Configuration::publicKey('5w5dbwftxgt56dxx');
+                      \Braintree_Configuration::privateKey('bb8b66c74d8740508bc72d28d116ad07');
+        $includeAddOn = false;
+            
+        /* First we create a new user using the BT API */
+        $result = \Braintree_Customer::create(array(
+                    'firstName' => mysql_real_escape_string($_POST['first_name']),
+                    'lastName' => mysql_real_escape_string($_POST['last_name']),
+                    'company' => mysql_real_escape_string($_POST['company']),
+                    'email' => mysql_real_escape_string($_POST['user_email']),
+                    'phone' => mysql_real_escape_string($_POST['user_phone']),
+                    
+                    // we can create a credit card at the same time
+                    'creditCard' => array(
+                        'cardholderName' => mysql_real_escape_string($_POST['full_name']),
+                        'number' => mysql_real_escape_string($_POST['card_number']),
+                        'expirationMonth' => mysql_real_escape_string($_POST['expiry_month']),
+                        'expirationYear' => mysql_real_escape_string($_POST['expiry_year']),
+                        'cvv' => mysql_real_escape_string($_POST['card_cvv']),
+                        'billingAddress' => array(
+                            'firstName' => mysql_real_escape_string($_POST['first_name']),
+                            'lastName' => mysql_real_escape_string($_POST['last_name'])
+                           /*Optional Information you can supply
+                'company' => mysql_real_escape_string($_POST['company']),
+                            'streetAddress' => mysql_real_escape_string($_POST['user_address']),
+                            'locality' => mysql_real_escape_string($_POST['user_city']),
+                            'region' => mysql_real_escape_string($_POST['user_state']), 
+                            //'postalCode' => mysql_real_escape_string($_POST['zip_code']),
+                            'countryCodeAlpha2' => mysql_real_escape_string($_POST['user_country'])
+                  */
+                        )
+                    )
+                ));
+        if ($result->success) {
+            dd($result);
+           //Do your stuff
+           //$creditCardToken = $result->customer->creditCards[0]->token;
+           //echo("Customer ID: " . $result->customer->id . "<br />");
+           //echo("Credit card ID: " . $result->customer->creditCards[0]->token . "<br />");
+        } else {
+            foreach ($result->errors->deepAll() as $error) {
+                $errorFound = $error->message . "<br />";
+            }
+            echo $errorFound ;
+            exit;
         }
     }
 

@@ -109,4 +109,4 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('checkout', 'BraintreeController@checkout');
 		Route::post('/braintree/token', 'BraintreeController@token');
 
-		//Route::get('payment', 'BraintreeController')
+		Route::get('payment/form', 'BraintreeController@getForm');

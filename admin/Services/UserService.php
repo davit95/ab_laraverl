@@ -72,7 +72,6 @@ class UserService implements UserInterface
 		return $this->owner->where('name', $name)->first();
 	}
 
-
 	/**
 	 * get all users
 	 */
