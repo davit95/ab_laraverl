@@ -189,7 +189,7 @@ class InvoicesController extends Controller
           ]
         );
         $result = \Braintree_Transaction::submitForSettlement($result->transaction->id);
-        dd($result);
+        //dd($result);
         //dd($result);
 
         /**/
