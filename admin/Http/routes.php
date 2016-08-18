@@ -94,6 +94,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/customers/{id}' , 'CsrController@getCustomerInfo');
 	Route::get('/customers/{id}/manage-balance' , 'CsrController@manangBalance');
 	Route::post('/customer-status/{id}' , 'CustomersController@UpdateStatus');
+	Route::post('/webhooks' , 'InvoicesController@webhooks');
 });
 
 Route::group(['middleware' => 'client_user'], function () {

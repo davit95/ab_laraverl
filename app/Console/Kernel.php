@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\OwnersSeeder::class,
         \App\Console\Commands\AwsImagesSeoDataMigration::class,
         \App\Console\Commands\LocationSocialMetaDataMigration::class,
+        \App\Console\Commands\ChangePaymentStatus::class,
        
 
     ];

@@ -42,6 +42,9 @@ class InvoicesController extends Controller
         $total_price = 0;
         foreach ($all_invoices as $invoice) {
             $total_price = $total_price + $invoice->price;
+            if(!$invoice || !$invoice->customer) {
+                throw new Exception("Invalid invoice", 1);
+            }
         }
         $invoice_id = rand(1,999999999);
 
@@ -56,9 +59,7 @@ class InvoicesController extends Controller
             throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);
             
         }
-        if(!$invoice || !$invoice->customer) {
-            throw new Exception("Invalid invoice", 1);
-        }
+        
         $customer = $userService->getUser($id);
         //dd($customer);
         $amount    = $total_price;
@@ -77,8 +78,9 @@ class InvoicesController extends Controller
             'amount' => 2000
           ]
         );
-        dd($result);
+        // 
 
+        dd($result);
         if($braintree_enviorenment == 'sandbox') {
             // logic for sandox mode
             if($result->success) {
@@ -186,8 +188,8 @@ class InvoicesController extends Controller
             'amount' => $invoice->price
           ]
         );
-        //dd($result);
-
+        $result = \Braintree_Transaction::submitForSettlement($result->transaction->id);
+        dd($result);
         //dd($result);
 
         /**/
@@ -267,5 +269,11 @@ class InvoicesController extends Controller
             return false;
         }
         return true;
+    }
+
+
+    public function webhooks(Request $request)
+    {
+        dd($request->all());
     }
 }
