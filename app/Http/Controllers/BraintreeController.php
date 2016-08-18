@@ -41,6 +41,12 @@ class BraintreeController extends Controller
         //
     }
 
+    public function webhooks(Request $request)
+    {
+        \Log::info(json_encode($request->all()));
+        //dd($request->all());
+    }
+
     /**
      * Display the specified resource.
      *

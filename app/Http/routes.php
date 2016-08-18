@@ -110,3 +110,5 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('/braintree/token', 'BraintreeController@token');
 
 		Route::get('payment/form', 'BraintreeController@getForm');
+
+		Route::post('/webhooks' , 'BraintreeController@webhooks');

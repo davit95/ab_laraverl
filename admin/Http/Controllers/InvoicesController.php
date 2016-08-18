@@ -181,6 +181,7 @@ class InvoicesController extends Controller
         //$customer = \Braintree_Customer::find($customer->customer->id);
         //dd($customer->customer->creditCards[0]->token);
         $customer = unserialize($customer->customer_serialized_result);
+        //dd($customer);
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,
@@ -271,9 +272,4 @@ class InvoicesController extends Controller
         return true;
     }
 
-
-    public function webhooks(Request $request)
-    {
-        dd($request->all());
-    }
 }
