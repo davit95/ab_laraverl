@@ -79,8 +79,6 @@ class InvoicesController extends Controller
           ]
         );
         // 
-
-        dd($result);
         if($braintree_enviorenment == 'sandbox') {
             // logic for sandox mode
             if($result->success) {
@@ -222,14 +220,14 @@ class InvoicesController extends Controller
                 if($new_invoice) {
                     $invoice = $invoiceService->updateInvoiceParams($id, $attributes);
                     if(null !== $invoice) {
-                        return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                        return redirect('/csr')->withSuccess('you must wait until your payment approve');
                     } else {
                         //something whent wrong
                     }
                 } else {
                     $invoice = $invoiceService->updateInvoiceParamsById($id, $attributes);
                     if($invoice) {
-                        return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                        return redirect('/csr')->withSuccess('you must wait until your payment approve');
                     } else {
                         // something whent wrong
                     }

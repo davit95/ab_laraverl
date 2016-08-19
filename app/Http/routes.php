@@ -102,6 +102,7 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('change-currency', 'AvoPagesController@changeCurrency');
 
 		
+		Route::post('/webhooks' , 'BraintreeController@webhooks');
 	});
 
 		Route::get('braintree', 'BraintreeController@getForm');
@@ -111,4 +112,3 @@ Route::group(['before' => 'auth.basic'], function () {
 
 		Route::get('payment/form', 'BraintreeController@getForm');
 
-		Route::post('/webhooks' , 'BraintreeController@webhooks');
