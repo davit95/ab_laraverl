@@ -247,7 +247,7 @@ class UserService implements UserInterface
 		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->orWhere(function($q) use($customer_id) {
 			$q->where('payment_type', 'recurring')->where('status', '<>' ,'approved')->where('customer_id', $customer_id);
 		})->where('status', '<>', 'declined')->get();
-
+		$basic_invoices = $basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->get();
 		// foreach ($basic_invoices as $invoice) {
 		// 	if($invoice->recurring_period_within_month == $invoice->recurring_attempts) {
 		// 		$pending_invoice_reccuring_attempt = $this->invoice->where('basic_invoice_id', $invoice->id)->orderBy('id', 'DESC')->first()->recurring_attempts;
