@@ -138,6 +138,7 @@ class InvoicesController extends Controller
             throw new Exception("Invalid invoice", 1);
         }
         $customer = $invoice->customer;
+        $customer_id = $customer->id;
         //dd($customer);
         // if(!$this->checkCustomerCreditCardCredentials($customer)) {
         //     throw new Exception("The Customer CC credentials are invalid", 1);
@@ -220,14 +221,14 @@ class InvoicesController extends Controller
                 if($new_invoice) {
                     $invoice = $invoiceService->updateInvoiceParams($id, $attributes);
                     if(null !== $invoice) {
-                        return redirect('/csr')->withSuccess('you must wait until your payment approve');
+                        return redirect('/customers/'.$customer_id)->withSuccess('you must wait until your payment approve');
                     } else {
                         //something whent wrong
                     }
                 } else {
                     $invoice = $invoiceService->updateInvoiceParamsById($id, $attributes);
                     if($invoice) {
-                        return redirect('/csr')->withSuccess('you must wait until your payment approve');
+                        return redirect('/customers/'.$customer_id)->withSuccess('you must wait until your payment approve');
                     } else {
                         // something whent wrong
                     }
