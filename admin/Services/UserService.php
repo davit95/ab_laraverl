@@ -233,9 +233,7 @@ class UserService implements UserInterface
 		// dd($this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->orWhere(function($q) {
 		// 	$q->where('payment_type', 'recurring')->where('status', 'pending');
 		// })->where('status', '<>', 'declined')->get());
-		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->orWhere(function($q) {
-			$q->where('payment_type', 'recurring')->where('status', '<>' ,'approved');
-		})->where('status', '<>', 'declined')->get();
+		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->get();
 	}
 
 	public function getCustomerDeclinedInvoices($customer_id)
@@ -245,8 +243,10 @@ class UserService implements UserInterface
 
 	public function getCustomerCompletedInvoices($customer_id)
 	{
-		
-		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->get();
+		//dd($customer_id);
+		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->orWhere(function($q) use($customer_id) {
+			$q->where('payment_type', 'recurring')->where('status', '<>' ,'approved')->where('customer_id', $customer_id);
+		})->where('status', '<>', 'declined')->get();
 
 		// foreach ($basic_invoices as $invoice) {
 		// 	if($invoice->recurring_period_within_month == $invoice->recurring_attempts) {
