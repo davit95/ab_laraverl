@@ -134,6 +134,7 @@ class AvoPagesController extends Controller {
 			if(null !== $user = $customerService->createCustomer($inputs, $center)) {
 				$tempCartItemService->updateUserId($temp_user_id, $user->id);
 				$customer_id = $user->id;
+				\Auth::loginUsingId($user->id);
 
 				$braintree_enviorenment = config('braintree.env');
 				$braintree_configs = [];
@@ -189,42 +190,44 @@ class AvoPagesController extends Controller {
 		
 		// dd($card_items->toArray());
 		// dd($inputs);
-		foreach ($card_items as $value) {
-			$price = 0;
-			if($value->type == 'vo') { 
-				$price = $value->sum;
-			} elseif($value->type == 'mr') {
-				$price = $value->price_due;
-			} elseif($value->type == 'lr') {
-				$price = $value->price;
-			}
+		// foreach ($card_items as $value) {
+		// 	$price = 0;
+		// 	if($value->type == 'vo') { 
+		// 		$price = $value->sum;
+		// 	} elseif($value->type == 'mr') {
+		// 		$price = $value->price_due;
+		// 	} elseif($value->type == 'lr') {
+		// 		$price = $value->price;
+		// 	}
 
-			$item_id = null;
-			if($value->type == 'vo') { 
-				$item_id = $value->center_id;
-			} elseif($value->type == 'mr') {
-				$item_id = $value->mr_id;
-			} elseif($value->type == 'lr') {
-				$item_id = $value->lr_id;
-			}
-			$temp['type'] = $value->type;
-			$temp['payment_type'] = 'initial';
-			$temp['item_id'] = $item_id;
-			$temp['price'] = $price;
-			$temp['is_recurring'] = $value->type == 'vo' ? 1 : 0;
-			$temp['recurring_period_within_month'] = $value->type == 'vo' ? $value->monthly_period : null;
-			$temp['recurring_attempts'] = $value->type == 'vo' ? 0 : null;
-			$temp['customer_id'] = $customer_id;
-			$temp['status'] = 'pending';
-			$temp['payment_response'] = null;
-			$temp['serialized_card_item_info'] = serialize($value->toArray());
-			$temp['created_at'] = Carbon::now()->__toString();
-			$temp['updated_at'] = Carbon::now()->__toString();
-			$invoice_insertable[] = $temp;
-		}
-		session(['customer_information' => $inputs]);
-		$invoice->insert($invoice_insertable);
+		// 	$item_id = null;
+		// 	if($value->type == 'vo') { 
+		// 		$item_id = $value->center_id;
+		// 	} elseif($value->type == 'mr') {
+		// 		$item_id = $value->mr_id;
+		// 	} elseif($value->type == 'lr') {
+		// 		$item_id = $value->lr_id;
+		// 	}
+		// 	$temp['type'] = $value->type;
+		// 	$temp['payment_type'] = 'initial';
+		// 	$temp['item_id'] = $item_id;
+		// 	$temp['price'] = $price;
+		// 	$temp['is_recurring'] = $value->type == 'vo' ? 1 : 0;
+		// 	$temp['recurring_period_within_month'] = $value->type == 'vo' ? $value->monthly_period : null;
+		// 	$temp['recurring_attempts'] = $value->type == 'vo' ? 0 : null;
+		// 	$temp['customer_id'] = $customer_id;
+		// 	$temp['status'] = 'pending';
+		// 	$temp['payment_response'] = null;
+		// 	$temp['serialized_card_item_info'] = serialize($value->toArray());
+		// 	$temp['created_at'] = Carbon::now()->__toString();
+		// 	$temp['updated_at'] = Carbon::now()->__toString();
+		// 	$invoice_insertable[] = $temp;
+		// }
+		// session(['customer_information' => $inputs]);
+		//$invoice->insert($invoice_insertable);
 		// dd($invoice_insertable);
+		//$cookie = Cookie::forget('temp_user_id');
+		//->withCookie($cookie)
 		return redirect('order-review')->withSuccess('Customer has been saccessfully created');
 	}
 
@@ -273,6 +276,51 @@ class AvoPagesController extends Controller {
          			}
          		}	
 			}
+ 		return $items;
+	}
+	private function getUsersTempCardItems()
+	{
+			$price_total = 0;
+         		$items = $this->tempCartItemService->getItemsByUserId(\Auth::id());
+         		// dd($items);
+         		for($i = count($items) -1; $i >= 0; $i--){
+         			if($i == count($items) -1) {
+         				if($items[$i]->type == 'mr'){
+         					$mr_start_time        = strtotime($items[$i]->mr_start_time);
+			                $mr_end_time          = strtotime($items[$i]->mr_end_time);
+			                $items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+			                $items[$i]->price_due      = $items[$i]->price*30/100;
+			                $items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+			                $price_total += $items[$i]->price_due;
+         				}
+         				if ($items[$i]->type == 'vo') {
+			                $items[$i]->sum = $items[$i]->price + $items[$i]->vo_mail_forwarding_price+100;
+			                $price_total += $items[$i]->sum;
+		            	}
+			            if ($items[$i]->type == 'lr') {
+			                $price_total += $items[$i]->price;
+		            	}
+         			}
+         			else{
+         				if($items[$i]->type == 'mr'){
+         					$mr_start_time        = strtotime($items[$i]->mr_start_time);
+			                $mr_end_time          = strtotime($items[$i]->mr_end_time);
+			                $items[$i]->price_per_hour = $items[$i]->price/(($mr_end_time-$mr_start_time)/3600);
+			                $items[$i]->price = $items[$i]->price + $items[$i+1]->price_due;
+			                $items[$i]->price_due      = $items[$i]->price*30/100;
+			                $items[$i]->price_total    = $items[$i]->price-$items[$i]->price_due;
+			                $price_total += $items[$i]->price_due;
+         				}
+         				if ($items[$i]->type == 'vo') {
+			                $items[$i]->sum = $items[$i]->price + $items[$i]->vo_mail_forwarding_price+100;
+			                $price_total += $items[$i]->sum;
+			                
+		            	}
+			            if ($items[$i]->type == 'lr') {
+			                $price_total += $items[$i]->price;
+		            	}
+         			}
+         		}	
  		return $items;
 	}
 
@@ -411,6 +459,8 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function sendcontact(Center $center, Guard $auth, SendContactrequest $request, CookieJar $cookieJar, TempCartItemService $tempCartItemService) {
+        // $cookieJar->unqueue('temp_user_id');
+        // $cookieJar->queue('temp_user_id', null, 0);
         $inputs = $request->all(); 
         // dd($request->all());
         session(['term' => $inputs['term']]);
@@ -435,13 +485,17 @@ class AvoPagesController extends Controller {
         $inputs['price']   = $price;
         $inputs['vo_plan'] = $package_option;
         if ($auth->guest()) {
+        	//dump('sdfsdf');
+        	//return 'sdfsdfsdf';
+        	//dd(Cookie::get('temp_user_id'), Cookie::forget('temp_user_id'));
             if (null != $cookie = Cookie::get('temp_user_id')) {
                 $temp_user_id = $cookie;
             } else {
+            	//dd('aa');
                 $temp_user_id = str_random(40);
                 $cookieJar->queue('temp_user_id', $temp_user_id, 999999);
             }
-            $inputs['user_id'] = session('user_id');
+            //$inputs['user_id'] = session('user_id');
             $inputs['temp_user_id'] = $temp_user_id;
             if(isset($inputs['term'])) {
 	            $inputs['monthly_period'] = $inputs['term']; 
@@ -453,8 +507,29 @@ class AvoPagesController extends Controller {
                     return redirect('/customer-information')->withCenterid($center_id);
                 }
             }
+        } else {
+        	if (null != $cookie = Cookie::get('temp_user_id')) {
+                $temp_user_id = $cookie;
+            } else {
+            	//dd('aa');
+                $temp_user_id = str_random(40);
+                $cookieJar->queue('temp_user_id', $temp_user_id, 999999);
+            }
+            //$inputs['user_id'] = session('user_id');
+            $inputs['temp_user_id'] = $temp_user_id;
+            if(isset($inputs['term'])) {
+	            $inputs['monthly_period'] = $inputs['term']; 
+            }
+            if (null != $tempCartItemService->create($inputs)) {
+                if ($request->has('live_receptionist')) {
+                    return redirect('/customize-phone');
+                } else {
+                    return redirect('/order-review')->withCenterid($center_id);
+                }
+            }
+        	//return redirect('order-review');
         }
-        return redirect()->back()->withSuccess('Successfully send!');
+        //return redirect()->back()->withSuccess('Successfully send!');
     }
 
 	public function sendContactThankYou() {
@@ -492,9 +567,51 @@ class AvoPagesController extends Controller {
 		return view('avo-pages.faq');
 	}
 
-	public function getNotarPage(CenterService $centerService)
-	{
-		return view('virtual-offices.notar', ['customer_info' => session('customer_information')]);
+	public function redirectNotarPage() {
+		$cookie = Cookie::forget('temp_user_id');
+		return redirect('/notar')->withCookie($cookie);
+	}
+
+	public function notar(CenterService $centerService, Invoice $invoice) {
+		$card_items = $this->getUsersTempCardItems();
+		foreach ($card_items as $value) {
+			$price = 0;
+			if($value->type == 'vo') { 
+				$price = $value->sum;
+			} elseif($value->type == 'mr') {
+				$price = $value->price_due;
+			} elseif($value->type == 'lr') {
+				$price = $value->price;
+			}
+
+			$item_id = null;
+			if($value->type == 'vo') { 
+				$item_id = $value->center_id;
+			} elseif($value->type == 'mr') {
+				$item_id = $value->mr_id;
+			} elseif($value->type == 'lr') {
+				$item_id = $value->lr_id;
+			}
+			$temp['type'] = $value->type;
+			$temp['payment_type'] = 'initial';
+			$temp['item_id'] = $item_id;
+			$temp['price'] = $price;
+			$temp['is_recurring'] = $value->type == 'vo' ? 1 : 0;
+			$temp['recurring_period_within_month'] = $value->type == 'vo' ? $value->monthly_period : null;
+			$temp['recurring_attempts'] = $value->type == 'vo' ? 0 : null;
+			$temp['customer_id'] = \Auth::id();
+			$temp['status'] = 'pending';
+			$temp['payment_response'] = null;
+			$temp['serialized_card_item_info'] = serialize($value->toArray());
+			$temp['created_at'] = Carbon::now()->__toString();
+			$temp['updated_at'] = Carbon::now()->__toString();
+			$invoice_insertable[] = $temp;
+		}
+		//dd($invoice_insertable);
+		//session(['customer_information' => $inputs]);
+		$invoice->insert($invoice_insertable);
+		$cookie = Cookie::forget('temp_user_id');
+		return view('virtual-offices.notar', ['customer_info' => session('customer_information')])->withCookie($cookie);
 	}
 
 	public function downloadPdf(CenterService $centerService)

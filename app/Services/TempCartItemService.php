@@ -58,12 +58,19 @@ class TempCartItemService {
 	}
 
 	public function updateUserId($temp_user_id, $id){
-		$cart_item = $this->tempCartItem->where('temp_user_id', $temp_user_id)->orderBy('created_at', 'DESC')->first();
+		$cart_item = $this->tempCartItem->where('temp_user_id', $temp_user_id)->get();
+		//dd($cart_item);
 		if (is_null($cart_item)) {
 			return false;
 		}
-		$cart_item->user_id  = $id;
+		foreach ($cart_item as $item) {
+			$item->update(['user_id' => $id]);
+		}
+		return true;
+	}
 
-		return $cart_item->save();
+	public function getItemsByUserId($id)
+	{
+		return $this->tempCartItem->where('user_id', $id)->orderBy('updated_at', 'DESC')->orderBy('type', 'DESC')->get();
 	}
 }
