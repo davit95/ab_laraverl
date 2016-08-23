@@ -14,7 +14,7 @@
             <div class="detailsTopWrap2 changeMtop2">
                 <div class="LeftCart">
 
-                    @forelse($items->reverse() as $item)
+                    @forelse($items as $item)
                         @include('cart.parts.item')
                     @empty
                         <p>

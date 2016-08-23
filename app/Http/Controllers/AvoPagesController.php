@@ -574,6 +574,8 @@ class AvoPagesController extends Controller {
 
 	public function notar(CenterService $centerService, Invoice $invoice) {
 		$card_items = $this->getUsersTempCardItems();
+		//dd($card_items);
+		$invoice_insertable = [];
 		foreach ($card_items as $value) {
 			$price = 0;
 			if($value->type == 'vo') { 

@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Models\Package;
+use App\Models\Invoice;
 use App\Models\TempCartItem;
 
 class TempCartItemService {
-	public function __construct(TempCartItem $tempCartItem, Package $package) {
+	public function __construct(TempCartItem $tempCartItem, Package $package, Invoice $invoice) {
 		$this->tempCartItem = $tempCartItem;
 		$this->package      = $package;
+		$this->invoice      = $invoice;
 	}
 
 	/**
@@ -72,5 +74,10 @@ class TempCartItemService {
 	public function getItemsByUserId($id)
 	{
 		return $this->tempCartItem->where('user_id', $id)->orderBy('updated_at', 'DESC')->orderBy('type', 'DESC')->get();
+	}
+
+	public function getCartItemsById($id)
+	{
+		return $this->tempCartItem->where('user_id', \Auth::id())->orderBy('updated_at', 'DESC')->orderBy('type', 'DESC')->get();
 	}
 }
