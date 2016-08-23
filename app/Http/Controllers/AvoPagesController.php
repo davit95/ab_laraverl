@@ -517,6 +517,7 @@ class AvoPagesController extends Controller {
             }
             //$inputs['user_id'] = session('user_id');
             $inputs['temp_user_id'] = $temp_user_id;
+            $inputs['user_id'] = \Auth::id();
             if(isset($inputs['term'])) {
 	            $inputs['monthly_period'] = $inputs['term']; 
             }
