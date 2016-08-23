@@ -362,6 +362,7 @@ class AvoPagesController extends Controller {
 		}
 		//dd(\Auth::user());
 		$customer = session('customer_information');
+		$customer = \Auth::user();
 		$price_total = 0;
 		$has_vo      = false;
 		if (null != $temp_user_id = Cookie::get('temp_user_id')) {
