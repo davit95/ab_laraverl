@@ -62,8 +62,8 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('/live-receptionist-add-to-cart', 'LiveReceptionistsController@addToCart');
 
 		// Avo pages
-		Route::get('/virtual-offices-confirmation','AvoPagesController@redirectNotarPage');
-		Route::get('/notar','AvoPagesController@notar');
+		Route::get('/virtual-offices-confirmation','AvoPagesController@notar');
+		Route::get('/notar','AvoPagesController@redirectNotarPage');
 		Route::get('/downloadPdf', 'AvoPagesController@downloadPdf');
 		Route::get('/all-features', 'AvoPagesController@allFeatures');
 		Route::get('/customize-phone', 'AvoPagesController@customizePhone');

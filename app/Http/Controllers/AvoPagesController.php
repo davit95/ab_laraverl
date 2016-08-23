@@ -569,52 +569,58 @@ class AvoPagesController extends Controller {
 	}
 
 	public function redirectNotarPage() {
-		$cookie = Cookie::forget('temp_user_id');
-		return redirect('/notar')->withCookie($cookie);
+		return view('virtual-offices.notar', ['customer_info' => session('customer_information')]);
+		//return redirect('/notar')->withCookie($cookie);
 	}
 
 	public function notar(CenterService $centerService, Invoice $invoice) {
-		$card_items = $this->getUsersTempCardItems();
-		//dd($card_items);
+		$temp_user_id = Cookie::get('temp_user_id');
 		$invoice_insertable = [];
-		foreach ($card_items as $value) {
-			$price = 0;
-			if($value->type == 'vo') { 
-				$price = $value->sum;
-			} elseif($value->type == 'mr') {
-				$price = $value->price_due;
-			} elseif($value->type == 'lr') {
-				$price = $value->price;
-			}
+		if($temp_user_id) {
+			$card_items = $this->getTempCardItems();
+			//dd($card_items);
+			$invoice_insertable = [];
+			foreach ($card_items as $value) {
+				$price = 0;
+				if($value->type == 'vo') { 
+					$price = $value->sum;
+				} elseif($value->type == 'mr') {
+					$price = $value->price_due;
+				} elseif($value->type == 'lr') {
+					$price = $value->price;
+				}
 
-			$item_id = null;
-			if($value->type == 'vo') { 
-				$item_id = $value->center_id;
-			} elseif($value->type == 'mr') {
-				$item_id = $value->mr_id;
-			} elseif($value->type == 'lr') {
-				$item_id = $value->lr_id;
+				$item_id = null;
+				if($value->type == 'vo') { 
+					$item_id = $value->center_id;
+				} elseif($value->type == 'mr') {
+					$item_id = $value->mr_id;
+				} elseif($value->type == 'lr') {
+					$item_id = $value->lr_id;
+				}
+				$temp['type'] = $value->type;
+				$temp['payment_type'] = 'initial';
+				$temp['item_id'] = $item_id;
+				$temp['price'] = $price;
+				$temp['is_recurring'] = $value->type == 'vo' ? 1 : 0;
+				$temp['recurring_period_within_month'] = $value->type == 'vo' ? $value->monthly_period : null;
+				$temp['recurring_attempts'] = $value->type == 'vo' ? 0 : null;
+				$temp['customer_id'] = \Auth::id();
+				$temp['status'] = 'pending';
+				$temp['payment_response'] = null;
+				$temp['serialized_card_item_info'] = serialize($value->toArray());
+				$temp['created_at'] = Carbon::now()->__toString();
+				$temp['updated_at'] = Carbon::now()->__toString();
+				$invoice_insertable[] = $temp;
 			}
-			$temp['type'] = $value->type;
-			$temp['payment_type'] = 'initial';
-			$temp['item_id'] = $item_id;
-			$temp['price'] = $price;
-			$temp['is_recurring'] = $value->type == 'vo' ? 1 : 0;
-			$temp['recurring_period_within_month'] = $value->type == 'vo' ? $value->monthly_period : null;
-			$temp['recurring_attempts'] = $value->type == 'vo' ? 0 : null;
-			$temp['customer_id'] = \Auth::id();
-			$temp['status'] = 'pending';
-			$temp['payment_response'] = null;
-			$temp['serialized_card_item_info'] = serialize($value->toArray());
-			$temp['created_at'] = Carbon::now()->__toString();
-			$temp['updated_at'] = Carbon::now()->__toString();
-			$invoice_insertable[] = $temp;
+			//dd($invoice_insertable);
+			//session(['customer_information' => $inputs]);
+			$invoice->insert($invoice_insertable);
+			$cookie = Cookie::forget('temp_user_id');
+			return redirect('notar')->withCookie($cookie);
 		}
-		//dd($invoice_insertable);
-		//session(['customer_information' => $inputs]);
-		$invoice->insert($invoice_insertable);
-		$cookie = Cookie::forget('temp_user_id');
-		return view('virtual-offices.notar', ['customer_info' => session('customer_information')])->withCookie($cookie);
+		//dd('aaaa');
+		return redirect('notar');
 	}
 
 	public function downloadPdf(CenterService $centerService)
