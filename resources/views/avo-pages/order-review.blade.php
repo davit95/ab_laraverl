@@ -188,8 +188,8 @@
                             <p>                            
                                 <span class="mediumBold">Name:</span> {{ $customer->first_name }} {{ $customer->last_name }}<br />
                                 <span class="mediumBold">Company:</span> {{ $customer->company_name }}<br />
-                                <span class="mediumBold">Address:</span> {{ $customer->address1 }}<br /> {{ isset($customer->address2)?$customer->address2:'' }} {{ isset($customer->city)?$customer->city:'' }}, {{ isset($customer->state)?$customer->state:'' }}  {{ $customer->postal_code }}<br />
-                                <span class="mediumBold">Country:</span> {{ isset($customer->country)?$customer->country:'No selected country' }}<br>
+                                <span class="mediumBold">Address:</span> {{ $customer->address1 }}<br /> {{ isset($customer->address2)?$customer->address2:'' }} {{ isset($customer->city)?$customer->city->name:'' }}, {{ isset($customer->state)?$customer->state->name:'' }}  {{ $customer->postal_code }}<br />
+                                <span class="mediumBold">Country:</span> {{ isset($customer->country)?$customer->country->name:'No selected country' }}<br>
                                 <span class="mediumBold">Phone:</span> {{ $customer->phone }}<br />
                                 <span class="mediumBold">Email:</span> {{ $customer->email }}<br><br>
                                 <a href="{{ url('customer-information') }}" class="aqua">Edit Your Information</a><br>

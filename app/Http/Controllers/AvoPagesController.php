@@ -99,6 +99,7 @@ class AvoPagesController extends Controller {
 	 * @return Response
 	 */
 	public function customerInformation(CenterService $centerService, TelCountryService $telCountryService, Request $request) {
+		//dd(\Auth::user());
 		$country_codes = $telCountryService->getAllCountriesWithList();	
 		$center = $centerService->getCenterById(session()->get('centerid'));	
 		isset($center->email_flag) && $center->email_flag == "Y" ? $email_flag = true : $email_flag = false;
@@ -463,6 +464,9 @@ class AvoPagesController extends Controller {
         // $cookieJar->queue('temp_user_id', null, 0);
         $inputs = $request->all(); 
         // dd($request->all());
+        if(\Auth::check()) {
+			\Auth::logout();
+		}
         session(['term' => $inputs['term']]);
         if (!isset($inputs['package_option'])) {
             return redirect('thank-you');
