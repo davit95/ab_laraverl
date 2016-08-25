@@ -42,6 +42,7 @@ class UsersController extends Controller
 
     public function getUserById($id, UserService $userService) {
         $user = $userService->getUserById($id);
-        return response()->json(['user' => $user]);
+        $user_role = $user->roles;
+        return response()->json(['user' => $user, 'user_role' => $user_role]);
     }
 }
