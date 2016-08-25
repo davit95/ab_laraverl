@@ -42,7 +42,7 @@ class UsersController extends Controller
 
     public function getUserById($id, UserService $userService) {
         $user = $userService->getUserById($id);
-        $user_role = $user->roles;
+        $user_role = $user->role->name;
         return response()->json(['user' => $user, 'user_role' => $user_role]);
     }
 }
