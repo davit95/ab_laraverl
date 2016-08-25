@@ -40,7 +40,7 @@ class UsersController extends Controller
         return response()->json(['status' => 'success', 'abcn_user_id' => $user_id]);
     }
 
-    public function getUserById($id) {
+    public function getUserById($id, UserService $userService) {
         $user = $userService->getUserById($id);
         return response()->json(['user' => $user]);
     }

@@ -12,6 +12,6 @@ class UserService {
 
 	public function getUserById($user_id) 
 	{
-		return $this->user->find($user_id);
+		return $this->user->where('id', $user_id)->first();
 	}
 }
