@@ -48,4 +48,14 @@ class UsersController extends Controller
         }
         return response()->json(['user' => $user, 'user_role' => $user_role]);
     }
+
+    public function updateUser($id, Request $request, UserService $userService) 
+    {
+        $user_details = $request->all();
+        if(null !== $userService->updateUser($id, $user_details)) {
+            return response()->json(['status' => 'success', 'message' => 'Contact has been successfully updated']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
+        }
+    }
 }
