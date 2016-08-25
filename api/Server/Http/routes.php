@@ -38,4 +38,5 @@ Route::resource('/location', 'LocationsController');
 Route::post('/authorization', 'OAuthController@postAuthorization');
 Route::post('/refresh-token', 'OAuthController@postRefreshToken');
 Route::post('/add-user-from-allwork', 'UsersController@postAddUserFromAllwork');
+Route::get('/users/{id}', 'UsersController@getUserById');
 Route::post('/check-access-token', 'OAuthController@postCheckAccessToken');
