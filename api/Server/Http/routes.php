@@ -41,4 +41,4 @@ Route::post('/add-user-from-allwork', 'UsersController@postAddUserFromAllwork');
 Route::post('/check-access-token', 'OAuthController@postCheckAccessToken');
 
 Route::get('/users/{id}', 'UsersController@getUserById');
-Route::put('/users/{id}/update', 'UsersController@updateUser');
+Route::post('/users/{id}/update', 'UsersController@updateUser');
