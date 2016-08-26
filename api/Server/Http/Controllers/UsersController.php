@@ -74,7 +74,7 @@ class UsersController extends Controller
             $result = User::find($auth_id)->allwork_staffs()->attach([$staff->id]);
         }
         $user_id = isset($user) ? $user->id : null;
-        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $staff]);
+        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $user]);
 
     }
 }
