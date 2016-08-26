@@ -69,14 +69,8 @@ class UsersController extends Controller
         $inputs['password'] = bcrypt($request->get('password'));
         $auth_id = $request->get('auth_id');
         $user    = User::create($inputs);
-        if($user) {
-            $staff   = Staff::create(['id' => $user->id, 'email' => $user->email]);
-        }
-        if($staff) {
-            $result = User::find($auth_id)->allwork_staffs()->attach([$staff->id]);
-        } else {
-            $result = User::find($auth_id)->delete();
-        }
+        $staff   = Staff::create(['id' => $user->id, 'email' => $user->email]);
+        $result = User::find($auth_id)->allwork_staffs()->attach([$staff->id]);
         $user_id = isset($user) ? $user->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $user]);
 
