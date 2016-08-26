@@ -74,4 +74,9 @@ class UsersController extends Controller
         $user_id = isset($staff) ? $staff->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $staff->id, 'staff' => $staff]);
     }
+
+    public function changePassword(Request $request, UserService $userService)
+    {
+        $inputs  = $request->all()['inputs'];
+    }
 }
