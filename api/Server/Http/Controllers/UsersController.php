@@ -63,16 +63,15 @@ class UsersController extends Controller
 
     public function postAddStaffFromAllwork(Request $request, UserService $userService)
     {
-        $inputs  = $request->inputs;
+        $inputs  = $request->all()['inputs'];
         $role    = Role::where('name', 'staff')->first();
         $role_id = isset($role) ? $role->id : null;
         $inputs['role_id'] = $role_id;
-        $inputs['password'] = bcrypt($request->get('password'));
-        $auth_id = $request->get('auth_id');
+        $inputs['password'] = bcrypt($inputs['password']);
+        $auth_id = $inputs['auth_id'];
         $staff    = User::create($inputs);
         $result =  UserStaff::create(['user_id' => $auth_id, 'staff_id' => $staff->id]);
         $user_id = isset($staff) ? $staff->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $staff->id, 'staff' => $staff]);
-
     }
 }
