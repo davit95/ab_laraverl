@@ -7,6 +7,7 @@ use App\Exceptions\Custom\FailedTransactionException;
 use App\User;
 use App\Models\Role;
 use App\Models\Staff;
+use App\Models\UserStaff;
 use Api\Server\Services\UserService;
 class UsersController extends Controller
 {
@@ -69,8 +70,7 @@ class UsersController extends Controller
         $inputs['password'] = bcrypt($request->get('password'));
         $auth_id = $request->get('auth_id');
         $staff    = User::create($inputs);
-        //$staff   = Staff::create(['id' => $user->id, 'email' => $user->email]);
-        $result =  User::find($auth_id)->allwork_staffs()->attach([$staff->id]);
+        $result =  UserStaff::create(['user_id' => $auth_id, 'staff_id' => $staff->id]);
         $user_id = isset($user) ? $user->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $user]);
 
