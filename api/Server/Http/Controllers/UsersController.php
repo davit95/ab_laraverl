@@ -65,9 +65,10 @@ class UsersController extends Controller
         $role    = Role::where('name', 'staff')->first();
         $role_id = isset($role) ? $role->id : null;
         $inputs['role_id'] = $role_id;
+        $inputs['password'] = bcrypt($inputs['password']);
         $staff    = User::create($inputs);
         if($staff) {
-            $result = User::find($request->get('id'))->staffs()->attach([$staff->id]);
+            $result = User::find(6553)->staffs()->attach([$staff->id]);
         }
         $user_id = isset($user) ? $user->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $staff]);
