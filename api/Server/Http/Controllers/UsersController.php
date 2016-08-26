@@ -68,7 +68,7 @@ class UsersController extends Controller
         $inputs['password'] = bcrypt($request->get('password'));
         $staff    = User::create($inputs);
         if($staff) {
-            $result = User::find(6553)->staffs()->attach([$staff->id]);
+            $result = User::find(6553)->allwork_staffs()->attach([$staff->id]);
         }
         $user_id = isset($user) ? $user->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $staff]);

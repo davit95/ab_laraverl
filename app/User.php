@@ -108,6 +108,10 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\\Models\\Staff', 'owner_staffs', 'user_id', 'staff_id');
     }
 
+    public function allwork_staffs() {
+        return $this->belongsToMany('App\\Models\\User', 'owner_staffs', 'user_id', 'user_id');
+    }
+
     public function centers()
     {
         return $this->hasMany('App\\Models\\Center', 'id', 'center_id');
