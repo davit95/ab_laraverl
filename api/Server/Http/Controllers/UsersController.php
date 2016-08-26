@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
 use App\User;
 use App\Models\Role;
+use App\Models\Staff;
 use Api\Server\Services\UserService;
 class UsersController extends Controller
 {
@@ -66,11 +67,14 @@ class UsersController extends Controller
         $role_id = isset($role) ? $role->id : null;
         $inputs['role_id'] = $role_id;
         $inputs['password'] = bcrypt($request->get('password'));
-        $staff    = User::create($inputs);
-        if($staff) {
-            $result = User::find(6553)->allwork_staffs()->attach([$staff->id]);
+        $auth_id = $request->get('auth_id');
+        $user    = User::create($inputs);
+        $staff   = Staff::create(['id' => $user->id, 'email' => $user->email]);
+        if($staff && $user) {
+            $result = User::find($auth_id)->allwork_staffs()->attach([$staff->id]);
         }
         $user_id = isset($user) ? $user->id : null;
         return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $staff]);
+
     }
 }
