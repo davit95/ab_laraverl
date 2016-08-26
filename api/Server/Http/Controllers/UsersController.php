@@ -58,4 +58,18 @@ class UsersController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
         }
     }
+
+    public function postAddStaffFromAllwork(Request $request, UserService $userService)
+    {
+        $inputs  = $request->inputs;
+        $role    = Role::where('name', 'staff')->first();
+        $role_id = isset($role) ? $role->id : null;
+        $inputs['role_id'] = $role_id;
+        $staff    = User::create($inputs);
+        if($staff) {
+            $result = User::find($request->get('id'))->staffs()->attach([$staff->id]);
+        }
+        $user_id = isset($user) ? $user->id : null;
+        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $staff]);
+    }
 }
