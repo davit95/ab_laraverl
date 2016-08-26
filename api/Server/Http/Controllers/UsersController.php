@@ -71,8 +71,8 @@ class UsersController extends Controller
         $auth_id = $request->get('auth_id');
         $staff    = User::create($inputs);
         $result =  UserStaff::create(['user_id' => $auth_id, 'staff_id' => $staff->id]);
-        $user_id = isset($user) ? $user->id : null;
-        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $user]);
+        $user_id = isset($user) ? $staff->id : null;
+        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'staff' => $staff]);
 
     }
 }
