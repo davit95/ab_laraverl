@@ -77,6 +77,14 @@ class UsersController extends Controller
 
     public function changePassword(Request $request, UserService $userService)
     {
-        $inputs  = $request->all()['inputs'];
+        $inputs  = $request->all();
+        $auth_id = $inputs['auth_id'];
+        $new_password = bcrypt($inputs['password']);
+        $user = User::find($auth_id);
+        if(null !== $user->update(['password' => $new_password])) {
+            return response()->json(['status' => 'success', 'user' => $user]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
+        }
     }
 }
