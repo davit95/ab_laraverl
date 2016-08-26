@@ -65,7 +65,7 @@ class UsersController extends Controller
         $role    = Role::where('name', 'staff')->first();
         $role_id = isset($role) ? $role->id : null;
         $inputs['role_id'] = $role_id;
-        $inputs['password'] = bcrypt($inputs['password']);
+        $inputs['password'] = bcrypt($request->get('password'));
         $staff    = User::create($inputs);
         if($staff) {
             $result = User::find(6553)->staffs()->attach([$staff->id]);
