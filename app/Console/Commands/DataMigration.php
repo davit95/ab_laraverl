@@ -81,6 +81,7 @@ class DataMigration extends Command {
 		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');	
 		DB::setDefaultConnection('mysql');
 		$centers_old_id_lists = DB::table('centers')->lists('old_id');
+		$centers = DB::table('centers')->lists('active_flag', 'id');
 		$users_ids = DB::table('users')->lists('old_owner_id', 'id');
 		$unknown_cities_count    = 0;
 		$unknown_countries_count = 0;
@@ -187,18 +188,18 @@ class DataMigration extends Command {
 					'tax_percentage'    => $tax_percentage
 				];			
 				$bar->advance();
-			} else {
-				DB::setDefaultConnection('mysql');
-				DB::table('centers')->where('old_id', $value->CenterID)->update(['allwork_active_flag' => $value->ActiveFlag]);
-				$bar->advance();
 			}
 		}
-			$this->info('count'.count($new_collection));
+		$this->info('count'.count($new_collection));
 		if(!empty($new_collection)) {
 			DB::table('centers')->insert($new_collection);
 			$new_collection = [];
 		}
-		
+		foreach ($centers as $id => $flag) {
+		 	DB::setDefaultConnection('mysql');
+			DB::table('centers')->where('id', $id)->update(['allwork_active_flag' => $flag]);
+			$bar->advance();
+		} 
 		$bar->finish();
 		$this->info(' ✔');
 
