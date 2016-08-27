@@ -8,6 +8,7 @@ use App\User;
 use App\Models\Role;
 use App\Models\Staff;
 use App\Models\UserStaff;
+use App\Models\Company;
 use Api\Server\Services\UserService;
 class UsersController extends Controller
 {
@@ -39,7 +40,7 @@ class UsersController extends Controller
         $inputs['role_id'] = $role_id;
         $user    = User::create($inputs);
         $user_id = isset($user) ? $user->id : null;
-        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id]);
+        return response()->json(['status' => 'success', 'abcn_user_id' => $user_id, 'user' => $user]);
     }
 
     public function getUserById($id, UserService $userService) {
@@ -54,8 +55,8 @@ class UsersController extends Controller
     public function updateUser($id, Request $request, UserService $userService) 
     {
         $user_details = $request->all();
-        if(null !== $userService->updateUser($id, $user_details)) {
-            return response()->json(['status' => 'success', 'message' => 'Contact has been successfully updated']);
+        if(null !== $user = $userService->updateUser($id, $user_details)) {
+            return response()->json(['status' => 'success', 'message' => 'Contact has been successfully updated', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
         }
@@ -85,6 +86,18 @@ class UsersController extends Controller
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
+        }
+    }
+
+    public function createCompany(Request $request)
+    {
+        $inputs = $request->all();
+        $user = $inputs['user_id'];
+        $company = Company::create($inputs);
+        if($company) {
+            return response()->json(['status' => 'success', 'company' => $company]);
+        } else {
+             return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
         }
     }
 }
