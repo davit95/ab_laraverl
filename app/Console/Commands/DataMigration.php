@@ -189,10 +189,8 @@ class DataMigration extends Command {
 				$bar->advance();
 			} else {
 				DB::setDefaultConnection('mysql');
-				if(in_array($value->CenterID, $centers_old_id_lists)) {
-					DB::table('centers')->where('old_id', $value->CenterID)->update(['allwork_active_flag' => $value->ActiveFlag]);
-					$bar->advance();
-				}
+				DB::table('centers')->where('old_id', $value->CenterID)->update(['allwork_active_flag' => $value->ActiveFlag]);
+				$bar->advance();
 			}
 		}
 			$this->info('count'.count($new_collection));
