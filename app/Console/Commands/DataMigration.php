@@ -52,13 +52,13 @@ class DataMigration extends Command {
 		// $this->users_files();
 		// $this->owners();
 		// $this->products();
-		// $this->centers();
+		$this->centers();
 		// $this->centers_coordinates();
 		// $this->features();
 		// $this->centers_local_numbers();
 		// $this->centers_emails();
 		// $this->centers_prices();
-		$this->centers_filters();
+		// $this->centers_filters();
 		// $this->meeting_rooms();
 		// $this->meeting_rooms_seos();
 		// $this->meeting_rooms_options();
@@ -176,6 +176,7 @@ class DataMigration extends Command {
 					'review_date'       => $value->ReviewDate,
 					'review_comments'   => $value->ReviewComments,
 					'active_flag'       => $value->ActiveFlag,
+					//'allwork_active_flag'       => $value->ActiveFlag,
 					'email_flag'        => isset($center_contacts[$value->CenterID]) ? $center_contacts[$value->CenterID] : null,
 					'notes'             => $value->Notes,
 					'virtual_tour_url'  => $value->VirtualTourURL,
@@ -186,6 +187,12 @@ class DataMigration extends Command {
 					'tax_percentage'    => $tax_percentage
 				];			
 				$bar->advance();
+			} else {
+				DB::setDefaultConnection('mysql');
+				if(in_array($value->CenterID, $centers_old_id_lists)) {
+					DB::table('centers')->where('old_id', $value->CenterID)->update(['allwork_active_flag' => $value->ActiveFlag]);
+					$bar->advance();
+				}
 			}
 		}
 			$this->info('count'.count($new_collection));
