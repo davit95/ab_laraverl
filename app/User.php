@@ -89,6 +89,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
     }
 
+    public function company()
+    {
+        return $this->hasOne('App\Models\Company', 'id', 'user_id');
+    }
+
     public function us_state()
     {
         return $this->belongsTo('App\\Models\\UsState', 'us_state_id');
