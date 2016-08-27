@@ -578,6 +578,7 @@ class DataMigration extends Command {
 	private function centers_filters() {
 		$this->info("\n migrating centers_filters table");
 		DB::setDefaultConnection('mysql');
+		DB::table('centers_filters')->truncate();
 		$centers = DB::table('centers')->get();
 		$center_filters = DB::table('centers_filters')->get();
 		$centers_filters_center_id_lists = DB::table('centers')->lists('old_id');
