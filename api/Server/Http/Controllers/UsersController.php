@@ -49,7 +49,7 @@ class UsersController extends Controller
         if($user->role) {
             $user_role = $user->role->name;
         }
-        return response()->json(['user' => $user, 'user_role' => $user_role]);
+        return response()->json(['user' => $user, 'user_role' => $user_role, 'company' => $user->company]);
     }
 
     public function updateUser($id, Request $request, UserService $userService) 
