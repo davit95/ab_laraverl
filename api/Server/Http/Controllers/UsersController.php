@@ -92,12 +92,12 @@ class UsersController extends Controller
     public function createCompany(Request $request)
     {
         $inputs = $request->all();
-        $user = $inputs['user_id'];
         $company = Company::create($inputs);
         if($company) {
             return response()->json(['status' => 'success', 'company' => $company]);
         } else {
              return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
         }
+
     }
 }
