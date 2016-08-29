@@ -15,7 +15,7 @@ class Company extends Model
      	'us_state_id', 
      	'facebook_url', 
      	'twitter_url', 
-     	'instgram_url',
+     	'instagram_url',
      	'linkedin_url',
      	'google_url'
     ];
