@@ -96,8 +96,18 @@ class UsersController extends Controller
         if($company) {
             return response()->json(['status' => 'success', 'company' => $company]);
         } else {
-             return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
+            return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
         }
+    }
 
+    public function updateCompany($id, Request $request)
+    {
+        $company_details = $request->all();
+        $company = Company::find($id);
+        if($company->update($company_details)) {
+            return response()->json(['status' => 'success', 'company' => $company]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Ooops something went wrong']);
+        }
     }
 }

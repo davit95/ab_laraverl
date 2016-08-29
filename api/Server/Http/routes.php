@@ -45,3 +45,4 @@ Route::post('/users/{id}/update', 'UsersController@updateUser');
 Route::post('/users/add-staff-from-allwork', 'UsersController@postAddStaffFromAllwork');
 Route::post('/users/change-password', 'UsersController@changePassword');
 Route::post('/company/create', 'UsersController@createCompany');
+Route::post('/company/{id}/update', 'UsersController@updateCompany');
