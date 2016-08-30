@@ -119,8 +119,8 @@
                                 </div>
                             {!! Form::close() !!}
                         </div><!--/signin-info-->
-
                         {!! Form::model(session('customer_information'), ['class' => 'custInfoForm', 'url' => url('/customer-information') ,'method' => 'POST']) !!}
+                            
                             @if($errors->has())
                                 <div class="alert-error-custom">
                                     <ul>

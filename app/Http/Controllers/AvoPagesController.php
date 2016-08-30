@@ -122,7 +122,7 @@ class AvoPagesController extends Controller {
 		$customer = $customerService->getCustomerByEmail($email);
 		// dd($card_items);
 		if($customer) {
-			return redirect()->back()->withWarning('Email has been already taken');
+			return redirect()->back()->withErrors('Email has been already taken. Please login');
 		} else {
 			if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 				$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
