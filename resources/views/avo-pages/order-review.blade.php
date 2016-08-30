@@ -19,90 +19,113 @@
                         <div class="mcartTxt">MY CART</div>
                         <img src="images/myCart.png" class="myCartImg"/>
                     </div><!--/MyCart-->
-
-                    @foreach ($items->reverse() as $item)
-                        @if($item->type == 'mr')
-                            <div class="eachSCartWrap marginTop paddingtop">
-                                <h3 class=" bold">Meeting Room</h3>
-                                <h4 class="bold blue">ADDRESS</h4>
-                                <p>
-                                    <span>{!! is_null($center = $item->center)?'':$center->city_name !!}</span>
-                                    {!! $center->address1 !!} {!! $center->address2!!} {!! $center->city_name !!} {!! $center->us_state !!} {!! $center->postal_code !!}<br><span class="smallLine mediumBold">
-                                    {{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
-                                    {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}
-                                    </span>
-                                </p>
-                                <table width="100%">
-                                    <tr>
-                                        <td class="sideCartL2">{!! is_null($center = $item->center)?'':$center->city_name !!}:</td>
-                                        <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price_per_hour*session('rate'),2) !!}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sideCartL2">TOTAL AMOUNT:</td>
-                                        <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'), 2) !!}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sideCartL2">30% DUE NOW:</td>
-                                        <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{{ round(($item->price_due*session('rate')),2) }}</span></td>
-                                    </tr>
-                                </table>
-                                <table width="100%">
-                                    <tr>
-                                        <td class="sideCartL3">TOTAL:</td>
-                                        <td class="sideCartr2"><span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_due*session('rate')),2) !!}</span></td>
-                                    </tr>
-                                </table>
-                            </div><!--/eachSCartWrap-->
-                        @endif
-                        @if($item->type == 'vo')
-                            @if (!is_null($center = $item->center))
+                    @if(count($items) != 0)
+                        @foreach ($items as $item)
+                            @if($item->type == 'mr')
                                 <div class="eachSCartWrap marginTop paddingtop">
-                                    <h3 class=" bold">Virtual Office</h3>
+                                    <h3 class=" bold">Meeting Room</h3>
                                     <h4 class="bold blue">ADDRESS</h4>
                                     <p>
-                                        <span class="mediumBold">{!! is_null($center = $item->center)?'':$center->city_name !!}</span><br>
-                                        {!! $center->address1 !!} {!! $center->address2!!} {!! $center->city_name !!}, {!! $center->us_state !!} {!! $center->postal_code !!}<br>
+                                        <span>{!! is_null($center = $item->center)?'':$center->city_name !!}</span>
+                                        {!! $center->address1 !!} {!! $center->address2!!} {!! $center->city_name !!} {!! $center->us_state !!} {!! $center->postal_code !!}<br><span class="smallLine mediumBold">
+                                        {{ (new DateTime($item->mr_date))->format('d/m/Y') }}<br>
+                                        {{ (new DateTime($item->mr_start_time))->format('H:i a') }} - {{ (new DateTime($item->mr_end_time))->format('H:i a') }}
+                                        </span>
                                     </p>
                                     <table width="100%">
                                         <tr>
-                                            <td class="sideCartL3">{!! $item->vo_plan !!}:</td>
-                                            <td class="sideCartr2">
-                                                @if ($item->live_receptionist)
-                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price-85)*session('rate'),2) !!}</span>
-                                                @else
-                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'),2) !!}</span>
-                                                @endif
-                                                <span class="smallLine gray3"> /month</span>
-                                            </td>
+                                            <td class="sideCartL2">{!! is_null($center = $item->center)?'':$center->city_name !!}:</td>
+                                            <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price_per_hour*session('rate'),2) !!}</span></td>
                                         </tr>
                                         <tr>
-                                            <td class="sideCartL3">MAIL FORWARDING:</td>
-                                            <td class="sideCartr2">
-                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->vo_mail_forwarding_price*session('rate'),2) !!}</span>
-                                                <span class="smallLine gray3"> /month</span>
-                                            </td>
+                                            <td class="sideCartL2">TOTAL AMOUNT:</td>
+                                            <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'), 2) !!}</span></td>
                                         </tr>
-                                        @if ($item->live_receptionist)
+                                        <tr>
+                                            <td class="sideCartL2">30% DUE NOW:</td>
+                                            <td class="sideCartr2"><span class="mediumBold">{!! session('currency.symbol') !!}{{ round(($item->price_due*session('rate')),2) }}</span></td>
+                                        </tr>
+                                    </table>
+                                    <table width="100%">
+                                        <tr>
+                                            <td class="sideCartL3">TOTAL:</td>
+                                            <td class="sideCartr2"><span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price_due*session('rate')),2) !!}</span></td>
+                                        </tr>
+                                    </table>
+                                </div><!--/eachSCartWrap-->
+                            @endif
+                            @if($item->type == 'vo')
+                                @if (!is_null($center = $item->center))
+                                    <div class="eachSCartWrap marginTop paddingtop">
+                                        <h3 class=" bold">Virtual Office</h3>
+                                        <h4 class="bold blue">ADDRESS</h4>
+                                        <p>
+                                            <span class="mediumBold">{!! is_null($center = $item->center)?'':$center->city_name !!}</span><br>
+                                            {!! $center->address1 !!} {!! $center->address2!!} {!! $center->city_name !!}, {!! $center->us_state !!} {!! $center->postal_code !!}<br>
+                                        </p>
+                                        <table width="100%">
                                             <tr>
-                                                <td class="sideCartL3">LIVE RECEPTIONIST 50:</td>
+                                                <td class="sideCartL3">{!! $item->vo_plan !!}:</td>
                                                 <td class="sideCartr2">
-                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(95*session('rate'),2) !!}</span>
+                                                    @if ($item->live_receptionist)
+                                                        <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(($item->price-85)*session('rate'),2) !!}</span>
+                                                    @else
+                                                        <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->price*session('rate'),2) !!}</span>
+                                                    @endif
                                                     <span class="smallLine gray3"> /month</span>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="sideCartL3">PACKAGE DISCOUNT:</td>
+                                                <td class="sideCartL3">MAIL FORWARDING:</td>
                                                 <td class="sideCartr2">
-                                                    <span class="mediumBold">-{!! session('currency.symbol') !!}{!! round(10*session('rate'),2) !!}</span>
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round($item->vo_mail_forwarding_price*session('rate'),2) !!}</span>
                                                     <span class="smallLine gray3"> /month</span>
                                                 </td>
                                             </tr>
-                                        @endif
+                                            @if ($item->live_receptionist)
+                                                <tr>
+                                                    <td class="sideCartL3">LIVE RECEPTIONIST 50:</td>
+                                                    <td class="sideCartr2">
+                                                        <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(95*session('rate'),2) !!}</span>
+                                                        <span class="smallLine gray3"> /month</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="sideCartL3">PACKAGE DISCOUNT:</td>
+                                                    <td class="sideCartr2">
+                                                        <span class="mediumBold">-{!! session('currency.symbol') !!}{!! round(10*session('rate'),2) !!}</span>
+                                                        <span class="smallLine gray3"> /month</span>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            <tr>
+                                                <td class="sideCartL3">SET UP FEE:</td>
+                                                <td class="sideCartr2">
+                                                    <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(100*session('rate'),2) !!}</span>
+                                                    <span class="smallLine gray3">(one time only)</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="100%">
+                                            <tr>
+                                                <td class="sideCartL3">TOTAL:</td>
+                                                <td class="sideCartr2">
+                                                    <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round($item->sum*session('rate'),2) !!}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                @endif
+                            @endif
+                            @if($item->type == 'lr')
+                                <div class="eachSCartWrap marginTop paddingtop">
+                                    <h3 class="bold">Phone Plan</h3><br>
+                                    <table width="100%">
                                         <tr>
-                                            <td class="sideCartL3">SET UP FEE:</td>
+                                            <td class="sideCartL3">{!! $item->lr_name !!}:</td>
                                             <td class="sideCartr2">
-                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! round(100*session('rate'),2) !!}</span>
-                                                <span class="smallLine gray3">(one time only)</span>
+                                                <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
+                                                <span class="smallLine gray3"> /month</span>
                                             </td>
                                         </tr>
                                     </table>
@@ -110,37 +133,14 @@
                                         <tr>
                                             <td class="sideCartL3">TOTAL:</td>
                                             <td class="sideCartr2">
-                                                <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! round($item->sum*session('rate'),2) !!}</span>
+                                                <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! $item->sum*session('rate') !!}</span>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
                             @endif
-                        @endif
-                        @if($item->type == 'lr')
-                            <div class="eachSCartWrap marginTop paddingtop">
-                                <h3 class="bold">Phone Plan</h3><br>
-                                <table width="100%">
-                                    <tr>
-                                        <td class="sideCartL3">{!! $item->lr_name !!}:</td>
-                                        <td class="sideCartr2">
-                                            <span class="mediumBold">{!! session('currency.symbol') !!}{!! $item->price*session('rate') !!}</span>
-                                            <span class="smallLine gray3"> /month</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table width="100%">
-                                    <tr>
-                                        <td class="sideCartL3">TOTAL:</td>
-                                        <td class="sideCartr2">
-                                            <span class="mediumBold aqua mediumBold">{!! session('currency.symbol') !!}{!! $item->sum*session('rate') !!}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        @endif
-                    @endforeach
-
+                        @endforeach
+                    @endif
                     <table class="totalLine" width="100%">
                         <tr>
                             <td class="sideCartL3">ORDER TOTAL:</td>
@@ -188,15 +188,15 @@
                             <p>                            
                                 <span class="mediumBold">Name:</span> {{ $customer->first_name }} {{ $customer->last_name }}<br />
                                 <span class="mediumBold">Company:</span> {{ $customer->company_name }}<br />
-                                <span class="mediumBold">Address:</span> {{ $customer->address1 }}<br /> {{ isset($customer->address2)?$customer->address2:'' }} {{ isset($customer->city)?$customer->city:'' }}, {{ isset($customer->state)?$customer->state:'' }}  {{ $customer->postal_code }}<br />
-                                <span class="mediumBold">Country:</span> {{ isset($customer->country)?$customer->country:'No selected country' }}<br>
+                                <span class="mediumBold">Address:</span> {{ $customer->address1 }}<br /> {{ isset($customer->address2)?$customer->address2:'' }} {{ isset($customer->city)?$customer->city->name:'' }}, {{ isset($customer->state)?$customer->state->name:'' }}  {{ $customer->postal_code }}<br />
+                                <span class="mediumBold">Country:</span> {{ isset($customer->country)?$customer->country->name:'No selected country' }}<br>
                                 <span class="mediumBold">Phone:</span> {{ $customer->phone }}<br />
                                 <span class="mediumBold">Email:</span> {{ $customer->email }}<br><br>
                                 <a href="{{ url('customer-information') }}" class="aqua">Edit Your Information</a><br>
                             </p>
 
                             <div class="clear"></div>
-                            @if(!$has_vo)
+                            @if(!$has_vo && isset($item))
                                 <div class="recurringCharge changeMtop2 ">
                                     <h3><span class="newCust">Meeting Room Charge Agreement</span></h3>
                                     <p>You are about to request your meeting room. Alliance Virtual Offices will confirm your request within 48 hours (most likely a lot sooner); until then your meeting room is not scheduled. We will NOT charge your card until we have your meeting room completely confirmed.
@@ -222,20 +222,22 @@
                                     </p>
                                 </div>
                             @endif
-                            {!! Form::open(['name' => 'form1','url' => url('virtual-offices-confirmation'),'method' => 'POST']) !!}
+                            
+                            
+                            <!-- {!! Form::open(['name' => 'form1','url' => url('virtual-offices-confirmation'),'method' => 'POST']) !!}
                                 {!! Form::hidden('step', 'next') !!}
                                 {!! Form::hidden('multiple', '$multiple') !!}
                                 {!! Form::hidden('returning', '$returning') !!}
                                 {!! Form::submit('PLACE ORDER', ['class' => 'aquaBtn changeMtop minW']) !!}
-                            {!! Form::close() !!}
-                            </form>
+                            {!! Form::close() !!} -->
                         </div><!--/reviewInfo-->
                     </div><!--/wrapDescrip-->
                 </div><!--/StepsContentLeft-->
             </div><!--/wrapMRdetails-->
             <div class="clear"></div>
-        </div><!--/detailsTopWrap2-->
 
+        </div><!--/detailsTopWrap2-->
+            <a class = "aquaBtn changeMtop minW" href="{{url('/virtual-offices-confirmation')}}">PLACE ORDER</a>
         <div class="nearWrap">
         </div><!--/nearWrap-->
     </div>

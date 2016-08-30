@@ -37,13 +37,13 @@ class InvoiceService {
 	public function getNewInvoices()
 	{
 		$invoice_ids = $this->adminClients->where('admin_id', \Auth::id())->lists('invoice_id');
-		return $this->invoice->where('basic_invoice_id', 0)->whereNotIn('id', $invoice_ids)->get();
+		return $this->invoice->whereNotIn('id', $invoice_ids)->get();
 	}
 
 	public function getYourInvoices()
 	{
 		$invoice_ids = $this->adminClients->where('admin_id', \Auth::id())->lists('invoice_id');
-		return $this->invoice->where('basic_invoice_id', 0)->whereIn('id', $invoice_ids)->get();
+		return $this->invoice->whereIn('id', $invoice_ids)->get();
 	}
 
 	public function makeAdminCustomer($id)
@@ -64,9 +64,10 @@ class InvoiceService {
 
 	public function createInvoice($id)
 	{
+		//return true;
 		$invoice = $this->invoice->find($id);
 		//dd($invoice);
-		if($invoice->recurring_attempts != $invoice->recurring_period_within_month && $invoice->type != 'mr') {
+		if($invoice->recurring_attempts != $invoice->recurring_period_within_month - 1 && $invoice->type != 'mr') {
 			if($invoice->basic_invoice_id != 0) {
 				$id = $invoice->basic_invoice_id;
 			} else {
@@ -79,6 +80,7 @@ class InvoiceService {
 				->get()
 				->toArray();
 			$params = $this->getInvoiceParams($invoice, 'pending' , $id);
+			//dd($params, $invoice);
 			return $this->invoice->create($params);
 		}
 
@@ -120,6 +122,7 @@ class InvoiceService {
 
 	public function updateInvoiceParams($id, $payments_response)
 	{
+		//dd($id);
 		$invoice = $this->invoice->where('id', $id)->first();
 		if($invoice->basic_invoice_id != 0) {
 			$invoice_recurring_attempt = $invoice->recurring_attempts;
@@ -133,7 +136,7 @@ class InvoiceService {
 		$invoice_recurring_attempt++;
 		$invoice_perriod = $invoice->recurring_period_within_month;
 		$status = 'approved';
-		$invoice->update(['status' => $status, 'recurring_attempts' =>  $invoice_recurring_attempt, 'payment_response' => $payments_response, 'payment_type' => 'recurring']);
+		$invoice->update(['status' => $status, 'payment_response' => $payments_response, 'payment_type' => 'recurring']);
 		return $invoice;
 	}
 

@@ -1,6 +1,20 @@
 
 <?php
-//require_once '_environment.php';
+$braintree_enviorenment = config('braintree.env');
+$braintree_configs = [];
+if($braintree_enviorenment == 'production') {
+    $braintree_configs = config('braintree.production_credentials');
+} elseif($braintree_enviorenment == 'sandbox') {
+    //dd('as');
+    $braintree_configs = config('braintree.sandbox_credentials');
+} else {
+    throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);
+    
+}
+\Braintree_Configuration::environment($braintree_enviorenment);
+\Braintree_Configuration::merchantId($braintree_configs['merchant_id']);
+\Braintree_Configuration::publicKey($braintree_configs['public_key']);
+\Braintree_Configuration::privateKey($braintree_configs['private_key']);
  
 function braintree_text_field($label, $name, $result) {
 	//var_dump($label, $name, $result);exit();
@@ -23,7 +37,7 @@ function braintree_text_field($label, $name, $result) {
         <?php
         
         if (isset($result) && $result->success) { ?>
-            <h1>Braintree Transparent Redirect Response</h1>
+            <h1>Braintree Braintree_TransparentRedirect Redirect Response</h1>
             <?php $transaction = $result->transaction; ?>
             <table>
                 <tr><td>transaction id</td><td><?php echo htmlentities($transaction->id); ?></td></tr>
@@ -58,6 +72,8 @@ function braintree_text_field($label, $name, $result) {
                     <?php braintree_text_field('CVV', 'transaction[credit_card][cvv]', $result); ?>
                 </fieldset>
  
+
+
                 <?php $tr_data = Braintree_TransparentRedirect::transactionData(
                     array('redirectUrl' => "http://abcn.dev/braintree/callback" ,
                     'transaction' => array('amount' => '10.00', 'type' => 'sale'))) ?>

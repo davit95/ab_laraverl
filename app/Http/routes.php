@@ -62,7 +62,8 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('/live-receptionist-add-to-cart', 'LiveReceptionistsController@addToCart');
 
 		// Avo pages
-		Route::post('/virtual-offices-confirmation','AvoPagesController@getNotarPage');
+		Route::get('/virtual-offices-confirmation','AvoPagesController@notar');
+		Route::get('/notar','AvoPagesController@redirectNotarPage');
 		Route::get('/downloadPdf', 'AvoPagesController@downloadPdf');
 		Route::get('/all-features', 'AvoPagesController@allFeatures');
 		Route::get('/customize-phone', 'AvoPagesController@customizePhone');
@@ -102,6 +103,7 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::get('change-currency', 'AvoPagesController@changeCurrency');
 
 		
+		Route::post('/webhooks' , 'BraintreeController@webhooks');
 	});
 
 		Route::get('braintree', 'BraintreeController@getForm');
@@ -109,4 +111,5 @@ Route::group(['before' => 'auth.basic'], function () {
 		Route::post('checkout', 'BraintreeController@checkout');
 		Route::post('/braintree/token', 'BraintreeController@token');
 
-		//Route::get('payment', 'BraintreeController')
+		Route::get('payment/form', 'BraintreeController@getForm');
+

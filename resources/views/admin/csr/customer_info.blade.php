@@ -137,7 +137,7 @@
                     Recurring Charging Status    
                 </span>
                 <br>
-                {{$recurring_invoice->id}}
+                {{isset($recurring_invoice) ? $recurring_invoice->id : null}}
                 <br>
                 <br>
                 <!-- <div class="cerca" style="height: 35px; padding-top: 10px; background-color: red; color: white;">125402041
@@ -235,11 +235,11 @@
                 Recurring Charges:
             </span>&nbsp;
             <br>
-            Account: {{$recurring_invoice->id}}<br>
+            Account: {{isset($recurring_invoice) ? $recurring_invoice->id : null}}<br>
             Description: Free LR<br>
-            Amount: $- {{$recurring_invoice->price}}<br>
-            Start Date: {{$recurring_invoice_start_date}}<br>
-            End Date: {{$recurring_invoice_end_date}}<br>
+            Amount: $- {{isset($recurring_invoice) ? $recurring_invoice->price : null}}<br>
+            Start Date: {{isset($recurring_invoice) ? $recurring_invoice_start_date : null}}<br>
+            End Date: {{isset($recurring_invoice) ? $recurring_invoice_end_date : null}}<br>
         </div>
         
            

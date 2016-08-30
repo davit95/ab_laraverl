@@ -220,4 +220,12 @@ class CustomerService {
 		dd($this->invoice->find($invoice_id));
 	}
 
+	public function createCustomerSerializedInfo($customer, $customer_id)
+	{
+		$customer = serialize($customer);
+		$user = $this->user->where('id', $customer_id)->first();
+		$user->update(['customer_serialized_result' => $customer]);
+		return $user;
+	}
+
 }

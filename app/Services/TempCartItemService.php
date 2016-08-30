@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Models\Package;
+use App\Models\Invoice;
 use App\Models\TempCartItem;
 
 class TempCartItemService {
-	public function __construct(TempCartItem $tempCartItem, Package $package) {
+	public function __construct(TempCartItem $tempCartItem, Package $package, Invoice $invoice) {
 		$this->tempCartItem = $tempCartItem;
 		$this->package      = $package;
+		$this->invoice      = $invoice;
 	}
 
 	/**
@@ -58,12 +60,24 @@ class TempCartItemService {
 	}
 
 	public function updateUserId($temp_user_id, $id){
-		$cart_item = $this->tempCartItem->where('temp_user_id', $temp_user_id)->orderBy('created_at', 'DESC')->first();
+		$cart_item = $this->tempCartItem->where('temp_user_id', $temp_user_id)->get();
+		//dd($cart_item);
 		if (is_null($cart_item)) {
 			return false;
 		}
-		$cart_item->user_id  = $id;
+		foreach ($cart_item as $item) {
+			$item->update(['user_id' => $id]);
+		}
+		return true;
+	}
 
-		return $cart_item->save();
+	public function getItemsByUserId($id)
+	{
+		return $this->tempCartItem->where('user_id', $id)->orderBy('updated_at', 'DESC')->orderBy('type', 'DESC')->get();
+	}
+
+	public function getCartItemsById($id)
+	{
+		return $this->tempCartItem->where('user_id', \Auth::id())->orderBy('updated_at', 'DESC')->orderBy('type', 'DESC')->get();
 	}
 }

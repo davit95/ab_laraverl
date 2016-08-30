@@ -32,8 +32,8 @@
 		</div>
 		<div class="resutsTop">
 			<div class="ResutlsTitle">
-				<h1>{{$location->H1}}</h1>
-				<p class="gray2">{{$location->H2}}</p>
+				<h1>{{isset($location) ? $location->H1 : ''}}</h1>
+				<p class="gray2">{{isset($location) ? $location->H2 : ''}}</p>
 			</div>
 			<div class="toggleMap">
         		<div class="toggleBtns">
