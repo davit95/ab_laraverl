@@ -9,6 +9,7 @@ use App\Services\InvoiceService;
 use App\Services\CustomerService;
 use Admin\Services\UserService;
 use Exception;
+use Carbon\Carbon;
 
 class InvoicesController extends Controller
 {
@@ -156,77 +157,44 @@ class InvoicesController extends Controller
         \Braintree_Configuration::publicKey($braintree_configs['public_key']);
         \Braintree_Configuration::privateKey($braintree_configs['private_key']);
 
-        // $customer = \Braintree_Customer::create([
-        //     'creditCard' => [
-        //             'number' => $cc_number,
-        //             'expirationMonth' => $cc_month,
-        //             'expirationYear' => $cc_year,
-
-        //         'billingAddress' => [
-        //             'firstName' => 'Jen',
-        //             'lastName' => 'Smith',
-        //             'company' => 'Braintree',
-        //             'streetAddress' => '123 Address',
-        //             'locality' => 'City',
-        //             'region' => 'State',
-        //             'postalCode' => '12345',
-        //         ],
-
-
-        //     ]
-        // ]);
-        //dd($customer->success);
-        //dd($customer->customer->id);
-
-
-
-        //$customer = \Braintree_Customer::find($customer->customer->id);
-        //dd($customer->customer->creditCards[0]->token);
         $customer = unserialize($customer->customer_serialized_result);
-        //dd($customer);
 
+        // $month_days_to_seconds = date("t") * 24 * 60 * 60;
+        // $one_second_price = $invoice->price / $month_days_to_seconds;
 
-        /*$result = \Braintree_Transaction::sale([
-          'amount' => '10.00',
-          'paymentMethodNonce' => 'fake-valid-visa-nonce',
-          'options' => [
-            'submitForSettlement' => True,
-            'paypal' => [
-                'customField' => 'customField'
-            ]
-          ]
-        ]);*/
+        // $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at);
+        // $last_day_of_month = Carbon::now()->endOfMonth();
+        // $time_diff_by_seconds = $created_at->diffInSeconds($last_day_of_month);
 
-        //dd($result);
+        // $last_days_price = $invoice->price;
+
+        // if($time_diff_by_seconds != 0 && ($invoice->recurring_attempts == 0 || $invoice->recurring_attempts == 6)) {
+        //     $last_days_price = $time_diff_by_seconds * $one_second_price;
+        //     if($invoice->recurring_attempts == 6) {
+        //         //dd('aa');
+        //         $last_days_price = ($month_days_to_seconds - $time_diff_by_seconds) * $one_second_price;
+        //     }
+        // } 
+
+        // $price = $last_days_price;
+        // $price = round($price, 0, PHP_ROUND_HALF_UP);
+        // dd($price, 'as');
+        // session(['amount' => $price]);
+        $price = session('price_'.$invoice->id);
+        //dd($price);
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,
             'orderId' => $order_id,
-            'amount' => $invoice->price
+            'amount' => $price
           ]
         );
-        $result = \Braintree_Transaction::submitForSettlement($result->transaction->id);
-        //dd($result);
-        //dd($result);
 
-        /**/
-        // $result = \Braintree_Transaction::sale(array(
-        //            'amount' => $amount,
-        //            'orderId' => $order_id,
-        //            // 'paymentMethodNonce' => 'fake-processor-declined-visa-nonce',
-        //            // 'paymentMethodNonce' => 'fake-valid-visa-nonce',
-        //            'creditCard' => array(
-        //            'number' => $cc_number,
-        //            'expirationMonth' => $cc_month,
-        //            'expirationYear' => $cc_year,
-        //                 ),
-        //                'options' => array(
-        //                    'submitForSettlement' => true
-        //                 )
-        //            ));
-        // $new_result = \Braintree_Transaction::submitForSettlement($result->transaction->id, '35.00');
-        // $result = \Braintree_Transaction::refund($result->transaction->id);
-        // dd($result);
+
+        if($result) {
+            $result = \Braintree_Transaction::submitForSettlement($result->transaction->id);    
+        }
+        
         if($braintree_enviorenment == 'sandbox') {
             // logic for sandox mode
             if($result->success) {

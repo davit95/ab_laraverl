@@ -37,7 +37,7 @@ class InvoiceService {
 	public function getNewInvoices()
 	{
 		$invoice_ids = $this->adminClients->where('admin_id', \Auth::id())->lists('invoice_id');
-		return $this->invoice->whereNotIn('id', $invoice_ids)->get();
+		return $this->invoice->whereNotIn('id', $invoice_ids)->where('basic_invoice_id', 0)->get();
 	}
 
 	public function getYourInvoices()
@@ -67,7 +67,7 @@ class InvoiceService {
 		//return true;
 		$invoice = $this->invoice->find($id);
 		//dd($invoice);
-		if($invoice->recurring_attempts != $invoice->recurring_period_within_month - 1 && $invoice->type != 'mr') {
+		if($invoice->recurring_attempts != $invoice->recurring_period_within_month  && $invoice->type != 'mr') {
 			if($invoice->basic_invoice_id != 0) {
 				$id = $invoice->basic_invoice_id;
 			} else {
@@ -151,6 +151,17 @@ class InvoiceService {
 	{
 		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->get();
 	}
+
+	public function getAllNextInvoices()
+	{
+		return $this->invoice->where('payment_type', 'initial')->with('customer')->get();
+	}
+
+	// public function getAllNextInvoicesByPaginate()
+	// {
+	// 	//dd(count($this->invoice->with('customer')->get()));
+	// 	return $this->invoice->with('customer')->get();
+	// }
 
 	
 }

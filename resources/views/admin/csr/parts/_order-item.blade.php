@@ -12,6 +12,6 @@
     </td>
     <td></td>
     <td></td>
-    <td>DYNAMIC CSR / Link to Change CSR</td>
+    <td>{{\Auth::user()->name}}</td>
 </tr>
 

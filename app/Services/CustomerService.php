@@ -11,6 +11,7 @@ use App\Models\Invoice;
 use App\Models\File;
 use App\Models\Role;
 use App\User;
+use Carbon\Carbon;
 
 class CustomerService {
 	public function __construct(Customer $customer, 
@@ -49,6 +50,34 @@ class CustomerService {
 		$params = $this->getCustomerParams($data, $center);
 		//dd($params);
 		return $this->user->create($params);
+	}
+
+	public function getCustomerPrices($customer_id)
+	{
+		$invoices = $this->invoice->where('customer_id', $customer_id)->get();
+		//dd($invoices);
+		foreach ($invoices as $invoice) {
+			$month_days_to_seconds = date("t") * 24 * 60 * 60;
+	        $one_second_price = $invoice->price / $month_days_to_seconds;
+
+	        $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at);
+	        $last_day_of_month = Carbon::now()->endOfMonth();
+	        $time_diff_by_seconds = $created_at->diffInSeconds($last_day_of_month);
+
+	        $last_days_price = $invoice->price;
+
+	        if($time_diff_by_seconds != 0 && ($invoice->recurring_attempts == 0 || $invoice->recurring_attempts == 6)) {
+	            $last_days_price = $time_diff_by_seconds * $one_second_price;
+	            if($invoice->recurring_attempts == 6) {
+	                $last_days_price = ($month_days_to_seconds - $time_diff_by_seconds) * $one_second_price;
+	            }
+	        } 
+	        $price = $last_days_price;
+	        $price = round($price, 0, PHP_ROUND_HALF_UP);
+	        session(['price_'.$invoice->id => $price]);
+		}
+		//dd($invoice);
+		
 	}
 
 	public function getCustomerParams($data, $center)

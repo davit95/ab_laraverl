@@ -12,7 +12,7 @@
     </tr>
 </thead>
     <tbody>
-        @forelse( $customer as $customer )
+        @forelse( $invoices as $invoice )
             @include('admin.csr.parts._charge-item-index')
         @empty
             @include('alerts.no-data-table')
@@ -29,6 +29,8 @@
     </tr>
     </tfoot>
 </table>
+
+
 @section('styles')
 
     <link href="/admin_assets/admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
@@ -44,21 +46,5 @@
 
     <script src="/admin_assets/admin/dist/js/sb-admin-2.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#dataTable').DataTable();
-            $('.tooltip-demo').tooltip({
-                selector: "[data-toggle=tooltip]",
-                container: "body"
-            });
-            $("[data-toggle=popover]").popover();
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('.delete-owner').click(function() {
-                $(this).parent().submit();
-            });
-        });
-    </script>
+    
 @stop
