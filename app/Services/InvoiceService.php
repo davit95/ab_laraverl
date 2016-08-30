@@ -135,7 +135,7 @@ class InvoiceService {
 		
 		$invoice_recurring_attempt++;
 		$invoice_perriod = $invoice->recurring_period_within_month;
-		$status = 'pending';
+		$status = 'approved';
 		$invoice->update(['status' => $status, 'payment_response' => $payments_response, 'payment_type' => 'recurring']);
 		return $invoice;
 	}
@@ -143,7 +143,7 @@ class InvoiceService {
 	public function updateInvoiceParamsById($id, $payments_response)
 	{
 		$invoice = $this->invoice->find($id);
-		$invoice->update(['payment_type' => 'recurring', 'payment_response' => $payments_response, 'status' => 'pending']);
+		$invoice->update(['payment_type' => 'recurring', 'payment_response' => $payments_response, 'status' => 'approved']);
 		return $invoice;
 	}
 

@@ -44,33 +44,33 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		$this->regions();
-		$this->us_states();
-		$this->countries();
-		$this->cities();
-		$this->users();
-		$this->users_files();
-		$this->owners();
-		$this->products();
+		// $this->regions();
+		// $this->us_states();
+		// $this->countries();
+		// $this->cities();
+		// $this->users();
+		// $this->users_files();
+		// $this->owners();
+		// $this->products();
 		$this->centers();
-		$this->centers_coordinates();
-		$this->features();
-		$this->centers_local_numbers();
-		$this->centers_emails();
-		$this->centers_prices();
-		$this->centers_filters();
-		$this->meeting_rooms();
-		$this->meeting_rooms_seos();
-		$this->meeting_rooms_options();
-		$this->virtual_offices_seos();
-		$this->virtual_offices_options();
-		$this->centers_photos();
-		$this->vo_photos();
-		$this->telephony_package_includes();
-		$this->tel_countries();
-		$this->tel_prefixes();
-		$this->detect_active_cities();
-		$this->location_SEO();
+		// $this->centers_coordinates();
+		// $this->features();
+		// $this->centers_local_numbers();
+		// $this->centers_emails();
+		// $this->centers_prices();
+		// $this->centers_filters();
+		// $this->meeting_rooms();
+		// $this->meeting_rooms_seos();
+		// $this->meeting_rooms_options();
+		// $this->virtual_offices_seos();
+		// $this->virtual_offices_options();
+		// $this->centers_photos();
+		// $this->vo_photos();
+		// $this->telephony_package_includes();
+		// $this->tel_countries();
+		// $this->tel_prefixes();
+		// $this->detect_active_cities();
+		// $this->location_SEO();
 	}
 
 	private function centers() {
@@ -81,6 +81,7 @@ class DataMigration extends Command {
 		$seo_collection = DB::table('Center_SEO')->lists('H3', 'Center_ID');	
 		DB::setDefaultConnection('mysql');
 		$centers_old_id_lists = DB::table('centers')->lists('old_id');
+		$centers = DB::table('centers')->lists('active_flag', 'id');
 		$users_ids = DB::table('users')->lists('old_owner_id', 'id');
 		$unknown_cities_count    = 0;
 		$unknown_countries_count = 0;
@@ -176,6 +177,7 @@ class DataMigration extends Command {
 					'review_date'       => $value->ReviewDate,
 					'review_comments'   => $value->ReviewComments,
 					'active_flag'       => $value->ActiveFlag,
+					//'allwork_active_flag'       => $value->ActiveFlag,
 					'email_flag'        => isset($center_contacts[$value->CenterID]) ? $center_contacts[$value->CenterID] : null,
 					'notes'             => $value->Notes,
 					'virtual_tour_url'  => $value->VirtualTourURL,
@@ -188,12 +190,16 @@ class DataMigration extends Command {
 				$bar->advance();
 			}
 		}
-			$this->info('count'.count($new_collection));
+		$this->info('count'.count($new_collection));
 		if(!empty($new_collection)) {
 			DB::table('centers')->insert($new_collection);
 			$new_collection = [];
 		}
-		
+		foreach ($centers as $id => $flag) {
+		 	DB::setDefaultConnection('mysql');
+			DB::table('centers')->where('id', $id)->update(['allwork_active_flag' => $flag]);
+			$bar->advance();
+		} 
 		$bar->finish();
 		$this->info(' ✔');
 
@@ -578,6 +584,7 @@ class DataMigration extends Command {
 	private function centers_filters() {
 		$this->info("\n migrating centers_filters table");
 		DB::setDefaultConnection('mysql');
+		DB::table('centers_filters')->truncate();
 		$centers = DB::table('centers')->get();
 		$center_filters = DB::table('centers_filters')->get();
 		$centers_filters_center_id_lists = DB::table('centers')->lists('old_id');
@@ -586,7 +593,7 @@ class DataMigration extends Command {
 		$this->make_new_connection();
 		$new_collection = [];
 		foreach ($centers as $center) {
-			if (null != $filter = DB::table('Center_Filter')->where('Center_ID', $center->id)->first()) {
+			if (null != $filter = DB::table('Center_Filter')->where('Center_ID', $center->old_id)->first()) {
 				if(empty($center_filters)) {
 					if(in_array($filter->Center_ID, $center_ids_lists) ) {
 						$center_id = array_search($filter->Center_ID, $center_ids_lists);

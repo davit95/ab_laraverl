@@ -134,6 +134,7 @@ class InvoicesController extends Controller
             
         }
         $invoice = $invoiceService->getInvoiceById($id);
+        //dd($invoice);
         if(!$invoice || !$invoice->customer) {
             throw new Exception("Invalid invoice", 1);
         }
@@ -177,10 +178,26 @@ class InvoicesController extends Controller
         //dd($customer->success);
         //dd($customer->customer->id);
 
+
+
         //$customer = \Braintree_Customer::find($customer->customer->id);
         //dd($customer->customer->creditCards[0]->token);
         $customer = unserialize($customer->customer_serialized_result);
         //dd($customer);
+
+
+        /*$result = \Braintree_Transaction::sale([
+          'amount' => '10.00',
+          'paymentMethodNonce' => 'fake-valid-visa-nonce',
+          'options' => [
+            'submitForSettlement' => True,
+            'paypal' => [
+                'customField' => 'customField'
+            ]
+          ]
+        ]);*/
+
+        //dd($result);
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,
@@ -221,14 +238,14 @@ class InvoicesController extends Controller
                 if($new_invoice) {
                     $invoice = $invoiceService->updateInvoiceParams($id, $attributes);
                     if(null !== $invoice) {
-                        return redirect('/customers/'.$customer_id)->withSuccess('you must wait until your payment approve');
+                        return redirect('/customers/'.$customer_id)->withSuccess('your payment has been approved');
                     } else {
                         //something whent wrong
                     }
                 } else {
                     $invoice = $invoiceService->updateInvoiceParamsById($id, $attributes);
                     if($invoice) {
-                        return redirect('/customers/'.$customer_id)->withSuccess('you must wait until your payment approve');
+                        return redirect('/customers/'.$customer_id)->withSuccess('your payment has been approved');
                     } else {
                         // something whent wrong
                     }

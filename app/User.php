@@ -89,6 +89,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
     }
 
+    public function company()
+    {
+        return $this->hasOne('App\Models\Company', 'user_id', 'id');
+    }
+
     public function us_state()
     {
         return $this->belongsTo('App\\Models\\UsState', 'us_state_id');
@@ -106,6 +111,10 @@ class User extends Model implements AuthenticatableContract,
 
     public function staffs() {
         return $this->belongsToMany('App\\Models\\Staff', 'owner_staffs', 'user_id', 'staff_id');
+    }
+
+    public function allwork_staffs() {
+        return $this->belongsToMany('App\\Models\\User', 'user_staffs', 'user_id', 'staff_id');
     }
 
     public function centers()
