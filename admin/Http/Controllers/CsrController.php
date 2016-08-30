@@ -107,15 +107,18 @@ class CsrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function charge(CustomerService $customerService)
+    public function charge(CustomerService $customerService, InvoiceService $invoiceService)
     {
         $role = \Auth::user()->role->name;
-        return view('admin.csr.charge', ['customer' => [], 'role_id' => $role]);
+        $invoices = $invoiceService->getAllNextInvoices();
+        //dd($invoices);
+        return view('admin.csr.charge', ['customer' => [], 'role_id' => $role, 'invoices' => $invoices]);
     }
 
 
     public function getCustomerInfo($id,CustomerService $customerService, UserInterface $userService)
     {
+        $customerService->getCustomerPrices($id);
         $role = \Auth::user()->role->name;
         $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
         $next_invoices = $userService->getCustomerPendingInvoices($id);

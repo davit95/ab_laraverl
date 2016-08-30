@@ -11,6 +11,7 @@ use App\Models\Package;
 use App\Services\TelCountryService;
 use App\Services\TempCartItemService;
 use App\Services\CenterService;
+use Admin\Services\MeetingRoomService;
 use App\Services\CountryService;
 use App\Services\CustomerService;
 use Cookie;
@@ -121,10 +122,8 @@ class AvoPagesController extends Controller {
 		$customer = $customerService->getCustomerByEmail($email);
 		// dd($card_items);
 		if($customer) {
-			$customer_id = $customer->id;
+			return redirect()->back()->withErrors('Email has been already taken. Please login');
 		} else {
-			//
-			//
 			if( null !== $countryService->getCountryById( $request->get('country_id') ) ) {
 				$inputs['country'] = $countryService->getCountryById( $request->get('country_id') )->name;		
 			}
@@ -578,7 +577,7 @@ class AvoPagesController extends Controller {
 		//return redirect('/notar')->withCookie($cookie);
 	}
 
-	public function notar(CenterService $centerService, Invoice $invoice) {
+	public function notar(CenterService $centerService, Invoice $invoice, MeetingRoomService $meetingRoomService) {
 		$temp_user_id = Cookie::get('temp_user_id');
 		$invoice_insertable = [];
 		if($temp_user_id) {
@@ -589,8 +588,11 @@ class AvoPagesController extends Controller {
 				$price = 0;
 				if($value->type == 'vo') { 
 					$price = $value->sum;
+					$product = $centerService->getCenterById($value->center_id);
 				} elseif($value->type == 'mr') {
 					$price = $value->price_due;
+					/*dd($value->mr_id);*/
+					$product = $meetingRoomService->getMeetingRoomById($value->mr_id);
 				} elseif($value->type == 'lr') {
 					$price = $value->price;
 				}
@@ -598,6 +600,7 @@ class AvoPagesController extends Controller {
 				$item_id = null;
 				if($value->type == 'vo') { 
 					$item_id = $value->center_id;
+					//$product = $centerService->getCenterById($item_id);
 				} elseif($value->type == 'mr') {
 					$item_id = $value->mr_id;
 				} elseif($value->type == 'lr') {
@@ -613,7 +616,10 @@ class AvoPagesController extends Controller {
 				$temp['customer_id'] = \Auth::id();
 				$temp['status'] = 'pending';
 				$temp['payment_response'] = null;
-				$temp['serialized_card_item_info'] = serialize($value->toArray());
+				$arr = $value->toArray();
+				$arr['product'] = $product;
+				//dd($arr);
+				$temp['serialized_card_item_info'] = serialize($arr);
 				$temp['created_at'] = Carbon::now()->__toString();
 				$temp['updated_at'] = Carbon::now()->__toString();
 				$invoice_insertable[] = $temp;

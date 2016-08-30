@@ -233,7 +233,7 @@ class UserService implements UserInterface
 		// dd($this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->orWhere(function($q) {
 		// 	$q->where('payment_type', 'recurring')->where('status', 'pending');
 		// })->where('status', '<>', 'declined')->get());
-		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->get();
+		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->where('status', '<>', 'declined')->get();
 	}
 
 	public function getCustomerDeclinedInvoices($customer_id)
