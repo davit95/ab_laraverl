@@ -599,6 +599,7 @@ class CenterService implements CenterInterface {
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
 		$center_params = $this->getCenterUpdateParams($inputs);		
+
 		DB::beginTransaction();
 		try {
 			foreach ($this->getCenterPhotosParams($inputs, $params, $files) as $key => $value) {
@@ -620,17 +621,27 @@ class CenterService implements CenterInterface {
 			}
 			$center_ids = $this->checkAllworkCenter();
 			if(isset($inputs['active'])) {
-				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
 				if(in_array($center_id, $center_ids)) {
 					$status = 'active';
-					$this->callAllWork($status,$center_id);
+					$result = $this->callAllWork($status,$center_id);
+					if($result['status'] == 'success') {
+						$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
+						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'Y']);
+					}
+				} else {
+					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
 				}
 				
 			} else {
-				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
 				if(in_array($center_id, $center_ids)) {
 					$status = 'inactive';
-					$this->callAllWork($status,$center_id);
+					$result = $this->callAllWork($status,$center_id);
+					if($result['status'] == 'success') {
+						$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
+						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N']);
+					}
+				} else {
+					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
 				}
 			}
 			$this->center->where('id', $center_id)->update($center_params);
