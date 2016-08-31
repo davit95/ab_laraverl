@@ -9,7 +9,7 @@
         "laravel/framework": "5.1.*",
         "cviebrock/eloquent-sluggable": "^3.0",
         "illuminate/html": "5.0.*@dev",
-        "guzzlehttp/guzzle": "5.*",
+        "guzzlehttp/guzzle": "*",
         "codeception/codeception": "*",
         "doctrine/dbal": "^2.5",
         "league/flysystem": "^1.0",

@@ -139,7 +139,7 @@ class CenterService implements CenterInterface {
 		//dd($inputs);
 		if(isset($inputs['owners'])) {
 			$owner_id = $this->user->where('company_name', $inputs['owners'])->first()->id;	
-			$inputs['owner_id'] = $owner_id;
+			$inputs['owner_user_id'] = $owner_id;
 		}
 		if(isset($inputs['states'])) {
 			$us_state = $this->usState->where('name', $inputs['states'])->first();
@@ -339,6 +339,7 @@ class CenterService implements CenterInterface {
 	{
 		if($owner_name == '') {
 			$params['owner_user_id'] = null;
+			$owner_id = null;
 		} else {
 			$owner_id = $this->user->where('company_name', $owner_name)->where('role_id', 5)->first()->id;
 		}
@@ -390,7 +391,7 @@ class CenterService implements CenterInterface {
 		}
 		
 		$params = $this->getCenterParams($inputs);
-		
+		//dd($params);
 		if(isset($params['owners'])) {
 			$params['owner_user_id'] = $this->getCenterOwnerIdByName($inputs['owners']);
 		}
@@ -398,7 +399,7 @@ class CenterService implements CenterInterface {
 		$city = $this->city->where('name', $params['city_name'])->where('active', 1)->first();
 
 		$params['city_id'] = $city->id;
-		
+		//dd($city);
 		$coordinates_data = new $this->centerCoordinate($this->getVoCoordParams($inputs));
 
 		$center_filter_data = new $this->centerFilter(['virtual_office' => 0, 'meeting_room' => 0]);
@@ -409,8 +410,10 @@ class CenterService implements CenterInterface {
 
 		$virtual_office_seos_data = new $this->virtualOfficeSeo($this->getVoSeosParams($inputs));
 
+		//dd($params);
+		
 		DB::beginTransaction();
-
+		//dd($params);
 		try {
 			$center = $this->center->create($params);
 
@@ -596,7 +599,6 @@ class CenterService implements CenterInterface {
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
 		$center_params = $this->getCenterUpdateParams($inputs);		
-
 		DB::beginTransaction();
 		try {
 			foreach ($this->getCenterPhotosParams($inputs, $params, $files) as $key => $value) {
@@ -1052,12 +1054,13 @@ class CenterService implements CenterInterface {
 	public function callAllWork($status, $center_id)
 	{
 		$owner_user_id = $this->getOwnerIdByCenterId($center_id);
+
 		$response = $this->client->request('POST',
-			$this->AllWORK_API_URL.'/center-status/'.$status,[
+			$this->apiUrl.'/center-status/'.$status,[
 				'headers' => [
 			        'AccessToken' => $this->access_token,
 			    ],
-			    'body' => [
+			    'form_params' => [
 			    	'status' => $status,
 			    	'center_id' => $center_id,
 			    	'owner_user_id' => $owner_user_id
