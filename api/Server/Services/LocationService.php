@@ -101,7 +101,7 @@ class LocationService {
 			$where['us_state_code'] = $state;
 		}
 		$cities = $this->city->where($where)->distinct('name')->whereHas('centers', function($query){
-					$query->where('active_flag', 'Y');
+					$query->where('allwork_active_flag', 'Y');
 				})->get(['id', 'name']);
 		return $cities;		
 	}
@@ -162,7 +162,7 @@ class LocationService {
 	    	->where('center_prices.price', '<>', '0')
 	    	->orWhere(['center_prices.package_id' => '105']);	    	
 	    })
-	    ->where(['centers.country' => $country_slug, 'centers.us_state' => $state, 'centers.active_flag' => 'Y'])
+	    ->where(['centers.country' => $country_slug, 'centers.us_state' => $state, 'centers.allwork_active_flag' => 'Y'])
 	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
 	    ->groupBy('centers.id')
 	    ->select(['centers.*'])
@@ -173,7 +173,7 @@ class LocationService {
 	    }else{
 	    	$locations = $locations->get();
 	    }
-		// $locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'active_flag' => 'Y'])->with(['prices', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms'])->paginate($per_page);		
+		// $locations = $this->center->where(['country' => $country_slug, 'us_state' => $state, 'allwork_active_flag' => 'Y'])->with(['prices', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms'])->paginate($per_page);		
 		if(isset($nearby) && isset($options)){
 			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
@@ -202,7 +202,7 @@ class LocationService {
 	    	->where('center_prices.price', '<>', '0')
 	    	->orWhere(['center_prices.package_id' => '105']);	    	
 	    })
-	    ->where(['centers.country' => $country_slug, 'centers.active_flag' => 'Y'])
+	    ->where(['centers.country' => $country_slug, 'centers.allwork_active_flag' => 'Y'])
 	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])	    
 	    ->groupBy('centers.id')
 	    ->select(['centers.*'])
@@ -213,7 +213,7 @@ class LocationService {
 	    }else{
 	    	$locations = $locations->get();
 	    }
-		// $locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
+		// $locations = $this->center->where(['country' => $country_slug, 'allwork_active_flag' => 'Y'])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
 		if(isset($nearby) && isset($options)){
 			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
@@ -246,7 +246,7 @@ class LocationService {
 	    	->where('center_prices.price', '<>', '0')
 	    	->orWhere(['center_prices.package_id' => '105']);
 	    })
-	    ->where(['centers.country' => 'us', 'centers.us_state' => $state, 'centers.active_flag' => 'Y', 'centers.city_name' => $city_name])
+	    ->where(['centers.country' => 'us', 'centers.us_state' => $state, 'centers.allwork_active_flag' => 'Y', 'centers.city_name' => $city_name])
 	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
 	    ->groupBy('centers.id')
 	    ->orderBy('center_prices.price', 'asc')
@@ -258,7 +258,7 @@ class LocationService {
 	    	$locations = $locations->get();
 	    }	    
 	    
-		// $locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
+		// $locations = $this->center->where(['country' => 'us', 'us_state' => $state, 'allwork_active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->paginate($per_page);
 		if(isset($nearby) && isset($options)){
 			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
@@ -291,7 +291,7 @@ class LocationService {
 	    	->where('center_prices.price', '<>', '0')
 	    	->orWhere(['center_prices.package_id' => '105']);
 	    })
-	    ->where(['centers.country' => $country_slug, 'centers.active_flag' => 'Y', 'centers.city_name' => $city_name])
+	    ->where(['centers.country' => $country_slug, 'centers.allwork_active_flag' => 'Y', 'centers.city_name' => $city_name])
 	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
 	    ->groupBy('centers.id')
 	    ->orderBy('center_prices.price', 'asc')
@@ -302,7 +302,7 @@ class LocationService {
 	    }else{
 	    	$locations = $locations->get();
 	    }
-		// $locations = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
+		// $locations = $this->center->where(['country' => $country_slug, 'allwork_active_flag' => 'Y', 'city_name' => $city_name])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options'])->get();
 		if(isset($nearby) && isset($options)){
 			return $this->getNeccessaryOptions($locations, true, true, false, $full_access, $paginate);
 		}else if(isset($nearby)){
@@ -326,7 +326,7 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'space_types'])->paginate($per_page);
+		$location = $this->center->where(['country' => 'US', 'us_state' => $state, 'allwork_active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'space_types'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);
 		$description = isset($description);
@@ -346,7 +346,7 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }	    
-		$location = $this->center->where(['country' => $country_slug, 'active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description', 'space_types'])->paginate($per_page);
+		$location = $this->center->where(['country' => $country_slug, 'allwork_active_flag' => 'Y', 'city_name' => $city_name, 'id' => $center_id])->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'description', 'space_types'])->paginate($per_page);
 		$nearby = isset($nearby);
 		$options = isset($options);
 		$description = isset($description); 		
@@ -357,21 +357,21 @@ class LocationService {
 	{
 		$searchResult = [];
 		$usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', 'US')->distinct('name')->whereHas('centers', function($query){
-				$query->where('active_flag', 'Y');
+				$query->where('allwork_active_flag', 'Y');
 			})->get(['name', 'id', 'us_state_code', 'slug'])->toArray();		
 		$searchResult = array_merge($searchResult, $usCities);
 		$cities = $this->city->where('name', 'LIKE', '%'.$key.'%')->whereNull('us_state_code')->distinct('name')->whereHas('centers', function($query){
-				$query->where('active_flag', 'Y');
+				$query->where('allwork_active_flag', 'Y');
 			})->get(['name', 'id', 'country_code', 'slug'])->toArray();
 		$searchResult = array_merge($searchResult, $cities);
 		$countries = $this->country->where('name', 'LIKE', '%'.$key.'%')->distinct('name')->get(['name', 'id', 'code'])->toArray();
 		$searchResult = array_merge($searchResult, $countries);
 		$locations = $this->center
 					->where(function($query) use ($key){
-						$query->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
+						$query->where('name', 'LIKE', '%'.$key.'%')->where('allwork_active_flag', 'Y');
 					})
 					->orWhere(function($query) use ($key){
-						$query->where('postal_code', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y');
+						$query->where('postal_code', 'LIKE', '%'.$key.'%')->where('allwork_active_flag', 'Y');
 					})
 					->with('city')
 					->get(['name', 'id', 'city_id', 'country', 'city_name', 'us_state']);					
@@ -394,7 +394,7 @@ class LocationService {
 		$searchResult = [];
 		if($country_slug == 'US'){
 			$usCities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', 'US')->distinct('name')->whereHas('centers', function($query){
-					$query->where('active_flag', 'Y');
+					$query->where('allwork_active_flag', 'Y');
 				})->get(['name', 'id', 'us_state_code', 'slug'])->toArray();		
 			$searchResult = array_merge($searchResult, $usCities);
 			$us_states = $this->usState->where('name', 'LIKE', '%'.$key.'%')->get(['name', 'id', 'code']);
@@ -404,11 +404,11 @@ class LocationService {
 			$searchResult = array_merge($searchResult, $us_states->toArray());
 		}else{
 			$cities = $this->city->where('name', 'LIKE', '%'.$key.'%')->where('country_code', $country_slug)->whereNull('us_state_code')->distinct('name')->whereHas('centers', function($query){
-					$query->where('active_flag', 'Y');
+					$query->where('allwork_active_flag', 'Y');
 				})->get(['name', 'id', 'country_code', 'slug'])->toArray();
 			$searchResult = array_merge($searchResult, $cities);
 		}
-		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->where('active_flag', 'Y')->where('country', $country_slug)->get(['name', 'id', 'country', 'city_name', 'us_state']);
+		$locations = $this->center->where('name', 'LIKE', '%'.$key.'%')->where('allwork_active_flag', 'Y')->where('country', $country_slug)->get(['name', 'id', 'country', 'city_name', 'us_state']);
 		foreach ($locations as $location) {
 			$location->type = 'vo';
 		}
@@ -423,7 +423,7 @@ class LocationService {
 	    						->where('country_code', 'US')
 	    						->distinct('name')
 	    						->whereHas('centers', function($query) use ($type){
-						    		$query->where('active_flag', 'Y');
+						    		$query->where('allwork_active_flag', 'Y');
 						    		$query->whereHas('space_types', function($q)  use ($type){
 						    			$q->where('type', $type);
 						    		});
@@ -433,7 +433,7 @@ class LocationService {
 	    					->whereNull('us_state_code')
 	    					->distinct('name')
 	    					->whereHas('centers', function($query) use ($type){
-					    		$query->where('active_flag', 'Y');
+					    		$query->where('allwork_active_flag', 'Y');
 					    		$query->whereHas('space_types', function($q) use ($type){
 					    			$q->where('type', $type);
 					    		});
@@ -442,7 +442,7 @@ class LocationService {
 	    $countries = $this->country
 	    				  ->where('name', 'LIKE', '%'.$key.'%')
 	    				  ->whereHas('centers', function($query) use ($type){
-					    		$query->where('active_flag', 'Y');
+					    		$query->where('allwork_active_flag', 'Y');
 					    		$query->whereHas('space_types', function($q) use ($type){
 					    			$q->where('type', $type);
 					    		});
@@ -453,14 +453,14 @@ class LocationService {
 	    $locations = $this->center
 	    			->where(function($query) use ($key, $type){
 	    				$query->where('name', 'LIKE', '%'.$key.'%')
-	    				->where('active_flag', 'Y')
+	    				->where('allwork_active_flag', 'Y')
 	    				->whereHas('space_types', function($q) use ($type){
 	    					$q->where('type', $type);
 	    				});
 	    			})
 	    			->orWhere(function($query) use ($key, $type){
 	    				$query->where('postal_code', 'LIKE', '%'.$key.'%')
-	    				->where('active_flag', 'Y')
+	    				->where('allwork_active_flag', 'Y')
 	    				->whereHas('space_types', function($q) use ($type){
 	    					$q->where('type', $type);
 	    				});
@@ -476,7 +476,7 @@ class LocationService {
 	    $us_states = $this->usState
 	                      ->where('name', 'LIKE', '%'.$key.'%')
 	                      ->whereHas('centers', function($query) use ($type){
-					    		$query->where('active_flag', 'Y');
+					    		$query->where('allwork_active_flag', 'Y');
 					    		$query->whereHas('space_types', function($q)  use ($type){
 					    			$q->where('type', $type);
 					    		});
