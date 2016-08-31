@@ -200,7 +200,7 @@ class CentersController extends Controller
                 'prices' => $prices,
                 'photos' => $photos,
                 'center_package' => $arr,
-                'package' => $center->prices[0]->package,
+                'package' => isset($center->prices[0]) ? $center->prices[0]->package : "",
                 'sites' => $sites,
                 'role' => $role,
                 'owners' => $owners,
