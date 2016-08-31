@@ -219,7 +219,7 @@ class CentersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, CenterRequest $request, CenterService $centerService)
+    public function update($id, Request $request, CenterService $centerService)
     {
         $role = \Auth::user()->role->name;
         //dd($request->all());
