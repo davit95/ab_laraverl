@@ -36,7 +36,8 @@ class Center extends Model {
 	   'map_url',
 	   'status_changed_at',
 	   'tax_name',
-	   'tax_percentage'
+	   'tax_percentage',
+	   'allwork_active_flag'
 	];
 	public function vo_photos() {
 		return $this->belongsToMany('App\\Models\\Photo', 'vo_photos', 'center_id', 'photo_id');

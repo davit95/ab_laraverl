@@ -34,7 +34,7 @@ class LocationService {
 	{
 		$locations = $this->center
 					->where('owner_user_id', $owner_id)
-					->where('active_flag', 'Y')
+					->with('vo_photos')					
 					->get();
         foreach ($locations as $location) {
         	$location->city_slug = isset($location->city) ? $location->city->slug : '';
@@ -48,8 +48,7 @@ class LocationService {
 	{
 		$location = $this->center
 					->where('id', $id)
-					->where('owner_user_id', $owner_id)
-					->where('active_flag', 'Y')
+					->where('owner_user_id', $owner_id)					
 					->first();
 		return $location;		
 	}
@@ -550,8 +549,8 @@ class LocationService {
 					}
 				}				
 				array_push($temp['images'], $tempPhoto);
-			}			
-			foreach ($location->space_types as $type) {				
+			}
+			foreach ($location->space_types as $type) {
 				array_push($temp['space_types'], $type);
 			}
 			foreach ($location->prices as $price) {
