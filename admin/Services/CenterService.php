@@ -616,14 +616,20 @@ class CenterService implements CenterInterface {
 					}
 				}
 			}
+			$center_ids = $this->checkAllworkCenter();
 			if(isset($inputs['active'])) {
 				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
-				$status = 'active';
-				$this->callAllWork($status,$center_id);
+				if(in_array($center_id, $center_ids)) {
+					$status = 'active';
+					$this->callAllWork($status,$center_id);
+				}
+				
 			} else {
 				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
-				$status = 'inactive';
-				$this->callAllWork($status,$center_id);
+				if(in_array($center_id, $center_ids)) {
+					$status = 'inactive';
+					$this->callAllWork($status,$center_id);
+				}
 			}
 			$this->center->where('id', $center_id)->update($center_params);
 			/*$this->centerPrice->where('center_id', $center_id)->update($prices_params);*/
@@ -659,6 +665,13 @@ class CenterService implements CenterInterface {
 		}
 		DB::commit();
 		return true;	
+	}
+
+	public function checkAllworkCenter()
+	{
+		$site_id = $this->site->where('name', 'allwork')->first()->id;
+		$center_ids = $this->centerSite->where('site_id',$site_id)->get()->lists('center_id')->toArray();
+		return $center_ids;
 	}
 
 	/******************************/
@@ -1047,7 +1060,7 @@ class CenterService implements CenterInterface {
 			    'body' => [
 			    	'status' => $status,
 			    	'center_id' => $center_id,
-			    	'owner_user_id' => $owner_user_id;
+			    	'owner_user_id' => $owner_user_id
 			    ]
 			]
 		);
