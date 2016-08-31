@@ -200,7 +200,7 @@ class CentersController extends Controller
                 'prices' => $prices,
                 'photos' => $photos,
                 'center_package' => $arr,
-                'package' => $center->prices[0]->package,
+                'package' => isset($center->prices[0]) ? $center->prices[0]->package : "",
                 'sites' => $sites,
                 'role' => $role,
                 'owners' => $owners,
@@ -219,7 +219,7 @@ class CentersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, CenterRequest $request, CenterService $centerService)
+    public function update($id, Request $request, CenterService $centerService)
     {
         $role = \Auth::user()->role->name;
         //dd($request->all());

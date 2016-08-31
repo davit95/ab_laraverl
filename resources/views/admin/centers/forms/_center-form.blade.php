@@ -129,9 +129,12 @@
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
-        @if(isset($center->center_filter))
+        @if(isset($center->center_filter) && count($center->sites) == 0)
             {!! Form::label('Make this center active or inactive') !!}
             {!! Form::checkbox('active',$center->center_filter->virtual_office, $center->center_filter->virtual_office == 1 ? true : null) !!}
+        @else
+            {!! Form::label('Make this center active or inactive') !!}
+            {!! Form::checkbox('active',$center->allwork_active_flag, $center->allwork_active_flag == 'Y' ? true : null) !!}
         @endif
         
         <!-- {!! Form::label('sentence3','sentence3') !!}
