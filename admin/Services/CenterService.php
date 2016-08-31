@@ -23,13 +23,15 @@ use App\Models\VirtualOfficeSeo;
 use App\Models\MeetingRoomSeo;
 use DB;
 use App\Exceptions\Custom\FailedTransactionException;
-
+use GuzzleHttp\Client;
 
 
 class CenterService implements CenterInterface {
 	/**
 	 * Create a new center service instance.
 	 */
+	private $access_token;
+
 	public function __construct(Center $center, 
 		Photo $photo, 
 		CenterCoordinate $centerCoordinate, 
@@ -46,7 +48,8 @@ class CenterService implements CenterInterface {
 		CenterPrice $centerPrice,
 		VirtualOfficeSeo $virtualOfficeSeo,
 		MeetingRoomSeo $meetingRoomSeo,
-		Feature $feature
+		Feature $feature,
+		Client $client
 		) {
 		$this->center = $center;
 		$this->photo  = $photo;
@@ -65,6 +68,9 @@ class CenterService implements CenterInterface {
 		$this->virtualOfficeSeo = $virtualOfficeSeo;
 		$this->meetingRoomSeo = $meetingRoomSeo;
 		$this->feature = $feature;
+		$this->client     = $client;
+		$this->apiUrl     = env('AllWORK_API_URL', 'http://allwork.com/find-space');
+		$this->getAccessToken();
 	}
 
 	/******************************/
@@ -612,8 +618,12 @@ class CenterService implements CenterInterface {
 			}
 			if(isset($inputs['active'])) {
 				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
+				$status = 'active';
+				$this->callAllWork($status,$center_id);
 			} else {
 				$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
+				$status = 'inactive';
+				$this->callAllWork($status,$center_id);
 			}
 			$this->center->where('id', $center_id)->update($center_params);
 			/*$this->centerPrice->where('center_id', $center_id)->update($prices_params);*/
@@ -1019,5 +1029,35 @@ class CenterService implements CenterInterface {
 	public function getAllFeatures()
 	{
 		return  $this->feature->lists('name', 'id')->toArray();
+	}
+
+	private function getAccessToken()
+	{
+		$this->access_token = env('ALLWORK_API_ACCESS_TOKEN', 'fksfbhghqjsdjsqpkdckdvksal78w3r21r4');
+	}
+
+	public function callAllWork($status, $center_id)
+	{
+		$owner_user_id = $this->getOwnerIdByCenterId($center_id);
+		$response = $this->client->request('POST',
+			$this->AllWORK_API_URL.'/center-status/'.$status,[
+				'headers' => [
+			        'AccessToken' => $this->access_token,
+			    ],
+			    'body' => [
+			    	'status' => $status,
+			    	'center_id' => $center_id,
+			    	'owner_user_id' => $owner_user_id;
+			    ]
+			]
+		);
+		return json_decode($response->getBody(), true);
+	}
+
+	public function getOwnerIdByCenterId($center_id)
+	{
+		$center = $this->center->find($center_id);
+		$owner_user_id = $center->owner_user_id;
+		return $owner_user_id;
 	}
 }

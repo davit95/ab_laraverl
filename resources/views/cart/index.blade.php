@@ -43,7 +43,7 @@
                                     <div class="aquaBtn">PLACE ORDER NOW</div>
                                 </a>
                             @else
-                                <a style="text-decoration:none;" href="{{ url('virtual-offices') }}">
+                                <a style="text-decoration:none;" href="/customer-information">
                                     <div class="aquaBtn">PLACE ORDER NOW</div>
                                 </a>
                             @endif
