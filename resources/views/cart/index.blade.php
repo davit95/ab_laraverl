@@ -39,7 +39,7 @@
                         <div class="MyCart2">ORDER TOTAL: &nbsp; <span class="aqua">{!! session('currency.symbol') !!}{{ round($price_total*session('rate'), 2) }}</span></div>
                         <div class="sideCartLine">
                             @if(\Auth::check())
-                                <a style="text-decoration:none;" href="/customer-information">
+                                <a style="text-decoration:none;" href="{{ url('virtual-offices-confirmation') }}">
                                     <div class="aquaBtn">PLACE ORDER NOW</div>
                                 </a>
                             @else
