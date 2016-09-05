@@ -93,6 +93,11 @@ class LocationService {
 		return $location;
 	}
 
+	public function getCityById($id)
+	{
+		return $this->city->find($id);
+	}
+
 	public function getCitiesByCountry($country_code, $state)
 	{
 		$where = ['country_code' => $country_code];

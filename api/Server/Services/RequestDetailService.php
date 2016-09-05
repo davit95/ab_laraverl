@@ -44,4 +44,9 @@ class RequestDetailService {
 		->with('center_info')
 		->first();
 	}
+
+	public function update($id, $inputs)
+	{
+		return $this->requestDetail->find($id)->update($inputs);
+	}
 }
