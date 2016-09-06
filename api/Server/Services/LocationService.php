@@ -61,8 +61,7 @@ class LocationService {
 	    if(null!= $city){
 	    	$inputs['inputs']['city_name'] = $city->name;	
 	    }
-		$center = $this->center->create($inputs['inputs']);
-		\Log::info($inputs);
+		$center = $this->center->create($inputs['inputs']);		
 		if(null !== $center){
 			if(isset($inputs['images'])){
 				$destinationPath = public_path().'/images/centers';
@@ -112,7 +111,7 @@ class LocationService {
 	}
 
 	public function getLocationById($id)
-	{		
+	{
 		$location = $this->center->where('id', $id)->with(['prices','telephony_includes','coordinate','local_number', 'meeting_rooms', 'options', 'space_types'])->get();
 		$nearby = isset($nearby);
 		$options = isset($options);
@@ -132,7 +131,7 @@ class LocationService {
 	}
 
 	public function getAllCountries()
-	{		
+	{
 		$countries = $this->country->whereHas('active_cities', function($query){})->get(['name', 'code']);
 		return $countries;
 	}
@@ -552,7 +551,7 @@ class LocationService {
 						$tempPhoto->alt = $photo->aws_seo->alt;
 						$tempPhoto->caption = $photo->aws_seo->caption;
 					}
-				}				
+				}
 				array_push($temp['images'], $tempPhoto);
 			}
 			foreach ($location->space_types as $type) {
@@ -568,7 +567,7 @@ class LocationService {
 					$product->price_type = "total";								
 					array_push($temp['products'], $product);					
 				}
-			}			
+			}
 			foreach ($location->meeting_rooms as $meeting_room) {
 				$product = new \stdClass();
 				$product->id = $meeting_room->id;
@@ -581,7 +580,7 @@ class LocationService {
 			$temp['space_types'] = $location->space_types;
 
 			if($options){
-				$temp['center_options'] = $location->options;	
+				$temp['center_options'] = $location->options;
 			}
 			if($description){
 				$temp['description'] = isset($location->description) ? $location->description->avo_description : '';
@@ -615,7 +614,7 @@ class LocationService {
 		$nearby_centers     = $this->centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);
 		foreach ($nearby_centers as $k => $v) {
 			$nearby_centers[$k]->distance = round($nearby_centers_ids['distances'][$v->id], 2);
-		}				
+		}
 		$nearby_centers = $nearby_centers->sortBy('distance');
 		foreach ($nearby_centers as $nearby_center) {
 			$center = new \stdClass();
