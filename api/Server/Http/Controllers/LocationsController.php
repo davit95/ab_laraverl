@@ -63,6 +63,12 @@ class LocationsController extends Controller
         return response()->json($locations);
     }
 
+    public function getCityById($id)
+    {
+        $city = $this->locationService->getCityById($id);
+        return response()->json($city);
+    }
+
     public function updateLocation($id, $owner_id, Request $request)
     {
         $location = $this->locationService->updateLocation($id, $owner_id, $request->all());

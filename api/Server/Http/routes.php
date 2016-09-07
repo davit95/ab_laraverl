@@ -17,6 +17,7 @@ Route::post('/add-location', 'LocationsController@addLocation');
 Route::post('/request-detail', 'RequestDetailsController@addRequestDetail');
 Route::get('/request-details-for-user/{user_id}', 'RequestDetailsController@getUserRequestDetail');
 Route::get('/request-details/{id}/{owner_id}', 'RequestDetailsController@showRequestDetail');
+Route::post('/request-details/update/{id}', 'RequestDetailsController@updateRequestDetail');
 Route::get('/location/show/{id}', 'LocationsController@getLocation');
 Route::get('/location/us/{state}', 'LocationsController@getStateLocations');
 Route::get('/location/search/city/{key}', 'LocationsController@getSearchCity');
@@ -41,6 +42,7 @@ Route::post('/add-user-from-allwork', 'UsersController@postAddUserFromAllwork');
 Route::post('/check-access-token', 'OAuthController@postCheckAccessToken');
 
 Route::get('/users/{id}', 'UsersController@getUserById');
+Route::get('/cities/{id}', 'LocationsController@getCityById');
 Route::post('/users/{id}/update', 'UsersController@updateUser');
 Route::post('/users/add-staff-from-allwork', 'UsersController@postAddStaffFromAllwork');
 Route::post('/users/change-password', 'UsersController@changePassword');
