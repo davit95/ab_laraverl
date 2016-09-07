@@ -33,11 +33,14 @@ class LocationService {
 	public function getLocationsByOwnerId($owner_id)
 	{
 		$locations = $this->center
-					->where('owner_user_id', $owner_id)
-					->with('vo_photos')					
+					->where('owner_user_id', $owner_id)							
 					->get();
         foreach ($locations as $location) {
         	$location->city_slug = isset($location->city) ? $location->city->slug : '';
+        	$allwork_site = $location->sites()->where('name', 'allwork')->first();
+			$location->from_allwork = null!= $allwork_site ? true : false;
+			$photo = $location->vo_photos()->first();
+			$location->main_image = 'https://www.abcn.com/images/photos/'.$photo->path;
         	unset($location->city);
         	$location->type = 'vo';
         }					
