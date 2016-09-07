@@ -172,7 +172,12 @@
         <div class='imageSlider'>
         	<ul class='bxslider'>
             @forelse($center->vo_photos as $photo)
-                <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
+                @if(isset($center) && count($center->sites) != 0)
+                    <li><div class='img-wrapper'><img src='/images/centers/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
+                @else
+                    <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/{!! $photo->path !!}' alt="{!! $photo->alt !!}" /></div></li>
+                @endif
+                
             @empty
                 <li><div class='img-wrapper'><img src='http://www.abcn.com/images/photos/no_pic.gif' alt=''></div></li>
             @endforelse

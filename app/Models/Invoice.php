@@ -19,18 +19,19 @@ class Invoice extends Model
      * @var array
      */
     protected $fillable = [
-                            'type', 
-                            'item_id', 
-                            'basic_invoice_id', 
-                            'payment_type', 
-                            'price', 
-                            'recurring_period_within_month',
-                            'recurring_attempts',
-                            'customer_id',
-                            'status',
-                            'payment_response',
-                            'is_recurring',
-                            ];
+        'type', 
+        'item_id', 
+        'basic_invoice_id', 
+        'payment_type', 
+        'price', 
+        'recurring_period_within_month',
+        'recurring_attempts',
+        'customer_id',
+        'status',
+        'payment_response',
+        'is_recurring',
+        'serialized_card_item_info'
+    ];
 
     public function customer()
     {

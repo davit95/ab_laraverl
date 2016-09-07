@@ -56,12 +56,14 @@ class CustomerService {
 	{
 		$invoices = $this->invoice->where('customer_id', $customer_id)->get();
 		//dd($invoices);
+		$prices = [];
 		foreach ($invoices as $invoice) {
 			$month_days_to_seconds = date("t") * 24 * 60 * 60;
 	        $one_second_price = $invoice->price / $month_days_to_seconds;
 
 	        $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at);
-	        $last_day_of_month = Carbon::now()->endOfMonth();
+	        $clone_created_at = clone $created_at;
+	        $last_day_of_month = $clone_created_at->endOfMonth();
 	        $time_diff_by_seconds = $created_at->diffInSeconds($last_day_of_month);
 
 	        $last_days_price = $invoice->price;
@@ -75,10 +77,16 @@ class CustomerService {
 	        $price = $last_days_price;
 	        $price = round($price, 0, PHP_ROUND_HALF_UP);
 	        session(['price_'.$invoice->id => $price]);
+	        $prices[$invoice->id] = $price;
 		}
-		//dd($invoice);
+	    return $prices;
 		
 	}
+
+	// public function getCustomersInvoicesById($id)
+	// {
+	// 	dd($this->getCustomerPrices($id));
+	// }
 
 	public function getCustomerParams($data, $center)
 	{

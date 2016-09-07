@@ -230,10 +230,14 @@ class UserService implements UserInterface
 
 	public function getCustomerPendingInvoices($customer_id)
 	{
+		$admin_invoices_ids = $this->adminClients->where('admin_id', \Auth::id())->lists('invoice_id')->toArray();
+		//dd($admin_invoices_ids);
+		//dd($admin_invoices_ids);
 		// dd($this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->orWhere(function($q) {
 		// 	$q->where('payment_type', 'recurring')->where('status', 'pending');
 		// })->where('status', '<>', 'declined')->get());
-		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->where('status', '<>', 'declined')->get();
+		return $this->invoice->whereIn('id', $admin_invoices_ids)->orWhereIn('basic_invoice_id', $admin_invoices_ids)->where('customer_id', $customer_id)->where('payment_type', 'initial')->where('status', '<>', 'declined')->get();
+		//return $this->invoice->whereIn('id', $admin_invoices_ids)->orWhereIn('basic_invoice_id', $admin_invoices_ids)->where('payment_type', 'initial')->where('status', '<>', 'declined')->get();
 	}
 
 	public function getCustomerDeclinedInvoices($customer_id)

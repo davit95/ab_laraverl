@@ -171,7 +171,7 @@
                         <tr>
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
-                            <td>$ {{session('price_'.$invoice->id)}}</td>
+                            <td>$ {{$invoices[$invoice->id]}}</td>
                         </tr>
                     @endforeach   
                 </tbody>
@@ -193,7 +193,7 @@
                         <tr>
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
-                            <td>$ {{$invoice->price}}</td>
+                            <td>$ {{$invoices[$invoice->id]}}</td>
                             <td> </td>
                         </tr>
                     @endforeach 

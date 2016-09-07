@@ -121,6 +121,7 @@ class AvoPagesController extends Controller {
 		$invoice_insertable = [];
 		$customer = $customerService->getCustomerByEmail($email);
 		// dd($card_items);
+		//dd($request->first_name);
 		if($customer) {
 			return redirect()->back()->withErrors('Email has been already taken. Please login');
 		} else {
@@ -158,7 +159,6 @@ class AvoPagesController extends Controller {
 				\Braintree_Configuration::merchantId($braintree_configs['merchant_id']);
 				\Braintree_Configuration::publicKey($braintree_configs['public_key']);
 				\Braintree_Configuration::privateKey($braintree_configs['private_key']);
-
 				$customer = \Braintree_Customer::create([
 				    'creditCard' => [
 				            'number' => $cc_number,
@@ -463,6 +463,7 @@ class AvoPagesController extends Controller {
         // $cookieJar->unqueue('temp_user_id');
         // $cookieJar->queue('temp_user_id', null, 0);
         $inputs = $request->all(); 
+        //dd($inputs);
         // dd($request->all());
         if(\Auth::check()) {
 			\Auth::logout();
@@ -477,6 +478,7 @@ class AvoPagesController extends Controller {
             }
         }
         $package      = $inputs['package_option'];
+        //dd($package);
         $center_id    = $inputs['center_id'];
         $center_price = $center->find($center_id)->prices()->where('package_id', $package)->first();
         $price        = $center_price->price;
@@ -489,6 +491,7 @@ class AvoPagesController extends Controller {
         $inputs['price']   = $price;
         $inputs['vo_plan'] = $package_option;
         if ($auth->guest()) {
+        	//dd($inputs['vo_plan']);
         	//dump('sdfsdf');
         	//return 'sdfsdfsdf';
         	//dd(Cookie::get('temp_user_id'), Cookie::forget('temp_user_id'));

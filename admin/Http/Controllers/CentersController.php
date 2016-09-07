@@ -186,7 +186,7 @@ class CentersController extends Controller
         $packages = $centerService->getPackagesList();
         //dd($center->prices);
         //dd($sites, );
-        //dd($center);
+        //dd($center->sites);
         if($center) {
             return view('admin.centers.create', 
             [
@@ -232,7 +232,7 @@ class CentersController extends Controller
             catch(FailedTransactionException $e)
             {
                 if($e->getCode() === -1) {
-                    return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+                    return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
                 }
             }
         } elseif($role === 'owner_user') {
@@ -245,7 +245,7 @@ class CentersController extends Controller
                 catch(FailedTransactionException $e)
                 {
                     if($e->getCode() === -1) {
-                        return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+                        return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
                     }
                 }
             } else {
@@ -260,7 +260,7 @@ class CentersController extends Controller
             catch(FailedTransactionException $e)
             {
                 if($e->getCode() === -1) {
-                    return redirect('centers/create')->withWarning('Whoops, looks like something went wrong, please try later.');
+                    return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
                 }
             }
         }
