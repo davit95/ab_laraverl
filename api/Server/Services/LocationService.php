@@ -160,17 +160,20 @@ class LocationService {
 			    return $page;
 		    });			
 		}
-	    $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')	    
-	    ->where(function($query){
-	    	$query->where('center_prices.package_id', '103')
-	    	->where('center_prices.price', '<>', '0')
-	    	->orWhere(['center_prices.package_id' => '105']);	    	
-	    })
+	    // $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')	    
+	    // ->where(function($query){
+	    // 	$query->where('center_prices.package_id', '103')
+	    // 	->where('center_prices.price', '<>', '0')
+	    // 	->orWhere(['center_prices.package_id' => '105']);	    	
+	    // })
+	    // ->where(['centers.country' => $country_slug, 'centers.us_state' => $state, 'centers.allwork_active_flag' => 'Y'])
+	    // ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
+	    // ->groupBy('centers.id')
+	    // ->select(['centers.*'])
+	    // ->orderBy('center_prices.price', 'asc');
+	    $locations = $this->center
 	    ->where(['centers.country' => $country_slug, 'centers.us_state' => $state, 'centers.allwork_active_flag' => 'Y'])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
-	    ->groupBy('centers.id')
-	    ->select(['centers.*'])
-	    ->orderBy('center_prices.price', 'asc');
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options']);
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
 	    	$paginate = true;
@@ -200,17 +203,21 @@ class LocationService {
 			    return $page;
 		    });			
 		}
-	    $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')	    
-	    ->where(function($query){
-	    	$query->where('center_prices.package_id', '103')
-	    	->where('center_prices.price', '<>', '0')
-	    	->orWhere(['center_prices.package_id' => '105']);	    	
-	    })
+	    // $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')	    
+	    // ->where(function($query){
+	    // 	$query->where('center_prices.package_id', '103')
+	    // 	->where('center_prices.price', '<>', '0')
+	    // 	->orWhere(['center_prices.package_id' => '105']);	    	
+	    // })
+	    // ->where(['centers.country' => $country_slug, 'centers.allwork_active_flag' => 'Y'])
+	    // ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])	    
+	    // ->groupBy('centers.id')
+	    // ->select(['centers.*'])
+	    // ->orderBy('center_prices.price', 'asc');
+	    $locations = $this->center
 	    ->where(['centers.country' => $country_slug, 'centers.allwork_active_flag' => 'Y'])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])	    
-	    ->groupBy('centers.id')
-	    ->select(['centers.*'])
-	    ->orderBy('center_prices.price', 'asc');
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options']);
+
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
 	    	$paginate = true;
@@ -244,17 +251,22 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }
-	    $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')
-	    ->where(function($query){
-	    	$query->where('center_prices.package_id', '103')
-	    	->where('center_prices.price', '<>', '0')
-	    	->orWhere(['center_prices.package_id' => '105']);
-	    })
-	    ->where(['centers.country' => 'us', 'centers.us_state' => $state, 'centers.allwork_active_flag' => 'Y', 'centers.city_name' => $city_name])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
-	    ->groupBy('centers.id')
-	    ->orderBy('center_prices.price', 'asc')
-	    ->select(['centers.*']);
+	    // $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')
+	    // ->where(function($query){
+	    // 	$query->where('center_prices.package_id', '103')
+	    // 	->where('center_prices.price', '<>', '0')
+	    // 	->orWhere(['center_prices.package_id' => '105']);
+	    // })
+	    // ->where(['centers.country' => 'us', 'centers.us_state' => $state, 'centers.allwork_active_flag' => 'Y', 'centers.city_name' => $city_name])
+	    // ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
+	    // ->groupBy('centers.id')
+	    // ->orderBy('center_prices.price', 'asc')
+	    // ->select(['centers.*']);
+
+	    $locations = $this->center
+	    ->where(['country' => 'us', 'us_state' => $state, 'allwork_active_flag' => 'Y', 'city_name' => $city_name])
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options']);
+
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
 	    	$paginate = true;
@@ -289,17 +301,22 @@ class LocationService {
 	    if(null!= $city){
 	    	$city_name = $city->name;
 	    }	    
-	    $locations = $this->center->join('center_prices','centers.id','=','center_prices.center_id')	    
-	    ->where(function($query){
-	    	$query->where('center_prices.package_id', '103')
-	    	->where('center_prices.price', '<>', '0')
-	    	->orWhere(['center_prices.package_id' => '105']);
-	    })
-	    ->where(['centers.country' => $country_slug, 'centers.allwork_active_flag' => 'Y', 'centers.city_name' => $city_name])
-	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
-	    ->groupBy('centers.id')
-	    ->orderBy('center_prices.price', 'asc')
-	    ->select(['centers.*']);
+	    // $locations = $this->center
+	    // ->join('center_prices','centers.id','=','center_prices.center_id')	    
+	    // ->where(function($query){
+	    // 	$query->where('center_prices.package_id', '103')
+	    // 	->where('center_prices.price', '<>', '0')
+	    // 	->orWhere(['center_prices.package_id' => '105']);
+	    // })
+	    // ->where(['centers.country' => $country_slug, 'centers.allwork_active_flag' => 'Y', 'centers.city_name' => $city_name])
+	    // ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options'])
+	    // ->groupBy('centers.id')
+	    // ->orderBy('center_prices.price', 'asc')
+	    // ->select(['centers.*']);
+	    $locations = $this->center
+	    ->where(['country' => $country_slug, 'allwork_active_flag' => 'Y', 'city_name' => $city_name])
+	    ->with(['prices', 'city', 'telephony_includes', 'coordinate', 'local_number', 'meeting_rooms', 'options']);	    
+
 	    if($per_page){
 	    	$locations = $locations->paginate($per_page);
 	    	$paginate = true;
@@ -592,6 +609,8 @@ class LocationService {
 					$temp['nearby_centers'] = [];
 				}
 			}
+			$allwork_site = $location->sites()->where('name', 'allwork')->first();
+			$temp['from_allwork'] = null!= $allwork_site ? true : false;
 			array_push($locationsArray, $temp);
 			$locationsArray['count'] = count($locations);
 			if($pagination){
