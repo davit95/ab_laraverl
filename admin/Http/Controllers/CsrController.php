@@ -127,15 +127,18 @@ class CsrController extends Controller
         $recurring_invoice = $userService->getRecurringInvoice($id);
         $recurring_invoice_start_date = '';
         $recurring_invoice_end_date = '';
+        $invoices = $customerService->getCustomerPrices($id);
         $date = new Carbon;
         if($recurring_invoice) {
             $recurring_invoice_start_date = $date->parse($recurring_invoice->created_at)->format('d/m/Y');
             $recurring_invoice_end_date = $date->parse($recurring_invoice->created_at)->addMonth($recurring_invoice->recurring_period_within_month)->format('d/m/Y');   
         }
+        //dd($invoices);
 
         return view('admin.csr.customer_info',
         [
             'customer'           => $customer, 
+            'invoices'           => $invoices, 
             'role'               => $role, 
             'next_invoices'      => $next_invoices, 
             'declined_invoices'  => $declined_invoices,

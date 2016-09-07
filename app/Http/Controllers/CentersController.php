@@ -34,7 +34,12 @@ class CentersController extends Controller {
 					$image_src = url('mr-photos/no_pic.gif');
 					$image_alt = '';
 				} else {
-					$image_src = 'http://www.abcn.com/images/photos/'.$photo->path;
+					
+					if(isset($center) && count($center->sites) != 0) {
+						$image_src = '/images/centers/'.$photo->path;
+					} else {
+						$image_src = 'http://www.abcn.com/images/photos/'.$photo->path;
+					}					
 					$image_alt = $photo->alt;
 				}
 			}

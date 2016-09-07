@@ -129,13 +129,7 @@
         {!! Form::label('lng','*Address Longitude: ') !!}
         {!! Form::text('lng', isset($center_coordinates->lng) ? $center_coordinates->lng : null,['class' => 'f1'])!!}
         <br>
-        @if(isset($center->center_filter) && count($center->sites) == 0)
-            {!! Form::label('Make this center active or inactive') !!}
-            {!! Form::checkbox('active',$center->center_filter->virtual_office, $center->center_filter->virtual_office == 1 ? true : null) !!}
-        @else
-            {!! Form::label('Make this center active or inactive') !!}
-            {!! Form::checkbox('active',$center->allwork_active_flag, $center->allwork_active_flag == 'Y' ? true : null) !!}
-        @endif
+        
         
         <!-- {!! Form::label('sentence3','sentence3') !!}
         {!! Form::text('sentence3',isset($center->virtual_office_seo->sentence3) ? $center->virtual_office_seo->sentence3 : null,['class' => 'f1']) !!}
@@ -334,7 +328,11 @@
                     {!! Form::file(isset($photos[$i]->id) ? 'image'.$i.'_'.$photos[$i]->id :'image'.$i, []) !!}
                     @if(isset($photos[$i]) && $photos[$i] != '')
                         {!! Form::hidden('photo_number'.$i.'', $photos[$i]->id, []) !!}
-                        <img src="/mr-photos/{!! $photos[$i]->path !!}" width="70px">
+                        @if(isset($center) && count($center->sites) != 0)
+                            <img src="/images/centers/{!! $photos[$i]->path !!}"  width="70px">
+                        @else
+                            <img src='http://www.abcn.com/images/photos/{!! $photos[$i]->path !!}' width="70px" />
+                        @endif
                     @endif
                 </div>
             </div>

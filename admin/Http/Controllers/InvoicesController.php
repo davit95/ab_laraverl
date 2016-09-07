@@ -42,7 +42,8 @@ class InvoicesController extends Controller
         $all_invoices = $invoiceService->getAllPendingInvoicesByCustomerId($id);
         $total_price = 0;
         foreach ($all_invoices as $invoice) {
-            $total_price = $total_price + $invoice->price;
+            //dd($invoice->id, session('price_'.$invoice->id));
+            $total_price = $total_price + session('price_'.$invoice->id);
             if(!$invoice || !$invoice->customer) {
                 throw new Exception("Invalid invoice", 1);
             }
@@ -62,8 +63,9 @@ class InvoicesController extends Controller
         }
         
         $customer = $userService->getUser($id);
-        //dd($customer);
+        $customer_id = $customer->id;
         $amount    = $total_price;
+        //dd($amount, 'aa');
         $order_id  = $invoice_id;
         \Braintree_Configuration::environment($braintree_enviorenment);
         \Braintree_Configuration::merchantId($braintree_configs['merchant_id']);
@@ -72,11 +74,12 @@ class InvoicesController extends Controller
 
         $customer = unserialize($customer->customer_serialized_result);
         //dd($customer->customer->creditCards[0]->token, $amount, $order_id);
+        dd($customer->customer->creditCards[0]->token);
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,
             'orderId' => $order_id,
-            'amount' => 2000
+            'amount' => $amount
           ]
         );
         // 
@@ -104,7 +107,7 @@ class InvoicesController extends Controller
                         // }
                     }
                 }  
-                return redirect('/csr')->withSuccess('need more info where to redircet after success payment');
+                return redirect('/customers/'.$customer_id)->withSuccess('your payment has been approved');
             } else {
                 dd($result);
                 dd('need more info where to redircet when payment is declined');
@@ -141,12 +144,14 @@ class InvoicesController extends Controller
         }
         $customer = $invoice->customer;
         $customer_id = $customer->id;
+        $invoices = $customerService->getCustomerPrices($customer_id);
         //dd($customer);
         // if(!$this->checkCustomerCreditCardCredentials($customer)) {
         //     throw new Exception("The Customer CC credentials are invalid", 1);
             
         // }
-        $amount    = $invoice->price;
+        //dd($invoices);
+        $amount    = $invoices[$invoice->id];
         $order_id  = $invoice->id;
         // $cc_number = $braintree_enviorenment == 'production' ? $customer->cc_number : 4012000033330026 ;
         // $cc_month  = $customer->cc_month;
@@ -180,6 +185,7 @@ class InvoicesController extends Controller
         // $price = round($price, 0, PHP_ROUND_HALF_UP);
         // dd($price, 'as');
         // session(['amount' => $price]);
+        //dd($amount);
         $price = session('price_'.$invoice->id);
         //dd($price);
         $result = \Braintree_Transaction::sale(

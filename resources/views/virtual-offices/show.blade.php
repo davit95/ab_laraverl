@@ -37,7 +37,12 @@
 					<div class="dimg">
 						<div class="img-wrapper2">
 							@if(count($center->vo_photos))
-								<img src="http://www.abcn.com/images/photos/{!! $center->vo_photos[0]->path !!}" alt="{!! $center->vo_photos[0]->alt !!}">
+								@if(isset($center) && count($center->sites) != 0)
+								    <img src="/images/centers/{!! $center->vo_photos[0]->path !!}" alt="{!! $center->vo_photos[0]->alt !!}">
+								@else
+								    <img src="http://www.abcn.com/images/photos/{!! $center->vo_photos[0]->path !!}" alt="{!! $center->vo_photos[0]->alt !!}">
+								@endif
+								
 							@else
 								<img src="http://www.abcn.com/images/photos/no_pic.gif">
 							@endif
@@ -332,10 +337,18 @@
 							<div class="littleImgs">
 								<div id="links">
 									@foreach($center->vo_photos as $photo)
-										<a href="http://www.abcn.com/images/photos/{!! $photo->path !!}" title="{!! $photo->caption !!}">
+										@if(isset($center) && count($center->sites) != 0)
+										    <a href="/images/centers/{!! $photo->path !!}" title="{!! $photo->caption !!}">
+										@else
+										    <a href="http://www.abcn.com/images/photos/{!! $photo->path !!}" title="{!! $photo->caption !!}">
+										@endif
 											<div class="centerimg">
 												<div class="img-wrapper3">
-													<img src="http://www.abcn.com/images/photos/{!! $photo->path !!}" alt=""/>
+													@if(isset($center) && count($center->sites) != 0)
+													    <img src="/images/centers/{!! $photo->path !!}" alt=""/>
+													@else
+													    <img src="http://www.abcn.com/images/photos/{!! $photo->path !!}" alt=""/>
+													@endif
 												</div>
 											</div>
 										</a>
@@ -365,7 +378,12 @@
 									@if(is_null($photo = $_center->vo_photos()->first()))
 										<img src="/mr-photos/no_pic.gif">
 									@else
-										<img src="http://www.abcn.com/images/photos/{!! $photo->path !!}" alt="$photo->alt">
+										@if(isset($center) && count($center->sites) != 0)
+										    <img src="/images/centers/{!! $photo->path !!}" alt="$photo->alt">
+										@else
+										    <img src="http://www.abcn.com/images/photos/{!! $photo->path !!}" alt="$photo->alt">
+										@endif
+										
 									@endif
 								</div>
 							</div>

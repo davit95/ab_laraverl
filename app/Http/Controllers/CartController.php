@@ -65,7 +65,7 @@ class CartController extends Controller {
          	else {
          		$items = [];
      		}  
-     		// dd($items, $price_total);
+     		//dd($items, $price_total);
      		return view('cart.index', ['items' => $items, 'price_total' => round($price_total, 2)]);
 		} else {
 			$price_total = 0;

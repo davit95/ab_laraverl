@@ -138,6 +138,7 @@ class VirtualOfficesController extends Controller {
 	 * @return Response
 	 */
 	public function getVirtualOfficeShowPage($country_code, $city_slug, $center_slug, $center_id, CenterService $centerService, CenterCoordinateService $centerCoordinateService, LocationSeoService $locationSeo) {
+		//dd($country_code, $city_slug, $center_slug, $center_id);
 		if (null != $center = $centerService->getVirtualOfficeByCenterSlug($country_code, $city_slug, $center_slug, $center_id)) {
 			$nearby_centers_ids = $centerCoordinateService->getNearbyCentersByLatLng($center->coordinate->lat, $center->coordinate->lng);	
 			$nearby_centers     = $centerService->getVirtualOfficesByIds($nearby_centers_ids['ids']);

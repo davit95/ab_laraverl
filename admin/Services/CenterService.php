@@ -87,10 +87,11 @@ class CenterService implements CenterInterface {
 	 */
 	public function uploadFile($files)
 	{
-		$file_names = [];
+		//$file_names = [];
 		if ($files) {
-	        $file_names = str_random(20).".".$files->getClientOriginalExtension();
-	        return $file_names;
+	        $name = str_random(20).".".$files->getClientOriginalExtension();
+	        $files->move(public_path().'/images/centers', $name);
+	        return $name;
 		}
 		return '';
 	}
@@ -106,7 +107,9 @@ class CenterService implements CenterInterface {
 		$file_names = [];
 		if ($files) {
 			foreach ($files as $file) {
-				$file_names = str_random(20).".".$file->getClientOriginalExtension();
+				$name = str_random(20).".".$file->getClientOriginalExtension();
+				$file_names[]['path'] = $name;
+				$file->move(public_path().'/images/centers', $name);
 			}
 	        
 	        return $file_names;
@@ -124,7 +127,7 @@ class CenterService implements CenterInterface {
 	{
 		$photo_ids = [];
 		$max_photo_id = $this->photo->max('id');
-		$ids = $this->photo->where('id', '>', $max_photo_id - count($this->uploadFiles($files)))->lists('id')->toArray();
+		$ids = $this->photo->where('id', '>', $max_photo_id - count($files))->lists('id')->toArray();
 		return $ids;
 	}
 
@@ -320,14 +323,16 @@ class CenterService implements CenterInterface {
 		$number = 1;
 		$photos = [];
 		$alts = [];
+		//dd($files, $inputs);
+		//dd($inputs);
 		foreach ($inputs as $key => $value) {
 			if(isset($inputs['image'.$number]) && $inputs['image'.$number] !== '') {
 				$photos[$number]['path'] = $this -> uploadFile($inputs['image'.$number]);
-				if(isset($inputs['photo_2_alt'.$number])) {
-					$photos[$number]['alt'] = $inputs['photo_2_alt'.$number];
+				if(isset($inputs['photo_2_alt_'.$number])) {
+					$photos[$number]['alt'] = $inputs['photo_2_alt_'.$number];
 				}
-				if(isset($inputs['photo_2_caption'.$number])) {
-					$photos[$number]['caption'] = $inputs['photo_2_caption'.$number];
+				if(isset($inputs['photo_2_caption_'.$number])) {
+					$photos[$number]['caption'] = $inputs['photo_2_caption_'.$number];
 				}
 			}
 			$number ++;
@@ -417,9 +422,9 @@ class CenterService implements CenterInterface {
 		try {
 			$center = $this->center->create($params);
 
-			$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
-
 			if($files) {
+				// $this->photo->insert($this->uploadFiles($files));
+				$this->photo->insert($this->getPhotosALtsAndCaptions($inputs, $files, $city->name));
 				$this->center->find($center->id)->vo_photos()->attach($this->getPhotosIds($files));
 			}
 
@@ -593,8 +598,8 @@ class CenterService implements CenterInterface {
 	 */
 	public function updateCenter($center_id, $inputs, $files, $params)
 	{
+		//dd($inputs);
 		$prices_params = $this->getPricesParamsForUpdate($inputs,$center_id);
-		//dd($prices_params);
 		$vo_coord_params = $this->getVoCoordParams($inputs);
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
@@ -620,13 +625,24 @@ class CenterService implements CenterInterface {
 				}
 			}
 			$center_ids = $this->checkAllworkCenter();
+			if(isset($inputs['avo_site'])){
+				if(isset($inputs['avo_vo'])){
+					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
+				} else {
+					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
+				}
+				if(isset($inputs['avo_mr'])){
+					$this->centerFilter->where('center_id', $center_id)->update(['meeting_room' => 1]);
+				} else {
+					$this->centerFilter->where('center_id', $center_id)->update(['meeting_room' => 0]);
+				}
+			}
 			if(isset($inputs['active'])) {
 				if(in_array($center_id, $center_ids)) {
 					$status = 'active';
 					$result = $this->callAllWork($status,$center_id);
 					if($result['status'] == 'success') {
-						$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
-						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'Y']);
+						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'Y', 'active_flag' => 'Y']);
 					}
 				} else {
 					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
@@ -637,8 +653,7 @@ class CenterService implements CenterInterface {
 					$status = 'inactive';
 					$result = $this->callAllWork($status,$center_id);
 					if($result['status'] == 'success') {
-						$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
-						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N']);
+						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N', 'active_flag' => 'N']);
 					}
 				} else {
 					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
@@ -1067,7 +1082,7 @@ class CenterService implements CenterInterface {
 		$owner_user_id = $this->getOwnerIdByCenterId($center_id);
 
 		$response = $this->client->request('POST',
-			$this->apiUrl.'/center-status/'.$status,[
+			$this->apiUrl.'/center-status-for-allwork/'.$status,[
 				'headers' => [
 			        'AccessToken' => $this->access_token,
 			    ],

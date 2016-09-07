@@ -100,7 +100,6 @@ class InvoiceService {
 				->orderBy('id', 'DESC')->first()->recurring_attempts;
 			$invoice_recurring_attempt++;
 		}
-	
 		$invoice_params = $invoice->toArray();
 		$invoice_params['basic_invoice_id'] = $basic_invoice_id;
 		$invoice_params['recurring_attempts'] = $invoice_recurring_attempt;
@@ -149,12 +148,13 @@ class InvoiceService {
 
 	public function getAllPendingInvoicesByCustomerId($customer_id)
 	{
-		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->get();
+		return $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'initial')->where('status', '<>', 'declined')->get();
 	}
 
 	public function getAllNextInvoices()
 	{
-		return $this->invoice->where('payment_type', 'initial')->with('customer')->get();
+		$invoices = $this->invoice->where('payment_type', 'initial')->where('status', 'pending')->with('customer')->get();
+		return $invoices;
 	}
 
 	// public function getAllNextInvoicesByPaginate()
