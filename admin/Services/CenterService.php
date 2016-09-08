@@ -590,6 +590,43 @@ class CenterService implements CenterInterface {
 		return $alts_and_caps;		
 	}
 
+	public function callAllWork($status, $center_id)
+	{
+		$owner_user_id = $this->getOwnerIdByCenterId($center_id);
+
+		$response = $this->client->request('POST',
+			$this->apiUrl.'/center-status-for-allwork/'.$status,[
+				'headers' => [
+			        'AccessToken' => $this->access_token,
+			    ],
+			    'form_params' => [
+			    	'status' => $status,
+			    	'center_id' => $center_id,
+			    	'owner_user_id' => $owner_user_id
+			    ]
+			]
+		);
+		return json_decode($response->getBody(), true);
+	}
+
+	public function callAllWorkForAvo($status, $center_id)
+	{
+		$owner_user_id = $this->getOwnerIdByCenterId($center_id);
+		$response = $this->client->request('POST',
+			$this->apiUrl.'/activate-center-for-abcn/'.$center_id,[
+				'headers' => [
+			        'AccessToken' => $this->access_token,
+			    ],
+			    'form_params' => [
+			    	'status' => $status,
+			    	'center_id' => $center_id,
+			    	'owner_user_id' => $owner_user_id
+			    ]
+			]
+		);
+		return json_decode($response->getBody(), true);
+	}
+
 	/**
 	 * Update center
 	 *
@@ -603,7 +640,11 @@ class CenterService implements CenterInterface {
 		$vo_coord_params = $this->getVoCoordParams($inputs);
 		$vo_seo_params = $this->getVoSeosParams($inputs);
 		$mr_seo_params = $this->getMrSeosParams($inputs);
-		$center_params = $this->getCenterUpdateParams($inputs);		
+		$center_params = $this->getCenterUpdateParams($inputs);	
+
+		$center_ids = $this->checkAllworkCenter();
+		$inputs['active'] = 'a';
+		//dd($inputs['active']);
 
 		DB::beginTransaction();
 		try {
@@ -625,39 +666,63 @@ class CenterService implements CenterInterface {
 				}
 			}
 			$center_ids = $this->checkAllworkCenter();
-			if(isset($inputs['avo_site'])){
-				if(isset($inputs['avo_vo'])){
-					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
-				} else {
-					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
-				}
-				if(isset($inputs['avo_mr'])){
-					$this->centerFilter->where('center_id', $center_id)->update(['meeting_room' => 1]);
-				} else {
-					$this->centerFilter->where('center_id', $center_id)->update(['meeting_room' => 0]);
-				}
-			}
 			if(isset($inputs['active'])) {
-				if(in_array($center_id, $center_ids)) {
-					$status = 'active';
-					$result = $this->callAllWork($status,$center_id);
-					if($result['status'] == 'success') {
-						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'Y', 'active_flag' => 'Y']);
+				if(isset($inputs['avo_site'])){
+					if(in_array($center_id, $center_ids)) {
+						$status = 'active';
+						$result = $this->callAllWorkForAvo($status,$center_id);
+						if($result['status'] == 'success') {
+							$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'Y']);
+						}
+					} 
+					$this->center->where('id', $center_id)->update(['active_flag' => 'Y']);
+
+					if(isset($inputs['avo_vo'])) {
+						$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
+					} else {
+						$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
+					}
+					if(isset($inputs['avo_mr'])){
+						$this->centerFilter->where('center_id', $center_id)->update(['meeting_room' => 1]);
+					} else {
+						$this->centerFilter->where('center_id', $center_id)->update(['meeting_room' => 0]);
 					}
 				} else {
-					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 1]);
+					if(in_array($center_id, $center_ids)) {
+						$status = 'inactive';
+						$result = $this->callAllWorkForAvo($status,$center_id);
+						if($result['status'] == 'success') {
+							$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N']);
+						}
+					}
+					$this->center->where('id', $center_id)->update(['active_flag' => 'N']);
 				}
-				
-			} else {
+				if(isset($inputs['allwork_site'])) {
+					if(in_array($center_id, $center_ids)) {
+						$status = 'active';
+						$result = $this->callAllWork($status,$center_id);
+						if($result['status'] == 'success') {
+							$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'Y']);
+						}
+					}
+				} else {
+					if(in_array($center_id, $center_ids)) {
+						$status = 'inactive';
+						$result = $this->callAllWork($status,$center_id);
+						if($result['status'] == 'success') {
+							$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N']);
+						}
+					}
+				}
+			}	else {
 				if(in_array($center_id, $center_ids)) {
 					$status = 'inactive';
 					$result = $this->callAllWork($status,$center_id);
 					if($result['status'] == 'success') {
-						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N', 'active_flag' => 'N']);
+						$this->center->where('id', $center_id)->update(['allwork_active_flag' => 'N']);
 					}
-				} else {
-					$this->centerFilter->where('center_id', $center_id)->update(['virtual_office' => 0]);
 				}
+				$this->center->where('id', $center_id)->update(['active_flag' => 'N']);
 			}
 			$this->center->where('id', $center_id)->update($center_params);
 			/*$this->centerPrice->where('center_id', $center_id)->update($prices_params);*/
@@ -1077,24 +1142,6 @@ class CenterService implements CenterInterface {
 		$this->access_token = env('ALLWORK_API_ACCESS_TOKEN', 'fksfbhghqjsdjsqpkdckdvksal78w3r21r4');
 	}
 
-	public function callAllWork($status, $center_id)
-	{
-		$owner_user_id = $this->getOwnerIdByCenterId($center_id);
-
-		$response = $this->client->request('POST',
-			$this->apiUrl.'/center-status-for-allwork/'.$status,[
-				'headers' => [
-			        'AccessToken' => $this->access_token,
-			    ],
-			    'form_params' => [
-			    	'status' => $status,
-			    	'center_id' => $center_id,
-			    	'owner_user_id' => $owner_user_id
-			    ]
-			]
-		);
-		return json_decode($response->getBody(), true);
-	}
 
 	public function getOwnerIdByCenterId($center_id)
 	{

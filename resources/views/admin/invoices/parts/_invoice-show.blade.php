@@ -155,7 +155,7 @@
                     <strong>Charge Amount:</strong>
                 </span>&nbsp;
                 <div class="formOinfo">
-                   <p> $ <input type="text" name="charge_amount" value="{{$invoice->price}}" style="width: 70px;">  (Prorated amount)</p>
+                   <p> $ <input type="text" name="charge_amount" value="{{$prorated_amount}}" style="width: 70px;">  (Prorated amount)</p>
                 </div>
             </div>
 
