@@ -46,9 +46,10 @@ class CenterCoordinateService
      * @return Response
      */
 	public function getNearbyCentersByLatLng($center_lat, $center_lng, $radius = 25)
-	{
+	{		
 		$q = DB::select( DB::raw("SELECT center_id, ( 3959 * acos( cos( radians($center_lat) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians($center_lng) ) + sin( radians($center_lat) ) * sin( radians( lat ) ) ) ) AS distance FROM centers_coordinates HAVING distance < $radius ORDER BY distance"));
 		$ids = [];
+		$distances = [];		
 		foreach ($q as $key => $value)
 		{
 			$ids[] = $value->center_id;

@@ -33,11 +33,14 @@ class LocationService {
 	public function getLocationsByOwnerId($owner_id)
 	{
 		$locations = $this->center
-					->where('owner_user_id', $owner_id)
-					->with('vo_photos')					
+					->where('owner_user_id', $owner_id)							
 					->get();
         foreach ($locations as $location) {
         	$location->city_slug = isset($location->city) ? $location->city->slug : '';
+        	$allwork_site = $location->sites()->where('name', 'allwork')->first();
+			$location->from_allwork = null!= $allwork_site ? true : false;
+			$photo = $location->vo_photos()->first();
+			$location->main_image = 'https://www.abcn.com/images/photos/'.$photo->path;
         	unset($location->city);
         	$location->type = 'vo';
         }					
@@ -56,12 +59,29 @@ class LocationService {
 	public function addLocation($inputs)
 	{		
 		$site = $this->site->where('name', 'allwork')->first();			
-		$site_id = isset($site) ? $site->id : null;		
-		$city = $this->city->find($inputs['inputs']['city_id']);
-	    if(null!= $city){
-	    	$inputs['inputs']['city_name'] = $city->name;	
+		$site_id = isset($site) ? $site->id : null;
+		$city = $this->city->where('name', $inputs['inputs']['city_name'])->first();
+		$country = $this->country->where('code', $inputs['inputs']['country'])->first();
+		$country_id = 1;
+		if(null!== $country){
+			$country_id = $country->id;
+			$country_code = $country->code;
+		}		
+	    if(null == $city){
+	    	$name = $inputs['inputs']['city_name'];
+	    	$slug = strtolower($name);
+	    	$slug = preg_replace('/\s+/', '-', $slug);
+	    	$city = $this->city->create([
+	    		'name' => $inputs['inputs']['city_name'],
+	    		'slug' => $slug,
+	    		'country_id' => $country_id,
+	    		'country_code' => $country_code
+    		]);
+    		$inputs['inputs']['city_id'] = $city->id;
+	    }else{
+	    	$inputs['inputs']['city_id'] = $city->id;
 	    }
-		$center = $this->center->create($inputs['inputs']);		
+		$center = $this->center->create($inputs['inputs']);
 		if(null !== $center){
 			if(isset($inputs['images'])){
 				$destinationPath = public_path().'/images/centers';
@@ -72,11 +92,11 @@ class LocationService {
 	                if(null!== $photo){
 	                	$center->vo_photos()->attach($photo->id);
 	                }
-				}				
+				}
 			}
 		}
 		$center->sites()->attach($site_id);
-		return $center;		
+		return $center;
 	}
 
 	public function updateLocation($id, $owner_id, $inputs)
