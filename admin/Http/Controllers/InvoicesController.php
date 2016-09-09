@@ -28,11 +28,12 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, InvoiceService $invoiceService)
+    public function show($id, InvoiceService $invoiceService, CustomerService $customerService)
     {
         $invoice = $invoiceService->getInvoiceById($id);
         $invoiceService->makeAdminCustomer($id);
-        return view('admin.invoices.show', ['invoice' => $invoice]);
+        $prorated_amount = $invoiceService->getInvoiceProratedAmount($invoice);
+        return view('admin.invoices.show', ['invoice' => $invoice, 'prorated_amount' => $prorated_amount]);
         //return redirect('users');
     }
 

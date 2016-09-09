@@ -240,21 +240,7 @@ class UserService implements UserInterface
 
 	public function getCustomerCompletedInvoices($customer_id)
 	{
-		$basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->where('payment_type', 'recurring')->get();
-		//$basic_invoices = $basic_invoices = $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->get();
-		// foreach ($basic_invoices as $invoice) {
-		// 	if($invoice->recurring_period_within_month == $invoice->recurring_attempts) {
-		// 		$pending_invoice_reccuring_attempt = $this->invoice->where('basic_invoice_id', $invoice->id)->orderBy('id', 'DESC')->first()->recurring_attempts;
-		// 		if($pending_invoice_reccuring_attempt == $invoice->recurring_period_within_month - 1) {
-		// 			$completed_invoices = $this->invoice->where('customer_id', $customer_id)->where('payment_type', 'reccuring')->get();
-		// 		}
-		// 		if($pending_invoice_reccuring_attempt == 6) {
-		// 			$completed_invoices = [];
-		// 		}
-		// 	}
-		// }
-		return $basic_invoices;
-
+		return $this->invoice->where('customer_id', $customer_id)->where('status', 'approved')->where('payment_type', 'recurring')->get();
 	}
 
 	public function updateCustomerStatus($id, $status)

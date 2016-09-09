@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Invoice;
 use App\Models\AdminClients;
+use Carbon\Carbon;
 
 class InvoiceService {
 	
@@ -162,6 +163,31 @@ class InvoiceService {
 	// 	//dd(count($this->invoice->with('customer')->get()));
 	// 	return $this->invoice->with('customer')->get();
 	// }
+
+	public function getInvoiceProratedAmount($invoice)
+	{
+
+		$month_days_to_seconds = date("t") * 24 * 60 * 60;
+	    $one_second_price = $invoice->price / $month_days_to_seconds;
+
+	    $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at);
+	    $clone_created_at = clone $created_at;
+	    $last_day_of_month = $clone_created_at->endOfMonth();
+	    $time_diff_by_seconds = $created_at->diffInSeconds($last_day_of_month);
+
+	    $last_days_price = $invoice->price;
+
+	    if($time_diff_by_seconds != 0 && ($invoice->recurring_attempts == 0 || $invoice->recurring_attempts == 6)) {
+	        $last_days_price = $time_diff_by_seconds * $one_second_price;
+	        if($invoice->recurring_attempts == 6) {
+	            $last_days_price = ($month_days_to_seconds - $time_diff_by_seconds) * $one_second_price;
+	        }
+	    } 
+	    $price = $last_days_price;
+	    $price = round($price, 0, PHP_ROUND_HALF_UP);
+	    
+	    return $price;
+	}
 
 	
 }
