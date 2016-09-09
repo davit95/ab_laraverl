@@ -81,7 +81,14 @@ class LocationService {
 	    }else{
 	    	$inputs['inputs']['city_id'] = $city->id;
 	    }
-		$center = $this->center->create($inputs['inputs']);
+		$center = $this->center->create($inputs['inputs']);		
+		$center->sites()->attach($site_id);
+		return $center;
+	}
+
+	public function saveLocationImages($center_id, $inputs)
+	{		
+		$center = $this->center->find($center_id);
 		if(null !== $center){
 			if(isset($inputs['images'])){
 				$destinationPath = public_path().'/images/centers';
@@ -92,11 +99,11 @@ class LocationService {
 	                if(null!== $photo){
 	                	$center->vo_photos()->attach($photo->id);
 	                }
+	                return true;
 				}
 			}
 		}
-		$center->sites()->attach($site_id);
-		return $center;
+		return false;
 	}
 
 	public function updateLocation($id, $owner_id, $inputs)

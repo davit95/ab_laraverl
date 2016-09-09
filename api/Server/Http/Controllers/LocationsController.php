@@ -45,11 +45,19 @@ class LocationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function addLocation(Request $request, LocationService $locationService)
-    {
-        \Log::Info($request->all());
+    {        
         $location = $locationService->addLocation($request->all());
         $status = null!= $location ? 'success' : 'error';
         return response()->json(['status' => $status, 'location' => $location]);
+    }
+
+    public function saveLocationImages($center_id, Request $request, LocationService $locationService)
+    {        
+        $result = $locationService->saveLocationImages($center_id, $request->all());
+        if($result){
+            return response()->json(['status' => 'success', 'message' => 'Images Saved Successfully']);
+        }
+        return response()->json(['status' => 'error', 'message' => 'Something Went Wrong Please try again']);
     }
 
     /**
