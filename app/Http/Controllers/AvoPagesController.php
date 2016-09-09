@@ -622,13 +622,21 @@ class AvoPagesController extends Controller {
 				$arr = $value->toArray();
 				$arr['product'] = $product;
 				//dd($arr);
-				$temp['serialized_card_item_info'] = serialize($arr);
 				$temp['created_at'] = Carbon::now()->__toString();
 				$temp['updated_at'] = Carbon::now()->__toString();
+
+				$month_days_to_seconds = date("t") * 24 * 60 * 60;
+			    $one_second_price = $temp['price'] / $month_days_to_seconds;
+			    $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $temp['created_at']);
+			    $clone_created_at = clone $created_at;
+			    $last_day_of_month = $clone_created_at->endOfMonth();
+			    $time_diff_by_seconds = $created_at->diffInSeconds($last_day_of_month);
+			    $last_days_price = $time_diff_by_seconds * $one_second_price;
+			    $arr['first_prorated_amount']  = round($last_days_price);
+			    $arr['last_prorated_amount']  = $temp['price']  - $arr['first_prorated_amount'];
+			    $temp['serialized_card_item_info'] = serialize($arr);
 				$invoice_insertable[] = $temp;
 			}
-			//dd($invoice_insertable);
-			//session(['customer_information' => $inputs]);
 			$invoice->insert($invoice_insertable);
 			$cookie = Cookie::forget('temp_user_id');
 			return redirect('notar')->withCookie($cookie);

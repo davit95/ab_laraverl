@@ -9,7 +9,7 @@
         <div class="line right_side_area_line">
             <div class="formOinfo left_side_area_content">
                 <span class="lh_fi mediumBold customer_text_area_headers" > Customer Information: </span>
-                <div style="float: right;"><img src="https://www.alliancevirtualoffices.com/csr/images/visa-icon.jpg" border="0" style="margin:31px 11px;"></div>
+                <div style="float: right;"><img src="{{unserialize($customer->customer_serialized_result)->customer->creditCards[0]->imageUrl}}" border="0" style="margin:31px 11px;"></div>
                 @if($customer->status == '' || $customer->status == null)
                     <div style="color: white; background-color: red; font-weight: bold;">CUSTOMER TERMINATED</div>
                 @endif
@@ -171,7 +171,7 @@
                         <tr>
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
-                            <td>$ {{$invoices[$invoice->id]}}</td>
+                            <td>$ {{unserialize($invoice->payment_response)->amount}}</td>
                         </tr>
                     @endforeach   
                 </tbody>
@@ -190,10 +190,11 @@
                         <td ><strong>Action</strong></td>
                     </tr>
                     @foreach($declined_invoices as $invoice)
+
                         <tr>
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
-                            <td>$ {{$invoices[$invoice->id]}}</td>
+                            <td>$ {{unserialize($invoice->payment_response)->amount}}</td>
                             <td> </td>
                         </tr>
                     @endforeach 
@@ -216,7 +217,21 @@
                         <tr>
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
-                            <td>$ {{$invoice->price}}</td>
+                            @if($invoice->recurring_attempts == 0)
+                                @if(unserialize($invoice->serialized_card_item_info)['first_prorated_amount'] != 0)
+                                    <td>$ {{unserialize($invoice->serialized_card_item_info)['first_prorated_amount']}}</td>
+                                @else
+                                    <td>$ {{$invoice->price}}</td>
+                                @endif
+                            @elseif($invoice->recurring_attempts == $invoice->recurring_period_within_month)
+                                @if(unserialize($invoice->serialized_card_item_info)['last_prorated_amount'] != 0)
+                                    <td>$ {{unserialize($invoice->serialized_card_item_info)['last_prorated_amount']}}</td>
+                                @else
+                                    <td>$ {{$invoice->price}}</td>
+                                @endif
+                            @else
+                                <td>$ {{$invoice->price}}</td>
+                            @endif
                             <td><a href="{{url('invoices/'.$invoice->id.'/charge')}}">Charge now</a> </td>
                         </tr>
                     @endforeach 

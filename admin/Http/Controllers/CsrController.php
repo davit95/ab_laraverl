@@ -133,7 +133,7 @@ class CsrController extends Controller
             $recurring_invoice_start_date = $date->parse($recurring_invoice->created_at)->format('d/m/Y');
             $recurring_invoice_end_date = $date->parse($recurring_invoice->created_at)->addMonth($recurring_invoice->recurring_period_within_month)->format('d/m/Y');   
         }
-        //dd($invoices);
+        //dd(unserialize($next_invoices[3]->serialized_card_item_info)['first_prorated_amount']);
 
         return view('admin.csr.customer_info',
         [

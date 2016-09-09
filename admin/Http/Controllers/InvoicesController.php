@@ -139,25 +139,24 @@ class InvoicesController extends Controller
             
         }
         $invoice = $invoiceService->getInvoiceById($id);
-        //dd($invoice);
+
+        $price = $invoice->price;
+        if($invoice->recurring_attempts == 0) {
+            $first_price = unserialize($invoice->serialized_card_item_info)['first_prorated_amount'];
+            if($first_price != 0) {
+                $price = $first_price;
+            }
+        } elseif($invoice->recurring_attempts == $invoice->recurring_period_within_month) {
+            $price = unserialize($invoice->serialized_card_item_info)['last_prorated_amount'];
+        }
         if(!$invoice || !$invoice->customer) {
             throw new Exception("Invalid invoice", 1);
         }
         $customer = $invoice->customer;
         $customer_id = $customer->id;
-        $invoices = $customerService->getCustomerPrices($customer_id);
-        //dd($customer);
-        // if(!$this->checkCustomerCreditCardCredentials($customer)) {
-        //     throw new Exception("The Customer CC credentials are invalid", 1);
-            
-        // }
-        //dd($invoices);
-        $amount    = $invoices[$invoice->id];
+
         $order_id  = $invoice->id;
-        // $cc_number = $braintree_enviorenment == 'production' ? $customer->cc_number : 4012000033330026 ;
-        // $cc_month  = $customer->cc_month;
-        // $cc_year   = $customer->cc_year;
-        //dd($customer);
+
         \Braintree_Configuration::environment($braintree_enviorenment);
         \Braintree_Configuration::merchantId($braintree_configs['merchant_id']);
         \Braintree_Configuration::publicKey($braintree_configs['public_key']);
@@ -165,30 +164,7 @@ class InvoicesController extends Controller
 
         $customer = unserialize($customer->customer_serialized_result);
 
-        // $month_days_to_seconds = date("t") * 24 * 60 * 60;
-        // $one_second_price = $invoice->price / $month_days_to_seconds;
 
-        // $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at);
-        // $last_day_of_month = Carbon::now()->endOfMonth();
-        // $time_diff_by_seconds = $created_at->diffInSeconds($last_day_of_month);
-
-        // $last_days_price = $invoice->price;
-
-        // if($time_diff_by_seconds != 0 && ($invoice->recurring_attempts == 0 || $invoice->recurring_attempts == 6)) {
-        //     $last_days_price = $time_diff_by_seconds * $one_second_price;
-        //     if($invoice->recurring_attempts == 6) {
-        //         //dd('aa');
-        //         $last_days_price = ($month_days_to_seconds - $time_diff_by_seconds) * $one_second_price;
-        //     }
-        // } 
-
-        // $price = $last_days_price;
-        // $price = round($price, 0, PHP_ROUND_HALF_UP);
-        // dd($price, 'as');
-        // session(['amount' => $price]);
-        //dd($amount);
-        $price = session('price_'.$invoice->id);
-        //dd($price);
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,

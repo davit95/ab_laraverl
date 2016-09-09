@@ -226,7 +226,7 @@ class CentersController extends Controller
         if($role === 'super_admin') {
             try {
                 if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {
-                    return redirect('centers')->withSuccess('Center has been successfully updated.');
+                    return redirect('centers/'.$id)->withSuccess('Center has been successfully updated.');
                 }
             }
             catch(FailedTransactionException $e)
@@ -239,7 +239,7 @@ class CentersController extends Controller
             if($center = $centerService->getOwnerVirtualOfficeById($id, \Auth::user()->owner_id)) {
                 try {
                     if ($center = $centerService->updateCenter($id, $request->all(), $request->file()) ) {
-                        return redirect('centers')->withSuccess('Center has been successfully updated.');
+                        return redirect('centers/'.$id)->withSuccess('Center has been successfully updated.');
                     }
                 }
                 catch(FailedTransactionException $e)
@@ -254,7 +254,7 @@ class CentersController extends Controller
         } elseif($role === 'admin') {
             try {
                 if ($center = $centerService->updateCenter($id, $request->all(), $request->file(), $centerService->getPhotosByCenterId($id)) ) {
-                    return redirect('centers')->withSuccess('Center has been successfully updated.');
+                    return redirect('centers/'.$id)->withSuccess('Center has been successfully updated.');
                 }
             }
             catch(FailedTransactionException $e)

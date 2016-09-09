@@ -155,7 +155,12 @@
                     <strong>Charge Amount:</strong>
                 </span>&nbsp;
                 <div class="formOinfo">
-                   <p> $ <input type="text" name="charge_amount" value="{{$prorated_amount}}" style="width: 70px;">  (Prorated amount)</p>
+                    @if(unserialize($invoice->serialized_card_item_info)['first_prorated_amount'] != 0)
+                        <p> $ <input type="text" name="charge_amount" value="{{unserialize($invoice->serialized_card_item_info)['first_prorated_amount']}}" style="width: 70px;">  (Prorated amount)</p>
+                    @else
+                        <p> $ <input type="text" name="charge_amount" value="{{$invoice->amount}}" style="width: 70px;">  (Prorated amount)</p>
+                    @endif
+                   
                 </div>
             </div>
 
@@ -165,7 +170,9 @@
                 </span>&nbsp;
                 <div class="formOinfo">
                     <p>
-                        <a href = "{{ url('/invoices/'.$invoice->id.'/charge') }}" type="button" class = "btn btn-primary">Charge</a>&nbsp; &nbsp; &nbsp;
+                        @if($invoice->recurring_attempts != $invoice->recurring_period_within_month)
+                            <a href = "{{ url('/invoices/'.$invoice->id.'/charge') }}" type="button" class = "btn btn-primary">Charge</a>&nbsp; &nbsp; &nbsp;
+                        @endif
                         <a href = "{{ url('/csr') }}" type="button" class = "btn btn-info btn-lg" value="Cancel">Cancel</a>
                     </p>
                 </div>
