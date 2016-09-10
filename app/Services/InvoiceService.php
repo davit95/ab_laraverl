@@ -4,15 +4,17 @@ namespace App\Services;
 
 use App\Models\Invoice;
 use App\Models\AdminClients;
+use App\Models\ExtraCharge;
 use Carbon\Carbon;
 
 class InvoiceService {
 	
 
-	public function __construct(Invoice $invoice, AdminClients $adminClients) 
+	public function __construct(Invoice $invoice, AdminClients $adminClients, ExtraCharge $extraCharge) 
 	{
 		$this->invoice = $invoice;
 		$this->adminClients = $adminClients;
+		$this->extraCharge = $extraCharge;
 	}
 
 	public function getAllInvoices()
@@ -187,6 +189,26 @@ class InvoiceService {
 	    $price = round($price, 0, PHP_ROUND_HALF_UP);
 	    
 	    return $price;
+	}
+
+	public function addExtraCharge($id, $params)
+	{
+		$params['invoice_id'] = $id;
+		$params['service'] = strtolower($params['service']);
+		$params['service_other'] = strtolower($params['service_other']);
+		$extra_charge = $this->extraCharge->create($params);
+		return $extra_charge;
+	}
+
+	public function getExtraChargesPrice($invoice)
+	{
+		$price = 0;
+		if(!empty($invoice->extra_charge)) {
+			foreach ($invoice->extra_charge as $extra_charge) {
+				$price = $price + $extra_charge->amount;
+			}
+		}
+		return $price;
 	}
 
 	

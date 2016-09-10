@@ -81,13 +81,6 @@ class CustomersController extends Controller
         return view('admin.csr.customers.customer-show', ['customer' => $customer, 'end_date' => $end_date, 'not_date' => $not_date, 'months' => $months, 'center' => $center, 'role_id' => $role_id, 'files' => $files]);
     }
 
-    public function extraCharge($id, CustomerService $customerService, UserInterface $userService){
-
-        $userService->test($id,\Auth::id());
-        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        return view('admin.csr.extra_charge', ['customer' => $customer]);
-    }
-
     public function store(Request $request, CustomerService $customerService) 
     {
         dd($request->all());

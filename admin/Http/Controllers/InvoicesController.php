@@ -31,6 +31,7 @@ class InvoicesController extends Controller
     public function show($id, InvoiceService $invoiceService, CustomerService $customerService)
     {
         $invoice = $invoiceService->getInvoiceById($id);
+        $sum_extra_charge_price = $invoiceService->getExtraChargesPrice($invoice);
         $invoiceService->makeAdminCustomer($id);
         $prorated_amount = $invoiceService->getInvoiceProratedAmount($invoice);
         return view('admin.invoices.show', ['invoice' => $invoice, 'prorated_amount' => $prorated_amount]);
@@ -237,6 +238,39 @@ class InvoicesController extends Controller
             return false;
         }
         return true;
+    }
+
+    public function extraCharge($id, InvoiceService $invoiceService) 
+    {
+        $invoice = $invoiceService->getInvoiceById($id);
+        $extra_charge_max_period = $invoice->recurring_period_within_month - $invoice->recurring_attempts;
+        $charge_reasons = [
+            ''                             => 'Please Select',
+            'Refreshments'                 => 'Refreshments',
+            'A/V Rental'                   => 'A/V Rental',
+            'Office Supplies'              => 'Office Supplies',
+            'Meeting Supplies'             => 'Meeting Supplies',
+            'Building Services'            => 'Building Services',
+            'Shipping / Courier Services'  => 'Shipping / Courier Services',
+            'Administrative Assistant'     => 'Administrative Assistant',
+            'Conference and Meeting Rooms' => 'Conference and Meeting Rooms',
+            'Parking Validations'          => 'Parking Validations'
+        ];
+        $period = [];
+        for($i = 1; $i <= $extra_charge_max_period; $i++) {
+            $period[$i] = $i;
+        }
+        return view('admin.csr.extra_charge', ['invoice' => $invoice, 'extra_charge_max_period' => $extra_charge_max_period, 'charge_reasons' => $charge_reasons, 'period' => $period]);
+    }
+
+    public function addExtraCharge($id, Request $request, InvoiceService $invoiceService) 
+    {
+        $extra_charge = $invoiceService->addExtraCharge($id, $request->all());
+        if($extra_charge) {
+            return redirect('/invoices/'.$id)->withSuccess('Extra charge has been successfully created');
+        } else {
+            return redirect()->back()->withWarning('Ops. Something went wrong please try later');
+        }
     }
 
 }

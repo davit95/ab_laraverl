@@ -81,7 +81,8 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/invoices/{id}/charge-all' , 'InvoicesController@chargeAllInvoices');
 	Route::get('/invoices/{id}' , 'InvoicesController@show');
 	Route::get('/invoices/{id}/charge' , 'InvoicesController@chargeInvoice');
-	Route::get('/new_charge/{id}' , 'CustomersController@extraCharge');
+	Route::get('/new_charge/{id}' , 'InvoicesController@extraCharge');
+	Route::put('/new_charge/{id}' , 'InvoicesController@addExtraCharge');
 	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
 	Route::get('/charge' , 'CsrController@charge');
 	//Route::resource('/customers' , 'CustomersController');

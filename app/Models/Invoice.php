@@ -42,4 +42,9 @@ class Invoice extends Model
     {
         dd('item');
     }
+
+    public function extra_charge()
+    {
+        return $this->hasMany('App\Models\ExtraCharge');
+    }
 }
