@@ -65,6 +65,28 @@ class InvoiceService {
 		return $this->invoice->whereNotIn('id', $invoice_ids)->lists('id')->toArray();
 	}
 
+	public function getChargeParams($extra_charge) 
+	{
+		$params = $extra_charge->toArray();
+		$params['step'] ++;
+		$params['invoice_id'] ++;
+		unset($params['created_at']);
+		unset($params['updated_at']);
+		return $params;
+
+	}
+
+	public function createExtraCharge($invoice_id)
+	{
+		$extra_charges = $this->extraCharge->where('invoice_id', $invoice_id)->get();
+		foreach ($extra_charges as $charge) {
+			if($charge->period != $charge->step) {
+				$extra_charge = $this->getChargeParams($charge);
+				$this->extraCharge->create($extra_charge);
+			}
+		}
+	}
+
 	public function createInvoice($id)
 	{
 		//return true;
@@ -168,9 +190,9 @@ class InvoiceService {
 
 	public function getInvoiceProratedAmount($invoice)
 	{
-
+		$extra_charge_price = $this->getExtraChargesPrice($invoice);
 		$month_days_to_seconds = date("t") * 24 * 60 * 60;
-	    $one_second_price = $invoice->price / $month_days_to_seconds;
+	    $one_second_price = $invoice->price + $extra_charge_price / $month_days_to_seconds;
 
 	    $created_at = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at);
 	    $clone_created_at = clone $created_at;
@@ -209,6 +231,11 @@ class InvoiceService {
 			}
 		}
 		return $price;
+	}
+
+	public function getInvoiceExtraCharges($invoice)
+	{
+		return $this->extraCharge->where('invoice_id', $invoice->id)->get();
 	}
 
 	

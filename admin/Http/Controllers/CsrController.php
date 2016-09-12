@@ -116,7 +116,7 @@ class CsrController extends Controller
     }
 
 
-    public function getCustomerInfo($id,CustomerService $customerService, UserInterface $userService)
+    public function getCustomerInfo($id,CustomerService $customerService, UserInterface $userService, InvoiceService $invoiceService)
     {
         $customerService->getCustomerPrices($id);
         $role = \Auth::user()->role->name;
@@ -128,6 +128,8 @@ class CsrController extends Controller
         $recurring_invoice_start_date = '';
         $recurring_invoice_end_date = '';
         $invoices = $customerService->getCustomerPrices($id);
+        $extra_charges_amount = $customerService->getCustomersExtraChargesAmount($id);
+        //dd($extra_charges_amount);
         $date = new Carbon;
         if($recurring_invoice) {
             $recurring_invoice_start_date = $date->parse($recurring_invoice->created_at)->format('d/m/Y');
@@ -145,7 +147,8 @@ class CsrController extends Controller
             'completed_invoices' => $completed_invoices,
             'recurring_invoice'  => $recurring_invoice,
             'recurring_invoice_start_date'  => $recurring_invoice_start_date,
-            'recurring_invoice_end_date'    => $recurring_invoice_end_date
+            'recurring_invoice_end_date'    => $recurring_invoice_end_date,
+            'extra_charges_amount' => $extra_charges_amount
         ]);
     }
 

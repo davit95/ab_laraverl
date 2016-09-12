@@ -265,4 +265,24 @@ class CustomerService {
 		return $user;
 	}
 
+	public function getCustomersExtraChargesAmount($id)
+	{
+		$price = 0;
+		$invoice_price = 0;
+		$invoice_extra_charges = [];
+		$invoices = $this->invoice->where('customer_id', $id)->where('status', 'pending')->orWhere('status', 'declined')->get();
+		foreach ($invoices as $invoice) {
+			$invoice_price = $invoice->price;
+			if($invoice->extra_charge) {
+				foreach ($invoice->extra_charge as $extra_charge) {
+					if($extra_charge->step <= $extra_charge->period) {
+					    $price = $price + $extra_charge->amount;
+					}
+				}
+			}
+			$invoice_extra_charges[$invoice->id] = $price;
+		}
+		return $invoice_extra_charges;
+	}
+
 }

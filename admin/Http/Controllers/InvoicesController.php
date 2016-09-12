@@ -34,7 +34,7 @@ class InvoicesController extends Controller
         $sum_extra_charge_price = $invoiceService->getExtraChargesPrice($invoice);
         $invoiceService->makeAdminCustomer($id);
         $prorated_amount = $invoiceService->getInvoiceProratedAmount($invoice);
-        return view('admin.invoices.show', ['invoice' => $invoice, 'prorated_amount' => $prorated_amount]);
+        return view('admin.invoices.show', ['invoice' => $invoice, 'prorated_amount' => $prorated_amount, 'sum_extra_charge_price' => $sum_extra_charge_price]);
         //return redirect('users');
     }
 
@@ -44,12 +44,26 @@ class InvoicesController extends Controller
         $all_invoices = $invoiceService->getAllPendingInvoicesByCustomerId($id);
         $total_price = 0;
         foreach ($all_invoices as $invoice) {
-            //dd($invoice->id, session('price_'.$invoice->id));
-            $total_price = $total_price + session('price_'.$invoice->id);
+            $price = $invoice->price;
+            if($invoice->recurring_attempts == 0) {
+                $first_price = unserialize($invoice->serialized_card_item_info)['first_prorated_amount'];
+                if($first_price != 0) {
+                    $price = $first_price;
+                }
+            } elseif($invoice->recurring_attempts == $invoice->recurring_period_within_month) {
+                $price = unserialize($invoice->serialized_card_item_info)['last_prorated_amount'];
+            }
             if(!$invoice || !$invoice->customer) {
                 throw new Exception("Invalid invoice", 1);
             }
+            $extra_charges = $invoiceService->getInvoiceExtraCharges($invoice);
+            foreach ($extra_charges as $extra_charge) {
+                if($extra_charge->step != $extra_charge->period) {
+                    $price = $price + $extra_charge->amount;
+                }
+            }
         }
+        dd($price);
         $invoice_id = rand(1,999999999);
 
         $braintree_enviorenment = config('braintree.env');
@@ -66,7 +80,7 @@ class InvoicesController extends Controller
         
         $customer = $userService->getUser($id);
         $customer_id = $customer->id;
-        $amount    = $total_price;
+        $amount    = $price;
         //dd($amount, 'aa');
         $order_id  = $invoice_id;
         \Braintree_Configuration::environment($braintree_enviorenment);
@@ -76,7 +90,7 @@ class InvoicesController extends Controller
 
         $customer = unserialize($customer->customer_serialized_result);
         //dd($customer->customer->creditCards[0]->token, $amount, $order_id);
-        dd($customer->customer->creditCards[0]->token);
+        //dd($customer->customer->creditCards[0]->token);
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,
@@ -92,6 +106,7 @@ class InvoicesController extends Controller
                 $attributes = unserialize($f)->transaction;
                 $attributes = serialize($attributes);  
                 foreach ($all_invoices as $invoice) {
+                    $new_extra_charge = $invoiceService->createExtraCharge($invoice->id);
                     $new_invoice = $invoiceService->createInvoice($invoice->id);
                     if($new_invoice) {
                         $invoice = $invoiceService->updateInvoiceParams($invoice->id, $attributes);
@@ -153,6 +168,12 @@ class InvoicesController extends Controller
         if(!$invoice || !$invoice->customer) {
             throw new Exception("Invalid invoice", 1);
         }
+        $extra_charges = $invoiceService->getInvoiceExtraCharges($invoice);
+        foreach ($extra_charges as $extra_charge) {
+            if($extra_charge->step != $extra_charge->period) {
+                $price = $price + $extra_charge->amount;
+            }
+        }
         $customer = $invoice->customer;
         $customer_id = $customer->id;
 
@@ -164,7 +185,6 @@ class InvoicesController extends Controller
         \Braintree_Configuration::privateKey($braintree_configs['private_key']);
 
         $customer = unserialize($customer->customer_serialized_result);
-
 
         $result = \Braintree_Transaction::sale(
           [
@@ -186,6 +206,7 @@ class InvoicesController extends Controller
                 $attributes = unserialize($f)->transaction;
                 //dd($attributes);
                 $attributes = serialize($attributes);
+                $new_extra_charge = $invoiceService->createExtraCharge($id);
                 $new_invoice = $invoiceService->createInvoice($id);
                 if($new_invoice) {
                     $invoice = $invoiceService->updateInvoiceParams($id, $attributes);

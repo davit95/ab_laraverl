@@ -147,7 +147,7 @@
                     <strong>Invoice Amount:</strong>
                 </span>&nbsp;
                 <div class="formOinfo">
-                   <p> ${{$invoice->price}}</p>
+                   <p> ${{$invoice->price + $sum_extra_charge_price}}</p>
                 </div>
             </div>
             <div class="line">

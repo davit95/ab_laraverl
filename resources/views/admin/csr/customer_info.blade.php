@@ -190,7 +190,6 @@
                         <td ><strong>Action</strong></td>
                     </tr>
                     @foreach($declined_invoices as $invoice)
-
                         <tr>
                             <td><a class="customer_text_area_links" href="" target="V">{{$invoice->id}}</a></td>
                             <td>{{$invoice->created_at}}</td>
@@ -219,19 +218,41 @@
                             <td>{{$invoice->created_at}}</td>
                             @if($invoice->recurring_attempts == 0)
                                 @if(unserialize($invoice->serialized_card_item_info)['first_prorated_amount'] != 0)
-                                    <td>$ {{unserialize($invoice->serialized_card_item_info)['first_prorated_amount']}}</td>
+                                    @if(isset($extra_charges_amount[$invoice->id]))
+                                        <td>$ {{unserialize($invoice->serialized_card_item_info)['first_prorated_amount'] + $extra_charges_amount[$invoice->id]}}</td>
+                                    @else
+                                        <td>$ {{unserialize($invoice->serialized_card_item_info)['first_prorated_amount']}}</td>
+                                    @endif    
                                 @else
-                                    <td>$ {{$invoice->price}}</td>
+                                    @if(isset($extra_charges_amount[$invoice->id]))
+                                        <td>$ {{$invoice->price + $extra_charges_amount[$invoice->id]}}</td>
+                                    @else
+                                        <td>$ {{$invoice->price}}</td>
+                                    @endif    
                                 @endif
                             @elseif($invoice->recurring_attempts == $invoice->recurring_period_within_month)
-                                @if(unserialize($invoice->serialized_card_item_info)['last_prorated_amount'] != 0)
-                                    <td>$ {{unserialize($invoice->serialized_card_item_info)['last_prorated_amount']}}</td>
+                                @if(unserialize($invoice->serialized_card_item_info)['first_prorated_amount'] != 0)
+                                    @if(isset($extra_charges_amount[$invoice->id]))
+                                        <td>$ {{unserialize($invoice->serialized_card_item_info)['last_prorated_amount'] + $extra_charges_amount[$invoice->id]}}</td>
+                                    @else
+                                        <td>$ {{unserialize($invoice->serialized_card_item_info)['last_prorated_amount']}}</td>
+                                    @endif    
                                 @else
-                                    <td>$ {{$invoice->price}}</td>
+                                    @if(isset($extra_charges_amount[$invoice->id]))
+                                        <td>$ {{$invoice->price + $extra_charges_amount[$invoice->id]}}</td>
+                                    @else
+                                        <td>$ {{$invoice->price}}</td>
+                                    @endif    
                                 @endif
                             @else
-                                <td>$ {{$invoice->price}}</td>
+                                @if(isset($extra_charges_amount[$invoice->id]))
+                                     <td>$ {{$invoice->price + $extra_charges_amount[$invoice->id]}}</td>
+                                @else
+                                     <td>$ {{$invoice->price}}</td>
+                                @endif
+                               
                             @endif
+                            
                             <td><a href="{{url('invoices/'.$invoice->id.'/charge')}}">Charge now</a> </td>
                         </tr>
                     @endforeach 
