@@ -21,6 +21,7 @@ use App\Models\CenterFilter;
 use App\Models\CenterPrice;
 use App\Models\VirtualOfficeSeo;
 use App\Models\MeetingRoomSeo;
+use App\Models\WhiteSite;
 use DB;
 use App\Exceptions\Custom\FailedTransactionException;
 use GuzzleHttp\Client;
@@ -49,7 +50,8 @@ class CenterService implements CenterInterface {
 		VirtualOfficeSeo $virtualOfficeSeo,
 		MeetingRoomSeo $meetingRoomSeo,
 		Feature $feature,
-		Client $client
+		Client $client,
+		WhiteSite $whiteSite
 		) {
 		$this->center = $center;
 		$this->photo  = $photo;
@@ -70,6 +72,7 @@ class CenterService implements CenterInterface {
 		$this->feature = $feature;
 		$this->client     = $client;
 		$this->apiUrl     = env('AllWORK_API_URL', 'http://allwork.com/find-space');
+		$this->whiteSite = $whiteSite;
 		$this->getAccessToken();
 	}
 
@@ -1148,5 +1151,73 @@ class CenterService implements CenterInterface {
 		$center = $this->center->find($center_id);
 		$owner_user_id = $center->owner_user_id;
 		return $owner_user_id;
+	}
+
+	public function getIncludedCentersListsIdName($user_id)
+	{
+		$white_site = $this->whiteSite->where('user_id', $user_id)->first();
+		if(null != $white_site){
+			$removed_center_ids_json = $white_site->removed_centers_ids;
+			if($removed_center_ids_json != null){
+				$removed_center_ids = json_decode($removed_center_ids_json);
+				$centers = $this->center->whereNotIn('id', $removed_center_ids)->lists('name', 'id');
+			}else{
+				$centers = $this->center->where('active_flag', 'Y')->lists('name', 'id');	
+			}
+		}else{
+			$centers = $this->center->where('active_flag', 'Y')->lists('name', 'id');
+		}
+		return $centers;
+	}
+
+	public function getRemovedCentersListsIdName($user_id)
+	{
+		$centers = [];
+		$white_site = $this->whiteSite->where('user_id', $user_id)->first();
+		if(null != $white_site){
+			$removed_center_ids_json = $white_site->removed_centers_ids;
+			if($removed_center_ids_json != null){
+				$removed_center_ids = json_decode($removed_center_ids_json);
+				$centers = $this->center->whereIn('id', $removed_center_ids)->lists('name', 'id');
+			}
+		}
+		return $centers;
+	}
+
+	public function removeCenterFromWhiteSite($center_ids, $user_id)
+	{
+		$white_site = $this->whiteSite->where('user_id', $user_id)->first();
+		if(null != $white_site){
+			$removed_center_ids_json = $white_site->removed_centers_ids;			
+			if($removed_center_ids_json != null){
+				$removed_center_ids = json_decode($removed_center_ids_json, true);
+				foreach ($center_ids as $key => $value) {
+					array_push($removed_center_ids, $value);					
+				}
+			}else{
+				$removed_center_ids = $center_ids;				
+			}
+			$removed_center_ids = json_encode($removed_center_ids);
+			$white_site->update(['removed_centers_ids' => $removed_center_ids]);
+		}
+	}
+
+	public function addCenterToWhiteSite($center_ids, $user_id)
+	{
+		$new_removed_arr = [];
+		$white_site = $this->whiteSite->where('user_id', $user_id)->first();
+		if(null != $white_site){
+			$removed_center_ids_json = $white_site->removed_centers_ids;			
+			if($removed_center_ids_json != null){
+				$removed_center_ids = json_decode($removed_center_ids_json, true);				
+				foreach ($removed_center_ids as $key => $value) {					
+					if(!in_array($value, $center_ids)){						
+						array_push($new_removed_arr, $value);
+					}
+				}
+			}			
+			$removed_center_ids = empty($new_removed_arr) ? null : json_encode($new_removed_arr);			
+			$white_site->update(['removed_centers_ids' => $removed_center_ids]);
+		}
 	}
 }

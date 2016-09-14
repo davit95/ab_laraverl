@@ -19,6 +19,14 @@ use App\Http\Middleware\AccountingUser;
 |
 */
 
+Route::group(['prefix' => 'white-site'], function () {
+	Route::get('/', 'WhiteSiteController@index');	
+	Route::post('/remove-center-from-white-site ', 'WhiteSiteController@removeCenter');
+	Route::post('/add-center-to-white-site ', 'WhiteSiteController@addCenter');
+	Route::post('/offerings/update ', 'WhiteSiteController@updateOfferings');
+	Route::post('/logo/update ', 'WhiteSiteController@updateLogo');
+	Route::post('/company-information/update ', 'WhiteSiteController@updateCompanyInformation');    
+});
 Route::get('/', 'HomeController@dashboard');
 
 Route::get('/login', 'Auth\AuthController@login');
