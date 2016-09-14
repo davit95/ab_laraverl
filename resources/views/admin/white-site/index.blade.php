@@ -107,7 +107,7 @@
 		<p>
 			In order to set up your white site you must simply point to this URL. All transactions made via this unique URL will be credited to you.
 
-			<a href="{{ env('APP_URL') }}/white-site/{{ Auth::id() }}">{{ env('APP_URL') }}/white-site/{{ $white_site->id }}</a>
+			<a href="{{ env('APP_URL') }}/white-site/{{ $white_site->id }}">{{ env('APP_URL') }}/white-site/{{ $white_site->id }}</a>
 		</p>
 	</div>
 @stop
