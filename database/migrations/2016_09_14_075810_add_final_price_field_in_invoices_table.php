@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFialPriceFieldInInvoicesTable extends Migration
+class AddFinalPriceFieldInInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
