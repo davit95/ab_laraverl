@@ -433,5 +433,5 @@
     {!! Form::submit('Submit', array('class'=>'submit_btn')) !!}
 </div>
 
- {!! Form::close() !!}
+{!! Form::close() !!}
 

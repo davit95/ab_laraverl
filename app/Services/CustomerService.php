@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Invoice;
 use App\Models\File;
 use App\Models\Role;
+use App\Models\Balance;
 use App\User;
 use Carbon\Carbon;
 
@@ -22,7 +23,8 @@ class CustomerService {
 		Invoice $invoice,
 		Role $role,
 		UsState $usState,
-		File $file
+		File $file,
+		Balance $balance
 		) {
 		$this->customer = $customer;
 		$this->user = $user;
@@ -33,6 +35,7 @@ class CustomerService {
 		$this->role = $role;
 		$this->usState = $usState;
 		$this->file = $file;
+		$this->balance = $balance;
 	}
 
 	public function getCustomerByEmail($email)
@@ -283,6 +286,63 @@ class CustomerService {
 			$invoice_extra_charges[$invoice->id] = $price;
 		}
 		return $invoice_extra_charges;
+	}
+
+	public function getMonthDaysArray($month_days)
+	{
+		$days = [];
+		for($i = 1; $i <= $month_days; $i++) {
+			if($i < 10) {
+				$days['0'.$i] = '0'.$i;
+			} else {
+				$days[$i] = $i;
+			}	
+		}
+		return $days;
+	}
+
+	public function createBalance($params, $id)
+	{
+		$balance = $this->balance->where('customer_id', $id)->first();
+		$params['customer_id'] = $id;
+		$params['receive_date'] = Carbon::createFromDate($params['year'], $params['month'], $params['day']);
+		$params['receive_date'] = $params['year'].'-'.$params['month'].'-'.$params['day'];
+		unset($params['year']);
+		unset($params['month']);
+		unset($params['day']);
+		if($balance) {
+			return $balance->update($params);
+		}
+		return $this->balance->create($params);
+	}
+
+	public function getCustomerBalance($customer_id)
+	{
+		$amount = 0;
+		$balances = $this->balance->where('customer_id', $customer_id)->get();
+		foreach ($balances as $balance) {
+			$amount = $amount + $balance->amount;
+		}
+		return $amount;
+	}
+
+	public function getCustomerChangeDate($customer_id)
+	{
+		$amount = 0;
+		$change_date = '';
+		$balance = $this->balance->where('customer_id', $customer_id)->orderBy('id', 'DESC')->first();
+		if($balance) {
+			$change_date = $balance->created_at;
+		}
+		return $change_date;
+	}
+
+	public function updateBalance($customer_id, $price)
+	{
+		$balance = $this->balance->where('customer_id', $customer_id)->first();
+		$new_price = $balance->amount - $price;
+		$balance->update(['amount' => $new_price]);
+		return $balance;
 	}
 
 }

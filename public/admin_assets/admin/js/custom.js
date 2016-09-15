@@ -1,5 +1,6 @@
 
     $(document).on('ready', function(){
+
         $('.change').niceselect();
     })
 
@@ -101,4 +102,9 @@ $('.features').on('click', function(){
     }
     click++;
 })
+
+
+
+
+
 

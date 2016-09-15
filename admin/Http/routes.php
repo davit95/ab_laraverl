@@ -88,7 +88,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/orders/{id}' , 'CustomersController@show');
 	Route::get('/invoices/{id}/charge-all' , 'InvoicesController@chargeAllInvoices');
 	Route::get('/invoices/{id}' , 'InvoicesController@show');
-	Route::get('/invoices/{id}/charge' , 'InvoicesController@chargeInvoice');
+	Route::get('/invoices/{id}/charge' , 'InvoicesController@checkPaymentMethodAndCharge');
 	Route::get('/new_charge/{id}' , 'InvoicesController@extraCharge');
 	Route::put('/new_charge/{id}' , 'InvoicesController@addExtraCharge');
 	Route::get('/invoice/{id}' , 'CustomersController@getInvoice');
@@ -101,7 +101,7 @@ Route::group(['middleware' => 'superAdminOrCsr'], function () {
 	Route::get('/customers/{id}/balance' , 'CustomersController@getBalance');
 
 	Route::get('/customers/{id}' , 'CsrController@getCustomerInfo');
-	Route::get('/customers/{id}/manage-balance' , 'CsrController@manangBalance');
+	Route::get('/customers/{id}/manage-balance' , 'CustomersController@manangBalance');
 	Route::post('/customer-status/{id}' , 'CustomersController@UpdateStatus');
 });
 
@@ -120,3 +120,5 @@ Route::group(['middleware' => 'superAdmin'], function () {
 });
 
 Route::get('/billing-faq' , 'CsrController@biilingFaq');
+Route::post('/customers/{id}/add-balance' , 'CustomersController@addBalance');
+Route::post('/manage-invoice-from-balance' , 'CustomersController@ManageInvoiceFromBalance');

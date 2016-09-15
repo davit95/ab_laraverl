@@ -36,15 +36,25 @@
                 	Balance History  
             	</span>&nbsp;
 				<table border="0" cellspacing="3" cellpadding="3" class="table" >
-				<tbody><tr>
-				<td width="100"><strong>ID #</strong></td>
-				<td width="100"><strong>Action Date</strong></td>
-				<td width="150"><strong>Type</strong></td>
-				<td width="110"><strong>Invoice #</strong></td>
-				<td width="100"><strong>Invoice<br>Date</strong></td>
-				<td width="155"><strong>Amount</strong></td>
-				<td width="130"><strong>Balance</strong></td>
-				</tr> </tbody></table></div>
+					<thead>
+						<tr>
+							<th width="100"><strong>ID #</strong></th>
+							<th width="100"><strong>Action Date</strong></th>
+							<th width="150"><strong>Type</strong></th>
+							<th width="110"><strong>Invoice #</strong></th>
+							<th width="100"><strong>Invoice<br>Date</strong></th>
+							<th width="155"><strong>Amount</strong></th>
+							<th width="130"><strong>Balance</strong></th>
+						</tr> 
+					</thead>
+					<tbody>
+						@forelse( $invoices as $invoice )
+						    @include('admin.csr.parts._manage_balanse_item')
+						@empty
+						    
+						@endforelse
+					</tbody>
+				</table></div>
 				<br style="clear: both;">
 				<span class="lh_fi mediumBold customer_text_area_headers pull-left">
                 	Customer Balance Info 
@@ -56,7 +66,9 @@
 								<span class="costumer_text_area">Current Balance:</span>
 							</td>
 							<td>
-								<span class="costumer_text_area">$0.00</span>
+								<span class="costumer_text_area">
+									$ {{$customer_balance_amount}}
+								</span>
 							</td>
 						</tr>
 					<tr>
@@ -64,16 +76,15 @@
 							<span class="costumer_text_area">Last Change Date:</span>
 						</td>
 						<td>
-							<span class="costumer_text_area">N/A</span>
+							<span class="costumer_text_area">
+								{{($balance_change_date != '') ? date_format($balance_change_date, 'j/m/y') : 'N/A'}}
+							</span>
 						</td>
 					</tr>
 					</tbody>
 				</table>
 				<br>
-				<form action="" method="post">
-					<input type="hidden" name="step" value="manage-customer-balance">
-					<input type="hidden" name="c" value="2">
-					<input type="hidden" name="custid" value="7455">
+				{!! Form::open(['method' => 'post' , 'url' => '/customers/'.$customer->id.'/add-balance']) !!}
 					<span class="lh_fi mediumBold customer_text_area_headers pull-left">
 	                	Receive Payment
 	            	</span>&nbsp;
@@ -84,7 +95,7 @@
 									<span class="costumer_text_area">Amount:</span>
 								</td>
 								<td class="table_text_align">
-									<input name="Amount" type="text" id="Amount" class="manage_balance_inputs">
+									{!! Form::text('amount', null, ['class' => 'manage_balance_inputs', 'id' => 'Amount'])!!}
 								</td>
 							</tr>
 							<tr>
@@ -92,108 +103,136 @@
 									<span class="costumer_text_area">Type:</span>
 								</td>
 								<td class="table_text_align">
-									<select name="Type" class="customer_text_area_selects">
-										<option value="Check">Check</option>
-										<option value="Wire">Wire</option>
-										<option value="CC">Credit Card</option>
-										<option value="Bitcoin">Bitcoin</option>
-									</select>
+									{!! Form::select('type',$balance_types, null, [ 'class' => 'customer_text_area_selects']) !!}
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span class="costumer_text_area">Check or Wire Number/ID:</span>
 								</td>
-								<td class="table_text_align"><input name="ID" type="text" id="ID"  class="manage_balance_inputs" ></td>
+								<td class="table_text_align">
+									{!! Form::text('id', null, ['class' => 'manage_balance_inputs', 'id' => 'ID'])!!}
+								</td>
 							</tr>
 							<tr>
-							<td>
-								<span class="costumer_text_area">Received on date:</span>
-							</td>
-							<td class="table_text_align">
-							<select name="ro_month" class="customer_text_area_selects">
-								<option value="" selected="selected"></option>
-								<option value="01">Jan</option>
-								<option value="02">Feb</option>
-								<option value="03">Mar</option>
-								<option value="04">Apr</option>
-								<option value="05">May</option>
-								<option value="06">Jun</option>
-								<option value="07">Jul</option>
-								<option value="08">Aug</option>
-								<option value="09">Sep</option>
-								<option value="10">Oct</option>
-								<option value="11">Nov</option>
-								<option value="12">Dec</option>
-							</select>
-							<select name="ro_day" class="customer_text_area_selects">
-								<option value="" selected="selected"></option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-								<option>9</option>
-								<option>10</option>
-								<option>11</option>
-								<option>12</option>
-								<option>13</option>
-								<option>14</option>
-								<option>15</option>
-								<option>16</option>
-								<option>17</option>
-								<option>18</option>
-								<option>19</option>
-								<option>20</option>
-								<option>21</option>
-								<option>22</option>
-								<option>23</option>
-								<option>24</option>
-								<option>25</option>
-								<option>26</option>
-								<option>27</option>
-								<option>28</option>
-								<option>29</option>
-								<option>30</option>
-								<option>31</option>
-							</select>
-							<select name="ro_year" class="customer_text_area_selects">
-								<option value="" selected="selected"></option>
-								<option value="2014">2014</option>
-								<option value="2015">2015</option>
-								<option value="2016">2016</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="costumer_text_area">Notes:</span>
-						</td>
-						<td class="table_text_align">
-							<textarea name="Notes" id="Notes" cols="25" rows="5" class="manage_balance_inputs"></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td class="table_text_align"><input type="submit" name="Submit" value="Submit" class="customer_text_area_button"></td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-		<br><br>
-		<a href=""  style="color: #369 !important;">Go to this Customer's Account Information Page</a>
+								<td>
+									<span class="costumer_text_area">Received on date:</span>
+								</td>
+								<td class="table_text_align">
+									{!! Form::select('year',$years, null, [ 'class' => 'customer_text_area_selects', 'id' => 'year']) !!}
+									{!! Form::select('month',$months, null, [ 'class' => 'customer_text_area_selects', 'id' => 'month']) !!}
+									{!! Form::select('day',$days, null, [ 'class' => 'customer_text_area_selects', 'id' => 'day']) !!}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="costumer_text_area">Notes:</span>
+								</td>
+								<td class="table_text_align">
+									{!! Form::textarea('notes', null,['class' => 'manage_balance_inputs', 'id' => 'Notes', 'cols' => '25', 'rows' => '5']) !!}
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td class="table_text_align">
+									{!! Form::submit('Submit', array('class'=>'customer_text_area_button')) !!}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				{!! Form::close() !!}
+				<br><br>
+				@if($customer_balance_amount > 0)
+					{!! Form::open(['method' => 'post' , 'url' => '/manage-invoice-from-balance']) !!}
+						<table border="0" cellspacing="0" cellpadding="0" width="100%">
+							<tbody>
+								<tr>
+									<td width="130" class="costumer_text_area">Amount Available:</td>
+									<td class="costumer_text_area">$ {{$customer_balance_amount}}</td>
+								</tr>
+								<tr>
+									<td width="130">
+										<span class="costumer_text_area">
+											Amount to assign:
+										</span>
+									</td>
+									<td class="table_text_align">
+										{!! Form::text('amount', null, ['class' => 'manage_balance_inputs'])!!}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="costumer_text_area">
+											Invoice to be changed:
+										</span>
+									</td>
+									<td class="table_text_align">
+										<select name="invoice_id" class="customer_text_area_selects"> 
+											<option value="{{$last_pending_invoice->id}}">
+												{{$last_pending_invoice->id}} ({{date_format($balance_change_date, 'M d, Y')}})
+											</option> 
+											<option value="{{$next_invoice->id}}">
+												{{$next_invoice->id}} (Next Invoice)
+											</option> 
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="costumer_text_area">
+											Entered on date:
+										</span>
+									</td>
+									<td>
+										{!! Form::select('year',$years, null, [ 'class' => 'customer_text_area_selects']) !!}
+										{!! Form::select('month',$months, null, [ 'class' => 'customer_text_area_selects']) !!}
+										{!! Form::select('day',$days, null, [ 'class' => 'customer_text_area_selects']) !!}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="costumer_text_area">
+											Notes:
+										</span>
+									</td>
+									<td>
+										{!! Form::textarea('notes', null,['class' => 'manage_balance_inputs', 'cols' => '25', 'rows' => '5']) !!}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="costumer_text_area">
+											Clear declined status?
+										</span>
+									</td>
+									<td>
+										{!! Form::checkbox('remove_from_declined', 'yes', null, ['class' => 'manage_balance_inputs']) !!}
+										{!! Form::hidden('customer_id', $customer->id, []) !!}    
+									</td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td class="table_text_align">
+										{!! Form::submit('Submit', array('class'=>'customer_text_area_button')) !!}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					{!! Form::close() !!}
+				@endif
+				<br><br>
+				<a href=""  style="color: #369 !important;">Go to this Customer's Account Information Page</a>
+			</div>
+		</div>
+		<div class="bBox_btns">       
+		    <div class="edit_oBtn bordL">
+	    		<a href="{{ url('customers/'.$customer->id.'/edit') }}" class="gLink">
+	        		<div class="sBox_icons edit_green"></div>edit customer's info
+	        	</a>
+		    </div>
+		    <div class="clear"></div>
+		</div>
 	</div>
 </div>
-<div class="bBox_btns">
-       
-        <div class="edit_oBtn bordL"><a href="{{ url('customers/'.$customer->id.'/edit') }}" class="gLink"><div class="sBox_icons edit_green"></div>edit customer's info</a></div>
-    </div> 
-    <div class="clear"></div>
-</div>
-</div>
-
-</div>
 @stop
+

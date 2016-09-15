@@ -250,4 +250,9 @@ class UserService implements UserInterface
 		$customer->update(['status' => $status]);
 		return $customer;
 	}
+
+	public function getCustomerById($id)
+	{
+		return $this->user->find($id);
+	}
 }

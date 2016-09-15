@@ -24,6 +24,7 @@ class Invoice extends Model
         'basic_invoice_id', 
         'payment_type', 
         'price', 
+        'final_price', 
         'recurring_period_within_month',
         'recurring_attempts',
         'customer_id',

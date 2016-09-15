@@ -48,69 +48,7 @@
 								</td>
 								<td align="left">
 									{!! Form::select('period', $period, null , ['class' => 'customer_text_area_selects', 'id' => 'select']) !!}
-									<!-- <select class="customer_text_area_selects">
-										//
-									</select> -->
-									<!-- <select name="service_month" class="customer_text_area_selects">
-										<option value="" selected="selected"></option>
-										<option value="01">Jan</option>
-										<option value="02">Feb</option>
-										<option value="03">Mar</option>
-										<option value="04">Apr</option>
-										<option value="05">May</option>
-										<option value="06">Jun</option>
-										<option value="07">Jul</option>
-										<option value="08">Aug</option>
-										<option value="09">Sep</option>
-										<option value="10">Oct</option>
-										<option value="11">Nov</option>
-										<option value="12">Dec</option>
-									</select>
-									<select name="service_day" class="customer_text_area_selects">
-										<option value="" selected="selected"></option>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
-										<option>11</option>
-										<option>12</option>
-										<option>13</option>
-										<option>14</option>
-										<option>15</option>
-										<option>16</option>
-										<option>17</option>
-										<option>18</option>
-										<option>19</option>
-										<option>20</option>
-										<option>21</option>
-										<option>22</option>
-										<option>23</option>
-										<option>24</option>
-										<option>25</option>
-										<option>26</option>
-										<option>27</option>
-										<option>28</option>
-										<option>29</option>
-										<option>30</option>
-										<option>31</option>
-									</select>
-									<select name="service_year" class="customer_text_area_selects">
-										<option value="" selected="selected"></option>
-										<option value="2009">2009</option>
-										<option value="2010">2010</option>
-										<option value="2011">2011</option>
-										<option value="2012">2012</option>
-										<option value="2013">2013</option>
-										<option value="2014">2014</option>
-										<option value="2015">2015</option>
-										<option value="2016">2016</option>
-									</select> -->
+									
 								</td>
 							</tr>
 							<tr>
@@ -123,6 +61,7 @@
 						</tbody>
 					</table>
 				{!! Form::close() !!}
+				
 			</div> 
 		</div>
         	<div class="bBox_btns">
