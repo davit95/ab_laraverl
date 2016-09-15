@@ -92,7 +92,7 @@ class CustomersController extends Controller
     {
         $customer = $userService->getCustomerByIdAndRole($id,\Auth::user()->role->name);
         if($customer) {
-            return view('admin.csr.customers.customer-edit',['customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id]);
+            return view('admin.csr.customers.customer-edit',[ 'customer' => $customer, 'role_id' => $customer = \Auth::user()->role_id ]);
         } else {
             dd(404);
         }
@@ -105,7 +105,7 @@ class CustomersController extends Controller
         }
         else {
             return redirect()->back()->withWarning('Whoops, looks like something went wrong, please try later.');
-        }    
+        }
     }
 
     public function uploadFile($id, CustomerService $customerService, Request $request)

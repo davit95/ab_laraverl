@@ -85,6 +85,10 @@ $app->singleton(
     Admin\Contracts\StaffInterface::class,
     Admin\Services\StaffService::class
 );
+$app->singleton(
+    Admin\Contracts\WhiteSiteServiceInterface::class,
+    Admin\Services\WhiteSiteService::class
+);
 
 
 /*

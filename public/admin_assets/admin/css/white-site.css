@@ -1,0 +1,26 @@
+.included_centers, .removed_centers {
+	margin-bottom: 10px;	
+}
+.remove_centers, .add_centers {
+	margin-bottom: 20px;
+}
+.product_offerings {
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+.site_logo {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.logo_submit {
+	margin-top: 10px;
+}
+.company_information input {
+	margin-bottom: 10px;
+}
+.url {
+	margin-top: 30px;
+	border:1px solid #fff;
+	padding: 20px;
+	border-radius: 5px;
+}

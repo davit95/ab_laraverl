@@ -15,11 +15,16 @@
         </ul>
     </li>
 </ul> --}}
-
 <div class="logo"><a href="{{ url('reports') }}"><img src="/admin_assets/admin/images/admin_logo.png" width="200" height="62" border="0"></a></div>
 <div class="mobileMenu"></div>
 <div class="menu">
-    @if($role !== 'owner_user')
+    <a href="{{ url('white-site') }}" class="nd">
+        <div class="menu_btn @if(Request::is('white-site*')) menu_active @endif">
+            <div class="@if(Request::is('white-site*')) menu_btnL1_a @else @endif"></div>
+            <div class="menu_btnR lh_menu">WHITE SITE</div>
+        </div>
+    </a>
+    @if(isset($role) && $role !== 'owner_user')
         <div class="dropD_header">
             <div class="sSelectWrap1">
                 <div class="sSelectWrap2">
