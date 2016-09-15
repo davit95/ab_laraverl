@@ -129,7 +129,6 @@ class CsrController extends Controller
         $recurring_invoice_end_date = '';
         $invoices = $customerService->getCustomerPrices($id);
         $extra_charges_amount = $customerService->getCustomersExtraChargesAmount($id);
-        //dd($extra_charges_amount);
         $date = new Carbon;
         if($recurring_invoice) {
             $recurring_invoice_start_date = $date->parse($recurring_invoice->created_at)->format('d/m/Y');
@@ -163,11 +162,5 @@ class CsrController extends Controller
     public function biilingFaq()
     {
         return view('admin.csr.billing-faq');
-    }
-
-    public function manangBalance($id,CustomerService $customerService, UserInterface $userService){
-        $role = \Auth::user()->role->name;
-        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
-        return view('admin.csr.manage_balance', ['customer' => $customer, 'role' => $role]);
     }
 }

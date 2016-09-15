@@ -18,9 +18,12 @@ class InvoicesController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(InvoiceService $invoiceService, CustomerService $customerService, UserService $userService)
     {
         $this->middleware('auth');
+        $this->invoiceService = $invoiceService;
+        $this->customerService = $customerService;
+        $this->userService = $userService;
     }
 
     /**
@@ -137,44 +140,63 @@ class InvoicesController extends Controller
                 //
             }
         }    
-        
-
     }
 
-    public function chargeInvoice($id, InvoiceService $invoiceService, CustomerService $customerService)
+    public function checkPaymentMethodAndCharge($id, InvoiceService $invoiceService, CustomerService $customerService, UserService $userService) 
     {
+        $invoice = $invoiceService->getInvoiceById($id);
+        $customer = $userService->getCustomerById($invoice->customer_id);
+        
+        $price = $invoiceService->getInvoiceFullPrice($invoice);
+        if(!empty($customer->balances)) {
+            foreach ($customer->balances as $balance) {
+                if($balance->amount >= $price) {
+                    $cash_price = $price;
+                    $new_invoice = $invoiceService->createInvoice($id);
+                    $invoice = $this->invoiceService->updateInvoiceParams($id, '');
+                    //$invoice = $invoiceService->updateBalanceInvoiceParams($id);
+                    if(!empty($invoice->extra_charge)) {
+                        $new_extra_charge = $this->invoiceService->createExtraCharge($id, $new_invoice->id);
+                    }
+                    $balance = $customerService->updateBalance($customer->id, $cash_price);
+                    return redirect('/customers/'.$customer->id)->withSuccess('your payment has been approved');
+                } elseif($balance->amount - $price < 0) {
+                    $braintree_price = $price - $balance->amount;
+                    $cash_price = $balance->amount;
+                    $result = $this->chargeInvoice($id, $braintree_price);
+                    if($result) {
+                        $balance = $customerService->updateBalance($customer->id, $cash_price);
+                        return redirect('/customers/'.$customer->id)->withSuccess('your payment has been approved');
+                    } else {
+                        return redirect()->back()->withError('You have an error');
+                    }
+                } else {
+                    $result = $this->chargeInvoice($id, $price);
+                    if($result) {
+                        return redirect('/customers/'.$customer->id)->withSuccess('your payment has been approved');
+                    } else {
+                        return redirect()->back()->withError('You have an error');
+                    }
+                }
+            }
+        }
+    }
+
+    public function chargeInvoice($id, $price)
+    {
+        $invoice = $this->invoiceService->getInvoiceById($id);
+        $customer = $this->userService->getCustomerById($invoice->customer_id);
+
         $braintree_enviorenment = config('braintree.env');
         $braintree_configs = [];
         if($braintree_enviorenment == 'production') {
             $braintree_configs = config('braintree.production_credentials');
         } elseif($braintree_enviorenment == 'sandbox') {
-            //dd('as');
             $braintree_configs = config('braintree.sandbox_credentials');
         } else {
-            throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);
-            
+            throw new Exception("Braintree enviorenment was incorrect. must be 'production or sandbox'", 1);    
         }
-        $invoice = $invoiceService->getInvoiceById($id);
-
-        $price = $invoice->price;
-        if($invoice->recurring_attempts == 0) {
-            $first_price = unserialize($invoice->serialized_card_item_info)['first_prorated_amount'];
-            if($first_price != 0) {
-                $price = $first_price;
-            }
-        } elseif($invoice->recurring_attempts == $invoice->recurring_period_within_month) {
-            $price = unserialize($invoice->serialized_card_item_info)['last_prorated_amount'];
-        }
-        if(!$invoice || !$invoice->customer) {
-            throw new Exception("Invalid invoice", 1);
-        }
-        $extra_charges = $invoiceService->getInvoiceExtraCharges($invoice);
-        foreach ($extra_charges as $extra_charge) {
-            if($extra_charge->step != $extra_charge->period) {
-                $price = $price + $extra_charge->amount;
-            }
-        }
-        $customer = $invoice->customer;
+        
         $customer_id = $customer->id;
 
         $order_id  = $invoice->id;
@@ -185,7 +207,6 @@ class InvoicesController extends Controller
         \Braintree_Configuration::privateKey($braintree_configs['private_key']);
 
         $customer = unserialize($customer->customer_serialized_result);
-
         $result = \Braintree_Transaction::sale(
           [
             'paymentMethodToken' => $customer->customer->creditCards[0]->token,
@@ -194,41 +215,40 @@ class InvoicesController extends Controller
           ]
         );
 
-
         if($result) {
             $result = \Braintree_Transaction::submitForSettlement($result->transaction->id);    
         }
-        
         if($braintree_enviorenment == 'sandbox') {
-            // logic for sandox mode
             if($result->success) {
                 $f = serialize($result);
                 $attributes = unserialize($f)->transaction;
-                //dd($attributes);
+
                 $attributes = serialize($attributes);
-                $new_extra_charge = $invoiceService->createExtraCharge($id);
-                $new_invoice = $invoiceService->createInvoice($id);
+                $new_invoice = $this->invoiceService->createInvoice($id);
+                if(!empty($invoice->extra_charge[0])) {
+                    $new_extra_charge = $this->invoiceService->createExtraCharge($id, $new_invoice->id);
+                }
                 if($new_invoice) {
-                    $invoice = $invoiceService->updateInvoiceParams($id, $attributes);
-                    if(null !== $invoice) {
-                        return redirect('/customers/'.$customer_id)->withSuccess('your payment has been approved');
+                    $invoice = $this->invoiceService->updateInvoiceParams($id, $attributes);
+                    if(null != $invoice) {
+                        return true;
                     } else {
-                        //something whent wrong
+                        return false;
                     }
                 } else {
-                    $invoice = $invoiceService->updateInvoiceParamsById($id, $attributes);
+                    $invoice = $this->invoiceService->updateInvoiceParamsById($id, $attributes);
                     if($invoice) {
-                        return redirect('/customers/'.$customer_id)->withSuccess('your payment has been approved');
+                        return true;
                     } else {
-                        // something whent wrong
+                        return false;
                     }
                 }    
             } else {
-                $new_decline_invoice = $invoiceService->createDeclineInvoice($id);
+                $new_decline_invoice = $this->invoiceService->createDeclineInvoice($id);
                 if($new_decline_invoice) {
-                    return redirect()->back()->withError('You have an error');
+                    return true;
                 } else {
-                    //something whent wrong
+                    return false;
                 }
             }
         } else {
@@ -237,15 +257,15 @@ class InvoicesController extends Controller
                 $f = serialize($result);
                 $attributes = unserialize($f)->transaction;
                 $attributes = serialize($attributes);
-                $invoice = $invoiceService->updateInvoiceStatus($id, $attributes);
+                $invoice = $this->invoiceService->updateInvoiceStatus($id, $attributes);
                 if($invoice) {
-                    $new_invoice = $invoiceService->createInvoice($id);
+                    $new_invoice = $this->invoiceService->createInvoice($id);
                     dd($new_invoice, 'aa');
                 }    
             } else {
                 return redirect()->back()->withError('You have an error');
             }
-        }    
+        }   
     }
 
     private function checkCustomerCreditCardCredentials($customer)

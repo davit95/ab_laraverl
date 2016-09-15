@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\Custom\FailedTransactionException;
 use Cookie;
 use Admin\Services\CenterService;
+use App\Services\InvoiceService;
+use Carbon\Carbon;
 
 class CustomersController extends Controller
 {
@@ -224,5 +226,69 @@ class CustomersController extends Controller
             return redirect('customers/'.$customer->id)->withSuccess('Customer status has been successfully updated.');
         }
         return redirect('customers/'.$customer->id)->withWarning('Whoops, looks like something went wrong, please try later.');
+    }
+
+    public function manangBalance($id,CustomerService $customerService, UserInterface $userService, InvoiceService $invoiceService){
+        $role = \Auth::user()->role->name;
+        $customer = $userService->getCustomerByIdAndRole($id, \Auth::user()->role->name);
+        $invoices = $invoiceService->getInvoicesByCustomerId($id);
+        $balance_types = [
+            'check'   => 'Check',
+            'wire'    => 'Wire',
+            'cc'      => 'Credit Card',
+            'bitcoin' => 'Bitcoin'
+        ];
+        $months = array();
+        $currentMonth = (int)date('m');
+
+        for ($x = $currentMonth; $x < $currentMonth + 12; $x++) {
+           $months[date('m', mktime(0, 0, 0, $x, 1))] = date('M', mktime(0, 0, 0, $x, 1));
+        }
+        $mytime = Carbon::now();
+        $years = 
+        [                     
+            date("Y",strtotime("-0 year")) => date("Y",strtotime("-0 year")),
+            date("Y",strtotime("-1 year")) => date("Y",strtotime("-1 year")),
+            date("Y",strtotime("-2 year")) => date("Y",strtotime("-2 year"))
+        ];
+
+        $days = $customerService->getMonthDaysArray(date("t"));
+        $customer_balance_amount = $customerService->getCustomerBalance($id);
+        $balance_change_date = $customerService->getCustomerChangeDate($id);
+        $last_pending_invoice = $invoiceService->getLastPendingInvoice($id);
+        $next_invoice = $invoiceService->getNextInvoice($id);
+        return view('admin.csr.manage_balance',
+        [
+            'customer' => $customer, 
+            'role' => $role, 
+            'invoices' => $invoices,
+            'balance_types' => $balance_types,
+            'months' => $months,
+            'years' => $years,
+            'days' => $days,
+            'customer_balance_amount' => $customer_balance_amount,
+            'balance_change_date' => $balance_change_date,
+            'last_pending_invoice' => $last_pending_invoice,
+            'next_invoice' => $next_invoice
+        ]);
+    }
+
+    public function addBalance($id, Request $request, CustomerService $customerService)
+    {
+        $balance = $customerService->createBalance($request->all(), $id);
+        if($balance) {
+            return redirect('customers/'.$id.'/manage-balance')->withSuccess('Balance has been successfuly added');
+        } else {
+            return redirect()->back()->withWarning('Ops. Something went wrong. Please try later');
+        }
+    }
+
+    public function ManageInvoiceFromBalance(Request $request, InvoiceService $invoiceService)
+    {
+        $id = $request->input('customer_id');
+        if(null != $balance = $invoiceService->checkInvoice($request->all())) {
+            return redirect('customers/'.$id.'/manage-balance')->withSuccess('Balance has been successfuly updated');
+        }
+        return redirect()->back()->withWarning('Ops. Something went wrong. Please try later');
     }
 }

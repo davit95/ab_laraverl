@@ -6,15 +6,17 @@ use App\Models\Invoice;
 use App\Models\AdminClients;
 use App\Models\ExtraCharge;
 use Carbon\Carbon;
+use App\Models\Balance;
 
 class InvoiceService {
 	
 
-	public function __construct(Invoice $invoice, AdminClients $adminClients, ExtraCharge $extraCharge) 
+	public function __construct(Invoice $invoice, AdminClients $adminClients, ExtraCharge $extraCharge, Balance $balance) 
 	{
 		$this->invoice = $invoice;
 		$this->adminClients = $adminClients;
 		$this->extraCharge = $extraCharge;
+		$this->balance = $balance;
 	}
 
 	public function getAllInvoices()
@@ -65,24 +67,26 @@ class InvoiceService {
 		return $this->invoice->whereNotIn('id', $invoice_ids)->lists('id')->toArray();
 	}
 
-	public function getChargeParams($extra_charge) 
+	public function getChargeParams($extra_charge, $new_id) 
 	{
 		$params = $extra_charge->toArray();
 		$params['step'] ++;
-		$params['invoice_id'] ++;
+		$params['invoice_id'] = $new_id;
 		unset($params['created_at']);
 		unset($params['updated_at']);
 		return $params;
 
 	}
 
-	public function createExtraCharge($invoice_id)
+	public function createExtraCharge($invoice_id, $new_id)
 	{
 		$extra_charges = $this->extraCharge->where('invoice_id', $invoice_id)->get();
-		foreach ($extra_charges as $charge) {
-			if($charge->period != $charge->step) {
-				$extra_charge = $this->getChargeParams($charge);
-				$this->extraCharge->create($extra_charge);
+		if($extra_charges) {
+			foreach ($extra_charges as $charge) {
+				if($charge->period != $charge->step) {
+					$extra_charge = $this->getChargeParams($charge, $new_id);
+					$this->extraCharge->create($extra_charge);
+				}
 			}
 		}
 	}
@@ -91,7 +95,6 @@ class InvoiceService {
 	{
 		//return true;
 		$invoice = $this->invoice->find($id);
-		//dd($invoice);
 		if($invoice->recurring_attempts != $invoice->recurring_period_within_month  && $invoice->type != 'mr') {
 			if($invoice->basic_invoice_id != 0) {
 				$id = $invoice->basic_invoice_id;
@@ -106,7 +109,10 @@ class InvoiceService {
 				->toArray();
 			$params = $this->getInvoiceParams($invoice, 'pending' , $id);
 			//dd($params, $invoice);
-			return $this->invoice->create($params);
+			$new_invoice = $this->invoice->create($params);
+			$new_price = $this->getInvoiceFullPrice($new_invoice);
+			$new_invoice->update(['final_price' => $new_price]);
+			return $new_invoice;
 		}
 
 		return false;
@@ -141,10 +147,33 @@ class InvoiceService {
 		$invoice['basic_invoice_id'] = $id;
 		$invoice['payment_type'] = 'initial';
 		$invoice['status'] = 'declined';
-		return $this->invoice->create($invoice);
+		$new_declined_invoice = $this->invoice->create($invoice);
+		$new_price =  $this->getInvoiceFullPrice($new_declined_invoice);
+		$new_declined_invoice->update(['final_price' => $new_price]);
+		return $new_declined_invoice;
 	}
 
 	public function updateInvoiceParams($id, $payments_response)
+	{
+		//dd($id);
+		$invoice = $this->invoice->where('id', $id)->first();
+		if($invoice->basic_invoice_id != 0) {
+			$invoice_recurring_attempt = $invoice->recurring_attempts;
+			$invoice_recurring_attempt++;
+			$basic_invoice = $this->invoice->find($invoice->basic_invoice_id);
+			$basic_invoice->update([ 'recurring_attempts' =>  $invoice_recurring_attempt]);
+		} else {
+			$invoice_recurring_attempt = $invoice->recurring_attempts;
+		}
+		$final_price =  $this->getInvoiceFullPrice($invoice);
+		$invoice_recurring_attempt++;
+		$invoice_perriod = $invoice->recurring_period_within_month;
+		$status = 'approved';
+		$invoice->update(['status' => $status, 'payment_response' => $payments_response, 'payment_type' => 'recurring', 'final_price' => $final_price]);
+		return $invoice;
+	}
+
+	public function updateBalanceInvoiceParams($id)
 	{
 		//dd($id);
 		$invoice = $this->invoice->where('id', $id)->first();
@@ -160,7 +189,7 @@ class InvoiceService {
 		$invoice_recurring_attempt++;
 		$invoice_perriod = $invoice->recurring_period_within_month;
 		$status = 'approved';
-		$invoice->update(['status' => $status, 'payment_response' => $payments_response, 'payment_type' => 'recurring']);
+		$invoice->update(['status' => $status, 'payment_type' => 'recurring', 'recurring_attempts' => $invoice_recurring_attempt]);
 		return $invoice;
 	}
 
@@ -236,6 +265,79 @@ class InvoiceService {
 	public function getInvoiceExtraCharges($invoice)
 	{
 		return $this->extraCharge->where('invoice_id', $invoice->id)->get();
+	}
+
+	public function getInvoicesByCustomerId($customer_id)
+	{
+		return $this->invoice->where('customer_id', $customer_id)->get();
+	}
+
+	public function getInvoiceFullPrice($invoice)
+	{
+		$price = $invoice->price;
+		if($invoice->recurring_attempts == 0) {
+		    $first_price = unserialize($invoice->serialized_card_item_info)['first_prorated_amount'];
+		    if($first_price != 0) {
+		        $price = $first_price;
+		    }
+		} elseif($invoice->recurring_attempts == $invoice->recurring_period_within_month) {
+		    $price = unserialize($invoice->serialized_card_item_info)['last_prorated_amount'];
+		}
+		if(!$invoice || !$invoice->customer) {
+		    throw new Exception("Invalid invoice", 1);
+		}
+		$extra_charges = $this->getInvoiceExtraCharges($invoice);
+		if($extra_charges) {
+		    foreach ($extra_charges as $extra_charge) {
+		        if($extra_charge->step != $extra_charge->period) {
+		            $price = $price + $extra_charge->amount;
+		        }
+		    }
+		}
+
+		return $price;
+	}
+
+	public function getFisrtPrice($invoice)
+	{
+		return unserialize($invoice->serialized_card_item_info)['first_prorated_amount'];
+	}
+
+	public function getNextInvoice($customer_id)
+	{
+		$next_invoice = $this->invoice
+		->where('customer_id', $customer_id)
+		->where('status', 'pending')
+		->where('payment_type', 'initial')->first();
+		
+		return $next_invoice;
+	}
+
+	public function getLastPendingInvoice($customer_id)
+	{
+		$last_pending_invoice = $this->invoice
+		->where('customer_id', $customer_id)
+		->where('status', 'approved')
+		->where('payment_type', 'recurring')
+		->orderBy('id', 'DESC')
+		->first();
+
+		return $last_pending_invoice;
+	}
+
+	public function checkInvoice($params)
+	{
+		$balance = $this->balance->where('customer_id', $params['customer_id'])->first();
+		$balance_amount = $balance->amount;
+		$balance_new_amount = $balance_amount + $params['amount'];
+		$invoice = $this->invoice->find($params['invoice_id']);
+		if($invoice->status == 'approved') {
+			$invoice->update(['final_price' => $invoice->final_price + $params['amount'] ]);
+		} else {
+			$invoice->update(['final_price' => $invoice->final_price + $params['amount'] ]);
+		}
+		$balance->update(['amount' => $balance_new_amount]);
+		return $balance;
 	}
 
 	

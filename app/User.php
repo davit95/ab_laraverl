@@ -136,6 +136,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\\Models\\Invoice', 'customer_id', 'id');
     }
 
+    public function balances()
+    {
+        return $this->hasMany('App\\Models\\Balance', 'customer_id', 'id');
+    }
+
     public function isSuperAdmin()
     {
         $role = $this->role;
