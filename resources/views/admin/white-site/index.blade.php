@@ -57,12 +57,12 @@
 					<label for="">Meeting room</label>
 				</div>
 				<div class="col-md-6">
-					{!! Form::submit('submit', ['class' => 'btn btn-default']) !!}					
+					{!! Form::submit('submit', ['class' => 'btn btn-default']) !!}
 				</div>
 			</div>
 		{!! Form::close() !!}
 	</div>
-	<div class="col-md-8 site_logo">		
+	<div class="col-md-8 site_logo">
 		@if(isset($white_site) && isset($white_site['logo']) && $white_site['logo'] != "")
 			<h3><b>Your logo is</b></h3>
 			<div class="row">

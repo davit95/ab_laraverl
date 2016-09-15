@@ -105,11 +105,16 @@ Route::group(['before' => 'auth.basic'], function () {
 		
 		Route::post('/webhooks' , 'BraintreeController@webhooks');
 	});
+	
+	Route::get('braintree', 'BraintreeController@getForm');
+	Route::get('braintree/callback', 'BraintreeController@callback');
+	Route::post('checkout', 'BraintreeController@checkout');
+	Route::post('/braintree/token', 'BraintreeController@token');
 
-		Route::get('braintree', 'BraintreeController@getForm');
-		Route::get('braintree/callback', 'BraintreeController@callback');
-		Route::post('checkout', 'BraintreeController@checkout');
-		Route::post('/braintree/token', 'BraintreeController@token');
+	Route::get('payment/form', 'BraintreeController@getForm');
 
-		Route::get('payment/form', 'BraintreeController@getForm');
-
+	Route::group(['prefix' => 'white-site'], function () {
+		Route::get('/{white_site_id}', 'WhiteSiteController@index');
+		Route::get('/{white_site_id}/virtual-offices', 'WhiteSiteController@getVirtualOffices');
+		Route::get('/{white_site_id}/virtual-offices-introduction', 'WhiteSiteController@getVirtualOfficesIntroduction');
+	});	

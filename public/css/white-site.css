@@ -1,0 +1,108 @@
+body {
+  font-family: 'Open Sans',sans-serif;
+  color: #515254;
+  background-color: #F1F2F2; }
+
+.header {
+  padding: 20px 40px;
+  height: 110px;
+  background-color: white; }
+  .header .logo img {
+    max-width: 150px;
+    height: auto;
+    max-height: 70px; }
+  .header .menu .call-us {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 13px; }
+  .header .menu .item {
+    float: right;
+    margin-right: 20px; }
+    .header .menu .item a {
+      font-size: 13px;
+      font-weight: 400;
+      text-decoration: none;
+      color: #58595B; }
+      .header .menu .item a.active {
+        font-weight: 600;
+        color: #9FAF3A; }
+      .header .menu .item a:hover {
+        color: #9FAF3A; }
+
+.footer {
+  width: 100%;
+  height: 50px;
+  text-align: right;
+  line-height: 50px;
+  font-size: 12px;
+  background-color: #fff; }
+  .footer .content {
+    width: 100%;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box; }
+
+.virtual-offices-introduction {
+  padding: 50px 60px 120px 60px; }
+  .virtual-offices-introduction .title {
+    font-size: 21px;
+    color: #414042;
+    font-weight: 600; }
+  .virtual-offices-introduction .subtitle {
+    color: #888C91;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 30px; }
+  .virtual-offices-introduction .list {
+    margin-bottom: 50px; }
+    .virtual-offices-introduction .list li {
+      color: #888C91; }
+  .virtual-offices-introduction .get_started {
+    text-decoration: none;
+    padding: 15px 50px;
+    line-height: 40px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 12px;
+    background-color: #9FAF3A;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px; }
+
+.virtual-offices {
+  padding: 50px 60px 120px 60px;
+  color: #888C91; }
+  .virtual-offices .title {
+    font-size: 21px;
+    color: #414042;
+    font-weight: 600; }
+  .virtual-offices .subtitle {
+    color: #888C91;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 30px; }
+  .virtual-offices .list li {
+    font-size: 16px;
+    line-height: 16px; }
+  .virtual-offices .find-location {
+    margin-top: 40px; }
+    .virtual-offices .find-location .title {
+      color: #58595B;
+      font-size: 16px;
+      font-weight: 700px; }
+    .virtual-offices .find-location .subtitle {
+      color: #58595B;
+      font-weight: bold;
+      font-size: 14px; }
+    .virtual-offices .find-location .search select {
+      width: 100%;
+      padding: 15px;
+      border: 0; }
+    .virtual-offices .find-location #countries {
+      margin-bottom: 20px; }
