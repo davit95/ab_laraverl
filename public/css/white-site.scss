@@ -130,8 +130,52 @@ body {
 				border: 0;				
 			}
 		}
-		#countries{
+		#countries {
 			margin-bottom: 20px;
+		}
+		#states {
+			margin-bottom: 20px;
+		}
+	}
+	.centers {
+		margin-top: 30px;
+		.center {
+		    padding: 20px 25px;
+			min-height: 200px;
+			background-color: #fff;
+		    margin-bottom: 30px;			
+			.info {
+				padding-left: 25px;
+				.center-show-link {
+					text-decoration: none;
+					color: white;
+					background-color: #9FAF3A;
+					font-size: 11px;
+				    padding: 10px 10px;
+				    font-weight: bold;
+				    border-radius: 5px;
+				}
+				.address {
+					min-height: 140px;
+				}
+			}
+		}
+	}	
+}
+.center-show {
+	padding: 60px 0;
+	.address-image {
+		.address {
+			.title {
+				font-size: 18px;
+				font-weight: 700;
+				color: #58595B;
+				padding: 20px 0;				
+			}
+			.location {
+				color: #58595B;
+				font-weight: 600;
+			}
 		}
 	}
 }

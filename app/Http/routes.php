@@ -114,7 +114,10 @@ Route::group(['before' => 'auth.basic'], function () {
 	Route::get('payment/form', 'BraintreeController@getForm');
 
 	Route::group(['prefix' => 'white-site'], function () {
-		Route::get('/{white_site_id}', 'WhiteSiteController@index');
+		Route::get('/{white_site_id}/get-cities-by-country-state', 'WhiteSiteController@getCitiesByCountryAndState');
+		Route::get('/{white_site_id}/get-centers-list', 'WhiteSiteController@getCentersLiist');
+		Route::get('/{white_site_id}', 'WhiteSiteController@index');		
 		Route::get('/{white_site_id}/virtual-offices', 'WhiteSiteController@getVirtualOffices');
+		Route::get('/{white_site_id}/virtual-offices/{center_id}', 'WhiteSiteController@getShowCenter');
 		Route::get('/{white_site_id}/virtual-offices-introduction', 'WhiteSiteController@getVirtualOfficesIntroduction');
 	});	

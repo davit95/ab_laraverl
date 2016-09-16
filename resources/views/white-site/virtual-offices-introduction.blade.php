@@ -30,7 +30,7 @@
 						<b>Local Area Code:</b>	 Setting up in a new city? Establish your presence with your own telephone number and local area code, 
 						which sets the scene and shows you mean business right from the word 'Go'.
 					</li>				
-				</ul>				
+				</ul>
 				<a class="get_started" href="/white-site/{{ $white_site->id }}/virtual-offices">GET STARTED</a>
 			</div>
 		</div>

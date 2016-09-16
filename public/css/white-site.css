@@ -106,3 +106,35 @@ body {
       border: 0; }
     .virtual-offices .find-location #countries {
       margin-bottom: 20px; }
+    .virtual-offices .find-location #states {
+      margin-bottom: 20px; }
+  .virtual-offices .centers {
+    margin-top: 30px; }
+    .virtual-offices .centers .center {
+      padding: 20px 25px;
+      min-height: 200px;
+      background-color: #fff;
+      margin-bottom: 30px; }
+      .virtual-offices .centers .center .info {
+        padding-left: 25px; }
+        .virtual-offices .centers .center .info .center-show-link {
+          text-decoration: none;
+          color: white;
+          background-color: #9FAF3A;
+          font-size: 11px;
+          padding: 10px 10px;
+          font-weight: bold;
+          border-radius: 5px; }
+        .virtual-offices .centers .center .info .address {
+          min-height: 140px; }
+
+.center-show {
+  padding: 60px 0; }
+  .center-show .address-image .address .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #58595B;
+    padding: 20px 0; }
+  .center-show .address-image .address .location {
+    color: #58595B;
+    font-weight: 600; }
