@@ -61,10 +61,16 @@ class WhiteSiteController extends Controller {
 
 	public function getShowCenter($white_site_id, $center_id)
 	{
-		$center = $this->whiteSiteService->getCenter($this->white_site, $center_id);		
+		$center = $this->whiteSiteService->getCenter($this->white_site, $center_id);
+		$images = [];
+		if(isset($center['vo_photos'])){
+			foreach ($center['vo_photos'] as $photo) {
+				array_push($images, 'https://www.abcn.com/images/photos/' . $photo['path']);
+			}
+		}		
 		if($center == null){
 			return redirect('/white-site/'.$this->white_site->id);
 		}
-		return view('white-site.centers.show', ['white_site' => $this->white_site, 'center' => $center]);
+		return view('white-site.centers.show', ['white_site' => $this->white_site, 'center' => $center, 'images' => $images]);
 	}
 }

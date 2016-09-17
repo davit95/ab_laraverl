@@ -130,11 +130,44 @@ body {
 
 .center-show {
   padding: 60px 0; }
-  .center-show .address-image .address .title {
+  .center-show .title {
     font-size: 18px;
-    font-weight: 700;
+    font-weight: bold;
     color: #58595B;
-    padding: 20px 0; }
+    margin-top: 20px;
+    margin-bottom: 20px; }
   .center-show .address-image .address .location {
     color: #58595B;
     font-weight: 600; }
+  .center-show .packages {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px; }
+    .center-show .packages .compare-plans {
+      background-color: #6D6E71;
+      color: #fff;
+      -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      -o-transition: all 0.2s ease-in-out;
+      border: 0;
+      padding: 10px 20px;
+      margin-top: 20px; }
+    .center-show .packages .terms .continue {
+      padding: 10px 25px;
+      background: #9FAF3A;
+      border: 0 none;
+      color: #FFF;
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px; }
+  .center-show .description {
+    margin-top: 30px; }
+  .center-show .images .image {
+    cursor: pointer;
+    margin-bottom: 20px; }

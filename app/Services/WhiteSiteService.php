@@ -96,7 +96,11 @@ class WhiteSiteService
 		if(null!= $white_site){
 			$removed_centers_ids = json_decode($white_site->removed_centers_ids);			
 			if(!in_array($center_id, $removed_centers_ids)){				
-				return $this->center->where('id', $center_id)->with('vo_photos')->first()->toArray();
+				return $this->center->where('id', $center_id)->with(['vo_photos' => function($query){
+					$query->lists('path');
+				}])->with(['prices' => function($query){
+					$query->with('package');
+				}])->first()->toArray();
 			}
 			return null;
 		}

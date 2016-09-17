@@ -1,7 +1,7 @@
 @extends('white-site.layouts.layout')
-@section('content')	
-	<link rel="stylesheet" href="/css/photoswipe.css">
-	<link rel="stylesheet" href="/css/default-skin.css">
+@section('content')
+	<link rel="stylesheet" href="css/photoswipe.css">
+	<link rel="stylesheet" href="css/default-skin.css">
 	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 	    <div class="pswp__bg"></div>
 	    <div class="pswp__scroll-wrap">
@@ -61,24 +61,6 @@
 			<div class="title">
 				Virtual Office Options
 			</div>
-			<div class="prices">
-				@if(isset($center['prices']))					
-					@foreach($center['prices'] as $price)
-						@if(isset($price['package']))
-							<input type="radio"> {{ $price['package']['name'] }} -$ {{ $price['package']['price'] }} <br>
-						@endif
-					@endforeach
-				@endif				
-			</div>
-			<button class="compare-plans">Compare Plans</button>
-			<div class="terms">
-				<div class="title">
-					Virtual Office Term Length					
-				</div>
-				<input type="radio"> 6 Months <br>
-				<input type="radio"> 12 Months <br>
-				<button class="continue">Continue</button>
-			</div>
 		</div>
 		<div class="col-md-12 description">
 			<div class="title">
@@ -96,58 +78,12 @@
 				{{ $center['amenities'] }}
 			</div>
 		</div>
-		<div class="images col-md-12">			
-			<div class="title">
-				Images
-			</div>
-			<div class="row">
-				@if(isset($images))
-					@foreach($images as $image)
-						<div class="col-md-4 image">
-							<img src="{{ $image }}" width="100%" height="200px" onclick="imageOpen('{{ $image }}', {{ json_encode($images) }})">
-						</div>
-					@endforeach
-				@endif				
-			</div>
+		<div class="images">
+			
 		</div>
 	</div>
 @stop
 @section('scripts')
-	<script src="/js/photoswipe.min.js"></script>
-	<script src="/js/photoswipe-ui-default.min.js"></script>
-	<script type="text/javascript">
-		function imageOpen(source, sources){
-			var pswpElement = document.querySelectorAll('.pswp')[0];
-
-			// build items array
-			var items = [
-			    {
-			        src: source,
-			        w: 1200,
-			        h: 900
-			    }
-			];
-			for( var src in sources ){
-				if( sources[src] !== source ){
-					items.push({
-						src: sources[src],
-						w: 1200,
-						h: 900
-					})
-				}
-			}
-
-			// define options (if needed)
-			var options = {
-			    // optionName: 'option value'
-			    // for example:		 *
-			    bgOpacity : 0.5,
-			    index: 0 // start at first slide
-			};
-
-			// Initializes and opens PhotoSwipe
-			var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-			gallery.init();		
-		}
-	</script>
+	<script src="/js/photoSwipe/photoswipe.min.js"></script>
+	<script src="/js/photoSwipe/photoswipe-ui-default.min.js"></script>
 @stop
