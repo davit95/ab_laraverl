@@ -44,15 +44,15 @@ class DataMigration extends Command {
 	 * @return mixed
 	 */
 	public function fire() {
-		// $this->regions();
-		// $this->us_states();
-		// $this->countries();
-		// $this->cities();
+		//$this->regions();
+		$this->us_states();
+		$this->countries();
+		$this->cities();
 		// $this->users();
 		// $this->users_files();
 		// $this->owners();
 		// $this->products();
-		$this->centers();
+		// $this->centers();
 		// $this->centers_coordinates();
 		// $this->features();
 		// $this->centers_local_numbers();
